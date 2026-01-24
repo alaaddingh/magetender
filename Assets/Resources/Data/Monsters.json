@@ -1,0 +1,19 @@
+{
+  "monsters": [
+    {
+      "id": "count_drunkula",
+      "name": "Count Drunkula",
+      "description": "An aristocratic vampire with a dramatic flair.",
+      "dialogue": [
+        "Hi",
+        "Hello",
+        "I am Count Drunkula",
+        "I Vant to drink some Bud!"
+      ],
+      "liked_ingredients": [
+        "Blood",
+        "MoonShine"
+      ]
+    }
+  ]
+}
