@@ -19,6 +19,11 @@ public class DialogueController : MonoBehaviour
     [Header("Data source")]
     [SerializeField] private string monstersJsonResourcePath = "Data/Monsters"; 
 
+
+    [Header("Ui Panels (to toggle/hide)")] 
+    public GameObject orderScreen;
+    public GameObject selectingGlassScreen;
+
     private MonsterData currentMonster;
     private int dialogueIndex = 0;
 
@@ -75,5 +80,7 @@ public class DialogueController : MonoBehaviour
     public void BrewingPressed()
     {
         Debug.Log("'Begin Brewing' pressed");
+        orderScreen.SetActive(false);
+        selectingGlassScreen.SetActive(true);
     }
 }
