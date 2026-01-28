@@ -1,3 +1,10 @@
+/*
+Purpose of file:
+ Handles hover over glasses on "Pick Glass" screen
+ When glass is pressed, relocates glasss
+ sets "Next" button to active
+ Informs "MixManager" of selected glass (stores the data)
+*/
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -28,6 +35,15 @@ public class BottleHoverSnapUI : MonoBehaviour
     private Vector3 smallBaseScale, medBaseScale, largeBaseScale;
     private Color smallBaseColor, medBaseColor, largeBaseColor;
 
+
+     [Header("Manager")]
+    [SerializeField] private MixManager mixManager;
+
+
+    [Header("Ui Panels (to toggle/hide)")] 
+    public GameObject CurrentScreen;
+    public GameObject NextScreen;
+
     void Awake()
     {
         smallBaseScale = smallBottle.rectTransform.localScale;
@@ -37,6 +53,8 @@ public class BottleHoverSnapUI : MonoBehaviour
         smallBaseColor = smallBottle.color;
         medBaseColor   = mediumBottle.color;
         largeBaseColor = largeBottle.color;
+        nextButton.SetActive(false);
+
     }
 
     void Update()
@@ -47,11 +65,25 @@ public class BottleHoverSnapUI : MonoBehaviour
         {
             hovered.rectTransform.anchoredPosition = snapTargetPos;
             nextButton.SetActive(true);
+
+
+            /* Store string for bottle type in mix manager */
+             mixManager.SetBottle(GetBottleKey(hovered));
+             Debug.Log($"Bottle selected: {mixManager.SelectedBottle}");
         }
 
         UpdateBottleFX(smallBottle,  smallBaseScale, smallBaseColor, hovered == smallBottle);
         UpdateBottleFX(mediumBottle, medBaseScale,   medBaseColor,   hovered == mediumBottle);
         UpdateBottleFX(largeBottle,  largeBaseScale, largeBaseColor, hovered == largeBottle);
+    }
+
+    /* helper function to get string for mix manager */
+    private string GetBottleKey(Image img)
+    {
+        if (img == smallBottle) return "small";
+        if (img == mediumBottle) return "medium";
+        if (img == largeBottle) return "large";
+        return "";
     }
 
     Image GetHoveredBottle()
@@ -98,5 +130,12 @@ public class BottleHoverSnapUI : MonoBehaviour
             targetColor,
             colorLerpSpeed * Time.unscaledDeltaTime
         );
+    }
+
+     public void NextPressed()
+    {
+        Debug.Log("'Next' pressed");
+        CurrentScreen.SetActive(false);
+        NextScreen.SetActive(true);
     }
 }

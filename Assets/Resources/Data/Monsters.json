@@ -10,10 +10,16 @@
         "I am Count Drunkula",
         "I Vant to drink some Bud!"
       ],
-      "liked_ingredients": [
-        "Blood",
-        "MoonShine"
-      ]
+      "starting_score": {
+        "x-val": 0.5,
+        "y-val": 0.5
+      },
+
+      "goal_score": {
+        "x-val": -0.5,
+        "y-val": -0.3
+        
+      }
     }
   ]
 }
