@@ -1,0 +1,46 @@
+{
+  "ingredients": [
+    {
+      "id": "pixie_dust",
+      "name": "Pixie Dust",
+      "description": "Elevates, slightly dissociative",
+      "type": "topping",
+      "effect": { "x": 0.15, "y": 0.40 }
+    },
+    {
+      "id": "eyeball",
+      "name": "Eyeball",
+      "description": "Strongly dissociative, unsettling",
+      "type": "topping",
+      "effect": { "x": 0.45, "y": 0.05 }
+    },
+    {
+      "id": "moon_shard",
+      "name": "Moon Shard",
+      "description": "Calming, mildly dissociative",
+      "type": "topping",
+      "effect": { "x": 0.20, "y": -0.35 }
+    },
+    {
+      "id": "magic_mushroom",
+      "name": "Magic Mushroom",
+      "description": "Elevated, dissociative",
+      "type": "topping",
+      "effect": { "x": 0.35, "y": 0.30 }
+    },
+    {
+      "id": "blood",
+      "name": "Blood",
+      "description": "Grounding, energizing",
+      "type": "base",
+      "effect": { "x": -0.30, "y": 0.25 }
+    },
+    {
+      "id": "holy_water",
+      "name": "Holy Water",
+      "description": "Grounding, calming",
+      "type": "base",
+      "effect": { "x": -0.40, "y": -0.30 }
+    }
+  ]
+}
