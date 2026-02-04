@@ -31,30 +31,30 @@
     {
       "id": "blood",
       "name": "Blood",
-      "description": "Grounding, energizing",
+      "description": "Grounding",
       "type": "base",
-      "effect": { "x": -0.35, "y": 0 }
+      "effect": { "x": -0.30, "y": 0 }
     },
     {
       "id": "holy_water",
       "name": "Holy Water",
-      "description": "Elevating, calming",
+      "description": "Elevating",
       "type": "base",
-      "effect": { "x": 0, "y": 0.35 }
+      "effect": { "x": 0, "y": 0.30 }
     },
     {
       "id": "spirits",
       "name": "Spirits",
-      "description": "Dissociative, otherworldly",
+      "description": "Dissociative",
       "type": "base",
-      "effect": { "x": 0.35, "y": 0 }
+      "effect": { "x": 0.30, "y": 0 }
     },
     {
       "id": "moonshine",
       "name": "Moon-Shine",
-      "description": "Calming, soothing",
+      "description": "Calming",
       "type": "base",
-      "effect": { "x": 0, "y": -0.35 }
+      "effect": { "x": 0, "y": -0.30 }
     }
   ]
 }
