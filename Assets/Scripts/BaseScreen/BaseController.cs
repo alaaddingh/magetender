@@ -23,6 +23,8 @@ public class BaseController : MonoBehaviour
     [Header("Base colors")]
     public Color BloodColor = new Color(0.7f, 0.1f, 0.1f, 1f); // red
     public Color HolyWaterColor = new Color(0.7f, 0.9f, 1f, 1f); // blue
+    public Color SpiritsColor = new  Color(0.85f, 0.95f, 0.8f, 1f); // ghostly green
+    public Color MoonShineColor = new Color(0.9f, 0.7f, 0.9f, 1f); // purple/pink
 
     [Header("Manager")]
     [SerializeField] private MixManager mixManager;
@@ -61,6 +63,14 @@ public class BaseController : MonoBehaviour
                 else if (key.Contains("holy"))
                 {
                     SetBase("holywater", HolyWaterColor);
+                }
+                else if (key.Contains("spirits"))
+                {
+                    SetBase("spirits", SpiritsColor);
+                }
+                else if (key.Contains("moon") || key.Contains("shine"))
+                {
+                    SetBase("moonshine", MoonShineColor);
                 }
             }
         }
@@ -106,6 +116,12 @@ public class BaseController : MonoBehaviour
                 break;
             case "holywater":
                 BaseBottle.color = HolyWaterColor;
+                break;
+            case "spirits":
+                BaseBottle.color = SpiritsColor;
+                break;
+            case "moonshine":
+                BaseBottle.color = MoonShineColor;
                 break;
         }
     }
