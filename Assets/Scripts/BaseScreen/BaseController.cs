@@ -369,12 +369,22 @@ public class BaseController : MonoBehaviour
     {
         if (currentFillLevel <= 0f || baseAmounts.Count == 0)
         {
-            return Color.white; // Default if empty
+            return Color.white;
         }
 
         // Weighted color blending: each base contributes based on its percentage
+        // Amounts are normalized to sum to currentFillLevel, so weight = amount / currentFillLevel
         Color mixedColor = Color.black;
-        float totalWeight = 0f;
+        float totalAmount = 0f;
+
+        foreach (var kvp in baseAmounts)
+        {
+            string baseKey = kvp.Key;
+            float amount = kvp.Value;
+            totalAmount += amount;
+        }
+
+        if (totalAmount <= 0f) return Color.white;
 
         foreach (var kvp in baseAmounts)
         {
@@ -384,25 +394,15 @@ public class BaseController : MonoBehaviour
             if (amount > 0f)
             {
                 Color baseColor = GetBaseColor(baseKey);
-                float weight = amount / currentFillLevel;
+                float weight = amount / totalAmount;
                 
                 mixedColor.r += baseColor.r * weight;
                 mixedColor.g += baseColor.g * weight;
                 mixedColor.b += baseColor.b * weight;
-                mixedColor.a += baseColor.a * weight;
-                
-                totalWeight += weight;
             }
         }
 
-        if (totalWeight > 0f)
-        {
-            mixedColor.r /= totalWeight;
-            mixedColor.g /= totalWeight;
-            mixedColor.b /= totalWeight;
-            mixedColor.a /= totalWeight;
-        }
-
+        mixedColor.a = 1f;
         return mixedColor;
     }
 
@@ -468,7 +468,7 @@ public class BaseController : MonoBehaviour
     {
         if (mixManager != null)
         {
-            mixManager.SetFillData(currentFillLevel, baseAmounts);
+            mixManager.SetFillData(currentFillLevel, baseAmounts, BloodColor, HolyWaterColor, SpiritsColor, MoonShineColor);
         }
 
         if (CurrentScreen != null) CurrentScreen.SetActive(false);

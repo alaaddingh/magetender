@@ -109,8 +109,17 @@ public class IngredientController : MonoBehaviour
         }
 
         // Weighted color blending: each base contributes based on its percentage
+        // Calculate total amount first to get accurate percentages
         Color mixedColor = Color.black;
-        float totalWeight = 0f;
+        float totalAmount = 0f;
+
+        foreach (var kvp in mixManager.BaseAmounts)
+        {
+            float amount = kvp.Value;
+            totalAmount += amount;
+        }
+
+        if (totalAmount <= 0f) return Color.white;
 
         foreach (var kvp in mixManager.BaseAmounts)
         {
@@ -120,40 +129,32 @@ public class IngredientController : MonoBehaviour
             if (amount > 0f)
             {
                 Color baseColor = GetBaseColor(baseKey);
-                float weight = amount / mixManager.FillLevel;
+                float weight = amount / totalAmount;
                 
                 mixedColor.r += baseColor.r * weight;
                 mixedColor.g += baseColor.g * weight;
                 mixedColor.b += baseColor.b * weight;
-                mixedColor.a += baseColor.a * weight;
-                
-                totalWeight += weight;
             }
         }
 
-        if (totalWeight > 0f)
-        {
-            mixedColor.r /= totalWeight;
-            mixedColor.g /= totalWeight;
-            mixedColor.b /= totalWeight;
-            mixedColor.a /= totalWeight;
-        }
-
+        mixedColor.a = 1f;
         return mixedColor;
     }
 
     private Color GetBaseColor(string baseKey)
     {
+        if (mixManager == null) return Color.white;
+        
         switch (baseKey.ToLower())
         {
             case "blood":
-                return new Color(0.7f, 0.1f, 0.1f, 1f);
+                return mixManager.BloodColor;
             case "holywater":
-                return new Color(0.7f, 0.9f, 1f, 1f);
+                return mixManager.HolyWaterColor;
             case "spirits":
-                return new Color(0.85f, 0.95f, 0.8f, 1f);
+                return mixManager.SpiritsColor;
             case "moonshine":
-                return new Color(0.9f, 0.7f, 0.9f, 1f);
+                return mixManager.MoonShineColor;
             default:
                 return Color.white;
         }

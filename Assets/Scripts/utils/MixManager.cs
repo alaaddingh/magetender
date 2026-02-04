@@ -13,6 +13,16 @@ using System.Collections.Generic;
  [Header("Fill Data")]
  public float FillLevel = 0f;
  public Dictionary<string, float> BaseAmounts = new Dictionary<string, float>();
+ 
+ // Base colors stored here temporarily when transitioning (not editable in Inspector)
+ [HideInInspector]
+ public Color BloodColor;
+ [HideInInspector]
+ public Color HolyWaterColor;
+ [HideInInspector]
+ public Color SpiritsColor;
+ [HideInInspector]
+ public Color MoonShineColor;
 
  public void SetBottle(string bottleKey) {
      SelectedBottle = bottleKey; 
@@ -27,7 +37,7 @@ public void AddIngredient(string IngredientKey)
     SelectedIngredients.Add(IngredientKey);
 }
 
-public void SetFillData(float fillLevel, Dictionary<string, float> baseAmounts)
+public void SetFillData(float fillLevel, Dictionary<string, float> baseAmounts, Color bloodColor, Color holyWaterColor, Color spiritsColor, Color moonShineColor)
 {
     FillLevel = fillLevel;
     BaseAmounts.Clear();
@@ -35,5 +45,10 @@ public void SetFillData(float fillLevel, Dictionary<string, float> baseAmounts)
     {
         BaseAmounts[kvp.Key] = kvp.Value;
     }
+    
+    BloodColor = bloodColor;
+    HolyWaterColor = holyWaterColor;
+    SpiritsColor = spiritsColor;
+    MoonShineColor = moonShineColor;
 }
  }
