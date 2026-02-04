@@ -33,6 +33,10 @@ public class BaseController : MonoBehaviour
     public GameObject CurrentScreen;
     public GameObject NextScreen;
 
+    private bool isDragging = false;
+    private Vector2 dragStartMousePos;
+    private Vector2 dragStartBottlePos;
+
     private void Awake()
     {
         if (mixManager == null)
@@ -49,30 +53,77 @@ public class BaseController : MonoBehaviour
 
     private void Update()
     {
+        if (BaseBottle == null) return;
         if (Input.GetMouseButtonDown(0))
         {
-            Image hoveredBase = GetHoveredBase();
-            if (hoveredBase != null)
+            if (IsClickingOnBaseBottle())
             {
-                string key = hoveredBase.gameObject.name.ToLower();
+                isDragging = true;
+                dragStartMousePos = Input.mousePosition;
+                dragStartBottlePos = BaseBottle.rectTransform.anchoredPosition;
+            }
+            // Otherwise check for base jar clicks
+            else if (!isDragging)
+            {
+                Image hoveredBase = GetHoveredBase();
+                if (hoveredBase != null)
+                {
+                    string key = hoveredBase.gameObject.name.ToLower();
 
-                if (key.Contains("blood"))
-                {
-                    SetBase("blood", BloodColor);
-                }
-                else if (key.Contains("holy"))
-                {
-                    SetBase("holywater", HolyWaterColor);
-                }
-                else if (key.Contains("spirits"))
-                {
-                    SetBase("spirits", SpiritsColor);
-                }
-                else if (key.Contains("moon") || key.Contains("shine"))
-                {
-                    SetBase("moonshine", MoonShineColor);
+                    if (key.Contains("blood"))
+                    {
+                        SetBase("blood", BloodColor);
+                    }
+                    else if (key.Contains("holy"))
+                    {
+                        SetBase("holywater", HolyWaterColor);
+                    }
+                    else if (key.Contains("spirits"))
+                    {
+                        SetBase("spirits", SpiritsColor);
+                    }
+                    else if (key.Contains("moon") || key.Contains("shine"))
+                    {
+                        SetBase("moonshine", MoonShineColor);
+                    }
                 }
             }
+        }
+
+        // Handle dragging
+        if (isDragging && Input.GetMouseButton(0))
+        {
+            Canvas canvas = BaseBottle.canvas;
+            if (canvas != null)
+            {
+                RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+                
+                // Convert mouse position to canvas local space
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvasRect,
+                    Input.mousePosition,
+                    canvas.worldCamera,
+                    out Vector2 currentMousePos);
+
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvasRect,
+                    dragStartMousePos,
+                    canvas.worldCamera,
+                    out Vector2 startMousePos);
+
+                // Calculate delta and update position
+                float deltaX = currentMousePos.x - startMousePos.x;
+                float newX = dragStartBottlePos.x + deltaX;
+                
+                // Update position: new x, keep y at -200
+                BaseBottle.rectTransform.anchoredPosition = new Vector2(newX, -200f);
+            }
+        }
+
+        // Handle mouse up
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
         }
     }
 
@@ -154,5 +205,33 @@ public class BaseController : MonoBehaviour
         }
 
         return null;
+    }
+
+    private bool IsClickingOnBaseBottle()
+    {
+        if (BaseBottle == null || EventSystem.current == null) return false;
+
+        PointerEventData pointer = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, results);
+
+        // Check if the top-most hit is the BaseBottle
+        foreach (var result in results)
+        {
+            if (result.gameObject == BaseBottle.gameObject)
+            {
+                return true;
+            }
+            // If we hit something else that blocks, stop checking
+            if (result.gameObject.GetComponent<Image>() != null)
+            {
+                break;
+            }
+        }
+        return false;
     }
 }
