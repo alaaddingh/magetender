@@ -166,6 +166,7 @@ MonoBehaviour:
   SelectedBottle: 
   SelectedBase: 
   SelectedIngredients: []
+  FillLevel: 0
 --- !u!1 &42081995
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 814, y: -378}
+  m_AnchoredPosition: {x: 698, y: -393}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &42081997
@@ -396,7 +397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &118565732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,6 +1667,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IngredientsBottle: {fileID: 1742341212}
   BaseBottle: {fileID: 992086412}
+  fillWidthMultiplier: 0.18
+  fillHeightMultiplier: 1
+  fillAlpha: 0.6
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &832843224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,14 +2523,22 @@ MonoBehaviour:
   smallBottleUI: {fileID: 338197908}
   mediumBottleUI: {fileID: 1003164639}
   largeBottleUI: {fileID: 730946031}
-  BloodColor: {r: 0.7, g: 0.1, b: 0.1, a: 1}
-  HolyWaterColor: {r: 0.11217508, g: 0.3855506, b: 0.5169811, a: 1}
-  SpiritsColor: {r: 0.85, g: 0.95, b: 0.8, a: 1}
-  MoonShineColor: {r: 0.9, g: 0.7, b: 0.9, a: 1}
+  BloodColor: {r: 0.7, g: 0.1, b: 0.1, a: 0.74509805}
+  HolyWaterColor: {r: 0.11217508, g: 0.3855506, b: 0.5169811, a: 0.74509805}
+  SpiritsColor: {r: 0.4433179, g: 0.6830188, b: 0.32346734, a: 0.74509805}
+  MoonShineColor: {r: 0.9, g: 0.7, b: 0.9, a: 0.74509805}
   mixManager: {fileID: 9305688}
+  dropSpawnInterval: 0.1
+  dropSize: 40
+  dropSpawnOffsetY: 0
   nextButton: {fileID: 1821739358}
   CurrentScreen: {fileID: 1228855948}
   NextScreen: {fileID: 906567377}
+  fillAmountPerDrop: 0.01
+  maxFillLevel: 1
+  fillWidthMultiplier: 0.18
+  fillHeightMultiplier: 1
+  fillAlpha: 0.6
 --- !u!1 &906567377
 GameObject:
   m_ObjectHideFlags: 0
