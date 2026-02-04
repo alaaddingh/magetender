@@ -167,6 +167,10 @@ MonoBehaviour:
   SelectedBase: 
   SelectedIngredients: []
   FillLevel: 0
+  BloodColor: {r: 0.7, g: 0.1, b: 0.1, a: 1}
+  HolyWaterColor: {r: 0.7, g: 0.9, b: 1, a: 1}
+  SpiritsColor: {r: 0.85, g: 0.95, b: 0.8, a: 1}
+  MoonShineColor: {r: 0.9, g: 0.7, b: 0.9, a: 1}
 --- !u!1 &42081995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2523,10 +2527,10 @@ MonoBehaviour:
   smallBottleUI: {fileID: 338197908}
   mediumBottleUI: {fileID: 1003164639}
   largeBottleUI: {fileID: 730946031}
-  BloodColor: {r: 0.7, g: 0.1, b: 0.1, a: 0.74509805}
-  HolyWaterColor: {r: 0.11217508, g: 0.3855506, b: 0.5169811, a: 0.74509805}
-  SpiritsColor: {r: 0.4433179, g: 0.6830188, b: 0.32346734, a: 0.74509805}
-  MoonShineColor: {r: 0.9, g: 0.7, b: 0.9, a: 0.74509805}
+  BloodColor: {r: 0.7, g: 0.1, b: 0.1, a: 1}
+  HolyWaterColor: {r: 0.11217508, g: 0.3855506, b: 0.5169811, a: 1}
+  SpiritsColor: {r: 0.4433179, g: 0.6830188, b: 0.32346734, a: 1}
+  MoonShineColor: {r: 0.9, g: 0.7, b: 0.9, a: 1}
   mixManager: {fileID: 9305688}
   dropSpawnInterval: 0.1
   dropSize: 40
