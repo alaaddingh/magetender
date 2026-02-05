@@ -13,6 +13,7 @@ public class QTECombatManager : MonoBehaviour
     public TextMeshProUGUI customerHealthText;
     public Image timerCircle;
     public Canvas mainCanvas;
+    public Image promptBackground; // NEW: Background color for the prompt (defense = red, attack = blue)
     
     [Header("Combat Settings")]
     public float qteTimeLimit = 1.5f;
@@ -27,14 +28,23 @@ public class QTECombatManager : MonoBehaviour
     public float shakeDuration = 0.3f;
     
     [Header("Button Randomization")]
-    public RectTransform buttonContainer; // The object that holds KeyPrompt and TimerCircle
+    public RectTransform buttonContainer;
     public float minX = -300f;
     public float maxX = 300f;
     public float minY = -150f;
     public float maxY = 150f;
     
+    [Header("Prompt Colors")]
+    public Color defenseColor = new Color(1f, 0.3f, 0.3f, 0.7f); // Red with transparency
+    public Color attackColor = new Color(0.3f, 0.6f, 1f, 0.7f);  // Blue with transparency
+    
     // Private variables
-    private KeyCode[] possibleKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space };
+    private KeyCode[] defenseKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
+    private KeyCode[] attackKeys = { KeyCode.H, KeyCode.U, KeyCode.J, KeyCode.K };
+    
+    private enum PromptType { Defense, Attack }
+    private PromptType currentPromptType;
+    
     private KeyCode currentKey;
     private float qteTimer;
     private bool waitingForInput;
@@ -95,20 +105,20 @@ public class QTECombatManager : MonoBehaviour
         if (Input.GetKeyDown(currentKey))
         {
             // Correct key pressed!
-            CustomerTakesDamage();
+            HandleCorrectKey();
             StartCoroutine(WaitAndStartNewQTE(0.5f));
         }
         else if (CheckForWrongKeyPress())
         {
             // Wrong key pressed!
-            PlayerTakesDamage();
+            HandleWrongKey();
             StartCoroutine(WaitAndStartNewQTE(0.5f));
         }
         
         // Time ran out
         if (qteTimer <= 0f)
         {
-            PlayerTakesDamage();
+            HandleTimeout();
             StartCoroutine(WaitAndStartNewQTE(0.5f));
         }
     }
@@ -132,10 +142,22 @@ public class QTECombatManager : MonoBehaviour
             return;
         }
         
-        // Pick random key
-        currentKey = possibleKeys[Random.Range(0, possibleKeys.Length)];
+        // Randomly choose defense or attack
+        currentPromptType = (Random.value > 0.5f) ? PromptType.Defense : PromptType.Attack;
         
-        // Display it (just the key, no "PRESS:" prefix)
+        // Pick random key based on type
+        if (currentPromptType == PromptType.Defense)
+        {
+            currentKey = defenseKeys[Random.Range(0, defenseKeys.Length)];
+            promptBackground.color = defenseColor; // Red background
+        }
+        else // Attack
+        {
+            currentKey = attackKeys[Random.Range(0, attackKeys.Length)];
+            promptBackground.color = attackColor; // Blue background
+        }
+        
+        // Display the key
         keyPromptText.text = currentKey.ToString();
         
         // Randomize button position
@@ -148,6 +170,55 @@ public class QTECombatManager : MonoBehaviour
         timerCircle.fillAmount = 1f;
         timerCircle.color = Color.yellow;
         waitingForInput = true;
+    }
+    
+    void HandleCorrectKey()
+    {
+        waitingForInput = false;
+        
+        if (currentPromptType == PromptType.Defense)
+        {
+            // Successful defense - no damage taken
+            Debug.Log("Defense successful! Blocked attack!");
+            // Could add visual feedback here (shield effect, etc.)
+        }
+        else // Attack
+        {
+            // Successful attack - customer takes damage
+            CustomerTakesDamage();
+        }
+    }
+    
+    void HandleWrongKey()
+    {
+        waitingForInput = false;
+        
+        if (currentPromptType == PromptType.Defense)
+        {
+            // Failed defense - player takes damage
+            PlayerTakesDamage();
+        }
+        else // Attack
+        {
+            // Failed attack - nothing happens (no penalty)
+            Debug.Log("Attack missed! No damage.");
+        }
+    }
+    
+    void HandleTimeout()
+    {
+        waitingForInput = false;
+        
+        if (currentPromptType == PromptType.Defense)
+        {
+            // Timeout on defense - player takes damage
+            PlayerTakesDamage();
+        }
+        else // Attack
+        {
+            // Timeout on attack - nothing happens (no penalty)
+            Debug.Log("Attack missed! No damage.");
+        }
     }
     
     bool CheckForWrongKeyPress()
@@ -166,7 +237,6 @@ public class QTECombatManager : MonoBehaviour
     
     void CustomerTakesDamage()
     {
-        waitingForInput = false;
         customerHealth -= damagePerHit;
         customerHealth = Mathf.Max(0, customerHealth);
         
@@ -177,7 +247,6 @@ public class QTECombatManager : MonoBehaviour
     
     void PlayerTakesDamage()
     {
-        waitingForInput = false;
         playerHealth -= damagePerHit;
         playerHealth = Mathf.Max(0, playerHealth);
         
