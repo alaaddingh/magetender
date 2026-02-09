@@ -18,4 +18,13 @@ public class MonsterData
 
     /* for laterrr */
     public List<string> liked_ingredients;
+
+    /* Fields used by ScoreManager / Monsters.json */
+    public string glassPreference;
+
+    [Serializable]
+    public class ScorePair { public float x; public float y; }
+
+    public ScorePair starting_score;
+    public ScorePair goal_score;
 }

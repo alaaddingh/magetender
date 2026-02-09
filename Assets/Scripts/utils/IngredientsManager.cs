@@ -35,16 +35,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
     {
         LoadIngredientData();
         HideTooltip();
-
-        if (debugLogs)
-        {
-            Debug.Log("ingredienthoversnapui awake");
-            Debug.Log("eventsystem current null? " + (EventSystem.current == null));
-            Debug.Log("tooltiproot assigned? " + (tooltipRoot != null));
-            Debug.Log("tooltip name text assigned? " + (tooltipNameText != null));
-            Debug.Log("tooltip desc text assigned? " + (tooltipDescText != null));
-            Debug.Log("tooltip effect text assigned? " + (tooltipEffectText != null));
-        }
+        // debug logs disabled
     }
 
     void Update()
@@ -96,7 +87,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
         }
 
         //console
-        Debug.Log(msg);
+    //    Debug.Log(msg);
     }
 
     private void LoadIngredientData()
@@ -104,14 +95,12 @@ public class IngredientHoverSnapUI : MonoBehaviour
         TextAsset json = Resources.Load<TextAsset>("Data/Ingredients");
         if (json == null)
         {
-            Debug.LogError("could not find Ingredients.json in Assets/Resources/Data");
             return;
         }
 
         IngredientsFile file = JsonUtility.FromJson<IngredientsFile>(json.text);
         if (file == null || file.ingredients == null)
         {
-            Debug.LogError("failed to parse Ingredients.json");
             return;
         }
 
@@ -122,8 +111,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
                 byId[ing.id] = ing;
         }
 
-        if (debugLogs)
-            Debug.Log("ingredients loaded: " + byId.Count);
+        // debug logs disabled
     }
 
     private void ShowTooltipFor(string id)
@@ -198,9 +186,10 @@ public class IngredientHoverSnapUI : MonoBehaviour
         //debug what we're actually hitting (top-most ui element wins)
         if (debugLogs && Time.unscaledTime >= nextDebugTime)
         {
-            Debug.Log("raycast hits: " + results.Count);
-            if (results.Count > 0)
-                Debug.Log("top hit: " + results[0].gameObject.name + " tag=" + results[0].gameObject.tag);
+      //      Debug.Log("raycast hits: " + results.Count);
+          //  if (results.Count > 0)
+               
+          /*      Debug.Log("top hit: " + results[0].gameObject.name + " tag=" + results[0].gameObject.tag); */
         }
 
         foreach (RaycastResult r in results)

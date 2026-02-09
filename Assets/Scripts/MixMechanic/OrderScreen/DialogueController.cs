@@ -57,7 +57,6 @@ public class DialogueController : MonoBehaviour
     /* handles Next UI Button clicks (iteration + brew button visibility) */
     public void OnNextPressed()
     {
-        Debug.Log("PRESSED");
         if (currentMonster?.dialogue == null || currentMonster.dialogue.Count == 0) return;
 
         /* if at the last line, show brew button. */
@@ -79,7 +78,6 @@ public class DialogueController : MonoBehaviour
 
     public void BrewingPressed()
     {
-        Debug.Log("'Begin Brewing' pressed");
         orderScreen.SetActive(false);
         selectingGlassScreen.SetActive(true);
     }

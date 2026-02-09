@@ -21,12 +21,6 @@ public class BaseController : MonoBehaviour
     public Image mediumBottleUI;
     public Image largeBottleUI;
 
-    [Header("Base colors")]
-    public Color BloodColor = new Color(0.7f, 0.1f, 0.1f, 1f);
-    public Color HolyWaterColor = new Color(0.7f, 0.9f, 1f, 1f);
-    public Color SpiritsColor = new  Color(0.85f, 0.95f, 0.8f, 1f);
-    public Color MoonShineColor = new Color(0.9f, 0.7f, 0.9f, 1f);
-
     [Header("Manager")]
     [SerializeField] private MixManager mixManager;
 
@@ -75,6 +69,8 @@ public class BaseController : MonoBehaviour
         ApplySavedBaseTint();
 
         nextButton.SetActive(false);
+        if (mixManager != null)
+            mixManager.ResetFillData();
         InitializeFillRectangle();
     }
 
@@ -110,8 +106,6 @@ public class BaseController : MonoBehaviour
             fillImage = fillTransform.GetComponent<Image>();
         }
 
-        currentFillLevel = 0f;
-        baseAmounts.Clear();
         UpdateFillVisual();
     }
 
@@ -245,23 +239,23 @@ public class BaseController : MonoBehaviour
 
         if (key.Contains("blood"))
         {
-            baseColor = BloodColor;
             baseKey = "blood";
+            baseColor = mixManager.GetBaseColor(baseKey);
         }
         else if (key.Contains("holy"))
         {
-            baseColor = HolyWaterColor;
             baseKey = "holywater";
+            baseColor = mixManager.GetBaseColor(baseKey);
         }
         else if (key.Contains("spirits"))
         {
-            baseColor = SpiritsColor;
             baseKey = "spirits";
+            baseColor = mixManager.GetBaseColor(baseKey);
         }
         else if (key.Contains("moon") || key.Contains("shine"))
         {
-            baseColor = MoonShineColor;
             baseKey = "moonshine";
+            baseColor = mixManager.GetBaseColor(baseKey);
         }
 
         // Spawn drops continuously
@@ -327,39 +321,14 @@ public class BaseController : MonoBehaviour
 
     public void CatchDrop(string baseKey, Color dropColor)
     {
-        if (currentFillLevel >= maxFillLevel) return;
+        if (mixManager == null) return;
+        if (mixManager.FillLevel >= maxFillLevel) return;
 
-        currentFillLevel = Mathf.Min(currentFillLevel + fillAmountPerDrop, maxFillLevel);
-
-        if (baseAmounts.ContainsKey(baseKey))
-        {
-            baseAmounts[baseKey] += fillAmountPerDrop;
-        }
-        else
-        {
-            baseAmounts[baseKey] = fillAmountPerDrop;
-        }
-
-        // Normalize base amounts to sum to currentFillLevel
-        float total = 0f;
-        foreach (var amount in baseAmounts.Values)
-        {
-            total += amount;
-        }
-        if (total > 0f)
-        {
-            float scale = currentFillLevel / total;
-            var keys = new List<string>(baseAmounts.Keys);
-            foreach (var key in keys)
-            {
-                baseAmounts[key] *= scale;
-            }
-        }
-
+        mixManager.AddDrip(baseKey, fillAmountPerDrop);
         UpdateFillVisual();
 
         // Show next button when bottle has some liquid
-        if (currentFillLevel > 0 && nextButton != null)
+        if (mixManager.FillLevel > 0 && nextButton != null)
         {
             nextButton.SetActive(true);
         }
@@ -367,33 +336,30 @@ public class BaseController : MonoBehaviour
 
     private Color CalculateMixedColor()
     {
-        if (currentFillLevel <= 0f || baseAmounts.Count == 0)
+        if (mixManager == null || mixManager.FillLevel <= 0f || mixManager.BaseAmounts.Count == 0)
         {
             return Color.white;
         }
 
         // Weighted color blending: each base contributes based on its percentage
-        // Amounts are normalized to sum to currentFillLevel, so weight = amount / currentFillLevel
         Color mixedColor = Color.black;
         float totalAmount = 0f;
 
-        foreach (var kvp in baseAmounts)
+        foreach (var kvp in mixManager.BaseAmounts)
         {
-            string baseKey = kvp.Key;
-            float amount = kvp.Value;
-            totalAmount += amount;
+            totalAmount += kvp.Value;
         }
 
         if (totalAmount <= 0f) return Color.white;
 
-        foreach (var kvp in baseAmounts)
+        foreach (var kvp in mixManager.BaseAmounts)
         {
             string baseKey = kvp.Key;
             float amount = kvp.Value;
             
             if (amount > 0f)
             {
-                Color baseColor = GetBaseColor(baseKey);
+                Color baseColor = mixManager.GetBaseColor(baseKey);
                 float weight = amount / totalAmount;
                 
                 mixedColor.r += baseColor.r * weight;
@@ -406,26 +372,9 @@ public class BaseController : MonoBehaviour
         return mixedColor;
     }
 
-    private Color GetBaseColor(string baseKey)
-    {
-        switch (baseKey.ToLower())
-        {
-            case "blood":
-                return BloodColor;
-            case "holywater":
-                return HolyWaterColor;
-            case "spirits":
-                return SpiritsColor;
-            case "moonshine":
-                return MoonShineColor;
-            default:
-                return Color.white;
-        }
-    }
-
     private void UpdateFillVisual()
     {
-        if (fillImage == null || BaseBottle == null) return;
+        if (fillImage == null || BaseBottle == null || mixManager == null) return;
 
         RectTransform fillRect = fillImage.rectTransform;
         RectTransform bottleRect = BaseBottle.rectTransform;
@@ -433,7 +382,7 @@ public class BaseController : MonoBehaviour
         // Use rect instead of sizeDelta to get actual rendered size (accounts for sprite not filling RectTransform)
         float bottleHeight = bottleRect.rect.height;
         float bottleWidth = bottleRect.rect.width;
-        float fillHeight = bottleHeight * fillHeightMultiplier * currentFillLevel;
+        float fillHeight = bottleHeight * fillHeightMultiplier * mixManager.FillLevel;
         float fillWidth = bottleWidth * fillWidthMultiplier;
         
         fillRect.sizeDelta = new Vector2(fillWidth, fillHeight);
@@ -447,30 +396,11 @@ public class BaseController : MonoBehaviour
     {
         if (mixManager == null || BaseBottle == null) return;
 
-        switch (mixManager.SelectedBase)
-        {
-            case "blood":
-                BaseBottle.color = BloodColor;
-                break;
-            case "holywater":
-                BaseBottle.color = HolyWaterColor;
-                break;
-            case "spirits":
-                BaseBottle.color = SpiritsColor;
-                break;
-            case "moonshine":
-                BaseBottle.color = MoonShineColor;
-                break;
-        }
+        BaseBottle.color = mixManager.GetBaseColor(mixManager.SelectedBase);
     }
 
     public void NextPressed()
     {
-        if (mixManager != null)
-        {
-            mixManager.SetFillData(currentFillLevel, baseAmounts, BloodColor, HolyWaterColor, SpiritsColor, MoonShineColor);
-        }
-
         if (CurrentScreen != null) CurrentScreen.SetActive(false);
         if (NextScreen != null) NextScreen.SetActive(true);
     }

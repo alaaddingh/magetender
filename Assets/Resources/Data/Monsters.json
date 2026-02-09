@@ -4,22 +4,15 @@
       "id": "count_drunkula",
       "name": "Count Drunkula",
       "description": "An aristocratic vampire with a dramatic flair.",
+      "glassPreference": "medium",
       "dialogue": [
         "Hi",
         "Hello",
         "I am Count Drunkula",
         "I Vant to drink some Bud!"
       ],
-      "starting_score": {
-        "x-val": 0.5,
-        "y-val": 0.5
-      },
-
-      "goal_score": {
-        "x-val": -0.5,
-        "y-val": -0.3
-        
-      }
+      "starting_score": { "x": 0.5, "y": 0.5 },
+      "goal_score": { "x": -0.5, "y": -0.3 }
     }
   ]
 }

@@ -69,7 +69,6 @@ public class BottleHoverSnapUI : MonoBehaviour
 
             /* Store string for bottle type in mix manager */
              mixManager.SetBottle(GetBottleKey(hovered));
-             Debug.Log($"Bottle selected: {mixManager.SelectedBottle}");
         }
 
         UpdateBottleFX(smallBottle,  smallBaseScale, smallBaseColor, hovered == smallBottle);
@@ -122,7 +121,6 @@ public class BottleHoverSnapUI : MonoBehaviour
             scaleLerpSpeed * Time.unscaledDeltaTime
         );
 
-        /* Decide what the target color should be */
         Color targetColor = isHovered ? highlightColor : baseColor;
 
         img.color = Color.Lerp(
@@ -132,9 +130,8 @@ public class BottleHoverSnapUI : MonoBehaviour
         );
     }
 
-     public void NextPressed()
+    public void NextPressed()
     {
-        Debug.Log("'Next' pressed");
         CurrentScreen.SetActive(false);
         NextScreen.SetActive(true);
     }

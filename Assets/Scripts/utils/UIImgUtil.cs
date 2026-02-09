@@ -1,6 +1,6 @@
 using UnityEngine.UI;
 
-/* util for copying visual appearance + scale (no position) */
+/* util for copying visual appearance + scale of Image */
 public static class UIImgUtil
 {
     public static void CopyAppearance(Image src, Image dst)
