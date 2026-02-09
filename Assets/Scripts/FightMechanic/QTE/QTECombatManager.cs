@@ -2,17 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class QTECombatManager : MonoBehaviour
 {
     [Header("UI References")]
     public Image customerSprite;
-    public TextMeshProUGUI keyPromptText;
     public Image screenFlashOverlay;
     public TextMeshProUGUI playerHealthText;
     public TextMeshProUGUI customerHealthText;
-    public Image timerCircle;
     public Canvas mainCanvas;
+    public GameObject promptPrefab; // Prefab containing: Background, TimerCircle, KeyText
+    public Transform promptContainer; // Parent object to hold all active prompts
     
     [Header("Combat Settings")]
     public float qteTimeLimit = 1.5f;
@@ -20,24 +21,33 @@ public class QTECombatManager : MonoBehaviour
     public int customerMaxHealth = 100;
     public int damagePerHit = 20;
     
+    [Header("Prompt Settings")]
+    public int minPromptsPerWave = 1;
+    public int maxPromptsPerWave = 3;
+    public float promptSpacing = 200f; // Minimum distance between prompts
+    
     [Header("Visual Settings")]
     public Color damageFlashColor = Color.red;
     public float flashDuration = 0.2f;
     public float shakeIntensity = 15f;
     public float shakeDuration = 0.3f;
     
-    [Header("Button Randomization")]
-    public RectTransform buttonContainer; // The object that holds KeyPrompt and TimerCircle
-    public float minX = -300f;
-    public float maxX = 300f;
-    public float minY = -150f;
-    public float maxY = 150f;
+    [Header("Spawn Area")]
+    public float minX = -350f;
+    public float maxX = 350f;
+    public float minY = -200f;
+    public float maxY = 200f;
+    
+    [Header("Prompt Colors")]
+    public Color defenseColor = new Color(1f, 0.3f, 0.3f, 0.8f);
+    public Color attackColor = new Color(0.3f, 0.6f, 1f, 0.8f);
     
     // Private variables
-    private KeyCode[] possibleKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space };
-    private KeyCode currentKey;
-    private float qteTimer;
-    private bool waitingForInput;
+    private KeyCode[] defenseKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
+    private KeyCode[] attackKeys = { KeyCode.H, KeyCode.U, KeyCode.J, KeyCode.K };
+    
+    private List<PromptInstance> activePrompts = new List<PromptInstance>();
+    private List<KeyCode> usedKeys = new List<KeyCode>(); // Track keys already in use
     
     private int playerHealth;
     private int customerHealth;
@@ -45,6 +55,20 @@ public class QTECombatManager : MonoBehaviour
     private Color originalCustomerColor;
     private Vector3 originalCustomerPosition;
     private Vector3 originalCanvasPosition;
+    private Coroutine currentCustomerFlash;
+    private Coroutine currentScreenFlash;
+    
+    private class PromptInstance
+    {
+        public GameObject promptObject;
+        public KeyCode keyCode;
+        public bool isDefense;
+        public float timer;
+        public Image background;
+        public Image timerCircle;
+        public TextMeshProUGUI keyText;
+        public Vector2 position;
+    }
     
     void Start()
     {
@@ -59,151 +83,331 @@ public class QTECombatManager : MonoBehaviour
         overlayColor.a = 0f;
         screenFlashOverlay.color = overlayColor;
         
-        // Initialize timer circle
-        timerCircle.fillAmount = 1f;
-        
         UpdateHealthDisplays();
-        StartNewQTE();
+        StartNewWave();
     }
     
     void Update()
     {
-        if (!waitingForInput) return;
+        if (activePrompts.Count == 0) return;
         
-        // Update timer
-        qteTimer -= Time.deltaTime;
-        
-        // Update circular timer fill
-        float timerProgress = qteTimer / qteTimeLimit;
-        timerCircle.fillAmount = timerProgress;
-        
-        // Change timer color based on time remaining
-        if (timerProgress < 0.33f)
+        // Update all active prompts
+        for (int i = activePrompts.Count - 1; i >= 0; i--)
         {
-            timerCircle.color = Color.red;
+            PromptInstance prompt = activePrompts[i];
+            prompt.timer -= Time.deltaTime;
+            
+            // Update visual timer
+            float progress = prompt.timer / qteTimeLimit;
+            prompt.timerCircle.fillAmount = progress;
+            
+            // Change color based on time
+            if (progress < 0.33f)
+                prompt.timerCircle.color = Color.red;
+            else if (progress < 0.66f)
+                prompt.timerCircle.color = new Color(1f, 0.6f, 0f);
+            else
+                prompt.timerCircle.color = Color.yellow;
+            
+            // Check if time ran out
+            if (prompt.timer <= 0f)
+            {
+                HandleTimeout(prompt);
+                RemovePrompt(i);
+                
+                // Check if wave is complete
+                if (activePrompts.Count == 0)
+                {
+                    StartCoroutine(WaitAndStartNewWave(0.5f));
+                }
+            }
         }
-        else if (timerProgress < 0.66f)
+        
+        // Check for key presses
+        CheckKeyPresses();
+    }
+    
+    void CheckKeyPresses()
+    {
+        // Check all possible keys
+        foreach (KeyCode key in defenseKeys)
         {
-            timerCircle.color = new Color(1f, 0.6f, 0f); // Orange
+            if (Input.GetKeyDown(key))
+            {
+                HandleKeyPress(key);
+                return;
+            }
+        }
+        
+        foreach (KeyCode key in attackKeys)
+        {
+            if (Input.GetKeyDown(key))
+            {
+                HandleKeyPress(key);
+                return;
+            }
+        }
+    }
+    
+    void HandleKeyPress(KeyCode pressedKey)
+    {
+        // Find matching prompt
+        for (int i = 0; i < activePrompts.Count; i++)
+        {
+            if (activePrompts[i].keyCode == pressedKey)
+            {
+                // Correct key!
+                HandleCorrectKey(activePrompts[i]);
+                RemovePrompt(i);
+                
+                // Check if wave is complete
+                if (activePrompts.Count == 0)
+                {
+                    StartCoroutine(WaitAndStartNewWave(0.5f));
+                }
+                return;
+            }
+        }
+        
+        // Wrong key pressed - check if it's a defense key
+        if (System.Array.IndexOf(defenseKeys, pressedKey) >= 0)
+        {
+            // Pressed a defense key that doesn't match any prompt - minor penalty?
+            Debug.Log("Wrong defense key pressed!");
+        }
+        else if (System.Array.IndexOf(attackKeys, pressedKey) >= 0)
+        {
+            // Pressed an attack key that doesn't match - no penalty
+            Debug.Log("Wrong attack key pressed - no penalty");
+        }
+    }
+    
+    void HandleCorrectKey(PromptInstance prompt)
+    {
+        if (prompt.isDefense)
+        {
+            Debug.Log("Defense successful! Blocked attack!");
         }
         else
         {
-            timerCircle.color = Color.yellow;
-        }
-        
-        // Check for key press
-        if (Input.GetKeyDown(currentKey))
-        {
-            // Correct key pressed!
             CustomerTakesDamage();
-            StartCoroutine(WaitAndStartNewQTE(0.5f));
-        }
-        else if (CheckForWrongKeyPress())
-        {
-            // Wrong key pressed!
-            PlayerTakesDamage();
-            StartCoroutine(WaitAndStartNewQTE(0.5f));
-        }
-        
-        // Time ran out
-        if (qteTimer <= 0f)
-        {
-            PlayerTakesDamage();
-            StartCoroutine(WaitAndStartNewQTE(0.5f));
         }
     }
     
-    void StartNewQTE()
+    void HandleTimeout(PromptInstance prompt)
+    {
+        if (prompt.isDefense)
+        {
+            // Failed to defend - take damage
+            PlayerTakesDamage();
+        }
+        else
+        {
+            // Missed attack opportunity - no penalty
+            Debug.Log("Attack missed - no damage");
+        }
+    }
+    
+    void StartNewWave()
     {
         // Check if fight is over
-        if (customerHealth <= 0)
+        if (customerHealth <= 0 || playerHealth <= 0)
         {
-            keyPromptText.text = "VICTORY!";
-            waitingForInput = false;
-            timerCircle.fillAmount = 0f;
+            EndFight();
             return;
         }
         
-        if (playerHealth <= 0)
+        // Clear used keys
+        usedKeys.Clear();
+        
+        // Determine number of prompts
+        int promptCount = Random.Range(minPromptsPerWave, maxPromptsPerWave + 1);
+        
+        // Create prompts
+        List<Vector2> spawnPositions = GenerateSpawnPositions(promptCount);
+        
+        for (int i = 0; i < promptCount; i++)
         {
-            keyPromptText.text = "DEFEATED!";
-            waitingForInput = false;
-            timerCircle.fillAmount = 0f;
-            return;
+            CreatePrompt(spawnPositions[i]);
         }
-        
-        // Pick random key
-        currentKey = possibleKeys[Random.Range(0, possibleKeys.Length)];
-        
-        // Display it (just the key, no "PRESS:" prefix)
-        keyPromptText.text = currentKey.ToString();
-        
-        // Randomize button position
-        float randomX = Random.Range(minX, maxX);
-        float randomY = Random.Range(minY, maxY);
-        buttonContainer.anchoredPosition = new Vector2(randomX, randomY);
-        
-        // Reset timer
-        qteTimer = qteTimeLimit;
-        timerCircle.fillAmount = 1f;
-        timerCircle.color = Color.yellow;
-        waitingForInput = true;
     }
     
-    bool CheckForWrongKeyPress()
+    List<Vector2> GenerateSpawnPositions(int count)
     {
-        // Check if ANY key was pressed this frame
-        if (Input.anyKeyDown)
+        List<Vector2> positions = new List<Vector2>();
+        int maxAttempts = 50;
+        
+        for (int i = 0; i < count; i++)
         {
-            // If it wasn't the correct key, it's wrong
-            if (!Input.GetKeyDown(currentKey))
+            Vector2 newPos = Vector2.zero;
+            bool validPosition = false;
+            
+            for (int attempt = 0; attempt < maxAttempts; attempt++)
             {
-                return true;
+                newPos = new Vector2(
+                    Random.Range(minX, maxX),
+                    Random.Range(minY, maxY)
+                );
+                
+                // Check distance from existing positions
+                validPosition = true;
+                foreach (Vector2 existingPos in positions)
+                {
+                    if (Vector2.Distance(newPos, existingPos) < promptSpacing)
+                    {
+                        validPosition = false;
+                        break;
+                    }
+                }
+                
+                if (validPosition) break;
+            }
+            
+            positions.Add(newPos);
+        }
+        
+        return positions;
+    }
+    
+    void CreatePrompt(Vector2 position)
+    {
+        // Instantiate prompt
+        GameObject promptObj = Instantiate(promptPrefab, promptContainer);
+        RectTransform rectTransform = promptObj.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = position;
+        
+        // Get components
+        Image background = promptObj.GetComponent<Image>();
+        Image timerCircle = promptObj.transform.Find("TimerCircle").GetComponent<Image>();
+        TextMeshProUGUI keyText = promptObj.transform.Find("TimerCircle/KeyText").GetComponent<TextMeshProUGUI>();
+        
+        // Randomly choose defense or attack
+        bool isDefense = Random.value > 0.5f;
+        KeyCode[] keyPool = isDefense ? defenseKeys : attackKeys;
+        
+        // Pick a key that's not already in use
+        KeyCode selectedKey = GetUnusedKey(keyPool);
+        usedKeys.Add(selectedKey);
+        
+        // Set visuals
+        background.color = isDefense ? defenseColor : attackColor;
+        keyText.text = selectedKey.ToString();
+        timerCircle.fillAmount = 1f;
+        timerCircle.color = Color.yellow;
+        
+        // Create instance
+        PromptInstance instance = new PromptInstance
+        {
+            promptObject = promptObj,
+            keyCode = selectedKey,
+            isDefense = isDefense,
+            timer = qteTimeLimit,
+            background = background,
+            timerCircle = timerCircle,
+            keyText = keyText,
+            position = position
+        };
+        
+        activePrompts.Add(instance);
+    }
+    
+    KeyCode GetUnusedKey(KeyCode[] keyPool)
+    {
+        List<KeyCode> availableKeys = new List<KeyCode>();
+        
+        foreach (KeyCode key in keyPool)
+        {
+            if (!usedKeys.Contains(key))
+            {
+                availableKeys.Add(key);
             }
         }
-        return false;
+        
+        // If all keys are used, allow repeats
+        if (availableKeys.Count == 0)
+        {
+            return keyPool[Random.Range(0, keyPool.Length)];
+        }
+        
+        return availableKeys[Random.Range(0, availableKeys.Count)];
+    }
+    
+    void RemovePrompt(int index)
+    {
+        Destroy(activePrompts[index].promptObject);
+        activePrompts.RemoveAt(index);
     }
     
     void CustomerTakesDamage()
     {
-        waitingForInput = false;
         customerHealth -= damagePerHit;
         customerHealth = Mathf.Max(0, customerHealth);
         
         UpdateHealthDisplays();
         Debug.Log("Customer Hit! Health: " + customerHealth);
-        StartCoroutine(FlashCustomer());
+        
+        // Stop previous flash if still running
+        if (currentCustomerFlash != null)
+        {
+            StopCoroutine(currentCustomerFlash);
+        }
+        
+        // Start new flash
+        currentCustomerFlash = StartCoroutine(FlashCustomer());
     }
     
     void PlayerTakesDamage()
     {
-        waitingForInput = false;
         playerHealth -= damagePerHit;
         playerHealth = Mathf.Max(0, playerHealth);
         
         UpdateHealthDisplays();
         Debug.Log("Player Hit! Health: " + playerHealth);
-        StartCoroutine(FlashScreen());
+        
+        // Stop previous flash if still running
+        if (currentScreenFlash != null)
+        {
+            StopCoroutine(currentScreenFlash);
+        }
+        
+        // Start new flash
+        currentScreenFlash = StartCoroutine(FlashScreen());
+    }
+    
+    void EndFight()
+    {
+        // Clear all prompts
+        foreach (var prompt in activePrompts)
+        {
+            Destroy(prompt.promptObject);
+        }
+        activePrompts.Clear();
+        
+        // Show result
+        if (customerHealth <= 0)
+        {
+            Debug.Log("VICTORY!");
+        }
+        else
+        {
+            Debug.Log("DEFEATED!");
+        }
     }
     
     IEnumerator FlashCustomer()
     {
-        // Get all Image components in customer and children
         Image[] allImages = customerSprite.GetComponentsInChildren<Image>();
         Color[] originalColors = new Color[allImages.Length];
         
-        // Store original colors and flash red
         for (int i = 0; i < allImages.Length; i++)
         {
             originalColors[i] = allImages[i].color;
             allImages[i].color = damageFlashColor;
         }
         
-        // Shake
         float elapsed = 0f;
         while (elapsed < shakeDuration)
         {
-            // Random offset for shake
             float xOffset = Random.Range(-shakeIntensity, shakeIntensity);
             float yOffset = Random.Range(-shakeIntensity, shakeIntensity);
             customerSprite.transform.localPosition = originalCustomerPosition + new Vector3(xOffset, yOffset, 0);
@@ -212,7 +416,6 @@ public class QTECombatManager : MonoBehaviour
             yield return null;
         }
         
-        // Return to original position and colors
         customerSprite.transform.localPosition = originalCustomerPosition;
         for (int i = 0; i < allImages.Length; i++)
         {
@@ -226,11 +429,9 @@ public class QTECombatManager : MonoBehaviour
         overlayColor.a = 0.4f;
         screenFlashOverlay.color = overlayColor;
         
-        // Screen shake
         float elapsed = 0f;
         while (elapsed < shakeDuration)
         {
-            // Random offset for shake
             float xOffset = Random.Range(-shakeIntensity, shakeIntensity);
             float yOffset = Random.Range(-shakeIntensity, shakeIntensity);
             mainCanvas.transform.localPosition = originalCanvasPosition + new Vector3(xOffset, yOffset, 0);
@@ -239,17 +440,15 @@ public class QTECombatManager : MonoBehaviour
             yield return null;
         }
         
-        // Return to original position
         mainCanvas.transform.localPosition = originalCanvasPosition;
-        
         overlayColor.a = 0f;
         screenFlashOverlay.color = overlayColor;
     }
     
-    IEnumerator WaitAndStartNewQTE(float delay)
+    IEnumerator WaitAndStartNewWave(float delay)
     {
         yield return new WaitForSeconds(delay);
-        StartNewQTE();
+        StartNewWave();
     }
     
     void UpdateHealthDisplays()
