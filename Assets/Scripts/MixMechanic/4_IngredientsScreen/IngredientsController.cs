@@ -25,6 +25,10 @@ public class IngredientController : MonoBehaviour
     [Range(0f, 1f)]
     public float fillAlpha = 0.7f;
 
+      [Header("UI Panels")]
+      public GameObject CurrentScreen;
+      public GameObject NextScreen;
+
     private MixManager mixManager;
     private Image fillImage;
 
@@ -159,4 +163,11 @@ public class IngredientController : MonoBehaviour
                 return Color.white;
         }
     }
+
+    /* tbh, should probably be its own utility in the future */
+    public void NextPressed()
+        {
+            CurrentScreen.SetActive(false);
+            NextScreen.SetActive(true);
+        }
 }

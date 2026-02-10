@@ -19,7 +19,7 @@
       "name": "Moon Shard",
       "description": "Calming, mildly dissociative",
       "type": "topping",
-      "effect": { "x": 0.20, "y": -0.35 }
+      "effect": { "x": 0.00, "y": -0.5 }
     },
     {
       "id": "magic_mushroom",

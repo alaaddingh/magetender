@@ -61,22 +61,18 @@ public class MixManager : MonoBehaviour
             BaseAmounts[baseKey] = amount;
         }
         FillLevel += amount;
-        UpdateBaseQuantityDisplay(baseKey);
+        UpdateBaseDisplay(baseKey);
         OnDripAdded?.Invoke(baseKey, amount);
         OnStateChanged?.Invoke();
     }
 
-    // event fired when a drip is added: (baseKey, amount) for scoremanager.cs */
+    /* events fired when certain changes are made to mix manager */ 
     public Action<string, float> OnDripAdded;
-    // general event fired whenever MixManager state changes
     public Action OnStateChanged;
-    // event fired when the selected bottle changes
     public Action<string> OnBottleChanged;
-
-    /* event fired when an ingredient is added */
     public Action<string> OnIngredientAdded;
 
-    private void UpdateBaseQuantityDisplay(string baseKey)
+    private void UpdateBaseDisplay(string baseKey)
     {
         switch (baseKey.ToLower())
         {

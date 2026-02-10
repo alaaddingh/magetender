@@ -1,15 +1,15 @@
 /*
-This file determines the score of your mix based off current customer.
-It now listens for drips added in MixManager and nudges the current mood
-board 5% toward the weighted base-effect each time a drip is added.
+This file determines the score of your mix based off current customer, it interacts with mixmanager to fire events
+off when quantities update (glass choice, base drips, ingredients).
+
+Glass: correct = 30% closer to target
+Base Drips: Using interpolation, each drip nudges to base's X Y 50% 
+Ingredients choices: Also using interpolation, each ingredient nudges 35% the way there
 */
 
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
-// Use existing data types in Assets/Scripts/Data/IngredientData.cs:
-// IngredientsFile, IngredientData, IngredientEffect
 
 public class ScoreManager : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class ScoreManager : MonoBehaviour
     public float CurrMoodBoardX;
     public float CurrMoodBoardY;
 
-    [SerializeField] private TMP_Text ScoreDisplay; /* temporary until mood graph */
+    [SerializeField] private TMP_Text ScoreDisplay; /* text until mood graph */
 
     [Header("tuning knobs")]
     [SerializeField] private float glassScorePercent = 0.3f;
@@ -40,8 +40,7 @@ public class ScoreManager : MonoBehaviour
         if (json == null) return;
 
         MonstersFile file = JsonUtility.FromJson<MonstersFile>(json.text);
-        if (file != null && file.monsters != null && file.monsters.Count > 0)
-            CurrentMonster = file.monsters[0];  /* temporary */
+        CurrentMonster = file.monsters[0];  /* temporary */
     }
 
     private void LoadIngredients()
@@ -63,7 +62,7 @@ public class ScoreManager : MonoBehaviour
             mixManager.OnStateChanged += OnMixManagerChanged;
         }
 
-        /* init to monster start */
+        /* init to monster starting X Y vals */
         ResetToMonsterStart();
         RecalculateFullMood();
         UpdateScoreText();
