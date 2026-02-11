@@ -9,6 +9,11 @@ public class MixManager : MonoBehaviour
     public string SelectedBottle = "";
     public string SelectedBase = "";
 
+    [Header("Selected bottle appearance (set when picking glass, used on Base screen)")]
+    public Sprite SelectedBottleSprite;
+    public Color SelectedBottleColor = Color.white;
+    public Vector3 SelectedBottleScale = Vector3.one;
+
     [Header("Ingredients")]
     public List<string> SelectedIngredients = new List<string>();
 
@@ -37,6 +42,13 @@ public class MixManager : MonoBehaviour
         OnBottleChanged?.Invoke(bottleKey);
     }
 
+    public void SetBottleAppearance(Sprite sprite, Color color, Vector3 scale)
+    {
+        SelectedBottleSprite = sprite;
+        SelectedBottleColor = color;
+        SelectedBottleScale = scale;
+    }
+
     public void SetBase(string baseKey)
     {
         SelectedBase = baseKey;
@@ -61,22 +73,33 @@ public class MixManager : MonoBehaviour
             BaseAmounts[baseKey] = amount;
         }
         FillLevel += amount;
-        UpdateBaseQuantityDisplay(baseKey);
+        UpdateBaseDisplay(baseKey);
         OnDripAdded?.Invoke(baseKey, amount);
+        OnStateChanged?.Invoke();
+    }
+
+    /// <summary>Reduces fill by amount while keeping same color/ratios. Scales all BaseAmounts proportionally. Fires OnStateChanged so mood updates.</summary>
+    public void DrainFill(float amount)
+    {
+        if (FillLevel <= 0f) return;
+        amount = Mathf.Min(amount, FillLevel);
+        float factor = (FillLevel - amount) / FillLevel;
+        FillLevel -= amount;
+        foreach (var key in new List<string>(BaseAmounts.Keys))
+        {
+            BaseAmounts[key] *= factor;
+        }
+        SyncAllBaseQuantitiesFromDictionary();
         OnStateChanged?.Invoke();
     }
 
     // event fired when a drip is added: (baseKey, amount) for scoremanager.cs */
     public Action<string, float> OnDripAdded;
-    // general event fired whenever MixManager state changes
     public Action OnStateChanged;
-    // event fired when the selected bottle changes
     public Action<string> OnBottleChanged;
-
-    /* event fired when an ingredient is added */
     public Action<string> OnIngredientAdded;
 
-    private void UpdateBaseQuantityDisplay(string baseKey)
+    private void UpdateBaseDisplay(string baseKey)
     {
         switch (baseKey.ToLower())
         {
@@ -93,6 +116,14 @@ public class MixManager : MonoBehaviour
                 MoonShineAmount = BaseAmounts["moonshine"];
                 break;
         }
+    }
+
+    private void SyncAllBaseQuantitiesFromDictionary()
+    {
+        BloodAmount = BaseAmounts.TryGetValue("blood", out float b) ? b : 0f;
+        HolyWaterAmount = BaseAmounts.TryGetValue("holywater", out float h) ? h : 0f;
+        SpiritsAmount = BaseAmounts.TryGetValue("spirits", out float s) ? s : 0f;
+        MoonShineAmount = BaseAmounts.TryGetValue("moonshine", out float m) ? m : 0f;
     }
 
     public void ResetFillData()

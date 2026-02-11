@@ -7,7 +7,6 @@ purpose:
     simply copy over the existing BaseBottle (size + color)
     to ingredients screen 
     
-    TO-DO: Make a NextPressed() function to transition to final "Mix" screen
 */
 public class IngredientController : MonoBehaviour
 {
@@ -24,6 +23,10 @@ public class IngredientController : MonoBehaviour
     public float fillHeightMultiplier = 0.5f;
     [Range(0f, 1f)]
     public float fillAlpha = 0.7f;
+
+      [Header("UI Panels")]
+      public GameObject CurrentScreen;
+      public GameObject NextScreen;
 
     private MixManager mixManager;
     private Image fillImage;
@@ -159,4 +162,11 @@ public class IngredientController : MonoBehaviour
                 return Color.white;
         }
     }
+
+    /* tbh, should probably be its own utility in the future */
+    public void NextPressed()
+        {
+            CurrentScreen.SetActive(false);
+            NextScreen.SetActive(true);
+        }
 }

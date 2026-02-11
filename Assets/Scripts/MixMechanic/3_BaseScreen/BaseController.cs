@@ -32,6 +32,8 @@ public class BaseController : MonoBehaviour
     public GameObject nextButton;
     public GameObject CurrentScreen;
     public GameObject NextScreen;
+    [Tooltip("Panel to show when Back is pressed (e.g. Pick Glass screen).")]
+    public GameObject PreviousScreen;
 
     private bool isDragging = false;
     private Vector2 dragStartMousePos;
@@ -40,6 +42,8 @@ public class BaseController : MonoBehaviour
     private Image currentPouringBase = null;
     private Coroutine pouringCoroutine = null;
     private Canvas canvas;
+    private int skipInputFrames;
+    private bool allowInput; // set true after short delay when panel enables so Next button release doesn't block drag/pour
 
     [Header("Fill Settings")]
     public float fillAmountPerDrop = 0.01f;
@@ -47,8 +51,19 @@ public class BaseController : MonoBehaviour
     [Range(0f, 1f)]
     public float fillWidthMultiplier = 0.8f;
     [Range(0f, 1f)]
-    public float fillHeightMultiplier = 0.5f; [Range(0f, 1f)]
+    public float fillHeightMultiplier = 0.5f;
+    [Range(0f, 1f)]
     public float fillAlpha = 0.7f;
+
+    [Header("Base screen bottle position (per size so they align)")]
+    public Vector2 baseBottlePosSmall = new Vector2(0f, -120f);
+    public Vector2 baseBottlePosMedium = new Vector2(0f, -160f);
+    public Vector2 baseBottlePosLarge = new Vector2(0f, -200f);
+
+    [Header("Trash drain")]
+    [Tooltip("When the bottle is over the trash, fill drains at this rate per second.")]
+    public float drainRatePerSecond = 0.3f;
+    public RectTransform trashRect;
 
     private float currentFillLevel = 0f;
     private Dictionary<string, float> baseAmounts = new Dictionary<string, float>(); // base name -> amount (0.0 to 1.0)
@@ -65,6 +80,28 @@ public class BaseController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (BaseBottle != null)
+            canvas = BaseBottle.canvas;
+        isDragging = false;
+        currentPouringBase = null;
+        allowInput = false;
+        if (pouringCoroutine != null)
+        {
+            StopCoroutine(pouringCoroutine);
+            pouringCoroutine = null;
+        }
+        skipInputFrames = 2;
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+
+        Canvas c = canvas;
+        if (c != null)
+        {
+            c.sortingOrder = 100;
+            if (c.GetComponent<UnityEngine.UI.GraphicRaycaster>() != null)
+                c.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+        }
+
         ApplySelectedBottleToBaseBottle();
         ApplySavedBaseTint();
 
@@ -72,6 +109,20 @@ public class BaseController : MonoBehaviour
         if (mixManager != null)
             mixManager.ResetFillData();
         InitializeFillRectangle();
+
+        StartCoroutine(AllowInputAfterDelay(0.25f));
+    }
+
+    private IEnumerator AllowInputAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        allowInput = true;
+    }
+
+    private void OnDisable()
+    {
+        isDragging = false;
+        StopPouring();
     }
 
     private void InitializeFillRectangle()
@@ -112,7 +163,10 @@ public class BaseController : MonoBehaviour
     private void Update()
     {
         if (BaseBottle == null) return;
-        if (Input.GetMouseButtonDown(0))
+        if (skipInputFrames > 0)
+            skipInputFrames--;
+
+        if (Input.GetMouseButtonDown(0) && allowInput && skipInputFrames <= 0)
         {
             if (IsClickingOnBaseBottle())
             {
@@ -164,10 +218,10 @@ public class BaseController : MonoBehaviour
                     canvas.worldCamera,
                     out Vector2 startMousePos);
 
-                // Calculate delta and update position
+                // Calculate delta and update position (keep same Y for this bottle size)
                 float deltaX = currentMousePos.x - startMousePos.x;
                 float newX = dragStartBottlePos.x + deltaX;
-                BaseBottle.rectTransform.anchoredPosition = new Vector2(newX, -200f);
+                BaseBottle.rectTransform.anchoredPosition = new Vector2(newX, dragStartBottlePos.y);
             }
         }
 
@@ -176,26 +230,68 @@ public class BaseController : MonoBehaviour
         {
             isDragging = false;
         }
+
+        // Drain fill when bottle is over trash (same color/ratios; mood updates via OnStateChanged)
+        if (trashRect != null && mixManager != null && mixManager.FillLevel > 0f && RectOverlaps(BaseBottle.rectTransform, trashRect))
+        {
+            mixManager.DrainFill(drainRatePerSecond * Time.deltaTime);
+            UpdateFillVisual();
+            if (mixManager.FillLevel <= 0f && nextButton != null)
+                nextButton.SetActive(false);
+        }
+    }
+
+    private static bool RectOverlaps(RectTransform a, RectTransform b)
+    {
+        Vector3[] cornersA = new Vector3[4];
+        Vector3[] cornersB = new Vector3[4];
+        a.GetWorldCorners(cornersA);
+        b.GetWorldCorners(cornersB);
+        float minAx = Mathf.Min(cornersA[0].x, cornersA[2].x);
+        float maxAx = Mathf.Max(cornersA[0].x, cornersA[2].x);
+        float minAy = Mathf.Min(cornersA[0].y, cornersA[2].y);
+        float maxAy = Mathf.Max(cornersA[0].y, cornersA[2].y);
+        float minBx = Mathf.Min(cornersB[0].x, cornersB[2].x);
+        float maxBx = Mathf.Max(cornersB[0].x, cornersB[2].x);
+        float minBy = Mathf.Min(cornersB[0].y, cornersB[2].y);
+        float maxBy = Mathf.Max(cornersB[0].y, cornersB[2].y);
+        return maxAx > minBx && minAx < maxBx && maxAy > minBy && minAy < maxBy;
     }
 
     private void ApplySelectedBottleToBaseBottle()
     {
         if (mixManager == null || BaseBottle == null) return;
 
+        Vector2 pos;
         switch (mixManager.SelectedBottle)
         {
             case "small":
-                UIImgUtil.CopyAppearance(smallBottleUI, BaseBottle);
+                pos = baseBottlePosSmall;
                 break;
             case "medium":
-                UIImgUtil.CopyAppearance(mediumBottleUI, BaseBottle);
+                pos = baseBottlePosMedium;
                 break;
             case "large":
-                UIImgUtil.CopyAppearance(largeBottleUI, BaseBottle);
+                pos = baseBottlePosLarge;
                 break;
             default:
+                pos = BaseBottle.rectTransform.anchoredPosition;
                 break;
         }
+
+        if (mixManager.SelectedBottleSprite != null)
+        {
+            BaseBottle.sprite = mixManager.SelectedBottleSprite;
+            BaseBottle.color = mixManager.SelectedBottleColor;
+            BaseBottle.rectTransform.localScale = mixManager.SelectedBottleScale;
+        }
+        else
+        {
+            Image src = mixManager.SelectedBottle == "small" ? smallBottleUI : mixManager.SelectedBottle == "medium" ? mediumBottleUI : largeBottleUI;
+            if (src != null)
+                UIImgUtil.CopyAppearance(src, BaseBottle);
+        }
+        BaseBottle.rectTransform.anchoredPosition = pos;
     }
 
     private void SetBase(string baseKey, Color tint)
@@ -403,6 +499,14 @@ public class BaseController : MonoBehaviour
     {
         if (CurrentScreen != null) CurrentScreen.SetActive(false);
         if (NextScreen != null) NextScreen.SetActive(true);
+    }
+
+    public void BackPressed()
+    {
+        if (mixManager != null)
+            mixManager.ResetFillData();
+        if (CurrentScreen != null) CurrentScreen.SetActive(false);
+        if (PreviousScreen != null) PreviousScreen.SetActive(true);
     }
 
     private Image GetHoveredBase()
