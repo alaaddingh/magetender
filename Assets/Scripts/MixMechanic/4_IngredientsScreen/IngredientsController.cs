@@ -7,7 +7,6 @@ purpose:
     simply copy over the existing BaseBottle (size + color)
     to ingredients screen 
     
-    TO-DO: Make a NextPressed() function to transition to final "Mix" screen
 */
 public class IngredientController : MonoBehaviour
 {

@@ -40,14 +40,12 @@ public class ScoreManager : MonoBehaviour
         if (json == null) return;
 
         MonstersFile file = JsonUtility.FromJson<MonstersFile>(json.text);
-        CurrentMonster = file.monsters[0];  /* temporary */
+        CurrentMonster = file.monsters[0];  /* temporary. THIS WILL NEED TO BE RESET FOR EVERY MONSTER */
     }
 
     private void LoadIngredients()
     {
         TextAsset json = Resources.Load<TextAsset>("Data/Ingredients");
-        if (json == null) return;
-
         ingredientsFile = JsonUtility.FromJson<IngredientsFile>(json.text);
     }
 
