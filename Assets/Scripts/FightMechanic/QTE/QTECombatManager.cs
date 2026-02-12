@@ -4,387 +4,367 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 
+// QTE Bank Combat System
+// Two banks (defend/attack) with key sequences
+// Player switches between them with SPACE
+
 public class QTECombatManager : MonoBehaviour
 {
     [Header("UI References")]
     public Image customerSprite;
+    public Image backgroundImage;
     public Image screenFlashOverlay;
     public TextMeshProUGUI playerHealthText;
     public TextMeshProUGUI customerHealthText;
+    public TextMeshProUGUI playerHealthLabel;
+    public TextMeshProUGUI customerHealthLabel;
     public Canvas mainCanvas;
-    public GameObject promptPrefab; // Prefab containing: Background, TimerCircle, KeyText
-    public Transform promptContainer; // Parent object to hold all active prompts
-    
+    public RectTransform leftHand;
+    public RectTransform rightHand;
+
+    [Header("Prompt Bank References")]
+    public GameObject defendBankContainer;
+    public GameObject attackBankContainer;
+    public Outline defendBankGlow;
+    public Outline attackBankGlow;
+    public Image defendTimerBar;
+    public Image attackTimerBar;
+    public TextMeshProUGUI[] defendKeyTexts;
+    public TextMeshProUGUI[] attackKeyTexts;
+
     [Header("Combat Settings")]
-    public float qteTimeLimit = 1.5f;
     public int playerMaxHealth = 100;
     public int customerMaxHealth = 100;
     public int damagePerHit = 20;
-    
-    [Header("Prompt Settings")]
-    public int minPromptsPerWave = 1;
-    public int maxPromptsPerWave = 3;
-    public float promptSpacing = 200f; // Minimum distance between prompts
-    
+    public float bankTimeLimit = 5f;
+    public int sequenceLength = 5;
+
     [Header("Visual Settings")]
-    public Color damageFlashColor = Color.red;
-    public float flashDuration = 0.2f;
     public float shakeIntensity = 15f;
     public float shakeDuration = 0.3f;
-    
-    [Header("Spawn Area")]
-    public float minX = -350f;
-    public float maxX = 350f;
-    public float minY = -200f;
-    public float maxY = 200f;
-    
-    [Header("Prompt Colors")]
-    public Color defenseColor = new Color(1f, 0.3f, 0.3f, 0.8f);
-    public Color attackColor = new Color(0.3f, 0.6f, 1f, 0.8f);
-    
+    public Color activeGlowColor = new Color(1f, 1f, 0.5f, 0.6f);
+    public Color inactiveGlowColor = new Color(0.3f, 0.3f, 0.3f, 0.2f);
+
     // Private variables
-    private KeyCode[] defenseKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
-    private KeyCode[] attackKeys = { KeyCode.H, KeyCode.U, KeyCode.J, KeyCode.K };
-    
-    private List<PromptInstance> activePrompts = new List<PromptInstance>();
-    private List<KeyCode> usedKeys = new List<KeyCode>(); // Track keys already in use
-    
+    private KeyCode[] availableKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
     private int playerHealth;
     private int customerHealth;
-    
     private Color originalCustomerColor;
     private Vector3 originalCustomerPosition;
     private Vector3 originalCanvasPosition;
     private Coroutine currentCustomerFlash;
     private Coroutine currentScreenFlash;
-    
-    private class PromptInstance
-    {
-        public GameObject promptObject;
-        public KeyCode keyCode;
-        public bool isDefense;
-        public float timer;
-        public Image background;
-        public Image timerCircle;
-        public TextMeshProUGUI keyText;
-        public Vector2 position;
-    }
-    
+    private Vector2 leftHandOriginalPos;
+    private Vector2 rightHandOriginalPos;
+    private bool useLeftHand = true;
+
+    // Bank system variables
+    private List<KeyCode> defendSequence = new List<KeyCode>();
+    private List<KeyCode> attackSequence = new List<KeyCode>();
+    private int defendProgress = 0;
+    private int attackProgress = 0;
+    private float defendTimer;
+    private float attackTimer;
+    private bool defendBankActive = true;
+
     void Start()
     {
         playerHealth = playerMaxHealth;
         customerHealth = customerMaxHealth;
-        originalCustomerColor = customerSprite.color;
-        originalCustomerPosition = customerSprite.transform.localPosition;
+
+        if (customerSprite != null)
+        {
+            originalCustomerColor = customerSprite.color;
+            originalCustomerPosition = customerSprite.transform.localPosition;
+        }
+
         originalCanvasPosition = mainCanvas.transform.localPosition;
-        
-        // Make sure screen flash is invisible at start
-        Color overlayColor = screenFlashOverlay.color;
-        overlayColor.a = 0f;
-        screenFlashOverlay.color = overlayColor;
-        
+
+        if (leftHand != null)
+        {
+            leftHandOriginalPos = leftHand.anchoredPosition;
+        }
+        if (rightHand != null)
+        {
+            rightHandOriginalPos = rightHand.anchoredPosition;
+        }
+
+        if (screenFlashOverlay != null)
+        {
+            Color overlayColor = screenFlashOverlay.color;
+            overlayColor.a = 0f;
+            screenFlashOverlay.color = overlayColor;
+        }
+
         UpdateHealthDisplays();
-        StartNewWave();
+        GenerateNewSequence(true);
+        GenerateNewSequence(false);
+        UpdateBankVisuals();
     }
-    
+
     void Update()
     {
-        if (activePrompts.Count == 0) return;
-        
-        // Update all active prompts
-        for (int i = activePrompts.Count - 1; i >= 0; i--)
-        {
-            PromptInstance prompt = activePrompts[i];
-            prompt.timer -= Time.deltaTime;
-            
-            // Update visual timer
-            float progress = prompt.timer / qteTimeLimit;
-            prompt.timerCircle.fillAmount = progress;
-            
-            // Change color based on time
-            if (progress < 0.33f)
-                prompt.timerCircle.color = Color.red;
-            else if (progress < 0.66f)
-                prompt.timerCircle.color = new Color(1f, 0.6f, 0f);
-            else
-                prompt.timerCircle.color = Color.yellow;
-            
-            // Check if time ran out
-            if (prompt.timer <= 0f)
-            {
-                HandleTimeout(prompt);
-                RemovePrompt(i);
-                
-                // Check if wave is complete
-                if (activePrompts.Count == 0)
-                {
-                    StartCoroutine(WaitAndStartNewWave(0.5f));
-                }
-            }
-        }
-        
-        // Check for key presses
-        CheckKeyPresses();
-    }
-    
-    void CheckKeyPresses()
-    {
-        // Check all possible keys
-        foreach (KeyCode key in defenseKeys)
-        {
-            if (Input.GetKeyDown(key))
-            {
-                HandleKeyPress(key);
-                return;
-            }
-        }
-        
-        foreach (KeyCode key in attackKeys)
-        {
-            if (Input.GetKeyDown(key))
-            {
-                HandleKeyPress(key);
-                return;
-            }
-        }
-    }
-    
-    void HandleKeyPress(KeyCode pressedKey)
-    {
-        // Find matching prompt
-        for (int i = 0; i < activePrompts.Count; i++)
-        {
-            if (activePrompts[i].keyCode == pressedKey)
-            {
-                // Correct key!
-                HandleCorrectKey(activePrompts[i]);
-                RemovePrompt(i);
-                
-                // Check if wave is complete
-                if (activePrompts.Count == 0)
-                {
-                    StartCoroutine(WaitAndStartNewWave(0.5f));
-                }
-                return;
-            }
-        }
-        
-        // Wrong key pressed - check if it's a defense key
-        if (System.Array.IndexOf(defenseKeys, pressedKey) >= 0)
-        {
-            // Pressed a defense key that doesn't match any prompt - minor penalty?
-            Debug.Log("Wrong defense key pressed!");
-        }
-        else if (System.Array.IndexOf(attackKeys, pressedKey) >= 0)
-        {
-            // Pressed an attack key that doesn't match - no penalty
-            Debug.Log("Wrong attack key pressed - no penalty");
-        }
-    }
-    
-    void HandleCorrectKey(PromptInstance prompt)
-    {
-        if (prompt.isDefense)
-        {
-            Debug.Log("Defense successful! Blocked attack!");
-        }
-        else
-        {
-            CustomerTakesDamage();
-        }
-    }
-    
-    void HandleTimeout(PromptInstance prompt)
-    {
-        if (prompt.isDefense)
-        {
-            // Failed to defend - take damage
-            PlayerTakesDamage();
-        }
-        else
-        {
-            // Missed attack opportunity - no penalty
-            Debug.Log("Attack missed - no damage");
-        }
-    }
-    
-    void StartNewWave()
-    {
-        // Check if fight is over
         if (customerHealth <= 0 || playerHealth <= 0)
         {
-            EndFight();
             return;
         }
-        
-        // Clear used keys
-        usedKeys.Clear();
-        
-        // Determine number of prompts
-        int promptCount = Random.Range(minPromptsPerWave, maxPromptsPerWave + 1);
-        
-        // Create prompts
-        List<Vector2> spawnPositions = GenerateSpawnPositions(promptCount);
-        
-        for (int i = 0; i < promptCount; i++)
+
+        // Update timers for both banks
+        defendTimer -= Time.deltaTime;
+        attackTimer -= Time.deltaTime;
+
+        // Update timer bar visuals
+        if (defendTimerBar != null)
         {
-            CreatePrompt(spawnPositions[i]);
+            defendTimerBar.fillAmount = Mathf.Max(0, defendTimer / bankTimeLimit);
+        }
+        if (attackTimerBar != null)
+        {
+            attackTimerBar.fillAmount = Mathf.Max(0, attackTimer / bankTimeLimit);
+        }
+
+        // Check for timeouts
+        if (defendTimer <= 0f)
+        {
+            HandleDefendFail();
+        }
+        if (attackTimer <= 0f)
+        {
+            HandleAttackFail();
+        }
+
+        // Check for bank switch
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SwitchActiveBank();
+        }
+
+        // Check for key presses in active bank
+        foreach (KeyCode key in availableKeys)
+        {
+            if (Input.GetKeyDown(key))
+            {
+                HandleKeyPress(key);
+                break;
+            }
         }
     }
-    
-    List<Vector2> GenerateSpawnPositions(int count)
+
+    void HandleKeyPress(KeyCode pressedKey)
     {
-        List<Vector2> positions = new List<Vector2>();
-        int maxAttempts = 50;
-        
-        for (int i = 0; i < count; i++)
+        if (defendBankActive)
         {
-            Vector2 newPos = Vector2.zero;
-            bool validPosition = false;
-            
-            for (int attempt = 0; attempt < maxAttempts; attempt++)
+            // must press keys in order left to right
+            if (defendProgress < defendSequence.Count && pressedKey == defendSequence[defendProgress])
             {
-                newPos = new Vector2(
-                    Random.Range(minX, maxX),
-                    Random.Range(minY, maxY)
-                );
-                
-                // Check distance from existing positions
-                validPosition = true;
-                foreach (Vector2 existingPos in positions)
+                // Correct key
+                defendProgress++;
+                UpdateBankVisuals();
+
+                // Check if sequence complete
+                if (defendProgress >= defendSequence.Count)
                 {
-                    if (Vector2.Distance(newPos, existingPos) < promptSpacing)
-                    {
-                        validPosition = false;
-                        break;
-                    }
+                    HandleDefendSuccess();
                 }
-                
-                if (validPosition) break;
             }
-            
-            positions.Add(newPos);
-        }
-        
-        return positions;
-    }
-    
-    void CreatePrompt(Vector2 position)
-    {
-        // Instantiate prompt
-        GameObject promptObj = Instantiate(promptPrefab, promptContainer);
-        RectTransform rectTransform = promptObj.GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = position;
-        
-        // Get components
-        Image background = promptObj.GetComponent<Image>();
-        Image timerCircle = promptObj.transform.Find("TimerCircle").GetComponent<Image>();
-        TextMeshProUGUI keyText = promptObj.transform.Find("TimerCircle/KeyText").GetComponent<TextMeshProUGUI>();
-        
-        // Randomly choose defense or attack
-        bool isDefense = Random.value > 0.5f;
-        KeyCode[] keyPool = isDefense ? defenseKeys : attackKeys;
-        
-        // Pick a key that's not already in use
-        KeyCode selectedKey = GetUnusedKey(keyPool);
-        usedKeys.Add(selectedKey);
-        
-        // Set visuals
-        background.color = isDefense ? defenseColor : attackColor;
-        keyText.text = selectedKey.ToString();
-        timerCircle.fillAmount = 1f;
-        timerCircle.color = Color.yellow;
-        
-        // Create instance
-        PromptInstance instance = new PromptInstance
-        {
-            promptObject = promptObj,
-            keyCode = selectedKey,
-            isDefense = isDefense,
-            timer = qteTimeLimit,
-            background = background,
-            timerCircle = timerCircle,
-            keyText = keyText,
-            position = position
-        };
-        
-        activePrompts.Add(instance);
-    }
-    
-    KeyCode GetUnusedKey(KeyCode[] keyPool)
-    {
-        List<KeyCode> availableKeys = new List<KeyCode>();
-        
-        foreach (KeyCode key in keyPool)
-        {
-            if (!usedKeys.Contains(key))
+            else
             {
-                availableKeys.Add(key);
+                // Wrong key
+                HandleDefendFail();
             }
         }
-        
-        // If all keys are used, allow repeats
-        if (availableKeys.Count == 0)
+        else
         {
-            return keyPool[Random.Range(0, keyPool.Length)];
+            // Check attack bank
+            if (attackProgress < attackSequence.Count && pressedKey == attackSequence[attackProgress])
+            {
+                // Correct key
+                attackProgress++;
+                UpdateBankVisuals();
+
+                // Check if sequence complete
+                if (attackProgress >= attackSequence.Count)
+                {
+                    HandleAttackSuccess();
+                }
+            }
+            else
+            {
+                // Wrong key
+                HandleAttackFail();
+            }
         }
-        
-        return availableKeys[Random.Range(0, availableKeys.Count)];
     }
-    
-    void RemovePrompt(int index)
+
+    void SwitchActiveBank()
     {
-        Destroy(activePrompts[index].promptObject);
-        activePrompts.RemoveAt(index);
+        defendBankActive = !defendBankActive;
+        UpdateBankVisuals();
     }
-    
+
+    void HandleDefendSuccess()
+    {
+        Debug.Log("Defense successful! Blocked attack!");
+        GenerateNewSequence(true);
+        UpdateBankVisuals();
+    }
+
+    void HandleDefendFail()
+    {
+        Debug.Log("Defense failed!");
+        PlayerTakesDamage();
+        GenerateNewSequence(true);
+        UpdateBankVisuals();
+    }
+
+    void HandleAttackSuccess()
+    {
+        Debug.Log("Attack successful!");
+        CustomerTakesDamage();
+        GenerateNewSequence(false);
+        UpdateBankVisuals();
+    }
+
+    void HandleAttackFail()
+    {
+        Debug.Log("Attack failed - missed opportunity");
+        GenerateNewSequence(false);
+        UpdateBankVisuals();
+    }
+
+    void GenerateNewSequence(bool isDefend)
+    {
+        List<KeyCode> newSequence = new List<KeyCode>();
+
+        for (int i = 0; i < sequenceLength; i++)
+        {
+            KeyCode randomKey = availableKeys[Random.Range(0, availableKeys.Length)];
+            newSequence.Add(randomKey);
+        }
+
+        if (isDefend)
+        {
+            defendSequence = newSequence;
+            defendProgress = 0;
+            defendTimer = bankTimeLimit;
+        }
+        else
+        {
+            attackSequence = newSequence;
+            attackProgress = 0;
+            attackTimer = bankTimeLimit;
+        }
+    }
+
+    void UpdateBankVisuals()
+    {
+        // Update outline on active/inactive banks
+        if (defendBankGlow != null)
+        {
+            defendBankGlow.effectColor = defendBankActive ? activeGlowColor : inactiveGlowColor;
+        }
+        if (attackBankGlow != null)
+        {
+            attackBankGlow.effectColor = defendBankActive ? inactiveGlowColor : activeGlowColor;
+        }
+
+        // Update defend bank key displays
+        for (int i = 0; i < defendKeyTexts.Length && i < defendSequence.Count; i++)
+        {
+            if (defendKeyTexts[i] != null)
+            {
+                defendKeyTexts[i].text = defendSequence[i].ToString();
+
+                // Highlight completed keys
+                if (i < defendProgress)
+                {
+                    defendKeyTexts[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                }
+                else if (i == defendProgress)
+                {
+                    defendKeyTexts[i].color = Color.yellow;
+                }
+                else
+                {
+                    defendKeyTexts[i].color = Color.white;
+                }
+            }
+        }
+
+        // Update attack bank key displays
+        for (int i = 0; i < attackKeyTexts.Length && i < attackSequence.Count; i++)
+        {
+            if (attackKeyTexts[i] != null)
+            {
+                attackKeyTexts[i].text = attackSequence[i].ToString();
+
+                // Highlight completed keys
+                if (i < attackProgress)
+                {
+                    attackKeyTexts[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                }
+                else if (i == attackProgress)
+                {
+                    attackKeyTexts[i].color = Color.yellow;
+                }
+                else
+                {
+                    attackKeyTexts[i].color = Color.white;
+                }
+            }
+        }
+    }
+
     void CustomerTakesDamage()
     {
         customerHealth -= damagePerHit;
         customerHealth = Mathf.Max(0, customerHealth);
-        
+
         UpdateHealthDisplays();
         Debug.Log("Customer Hit! Health: " + customerHealth);
-        
-        // Stop previous flash if still running
-        if (currentCustomerFlash != null)
+
+        if (customerHealth <= 0)
         {
-            StopCoroutine(currentCustomerFlash);
+            EndFight(true);
+            return;
         }
-        
-        // Start new flash
-        currentCustomerFlash = StartCoroutine(FlashCustomer());
+
+        if (customerSprite != null)
+        {
+            if (currentCustomerFlash != null)
+            {
+                StopCoroutine(currentCustomerFlash);
+            }
+            currentCustomerFlash = StartCoroutine(FlashCustomer());
+        }
+
+        StartCoroutine(PunchAnimation());
     }
-    
+
     void PlayerTakesDamage()
     {
         playerHealth -= damagePerHit;
         playerHealth = Mathf.Max(0, playerHealth);
-        
+
         UpdateHealthDisplays();
         Debug.Log("Player Hit! Health: " + playerHealth);
-        
-        // Stop previous flash if still running
+
+        if (playerHealth <= 0)
+        {
+            EndFight(false);
+            return;
+        }
+
         if (currentScreenFlash != null)
         {
             StopCoroutine(currentScreenFlash);
         }
-        
-        // Start new flash
         currentScreenFlash = StartCoroutine(FlashScreen());
     }
-    
-    void EndFight()
+
+    void EndFight(bool playerWon)
     {
-        // Clear all prompts
-        foreach (var prompt in activePrompts)
-        {
-            Destroy(prompt.promptObject);
-        }
-        activePrompts.Clear();
-        
-        // Show result
-        if (customerHealth <= 0)
+        if (playerWon)
         {
             Debug.Log("VICTORY!");
         }
@@ -393,67 +373,126 @@ public class QTECombatManager : MonoBehaviour
             Debug.Log("DEFEATED!");
         }
     }
-    
+
     IEnumerator FlashCustomer()
     {
         Image[] allImages = customerSprite.GetComponentsInChildren<Image>();
         Color[] originalColors = new Color[allImages.Length];
-        
+
         for (int i = 0; i < allImages.Length; i++)
         {
             originalColors[i] = allImages[i].color;
-            allImages[i].color = damageFlashColor;
+            allImages[i].color = Color.red;
         }
-        
+
         float elapsed = 0f;
         while (elapsed < shakeDuration)
         {
             float xOffset = Random.Range(-shakeIntensity, shakeIntensity);
             float yOffset = Random.Range(-shakeIntensity, shakeIntensity);
             customerSprite.transform.localPosition = originalCustomerPosition + new Vector3(xOffset, yOffset, 0);
-            
+
             elapsed += Time.deltaTime;
             yield return null;
         }
-        
+
         customerSprite.transform.localPosition = originalCustomerPosition;
         for (int i = 0; i < allImages.Length; i++)
         {
             allImages[i].color = originalColors[i];
         }
     }
-    
+
     IEnumerator FlashScreen()
     {
-        Color overlayColor = screenFlashOverlay.color;
-        overlayColor.a = 0.4f;
-        screenFlashOverlay.color = overlayColor;
-        
+        if (screenFlashOverlay != null)
+        {
+            Color overlayColor = screenFlashOverlay.color;
+            overlayColor.a = 0.4f;
+            screenFlashOverlay.color = overlayColor;
+        }
+
         float elapsed = 0f;
         while (elapsed < shakeDuration)
         {
             float xOffset = Random.Range(-shakeIntensity, shakeIntensity);
             float yOffset = Random.Range(-shakeIntensity, shakeIntensity);
             mainCanvas.transform.localPosition = originalCanvasPosition + new Vector3(xOffset, yOffset, 0);
-            
+
             elapsed += Time.deltaTime;
             yield return null;
         }
-        
+
         mainCanvas.transform.localPosition = originalCanvasPosition;
-        overlayColor.a = 0f;
-        screenFlashOverlay.color = overlayColor;
+
+        if (screenFlashOverlay != null)
+        {
+            Color overlayColor = screenFlashOverlay.color;
+            overlayColor.a = 0f;
+            screenFlashOverlay.color = overlayColor;
+        }
     }
-    
-    IEnumerator WaitAndStartNewWave(float delay)
+
+    IEnumerator PunchAnimation()
     {
-        yield return new WaitForSeconds(delay);
-        StartNewWave();
+        // alternate hands for variety
+        RectTransform handToPunch = useLeftHand ? leftHand : rightHand;
+        Vector2 originalPos = useLeftHand ? leftHandOriginalPos : rightHandOriginalPos;
+        useLeftHand = !useLeftHand;
+
+        if (handToPunch == null || customerSprite == null)
+        {
+            yield break;
+        }
+
+        RectTransform customerRect = customerSprite.GetComponent<RectTransform>();
+        Vector3 handWorldPos = handToPunch.position;
+        Vector3 customerWorldPos = customerRect.position;
+        Vector2 direction = (customerWorldPos - handWorldPos).normalized;
+
+        float punchDistance = 300f;
+        Vector2 targetOffset = direction * punchDistance;
+        Vector2 targetPos = originalPos + targetOffset;
+
+        float punchDuration = 0.08f;
+        float elapsed = 0f;
+
+        while (elapsed < punchDuration)
+        {
+            float t = elapsed / punchDuration;
+            float easeT = 1f - Mathf.Pow(1f - t, 3f);
+            handToPunch.anchoredPosition = Vector2.Lerp(originalPos, targetPos, easeT);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        handToPunch.anchoredPosition = targetPos;
+        yield return new WaitForSeconds(0.02f);
+
+        float returnDuration = 0.15f;
+        elapsed = 0f;
+
+        while (elapsed < returnDuration)
+        {
+            float t = elapsed / returnDuration;
+            handToPunch.anchoredPosition = Vector2.Lerp(targetPos, originalPos, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        handToPunch.anchoredPosition = originalPos;
     }
-    
+
     void UpdateHealthDisplays()
     {
-        playerHealthText.text = playerHealth + " / " + playerMaxHealth;
-        customerHealthText.text = customerHealth + " / " + customerMaxHealth;
+        if (playerHealthText != null)
+        {
+            playerHealthText.text = playerHealth + " / " + playerMaxHealth;
+        }
+
+        if (customerHealthText != null)
+        {
+            customerHealthText.text = customerHealth + " / " + customerMaxHealth;
+        }
     }
 }
