@@ -72,6 +72,11 @@ public class ScoreManager : MonoBehaviour
         CurrMoodBoardY = CurrentMonster.starting_score.y;
     }
 
+    public MonsterData GetCurrentMonster()
+    {
+        return CurrentMonster;
+    }
+
     private void OnMixManagerChanged()
     {
         RecalculateFullMood();
