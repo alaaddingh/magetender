@@ -9,6 +9,7 @@ public class MoodGraphUI : MonoBehaviour
     [Header("ui refs")]
     [SerializeField] private RectTransform graphRect;
     [SerializeField] private RectTransform markerRect;
+    [SerializeField] private RectTransform goalMarkerRect;
     [SerializeField] private TMP_Text nameText;
 
     [Header("graph range")]
@@ -45,16 +46,26 @@ public class MoodGraphUI : MonoBehaviour
         if (scoreManager == null) return;
 
         MonsterData monster = scoreManager.GetCurrentMonster();
-        if (monster == null || monster.starting_score == null) {
-            SetMarkerVisible(false);
+        if (monster == null || monster.starting_score == null || monster.goal_score == null)
+        {
+            SetMarkerVisible(markerRect, false);
+            SetMarkerVisible(goalMarkerRect, false);
             if (nameText != null) nameText.text = "";
             return;
         }
 
-        if (force || monster.id != lastMonsterId)
+        bool monsterChanged = force || monster.id != lastMonsterId;
+
+        if (monsterChanged)
         {
             lastMonsterId = monster.id;
-            if (nameText != null) nameText.text = monster.name;
+
+            if (nameText != null)
+                nameText.text = monster.name;
+
+            Vector2 goal = new Vector2(monster.goal_score.x, monster.goal_score.y);
+            SetMarkerVisible(goalMarkerRect, true);
+            UpdateMarkerPosition(goalMarkerRect, goal);
         }
 
         float x = scoreManager.CurrMoodBoardX;
@@ -71,28 +82,69 @@ public class MoodGraphUI : MonoBehaviour
         lastX = x;
         lastY = y;
 
-        SetMarkerVisible(true);
-        UpdateMarkerPosition(new Vector2(x, y));
+        SetMarkerVisible(markerRect, true);
+        UpdateMarkerPosition(markerRect, new Vector2(x, y));
     }
 
-    private void UpdateMarkerPosition(Vector2 mood)
+    private void UpdateMarkerPosition(RectTransform rect, Vector2 mood)
     {
-        if (graphRect == null || markerRect == null) return;
+        if (graphRect == null || rect == null) return;
 
         float nx = Mathf.InverseLerp(minX, maxX, mood.x);
         float ny = Mathf.InverseLerp(minY, maxY, mood.y);
 
-        Rect r = graphRect.rect;
-        float localX = (nx - 0.5f) * r.width;
-        float localY = (ny - 0.5f) * r.height;
+        nx = Mathf.Clamp01(nx);
+        ny = Mathf.Clamp01(ny);
 
-        //marker should be a child of graphRect
-        markerRect.anchoredPosition = new Vector2(localX, localY);
+        Rect r = graphRect.rect;
+
+        float localX = Mathf.Lerp(r.xMin, r.xMax, nx);
+        float localY = Mathf.Lerp(r.yMin, r.yMax, ny);
+
+        Vector3 worldPos = graphRect.TransformPoint(new Vector3(localX, localY, 0f));
+
+        RectTransform parentRect = rect.parent as RectTransform;
+        if (parentRect == null)
+        {
+            rect.position = worldPos;
+            return;
+        }
+
+        Vector2 anchored;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parentRect,
+            RectTransformUtility.WorldToScreenPoint(null, worldPos),
+            null,
+            out anchored
+        );
+
+        rect.anchoredPosition = anchored;
+
+        ClampMarkerInsideGraph(rect);
+        Debug.Log($"y={mood.y} -> ny={ny} (minY={minY}, maxY={maxY}) plotH={graphRect.rect.height}");
+
     }
 
-    private void SetMarkerVisible(bool visible)
+    // Helper function ensures marker stays in bounds
+    private void ClampMarkerInsideGraph(RectTransform rect)
     {
-        if (markerRect != null)
-            markerRect.gameObject.SetActive(visible);
+        if (graphRect == null || rect == null) return;
+
+        Rect gr = graphRect.rect;
+        Vector2 p = rect.anchoredPosition;
+
+        float halfW = rect.rect.width * 0.5f;
+        float halfH = rect.rect.height * 0.5f;
+
+        p.x = Mathf.Clamp(p.x, gr.xMin + halfW, gr.xMax - halfW);
+        p.y = Mathf.Clamp(p.y, gr.yMin + halfH, gr.yMax - halfH);
+
+        rect.anchoredPosition = p;
+    }
+
+    private void SetMarkerVisible(RectTransform rect, bool visible)
+    {
+        if (rect != null)
+            rect.gameObject.SetActive(visible);
     }
 }
