@@ -138,6 +138,23 @@ public class MixManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
+    /* call on scene load so next day starts with a clean mix and mood */
+    public void ResetForNewDay()
+    {
+        SelectedBottle = "";
+        SelectedBase = "";
+        SelectedIngredients.Clear();
+        SelectedBottleSprite = null;
+        SelectedBottleColor = Color.white;
+        SelectedBottleScale = Vector3.one;
+        ResetFillData();
+    }
+
+    private void Awake()
+    {
+        ResetForNewDay();
+    }
+
     public Color GetBaseColor(string baseKey)
     {
         switch (baseKey.ToLower())

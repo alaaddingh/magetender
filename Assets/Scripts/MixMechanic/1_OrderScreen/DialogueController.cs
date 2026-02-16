@@ -28,10 +28,13 @@ public class DialogueController : MonoBehaviour
     public GameObject orderScreen;
     public GameObject selectingGlassScreen;
 
+    [Header("Global coin canvas - hide when leaving order screen")]
+    [SerializeField] private GameObject coinCanvas;
+
     private MonsterData currentMonster;
     private int dialogueIndex = 0;
 
-    void Start()
+    private void Start()
     {
         brewButtonObject.SetActive(false);
 
@@ -93,6 +96,8 @@ public class DialogueController : MonoBehaviour
 
     public void BrewingPressed()
     {
+        if (coinCanvas != null)
+            coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
         selectingGlassScreen.SetActive(true);
     }

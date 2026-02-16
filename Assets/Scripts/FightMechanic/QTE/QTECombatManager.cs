@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,6 +23,10 @@ public class QTECombatManager : MonoBehaviour
     public RectTransform leftHand;
     public RectTransform rightHand;
 
+    [Header("Back to bar (show when fight ends)")]
+    public GameObject backToBarButton;
+    public string backToBarSceneName = "MixScene";
+
     [Header("Prompt Bank References")]
     public GameObject defendBankContainer;
     public GameObject attackBankContainer;
@@ -38,6 +43,7 @@ public class QTECombatManager : MonoBehaviour
     public int damagePerHit = 20;
     public float bankTimeLimit = 5f;
     public int sequenceLength = 5;
+    [SerializeField] private int coinsForWin = 10;
 
     [Header("Visual Settings")]
     public float shakeIntensity = 15f;
@@ -367,11 +373,24 @@ public class QTECombatManager : MonoBehaviour
         if (playerWon)
         {
             Debug.Log("VICTORY!");
+            if (GameManager.Instance != null && coinsForWin > 0)
+                GameManager.Instance.AddCoins(coinsForWin);
         }
         else
         {
             Debug.Log("DEFEATED!");
         }
+        if (backToBarButton != null)
+            backToBarButton.SetActive(true);
+    }
+
+    /* call from Back to bar button OnClick */
+    public void OnBackToBarPressed()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.IncrementDay();
+        if (!string.IsNullOrEmpty(backToBarSceneName))
+            SceneManager.LoadScene(backToBarSceneName);
     }
 
     IEnumerator FlashCustomer()

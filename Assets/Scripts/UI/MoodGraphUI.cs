@@ -36,6 +36,22 @@ public class MoodGraphUI : MonoBehaviour
         RefreshAll(true);
     }
 
+    private void OnEnable()
+    {
+        lastX = float.NaN;
+        lastY = float.NaN;
+        RefreshAll(true);
+    }
+
+    /* call when showing order screen after new day so graph shows starting mood */
+    public void ForceRefresh()
+    {
+        lastX = float.NaN;
+        lastY = float.NaN;
+        lastMonsterId = "";
+        RefreshAll(true);
+    }
+
     private void Update()
     {
         RefreshAll(false);
@@ -68,8 +84,18 @@ public class MoodGraphUI : MonoBehaviour
             UpdateMarkerPosition(goalMarkerRect, goal);
         }
 
-        float x = scoreManager.CurrMoodBoardX;
-        float y = scoreManager.CurrMoodBoardY;
+        float x;
+        float y;
+        if (force)
+        {
+            x = monster.starting_score.x;
+            y = monster.starting_score.y;
+        }
+        else
+        {
+            x = scoreManager.CurrMoodBoardX;
+            y = scoreManager.CurrMoodBoardY;
+        }
 
         bool moodChanged =
             force ||
@@ -121,8 +147,6 @@ public class MoodGraphUI : MonoBehaviour
         rect.anchoredPosition = anchored;
 
         ClampMarkerInsideGraph(rect);
-        Debug.Log($"y={mood.y} -> ny={ny} (minY={minY}, maxY={maxY}) plotH={graphRect.rect.height}");
-
     }
 
     // Helper function ensures marker stays in bounds

@@ -49,21 +49,24 @@ public class ScoreManager : MonoBehaviour
         ingredientsFile = JsonUtility.FromJson<IngredientsFile>(json.text);
     }
 
-    void Start()
+    /* run before any Start() so score display and mood graph see correct starting mood on first frame and every new day (scene load) */
+    private void Awake()
     {
         LoadMonster();
         LoadIngredients();
-
-        mixManager = MixManagerObject.GetComponent<MixManager>();
-        if (mixManager != null)
-        {
-            mixManager.OnStateChanged += OnMixManagerChanged;
-        }
-
-        /* init to monster starting X Y vals */
+        if (MixManagerObject != null)
+            mixManager = MixManagerObject.GetComponent<MixManager>();
+        if (CurrentMonster == null || CurrentMonster.starting_score == null) return;
         ResetToMonsterStart();
-        RecalculateFullMood();
+        if (mixManager != null)
+            RecalculateFullMood();
         UpdateScoreText();
+    }
+
+    private void Start()
+    {
+        if (mixManager != null)
+            mixManager.OnStateChanged += OnMixManagerChanged;
     }
 
     private void ResetToMonsterStart()
@@ -87,6 +90,19 @@ public class ScoreManager : MonoBehaviour
     {
         if (ScoreDisplay != null)
             ScoreDisplay.text = $"Mood: ({CurrMoodBoardX:F2}, {CurrMoodBoardY:F2})";
+    }
+
+    /* call when showing score display (e.g. after new day); shows monster starting mood only */
+    public void RefreshScoreDisplay()
+    {
+        LoadMonster();
+        if (CurrentMonster == null || CurrentMonster.starting_score == null) return;
+        if (mixManager == null && MixManagerObject != null)
+            mixManager = MixManagerObject.GetComponent<MixManager>();
+        if (mixManager != null)
+            mixManager.ResetForNewDay();
+        ResetToMonsterStart();
+        UpdateScoreText();
     }
 
     private void RecalculateFullMood()
@@ -187,8 +203,9 @@ public class ScoreManager : MonoBehaviour
     /* similar to base choice, nudges towards ingredients.json but by 35% */
     private void EvalToppingsChoice(ref float x, ref float y)
     {
-        if (mixManager.SelectedIngredients == null || mixManager.SelectedIngredients.Count == 0) {
-         return;
+        if (mixManager.SelectedIngredients == null || mixManager.SelectedIngredients.Count == 0)
+        {
+            return;
         }
 
         foreach (var ingredientKey in mixManager.SelectedIngredients)
