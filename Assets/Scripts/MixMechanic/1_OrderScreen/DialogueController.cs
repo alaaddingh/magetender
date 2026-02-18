@@ -12,7 +12,6 @@ using UnityEngine;
 public class DialogueController : MonoBehaviour
 {
     [Header("UI variables")]
-    [SerializeField] private TMP_Text monsterName;
     [SerializeField] private TMP_Text monsterSpeech;
 
     [Header("Buttons")]
@@ -67,7 +66,6 @@ public class DialogueController : MonoBehaviour
     {
         List<string> activeDialogue = GetActiveDialogue();
 
-        monsterName.text = currentMonster.name;
         dialogueIndex = Mathf.Clamp(dialogueIndex, 0, activeDialogue.Count - 1);
         monsterSpeech.text = activeDialogue[dialogueIndex];
     }

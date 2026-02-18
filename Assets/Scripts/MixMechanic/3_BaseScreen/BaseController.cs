@@ -258,41 +258,34 @@ public class BaseController : MonoBehaviour
         return maxAx > minBx && minAx < maxBx && maxAy > minBy && minAy < maxBy;
     }
 
-    private void ApplySelectedBottleToBaseBottle()
+ private void ApplySelectedBottleToBaseBottle()
+{
+
+    /* update: only scale is copied over from small/medium/large glass (since separate sprites) */
+    Vector2 pos = BaseBottle.rectTransform.anchoredPosition;
+    Vector3 scale = BaseBottle.rectTransform.localScale;
+
+    switch (mixManager.SelectedBottle)
     {
-        if (mixManager == null || BaseBottle == null) return;
+        case "small":
+            pos = baseBottlePosSmall;
+            scale = smallBottleUI.rectTransform.localScale;
+            break;
 
-        Vector2 pos;
-        switch (mixManager.SelectedBottle)
-        {
-            case "small":
-                pos = baseBottlePosSmall;
-                break;
-            case "medium":
-                pos = baseBottlePosMedium;
-                break;
-            case "large":
-                pos = baseBottlePosLarge;
-                break;
-            default:
-                pos = BaseBottle.rectTransform.anchoredPosition;
-                break;
-        }
+        case "medium":
+            pos = baseBottlePosMedium;
+            scale =  mediumBottleUI.rectTransform.localScale;
+            break;
 
-        if (mixManager.SelectedBottleSprite != null)
-        {
-            BaseBottle.sprite = mixManager.SelectedBottleSprite;
-            BaseBottle.color = mixManager.SelectedBottleColor;
-            BaseBottle.rectTransform.localScale = mixManager.SelectedBottleScale;
-        }
-        else
-        {
-            Image src = mixManager.SelectedBottle == "small" ? smallBottleUI : mixManager.SelectedBottle == "medium" ? mediumBottleUI : largeBottleUI;
-            if (src != null)
-                UIImgUtil.CopyAppearance(src, BaseBottle);
-        }
-        BaseBottle.rectTransform.anchoredPosition = pos;
+        case "large":
+            pos = baseBottlePosLarge;
+            scale = largeBottleUI.rectTransform.localScale;
+            break;
     }
+
+    BaseBottle.rectTransform.anchoredPosition = pos;
+    BaseBottle.rectTransform.localScale = scale;
+}
 
     private void SetBase(string baseKey, Color tint)
     {
