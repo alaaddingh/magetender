@@ -2040,7 +2040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MixManagerObject: {fileID: 9305686}
-  currentMonsterManager: {fileID: 0}
+  currentMonsterManager: {fileID: 1245897901}
   CurrMoodBoardX: 0
   CurrMoodBoardY: 0
   ScoreDisplay: {fileID: 2073579210}
@@ -5898,7 +5898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterSpeech: {fileID: 1601185387}
   brewButtonObject: {fileID: 42081995}
-  currentMonsterManager: {fileID: 0}
+  currentMonsterManager: {fileID: 1245897901}
   monsterStateManager: {fileID: 1091468760}
   orderScreen: {fileID: 118565731}
   selectingGlassScreen: {fileID: 832843223}
