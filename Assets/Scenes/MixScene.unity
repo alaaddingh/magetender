@@ -222,11 +222,11 @@ Transform:
   m_GameObject: {fileID: 9305686}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -360.4095, y: -3.0171356, z: 70.68441}
+  m_LocalPosition: {x: 318.3343, y: 71.16022, z: 70.68441}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 670419798}
+  m_Father: {fileID: 1780717590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9305688
 MonoBehaviour:
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 142902012}
   - component: {fileID: 142902011}
   m_Layer: 5
-  m_Name: MonsterSprite
+  m_Name: ServeMonsterSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -782,7 +782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 84541613de47c3e4ea5f614a92b8e656, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -819,7 +819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &155716012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,11 +2021,11 @@ Transform:
   m_GameObject: {fileID: 440574827}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -769.8, y: -131.1, z: 0}
+  m_LocalPosition: {x: -91.0562, y: -56.92265, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 670419798}
+  m_Father: {fileID: 1780717590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &440574829
 MonoBehaviour:
@@ -2039,8 +2039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afbdce458f4a214296586c6b00df725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monstersJsonResourcePath: Data/Monsters
   MixManagerObject: {fileID: 9305686}
+  currentMonsterManager: {fileID: 0}
   CurrMoodBoardX: 0
   CurrMoodBoardY: 0
   ScoreDisplay: {fileID: 2073579210}
@@ -2824,11 +2824,11 @@ Transform:
   m_GameObject: {fileID: 604233833}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -634.407, y: -43.06961, z: 0}
+  m_LocalPosition: {x: 44.336807, y: 31.107746, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 670419798}
+  m_Father: {fileID: 1780717590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &608719142
 GameObject:
@@ -3393,7 +3393,7 @@ GameObject:
   - component: {fileID: 670419798}
   - component: {fileID: 670419799}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: DayManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3407,16 +3407,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670419797}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 769.8, y: 131.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 604233835}
-  - {fileID: 964721726}
-  - {fileID: 9305687}
-  - {fileID: 440574828}
-  - {fileID: 1091468759}
+  - {fileID: 1245897900}
+  - {fileID: 2117493560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &670419799
@@ -4742,11 +4739,11 @@ Transform:
   m_GameObject: {fileID: 964721724}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -76.9599, y: 32.600006, z: 0}
+  m_LocalPosition: {x: 601.7839, y: 106.77736, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 670419798}
+  m_Father: {fileID: 1780717590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &992086411
 GameObject:
@@ -5211,12 +5208,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091468758}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 678.7438, y: 74.17735, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 670419798}
+  m_Father: {fileID: 1780717590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1091468760
 MonoBehaviour:
@@ -5901,7 +5898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterSpeech: {fileID: 1601185387}
   brewButtonObject: {fileID: 42081995}
-  monstersJsonResourcePath: Data/Monsters
+  currentMonsterManager: {fileID: 0}
   monsterStateManager: {fileID: 1091468760}
   orderScreen: {fileID: 118565731}
   selectingGlassScreen: {fileID: 832843223}
@@ -5918,7 +5915,7 @@ GameObject:
   - component: {fileID: 1188369544}
   - component: {fileID: 1188369543}
   m_Layer: 5
-  m_Name: MonsterSprite
+  m_Name: OrderMonsterSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5963,7 +5960,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 84541613de47c3e4ea5f614a92b8e656, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6093,6 +6090,54 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1245897899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245897900}
+  - component: {fileID: 1245897901}
+  m_Layer: 0
+  m_Name: MonsterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1245897900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245897899}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 670419798}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1245897901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245897899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfc093d84a50b64c89f91d9e391f2e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
+  monstersJsonResourcePath: Data/Monsters
+  levelsJsonResourcePath: Data/Levels
+  dialogueJsonResourcePath: Data/Dialogue
 --- !u!1 &1267240447
 GameObject:
   m_ObjectHideFlags: 0
@@ -7081,7 +7126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterSpeech: {fileID: 660517148}
   brewButtonObject: {fileID: 42081995}
-  monstersJsonResourcePath: Data/Monsters
+  currentMonsterManager: {fileID: 0}
   monsterStateManager: {fileID: 1091468760}
   orderScreen: {fileID: 118565731}
   selectingGlassScreen: {fileID: 832843223}
@@ -7699,7 +7744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreManager: {fileID: 440574829}
   MonsterStateManager: {fileID: 1091468760}
-  monstersJsonResourcePath: Data/Monsters
+  currentMonsterManager: {fileID: 0}
   coinsDisplay: {fileID: 2092445570}
   coinCanvas: {fileID: 2128562753}
   nextDaySceneName: MixScene
@@ -7919,6 +7964,42 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1780717589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1780717590}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1780717590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780717589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 91.0562, y: 56.92265, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 604233835}
+  - {fileID: 964721726}
+  - {fileID: 9305687}
+  - {fileID: 440574828}
+  - {fileID: 1091468759}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1818636505
 GameObject:
   m_ObjectHideFlags: 0
@@ -10072,7 +10153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 390, y: 391}
+  m_AnchoredPosition: {x: 235, y: 134}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2092445570
@@ -10385,6 +10466,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110272763}
   m_CullTransparentMesh: 1
+--- !u!1 &2117493559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2117493560}
+  - component: {fileID: 2117493561}
+  m_Layer: 0
+  m_Name: SpriteManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2117493560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117493559}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -678.7438, y: -74.17735, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 670419798}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2117493561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117493559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 971e13ae60f117c4d824cfd19b0221de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMonsterManager: {fileID: 1245897901}
+  monsterStateManager: {fileID: 1091468760}
+  orderSprite: {fileID: 1188369543}
+  serveSprite: {fileID: 142902011}
+  orderSpriteObjectName: OrderMonsterSprite
+  serveSpriteObjectName: ServeMonsterSprite
 --- !u!1 &2127072629
 GameObject:
   m_ObjectHideFlags: 0
@@ -10635,4 +10766,5 @@ SceneRoots:
   - {fileID: 115739955}
   - {fileID: 526496294}
   - {fileID: 2128562757}
+  - {fileID: 1780717590}
   - {fileID: 670419798}

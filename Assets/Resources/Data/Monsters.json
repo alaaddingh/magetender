@@ -1,47 +1,31 @@
 {
   "monsters": [
     {
-      "id": "count_drunkula",
-      "name": "Count Drunkula",
-      "description": "An aristocratic vampire with a dramatic flair.",
+      "id": "unicorn",
+      "name": "Anita Carberneigh",
       "glassPreference": "medium",
-      "starting_dialogue": [
-        "Hi",
-        "Hello",
-        "I am Count Drunkula. But you probably know this already..",
-        "You... haven't heard of me?",
-        "...",
-        "You really need to get out more.. I'm the talk of all of Transylvania!",
-        "You've never BEEN?? Don't you MageTenders get vacation days??",
-        "Whatever. Count Drunkula is the name. And in case it isn't obvious..",
-        "I love a moderate-sized brew!",
-        "Anyways, barkeep, give me a brew... that would make the man on the moon's blood curdle!"
-      ],
-      "satisfied_dialogue": [
-        "Ah yes... this hits the spot! Blood-curdling taste... just the way I like it!",
-        "I've always walked pass this tavern, never bothered to come in..",
-        "Count Drunkula will be returning in the future!",
-        "What's that? Why do I refer to myself in third-person?",
-        "...",
-        "Goodbye."
 
-      ],
-      "angry_dialogue": [
-        "*Gags*",
-        "Wha- what is this?? I asked for a brew that would make the man on the moon's blood curdle!",
-        "Are you making a mockery of me? Have you tried to POISON COUNT DRUNKULA??"
-      ],
+      "sprites": {
+        "neutral": "Art/Monsters/Unicorn/unicorn_neutral",
+        "happy": "Art/Monsters/Unicorn/unicorn_happy",
+        "angry": "Art/Monsters/Unicorn/unicorn_angry"
+      },
+  
+      "dialogueId": "dlg_unicorn"
+    },
+     {
+      "id": "slime",
+      "name": "Slimuel Sluggington",
+      "glassPreference": "large",
 
-      "neutral_dialogue": [
-        "Hmm...",
-        "Not bad... not quite to my liking either.",
-        "Perhaps I underestimated you BarTender... but not by much.",
-        "Goodbye!"
-      ],
-      "starting_score": { "x": 0.5, "y": 0.5 },
-      "goal_score": { "x": -0.5, "y": -0.3 },
-      "anger_tolerance": 30,
-      "satisfied_tolerance": 20
+      "sprites": {
+        "neutral": "Art/Monsters/Slime/slime_neutral",
+        "happy": "Art/Monsters/Slime/slime_happy",
+        "angry": "Art/Monsters/Slime/slime_angry"
+      },
+
+    
+      "dialogueId": "dlg_slime"
     }
   ]
 }

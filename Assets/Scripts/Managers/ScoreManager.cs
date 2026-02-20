@@ -13,11 +13,10 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private string monstersJsonResourcePath = "Data/Monsters";
     public GameObject MixManagerObject;
+    [SerializeField] private CurrentMonster currentMonsterManager;
 
     private MixManager mixManager;
-    private MonsterData CurrentMonster;
     private IngredientsFile ingredientsFile;
 
     [Header("current score given as X & Y coords")]
@@ -34,15 +33,6 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private float clampMin = -1f;
     [SerializeField] private float clampMax = 1f;
 
-    private void LoadMonster()
-    {
-        TextAsset json = Resources.Load<TextAsset>(monstersJsonResourcePath);
-        if (json == null) return;
-
-        MonstersFile file = JsonUtility.FromJson<MonstersFile>(json.text);
-        CurrentMonster = file.monsters[0];  /* temporary. THIS WILL NEED TO BE RESET FOR EVERY MONSTER */
-    }
-
     private void LoadIngredients()
     {
         TextAsset json = Resources.Load<TextAsset>("Data/Ingredients");
@@ -52,11 +42,13 @@ public class ScoreManager : MonoBehaviour
     /* run before any Start() so score display and mood graph see correct starting mood on first frame and every new day (scene load) */
     private void Awake()
     {
-        LoadMonster();
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
         LoadIngredients();
         if (MixManagerObject != null)
             mixManager = MixManagerObject.GetComponent<MixManager>();
-        if (CurrentMonster == null || CurrentMonster.starting_score == null) return;
+        ScorePair starting = GetCurrentStartingScore();
+        if (starting == null) return;
         ResetToMonsterStart();
         if (mixManager != null)
             RecalculateFullMood();
@@ -71,13 +63,25 @@ public class ScoreManager : MonoBehaviour
 
     private void ResetToMonsterStart()
     {
-        CurrMoodBoardX = CurrentMonster.starting_score.x;
-        CurrMoodBoardY = CurrentMonster.starting_score.y;
+        ScorePair starting = GetCurrentStartingScore();
+        if (starting == null) return;
+        CurrMoodBoardX = starting.x;
+        CurrMoodBoardY = starting.y;
     }
 
     public MonsterData GetCurrentMonster()
     {
-        return CurrentMonster;
+        return currentMonsterManager != null ? currentMonsterManager.Data : null;
+    }
+
+    public ScorePair GetCurrentStartingScore()
+    {
+        return currentMonsterManager != null ? currentMonsterManager.GetStartingScore() : null;
+    }
+
+    public ScorePair GetCurrentGoalScore()
+    {
+        return currentMonsterManager != null ? currentMonsterManager.GetGoalScore() : null;
     }
 
     private void OnMixManagerChanged()
@@ -95,8 +99,8 @@ public class ScoreManager : MonoBehaviour
     /* call when showing score display (e.g. after new day); shows monster starting mood only */
     public void RefreshScoreDisplay()
     {
-        LoadMonster();
-        if (CurrentMonster == null || CurrentMonster.starting_score == null) return;
+        ScorePair starting = GetCurrentStartingScore();
+        if (starting == null) return;
         if (mixManager == null && MixManagerObject != null)
             mixManager = MixManagerObject.GetComponent<MixManager>();
         if (mixManager != null)
@@ -107,11 +111,16 @@ public class ScoreManager : MonoBehaviour
 
     private void RecalculateFullMood()
     {
-        /* start from monster's starting */
-        float x = CurrentMonster.starting_score.x;
-        float y = CurrentMonster.starting_score.y;
+        MonsterData currentMonster = GetCurrentMonster();
+        ScorePair starting = GetCurrentStartingScore();
+        ScorePair goal = GetCurrentGoalScore();
+        if (currentMonster == null || starting == null || goal == null) return;
 
-        EvalGlassChoice(ref x, ref y);
+        /* start from monster's starting */
+        float x = starting.x;
+        float y = starting.y;
+
+        EvalGlassChoice(currentMonster, goal, ref x, ref y);
 
         EvalBaseChoice(ref x, ref y);
 
@@ -127,14 +136,14 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private void EvalGlassChoice(ref float x, ref float y)
+    private void EvalGlassChoice(MonsterData currentMonster, ScorePair goal, ref float x, ref float y)
     {
-        if (string.IsNullOrEmpty(mixManager.SelectedBottle)) return;
+        if (mixManager == null || currentMonster == null || goal == null || string.IsNullOrEmpty(mixManager.SelectedBottle)) return;
 
-        if (mixManager.SelectedBottle == CurrentMonster.glassPreference)
+        if (mixManager.SelectedBottle == currentMonster.glassPreference)
         {
-            x += glassScorePercent * (CurrentMonster.goal_score.x - x);
-            y += glassScorePercent * (CurrentMonster.goal_score.y - y);
+            x += glassScorePercent * (goal.x - x);
+            y += glassScorePercent * (goal.y - y);
         }
     }
 

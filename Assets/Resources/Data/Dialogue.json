@@ -1,0 +1,50 @@
+{
+  "dialogue": [
+    {
+      "id": "dlg_slime",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "*plops onto the stool*",
+            "Hi. I would like... a drink. Preferably not judgmental."
+          ],
+          "neutral": [
+            "*wiggles*",
+            "Mmm. Acceptable."
+          ],
+          "satisfied": [
+            "*content bubbling*",
+            "Yes... that's the texture."
+          ],
+          "angry": [
+            "*aggressive sloshing*",
+            "NO. WRONG. I am offended on a molecular level."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dlg_unicorn",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "Behold! A unicorn graces your establishment.",
+            "Make it elegant. Make it bright. Make it legendary."
+          ],
+          "neutral": [
+            "It's... fine. The vibes are slightly misaligned."
+          ],
+          "satisfied": [
+            "Exquisite. I feel my aura improving already."
+          ],
+          "angry": [
+            "This is an insult to my lineage.",
+            "Do you know how rare I am??"
+          ]
+        }
+      ]
+    }
+  ]
+}

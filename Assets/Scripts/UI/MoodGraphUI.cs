@@ -62,7 +62,9 @@ public class MoodGraphUI : MonoBehaviour
         if (scoreManager == null) return;
 
         MonsterData monster = scoreManager.GetCurrentMonster();
-        if (monster == null || monster.starting_score == null || monster.goal_score == null)
+        ScorePair starting = scoreManager.GetCurrentStartingScore();
+        ScorePair goal = scoreManager.GetCurrentGoalScore();
+        if (monster == null || starting == null || goal == null)
         {
             SetMarkerVisible(markerRect, false);
             SetMarkerVisible(goalMarkerRect, false);
@@ -79,17 +81,17 @@ public class MoodGraphUI : MonoBehaviour
             if (nameText != null)
                 nameText.text = monster.name;
 
-            Vector2 goal = new Vector2(monster.goal_score.x, monster.goal_score.y);
+            Vector2 goalPos = new Vector2(goal.x, goal.y);
             SetMarkerVisible(goalMarkerRect, true);
-            UpdateMarkerPosition(goalMarkerRect, goal);
+            UpdateMarkerPosition(goalMarkerRect, goalPos);
         }
 
         float x;
         float y;
         if (force)
         {
-            x = monster.starting_score.x;
-            y = monster.starting_score.y;
+            x = starting.x;
+            y = starting.y;
         }
         else
         {
