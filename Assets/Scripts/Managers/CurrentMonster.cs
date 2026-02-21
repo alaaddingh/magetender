@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class CurrentMonster : MonoBehaviour
 {
@@ -65,13 +65,13 @@ public class CurrentMonster : MonoBehaviour
     public float GetAngerTolerance()
     {
         var encounter = CurrentEncounter;
-        return encounter != null ? encounter.tolerances.anger_tolerance : 100f;
+        return encounter != null && encounter.tolerances != null ? encounter.tolerances.anger_tolerance : 100f;
     }
 
     public float GetSatisfiedTolerance()
     {
         var encounter = CurrentEncounter;
-        return encounter != null ? encounter.tolerances.satisfied_tolerance : 0f;
+        return encounter != null && encounter.tolerances != null ? encounter.tolerances.satisfied_tolerance : 0f;
     }
 
     public Vector2 GetOrderSpritePosition()
@@ -92,6 +92,8 @@ public class CurrentMonster : MonoBehaviour
     {
         MonsterData monster = Data;
         LevelEncounterData encounter = CurrentEncounter;
+        if (monster == null || encounter == null || dialogueFile == null || dialogueFile.dialogue == null)
+            return new List<string>();
 
         DialogueEntry entry = null;
         foreach (var d in dialogueFile.dialogue)
@@ -102,7 +104,7 @@ public class CurrentMonster : MonoBehaviour
                 break;
             }
         }
-        if (entry == null) return new List<string>();
+        if (entry == null || entry.levels == null) return new List<string>();
 
         DialogueLevelEntry levelEntry = null;
         foreach (var l in entry.levels)
@@ -127,7 +129,7 @@ public class CurrentMonster : MonoBehaviour
         currentEncounterIndex = 0;
         var encounter = GetCurrentEncounter();
         if (encounter != null)
-            SetCurrentMonsterName(GetMonsterById(encounter.monster_id).name);
+            SetCurrentMonsterNameById(encounter.monster_id);
     }
 
     public bool AdvanceToNextMonster()
@@ -141,7 +143,7 @@ public class CurrentMonster : MonoBehaviour
         var encounter = GetCurrentEncounter();
         if (encounter == null) return false;
 
-        SetCurrentMonsterName(GetMonsterById(encounter.monster_id).name);
+        SetCurrentMonsterNameById(encounter.monster_id);
         return true;
     }
 
@@ -153,24 +155,6 @@ public class CurrentMonster : MonoBehaviour
         return currentEncounterIndex < level.encounters.Count - 1;
     }
 
-    private void LoadData()
-    {
-        monstersFile = JsonUtility.FromJson<MonstersFile>(Resources.Load<TextAsset>(monstersJsonResourcePath).text);
-        levelsFile = JsonUtility.FromJson<LevelsFile>(Resources.Load<TextAsset>(levelsJsonResourcePath).text);
-        dialogueFile = JsonUtility.FromJson<DialogueFile>(Resources.Load<TextAsset>(dialogueJsonResourcePath).text);
-        dataLoaded = true;
-        currentEncounterIndex = 0;
-        lastSeenDay = GetCurrentDay();
-
-        if (!string.IsNullOrWhiteSpace(name)) return;
-
-        var encounter = GetCurrentEncounter();
-        if (encounter != null)
-            name = GetMonsterById(encounter.monster_id).name;
-        else if (monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
-            name = monstersFile.monsters[0].name;
-    }
-
     public void SetCurrentMonsterName(string monsterName)
     {
         name = monsterName;
@@ -179,6 +163,25 @@ public class CurrentMonster : MonoBehaviour
             lastMonsterName = name;
             OnMonsterChanged?.Invoke(name);
         }
+    }
+
+    private void LoadData()
+    {
+        monstersFile = JsonUtility.FromJson<MonstersFile>(Resources.Load<TextAsset>(monstersJsonResourcePath).text);
+        levelsFile = JsonUtility.FromJson<LevelsFile>(Resources.Load<TextAsset>(levelsJsonResourcePath).text);
+        dialogueFile = JsonUtility.FromJson<DialogueFile>(Resources.Load<TextAsset>(dialogueJsonResourcePath).text);
+
+        dataLoaded = true;
+        currentEncounterIndex = 0;
+        lastSeenDay = GetCurrentDay();
+
+        if (!string.IsNullOrWhiteSpace(name)) return;
+
+        var encounter = GetCurrentEncounter();
+        if (encounter != null)
+            SetCurrentMonsterNameById(encounter.monster_id);
+        else if (monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
+            name = monstersFile.monsters[0].name;
     }
 
     private int GetCurrentDay()
@@ -217,7 +220,7 @@ public class CurrentMonster : MonoBehaviour
     private MonsterData GetMonsterById(string monsterId)
     {
         EnsureDataLoaded();
-        if (monstersFile == null || monstersFile.monsters == null || monstersFile.monsters.Count == 0)
+        if (monstersFile == null || monstersFile.monsters == null || monstersFile.monsters.Count == 0 || string.IsNullOrWhiteSpace(monsterId))
             return null;
 
         foreach (MonsterData monster in monstersFile.monsters)
@@ -229,33 +232,21 @@ public class CurrentMonster : MonoBehaviour
         return null;
     }
 
+    private void SetCurrentMonsterNameById(string monsterId)
+    {
+        var monster = GetMonsterById(monsterId);
+        if (monster != null)
+            SetCurrentMonsterName(monster.name);
+    }
+
     private LevelData GetLevelForDay(int day)
     {
         EnsureDataLoaded();
-        if (levelsFile == null || levelsFile.levels == null) return null;
+        if (levelsFile == null || levelsFile.levels == null || levelsFile.levels.Count == 0)
+            return null;
 
         int levelIndex = Mathf.Clamp(day - 1, 0, levelsFile.levels.Count - 1);
         return levelsFile.levels[levelIndex];
-    }
-
-    private LevelEncounterData GetEncounterForDayAndMonster(int day, MonsterData monster)
-    {
-        EnsureDataLoaded();
-        if (levelsFile == null || levelsFile.levels == null || levelsFile.levels.Count == 0 || monster == null)
-            return null;
-
-        int levelIndex = Mathf.Clamp(day - 1, 0, levelsFile.levels.Count - 1);
-        LevelData level = levelsFile.levels[levelIndex];
-        if (level == null || level.encounters == null || level.encounters.Count == 0)
-            return null;
-
-        foreach (var encounter in level.encounters)
-        {
-            if (encounter.monster_id == monster.id)
-                return encounter;
-        }
-
-        return level.encounters[0];
     }
 
     private LevelEncounterData GetCurrentEncounter()
@@ -263,7 +254,8 @@ public class CurrentMonster : MonoBehaviour
         EnsureDataLoaded();
         SyncEncounterIndexToDay();
         var level = GetLevelForDay(GetCurrentDay());
-        if (level == null || level.encounters == null || level.encounters.Count == 0) return null;
+        if (level == null || level.encounters == null || level.encounters.Count == 0)
+            return null;
 
         currentEncounterIndex = Mathf.Clamp(currentEncounterIndex, 0, level.encounters.Count - 1);
         return level.encounters[currentEncounterIndex];

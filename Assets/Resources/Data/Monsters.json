@@ -13,7 +13,6 @@
   
       "dialogueId": "dlg_unicorn",
       "position": {"pos_x": -169, "pos_y": 125}
-
     },
      {
       "id": "slime",
@@ -25,9 +24,10 @@
         "happy": "Art/Monsters/Slime/slime_happy",
         "angry": "Art/Monsters/Slime/slime_angry"
       },
+
+    
       "dialogueId": "dlg_slime",
       "position": {"pos_x": -169, "pos_y": -37}
-
     }
   ]
 }

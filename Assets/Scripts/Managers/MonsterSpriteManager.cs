@@ -92,6 +92,13 @@ public class MonsterSpriteManager : MonoBehaviour
         MonsterData monster = currentMonsterManager.Data;
         if (monster == null || monster.sprites == null) return;
 
+        Vector2 orderPos = currentMonsterManager.GetOrderSpritePosition();
+        Vector2 servePos = currentMonsterManager.GetServeSpritePosition();
+        if (orderSprite != null)
+            orderSprite.rectTransform.anchoredPosition = orderPos;
+        if (serveSprite != null)
+            serveSprite.rectTransform.anchoredPosition = servePos;
+
         string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
         string path = ResolveSpritePathForState(monster.sprites, state);
         if (string.IsNullOrEmpty(path)) return;
@@ -104,15 +111,9 @@ public class MonsterSpriteManager : MonoBehaviour
         }
 
         if (orderSprite != null)
-        {
             orderSprite.sprite = sprite;
-            orderSprite.rectTransform.anchoredPosition = currentMonsterManager.GetOrderSpritePosition();
-        }
         if (serveSprite != null)
-        {
             serveSprite.sprite = sprite;
-            serveSprite.rectTransform.anchoredPosition = currentMonsterManager.GetServeSpritePosition();
-        }
     }
 
     private string ResolveSpritePathForState(MonsterSprites sprites, string state)

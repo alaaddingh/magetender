@@ -35,20 +35,16 @@ public class DialogueController : MonoBehaviour
     private void Start()
     {
         brewButtonObject.SetActive(false);
-        ResolveCurrentMonster();
+
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
 
         Dialogue();
-    }
-
-    private void Update()
-    {
-        ResolveCurrentMonster();
     }
 
     /* returns whichever dialogue list should be used based on monster state */
     private List<string> GetActiveDialogue()
     {
-        ResolveCurrentMonster();
         if (currentMonsterManager == null) return new List<string>();
 
         string state = monsterStateManager.MonsterState;
@@ -103,11 +99,5 @@ public class DialogueController : MonoBehaviour
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
         selectingGlassScreen.SetActive(true);
-    }
-
-    private void ResolveCurrentMonster()
-    {
-        if (currentMonsterManager == null)
-            currentMonsterManager = CurrentMonster.Instance;
     }
 }
