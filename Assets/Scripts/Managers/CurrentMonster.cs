@@ -19,9 +19,12 @@ public class CurrentMonster : MonoBehaviour
     private LevelsFile levelsFile;
     private DialogueFile dialogueFile;
     private string lastMonsterName;
+    private bool dataLoaded;
+    private int currentEncounterIndex;
+    private int lastSeenDay;
 
     public MonsterData Data => GetCurrentMonsterData();
-    public LevelEncounterData CurrentEncounter => GetEncounterForDayAndMonster(GetCurrentDay(), GetMonsterByName(name));
+    public LevelEncounterData CurrentEncounter => GetCurrentEncounter();
 
     private void Awake()
     {
@@ -120,25 +123,34 @@ public class CurrentMonster : MonoBehaviour
 
     public void ResetToFirstMonster()
     {
-        var first = GetEncounterForDay(1);
-        if (first != null)
-            SetCurrentMonsterName(GetMonsterById(first.monster_id).name);
+        SyncEncounterIndexToDay();
+        currentEncounterIndex = 0;
+        var encounter = GetCurrentEncounter();
+        if (encounter != null)
+            SetCurrentMonsterName(GetMonsterById(encounter.monster_id).name);
     }
 
     public bool AdvanceToNextMonster()
     {
-        if (monstersFile == null || monstersFile.monsters == null || monstersFile.monsters.Count == 0) return false;
+        SyncEncounterIndexToDay();
+        var level = GetLevelForDay(GetCurrentDay());
+        if (level == null || level.encounters == null || level.encounters.Count == 0) return false;
+        if (currentEncounterIndex >= level.encounters.Count - 1) return false;
 
-        for (int i = 0; i < monstersFile.monsters.Count - 1; i++)
-        {
-            if (monstersFile.monsters[i].name == name)
-            {
-                SetCurrentMonsterName(monstersFile.monsters[i + 1].name);
-                return true;
-            }
-        }
+        currentEncounterIndex++;
+        var encounter = GetCurrentEncounter();
+        if (encounter == null) return false;
 
-        return false;
+        SetCurrentMonsterName(GetMonsterById(encounter.monster_id).name);
+        return true;
+    }
+
+    public bool HasNextMonsterInCurrentLevel()
+    {
+        SyncEncounterIndexToDay();
+        var level = GetLevelForDay(GetCurrentDay());
+        if (level == null || level.encounters == null || level.encounters.Count == 0) return false;
+        return currentEncounterIndex < level.encounters.Count - 1;
     }
 
     private void LoadData()
@@ -146,10 +158,13 @@ public class CurrentMonster : MonoBehaviour
         monstersFile = JsonUtility.FromJson<MonstersFile>(Resources.Load<TextAsset>(monstersJsonResourcePath).text);
         levelsFile = JsonUtility.FromJson<LevelsFile>(Resources.Load<TextAsset>(levelsJsonResourcePath).text);
         dialogueFile = JsonUtility.FromJson<DialogueFile>(Resources.Load<TextAsset>(dialogueJsonResourcePath).text);
+        dataLoaded = true;
+        currentEncounterIndex = 0;
+        lastSeenDay = GetCurrentDay();
 
         if (!string.IsNullOrWhiteSpace(name)) return;
 
-        var encounter = GetEncounterForDay(GetCurrentDay());
+        var encounter = GetCurrentEncounter();
         if (encounter != null)
             name = GetMonsterById(encounter.monster_id).name;
         else if (monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
@@ -173,7 +188,8 @@ public class CurrentMonster : MonoBehaviour
 
     private MonsterData GetCurrentMonsterData()
     {
-        var encounter = GetEncounterForDay(GetCurrentDay());
+        EnsureDataLoaded();
+        var encounter = GetCurrentEncounter();
         if (encounter != null && !string.IsNullOrWhiteSpace(encounter.monster_id))
         {
             var byId = GetMonsterById(encounter.monster_id);
@@ -185,6 +201,10 @@ public class CurrentMonster : MonoBehaviour
 
     private MonsterData GetMonsterByName(string monsterName)
     {
+        EnsureDataLoaded();
+        if (monstersFile == null || monstersFile.monsters == null || monstersFile.monsters.Count == 0)
+            return null;
+
         foreach (MonsterData monster in monstersFile.monsters)
         {
             if (monster.name == monsterName)
@@ -196,6 +216,10 @@ public class CurrentMonster : MonoBehaviour
 
     private MonsterData GetMonsterById(string monsterId)
     {
+        EnsureDataLoaded();
+        if (monstersFile == null || monstersFile.monsters == null || monstersFile.monsters.Count == 0)
+            return null;
+
         foreach (MonsterData monster in monstersFile.monsters)
         {
             if (monster.id == monsterId)
@@ -205,18 +229,18 @@ public class CurrentMonster : MonoBehaviour
         return null;
     }
 
-    private LevelEncounterData GetEncounterForDay(int day)
+    private LevelData GetLevelForDay(int day)
     {
+        EnsureDataLoaded();
         if (levelsFile == null || levelsFile.levels == null) return null;
 
         int levelIndex = Mathf.Clamp(day - 1, 0, levelsFile.levels.Count - 1);
-        var level = levelsFile.levels[levelIndex];
-        if (level == null || level.encounters == null || level.encounters.Count == 0) return null;
-        return level.encounters[0];
+        return levelsFile.levels[levelIndex];
     }
 
     private LevelEncounterData GetEncounterForDayAndMonster(int day, MonsterData monster)
     {
+        EnsureDataLoaded();
         if (levelsFile == null || levelsFile.levels == null || levelsFile.levels.Count == 0 || monster == null)
             return null;
 
@@ -232,5 +256,32 @@ public class CurrentMonster : MonoBehaviour
         }
 
         return level.encounters[0];
+    }
+
+    private LevelEncounterData GetCurrentEncounter()
+    {
+        EnsureDataLoaded();
+        SyncEncounterIndexToDay();
+        var level = GetLevelForDay(GetCurrentDay());
+        if (level == null || level.encounters == null || level.encounters.Count == 0) return null;
+
+        currentEncounterIndex = Mathf.Clamp(currentEncounterIndex, 0, level.encounters.Count - 1);
+        return level.encounters[currentEncounterIndex];
+    }
+
+    private void EnsureDataLoaded()
+    {
+        if (!dataLoaded)
+            LoadData();
+    }
+
+    private void SyncEncounterIndexToDay()
+    {
+        int day = GetCurrentDay();
+        if (day != lastSeenDay)
+        {
+            currentEncounterIndex = 0;
+            lastSeenDay = day;
+        }
     }
 }
