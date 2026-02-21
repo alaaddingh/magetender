@@ -104,9 +104,15 @@ public class MonsterSpriteManager : MonoBehaviour
         }
 
         if (orderSprite != null)
+        {
             orderSprite.sprite = sprite;
+            orderSprite.rectTransform.anchoredPosition = currentMonsterManager.GetOrderSpritePosition();
+        }
         if (serveSprite != null)
+        {
             serveSprite.sprite = sprite;
+            serveSprite.rectTransform.anchoredPosition = currentMonsterManager.GetServeSpritePosition();
+        }
     }
 
     private string ResolveSpritePathForState(MonsterSprites sprites, string state)

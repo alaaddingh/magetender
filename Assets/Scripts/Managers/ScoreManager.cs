@@ -42,8 +42,7 @@ public class ScoreManager : MonoBehaviour
     /* run before any Start() so score display and mood graph see correct starting mood on first frame and every new day (scene load) */
     private void Awake()
     {
-        if (currentMonsterManager == null)
-            currentMonsterManager = CurrentMonster.Instance;
+        ResolveCurrentMonster();
         LoadIngredients();
         if (MixManagerObject != null)
             mixManager = MixManagerObject.GetComponent<MixManager>();
@@ -61,6 +60,11 @@ public class ScoreManager : MonoBehaviour
             mixManager.OnStateChanged += OnMixManagerChanged;
     }
 
+    private void Update()
+    {
+        ResolveCurrentMonster();
+    }
+
     private void ResetToMonsterStart()
     {
         ScorePair starting = GetCurrentStartingScore();
@@ -71,16 +75,19 @@ public class ScoreManager : MonoBehaviour
 
     public MonsterData GetCurrentMonster()
     {
+        ResolveCurrentMonster();
         return currentMonsterManager != null ? currentMonsterManager.Data : null;
     }
 
     public ScorePair GetCurrentStartingScore()
     {
+        ResolveCurrentMonster();
         return currentMonsterManager != null ? currentMonsterManager.GetStartingScore() : null;
     }
 
     public ScorePair GetCurrentGoalScore()
     {
+        ResolveCurrentMonster();
         return currentMonsterManager != null ? currentMonsterManager.GetGoalScore() : null;
     }
 
@@ -231,5 +238,11 @@ public class ScoreManager : MonoBehaviour
     {
         if (mixManager != null)
             mixManager.OnStateChanged -= OnMixManagerChanged;
+    }
+
+    private void ResolveCurrentMonster()
+    {
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
     }
 }
