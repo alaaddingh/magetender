@@ -14,11 +14,7 @@ public class AssessController : MonoBehaviour
     [Header("refs")]
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private MonsterStateManager MonsterStateManager;
-
-    [Header("monster data (MVP)")]
-    [SerializeField] private string monstersJsonResourcePath = "Data/Monsters";
-    private MonstersFile monstersFile;
-    private MonsterData currentMonster;   /* monster[0] AGAIN TEMPORARY SOLUTION SRY*/
+    [SerializeField] private CurrentMonster currentMonsterManager;
 
     [Header("UI")]
     [SerializeField] private TMP_Text coinsDisplay;
@@ -36,8 +32,8 @@ public class AssessController : MonoBehaviour
 
     private void Awake()
     {
-        LoadMonsters();
-        currentMonster = monstersFile.monsters[0]; /* temp */
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
 
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
@@ -61,8 +57,19 @@ public class AssessController : MonoBehaviour
     /* call from Assess Next button OnClick: go to next day and show day screen again */
     public void OnNextCustomerPressed()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.IncrementDay();
+        bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+        if (hasNextMonster)
+        {
+            currentMonsterManager.AdvanceToNextMonster();
+        }
+        else
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.IncrementDay();
+            if (currentMonsterManager != null)
+                currentMonsterManager.ResetToFirstMonster();
+        }
+
         if (!string.IsNullOrEmpty(nextDaySceneName))
             SceneManager.LoadScene(nextDaySceneName);
     }
@@ -74,21 +81,19 @@ public class AssessController : MonoBehaviour
         coinsDisplay.text = coins + " coins";
     }
 
-    private void LoadMonsters()
-    {
-        TextAsset json = Resources.Load<TextAsset>(monstersJsonResourcePath);
-        monstersFile = JsonUtility.FromJson<MonstersFile>(json.text);
-    }
-
     /* assesses percentage difference of the final mix's X and Y,
      returns accuracy in form of a whole number*/
     private float AssessAccuracy()
     {
+        ScorePair goal = currentMonsterManager != null ? currentMonsterManager.GetGoalScore() : null;
+        if (goal == null)
+            return 0f;
+
         /* live values (no stale data) */
         float finalX = scoreManager.CurrMoodBoardX;
         float finalY = scoreManager.CurrMoodBoardY;
-        float targetX = currentMonster.goal_score.x;
-        float targetY = currentMonster.goal_score.y;
+        float targetX = goal.x;
+        float targetY = goal.y;
 
         float diffX = finalX - targetX;
         float diffY = finalY - targetY;
@@ -106,8 +111,14 @@ public class AssessController : MonoBehaviour
 
     private void AssessState(float accuracy)
     {
-        float angerTolerance = currentMonster.anger_tolerance;
-        float satisfiedTolerance = currentMonster.satisfied_tolerance;
+        if (currentMonsterManager == null)
+        {
+            MonsterStateManager.SetState("neutral");
+            return;
+        }
+
+        float angerTolerance = currentMonsterManager.GetAngerTolerance();
+        float satisfiedTolerance = currentMonsterManager.GetSatisfiedTolerance();
         float error = 100f - accuracy;
 
         if (error >= angerTolerance)

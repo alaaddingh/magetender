@@ -18,7 +18,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private GameObject brewButtonObject;
 
     [Header("Data source")]
-    [SerializeField] private string monstersJsonResourcePath = "Data/Monsters";
+    [SerializeField] private CurrentMonster currentMonsterManager;
 
     [Header("State source")]
     [SerializeField] private MonsterStateManager monsterStateManager;
@@ -30,41 +30,37 @@ public class DialogueController : MonoBehaviour
     [Header("Global coin canvas - hide when leaving order screen")]
     [SerializeField] private GameObject coinCanvas;
 
-    private MonsterData currentMonster;
     private int dialogueIndex = 0;
 
     private void Start()
     {
         brewButtonObject.SetActive(false);
 
-        LoadMonster();
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
+
         Dialogue();
-    }
-
-    private void LoadMonster()
-    {
-        TextAsset json = Resources.Load<TextAsset>(monstersJsonResourcePath);
-        MonstersFile file = JsonUtility.FromJson<MonstersFile>(json.text);
-
-        currentMonster = file.monsters[0]; /* Count Drunkula */
-        dialogueIndex = 0;
     }
 
     /* returns whichever dialogue list should be used based on monster state */
     private List<string> GetActiveDialogue()
     {
-        string state = monsterStateManager.MonsterState;
+        if (currentMonsterManager == null) return new List<string>();
 
-        if (state == "satisfied") return currentMonster.satisfied_dialogue;
-        if (state == "angry") return currentMonster.angry_dialogue;
-        if (state == "neutral") return currentMonster.neutral_dialogue;
-        return currentMonster.starting_dialogue;
+        string state = monsterStateManager.MonsterState;
+        return currentMonsterManager.GetDialogue(state);
     }
 
     /* sets monster name, displays current dialogue index */
     private void Dialogue()
     {
         List<string> activeDialogue = GetActiveDialogue();
+        if (activeDialogue == null || activeDialogue.Count == 0)
+        {
+            monsterSpeech.text = "";
+            brewButtonObject.SetActive(true);
+            return;
+        }
 
         dialogueIndex = Mathf.Clamp(dialogueIndex, 0, activeDialogue.Count - 1);
         monsterSpeech.text = activeDialogue[dialogueIndex];
@@ -74,6 +70,11 @@ public class DialogueController : MonoBehaviour
     public void OnNextPressed()
     {
         List<string> activeDialogue = GetActiveDialogue();
+        if (activeDialogue == null || activeDialogue.Count == 0)
+        {
+            brewButtonObject.SetActive(true);
+            return;
+        }
 
         /* if at the last line, show brew button. */
         bool last = dialogueIndex >= activeDialogue.Count - 1;
