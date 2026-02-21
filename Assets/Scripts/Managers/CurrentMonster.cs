@@ -20,8 +20,8 @@ public class CurrentMonster : MonoBehaviour
     private DialogueFile dialogueFile;
     private string lastMonsterName;
 
-    public MonsterData Data => GetCurrentMonsterData();
-    public LevelEncounterData CurrentEncounter => GetEncounterForDayAndMonster(GetCurrentDay(), GetMonsterByName(name));
+    public MonsterData Data => GetMonsterByName(name);
+    public LevelEncounterData CurrentEncounter => GetEncounterForDayAndMonster(GetCurrentDay(), Data);
 
     private void Awake()
     {
@@ -62,33 +62,21 @@ public class CurrentMonster : MonoBehaviour
     public float GetAngerTolerance()
     {
         var encounter = CurrentEncounter;
-        return encounter != null ? encounter.tolerances.anger_tolerance : 100f;
+        return encounter != null && encounter.tolerances != null ? encounter.tolerances.anger_tolerance : 100f;
     }
 
     public float GetSatisfiedTolerance()
     {
         var encounter = CurrentEncounter;
-        return encounter != null ? encounter.tolerances.satisfied_tolerance : 0f;
-    }
-
-    public Vector2 GetOrderSpritePosition()
-    {
-        return Data != null && Data.position != null
-            ? new Vector2(Data.position.pos_x, Data.position.pos_y)
-            : Vector2.zero;
-    }
-
-    public Vector2 GetServeSpritePosition()
-    {
-        return Data != null && Data.position != null
-            ? new Vector2(Data.position.pos_x, Data.position.pos_y)
-            : Vector2.zero;
+        return encounter != null && encounter.tolerances != null ? encounter.tolerances.satisfied_tolerance : 0f;
     }
 
     public List<string> GetDialogue(string state)
     {
         MonsterData monster = Data;
         LevelEncounterData encounter = CurrentEncounter;
+        if (monster == null || encounter == null || dialogueFile == null || dialogueFile.dialogue == null)
+            return new List<string>();
 
         DialogueEntry entry = null;
         foreach (var d in dialogueFile.dialogue)
@@ -99,7 +87,7 @@ public class CurrentMonster : MonoBehaviour
                 break;
             }
         }
-        if (entry == null) return new List<string>();
+        if (entry == null || entry.levels == null) return new List<string>();
 
         DialogueLevelEntry levelEntry = null;
         foreach (var l in entry.levels)
@@ -120,9 +108,8 @@ public class CurrentMonster : MonoBehaviour
 
     public void ResetToFirstMonster()
     {
-        var first = GetEncounterForDay(1);
-        if (first != null)
-            SetCurrentMonsterName(GetMonsterById(first.monster_id).name);
+        if (monstersFile == null || monstersFile.monsters == null || monstersFile.monsters.Count == 0) return;
+        SetCurrentMonsterName(monstersFile.monsters[0].name);
     }
 
     public bool AdvanceToNextMonster()
@@ -147,12 +134,7 @@ public class CurrentMonster : MonoBehaviour
         levelsFile = JsonUtility.FromJson<LevelsFile>(Resources.Load<TextAsset>(levelsJsonResourcePath).text);
         dialogueFile = JsonUtility.FromJson<DialogueFile>(Resources.Load<TextAsset>(dialogueJsonResourcePath).text);
 
-        if (!string.IsNullOrWhiteSpace(name)) return;
-
-        var encounter = GetEncounterForDay(GetCurrentDay());
-        if (encounter != null)
-            name = GetMonsterById(encounter.monster_id).name;
-        else if (monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
+        if (string.IsNullOrWhiteSpace(name) && monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
             name = monstersFile.monsters[0].name;
     }
 
@@ -171,48 +153,17 @@ public class CurrentMonster : MonoBehaviour
         return GameManager.Instance != null ? GameManager.Instance.Day : 1;
     }
 
-    private MonsterData GetCurrentMonsterData()
-    {
-        var encounter = GetEncounterForDay(GetCurrentDay());
-        if (encounter != null && !string.IsNullOrWhiteSpace(encounter.monster_id))
-        {
-            var byId = GetMonsterById(encounter.monster_id);
-            if (byId != null) return byId;
-        }
-
-        return GetMonsterByName(name);
-    }
-
     private MonsterData GetMonsterByName(string monsterName)
     {
+        if (monstersFile == null || monstersFile.monsters == null) return null;
+
         foreach (MonsterData monster in monstersFile.monsters)
         {
             if (monster.name == monsterName)
                 return monster;
         }
 
-        return monstersFile.monsters[0];
-    }
-
-    private MonsterData GetMonsterById(string monsterId)
-    {
-        foreach (MonsterData monster in monstersFile.monsters)
-        {
-            if (monster.id == monsterId)
-                return monster;
-        }
-
-        return null;
-    }
-
-    private LevelEncounterData GetEncounterForDay(int day)
-    {
-        if (levelsFile == null || levelsFile.levels == null) return null;
-
-        int levelIndex = Mathf.Clamp(day - 1, 0, levelsFile.levels.Count - 1);
-        var level = levelsFile.levels[levelIndex];
-        if (level == null || level.encounters == null || level.encounters.Count == 0) return null;
-        return level.encounters[0];
+        return monstersFile.monsters.Count > 0 ? monstersFile.monsters[0] : null;
     }
 
     private LevelEncounterData GetEncounterForDayAndMonster(int day, MonsterData monster)

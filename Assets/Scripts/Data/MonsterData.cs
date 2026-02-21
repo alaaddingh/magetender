@@ -14,7 +14,6 @@ public class MonsterData
     public string name;
     public string glassPreference;
     public MonsterSprites sprites;
-    public MonsterPosition position;
     public string dialogueId;
 }
 
@@ -24,11 +23,4 @@ public class MonsterSprites
     public string neutral;
     public string happy;
     public string angry;
-}
-
-[Serializable]
-public class MonsterPosition
-{
-    public float pos_x;
-    public float pos_y;
 }
