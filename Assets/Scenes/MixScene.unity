@@ -4730,6 +4730,7 @@ MonoBehaviour:
   tooltipOffset: {x: 16, y: -16}
   debugLogs: 1
   debugOverlayText: {fileID: 0}
+  inDrinkThreshold: 15
 --- !u!4 &964721726
 Transform:
   m_ObjectHideFlags: 0
@@ -6235,6 +6236,7 @@ MonoBehaviour:
   tooltipOffset: {x: 16, y: -16}
   debugLogs: 1
   debugOverlayText: {fileID: 0}
+  inDrinkThreshold: 15
 --- !u!1 &1291967965
 GameObject:
   m_ObjectHideFlags: 0
@@ -10153,7 +10155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 235, y: 134}
+  m_AnchoredPosition: {x: 235, y: 383}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2092445570
