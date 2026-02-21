@@ -1,5 +1,3 @@
-/* rly simple for now, when user clicks on UI image tagged as "Ingredients", relocates image to new XY and adds Ingredients
-to mixmanager's storage */
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +6,6 @@ using TMPro;
 
 public class IngredientHoverSnapUI : MonoBehaviour
 {
-    /* relocate ingredients after click */
     [Header("target position")]
     public Vector2 snapTargetPos;
 
@@ -21,13 +18,18 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
     [Header("debug")]
     public bool debugLogs = true;
-    public TextMeshProUGUI debugOverlayText; //optional: put a tmp text on canvas and drag it here
+    public TextMeshProUGUI debugOverlayText;
 
     private Image hoveredIngredient;
+    private MixManager mixManager;
+    private Dictionary<string, Vector2> shelfPositions = new Dictionary<string, Vector2>();
 
     private Dictionary<string, IngredientData> byId = new Dictionary<string, IngredientData>();
 
-    //debug throttling
+    [Tooltip("Max distance from snap target to consider ingredient 'in drink' for toggle-off")]
+    public float inDrinkThreshold = 15f;
+
+    private static bool s_processedClickThisFrame;
     private float nextDebugTime = 0f;
     private const float debugInterval = 0.25f;
 
@@ -35,14 +37,31 @@ public class IngredientHoverSnapUI : MonoBehaviour
     {
         LoadIngredientData();
         HideTooltip();
-        // debug logs disabled
+        mixManager = FindFirstObjectByType<MixManager>();
+        RecordShelfPositions();
+    }
+
+    private void RecordShelfPositions()
+    {
+        shelfPositions.Clear();
+        GameObject[] ingredients = GameObject.FindGameObjectsWithTag("Ingredients");
+        foreach (GameObject go in ingredients)
+        {
+            Image img = go.GetComponent<Image>();
+            if (img != null && !string.IsNullOrEmpty(go.name))
+                shelfPositions[go.name] = img.rectTransform.anchoredPosition;
+        }
+    }
+
+    void LateUpdate()
+    {
+        s_processedClickThisFrame = false;
     }
 
     void Update()
     {
         hoveredIngredient = GetHoveredIngredient();
 
-        //hover tooltip
         if (hoveredIngredient != null)
         {
             string id = hoveredIngredient.gameObject.name;
@@ -57,37 +76,58 @@ public class IngredientHoverSnapUI : MonoBehaviour
             DebugTick("hovered ingredient: (none)");
         }
 
-        if (Input.GetMouseButtonDown(0) && hoveredIngredient != null)
+        if (Input.GetMouseButtonDown(0) && hoveredIngredient != null && !s_processedClickThisFrame)
         {
-            hoveredIngredient.rectTransform.anchoredPosition = snapTargetPos;
+            if (mixManager == null)
+                mixManager = FindFirstObjectByType<MixManager>();
+            if (mixManager == null) return;
 
-            /* add ingredient to mixmanager */ 
-            var mixManager = FindFirstObjectByType<MixManager>();
-            if (mixManager != null)
+            bool inDrink = IsInDrink(hoveredIngredient);
+            if (inDrink)
+            {
+                bool removed = mixManager.RemoveIngredient(hoveredIngredient.name);
+                if (removed)
+                {
+                    hoveredIngredient.rectTransform.anchoredPosition = GetShelfPosition(hoveredIngredient.name);
+                }
+            }
+            else
+            {
+                if (!shelfPositions.ContainsKey(hoveredIngredient.name))
+                    shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
+                hoveredIngredient.rectTransform.anchoredPosition = snapTargetPos;
                 mixManager.AddIngredient(hoveredIngredient.name);
+            }
+            s_processedClickThisFrame = true;
         }
+    }
+
+    private bool IsInDrink(Image img)
+    {
+        Vector2 pos = img.rectTransform.anchoredPosition;
+        return (pos - snapTargetPos).sqrMagnitude <= inDrinkThreshold * inDrinkThreshold;
+    }
+
+    private Vector2 GetShelfPosition(string ingredientName)
+    {
+        return shelfPositions.TryGetValue(ingredientName, out Vector2 pos) ? pos : snapTargetPos;
     }
 
     private void DebugTick(string line)
     {
         if (!debugLogs) return;
 
-        //throttle log spam
         if (Time.unscaledTime < nextDebugTime) return;
         nextDebugTime = Time.unscaledTime + debugInterval;
 
         string msg = line;
 
-        //overlay (optional)
         if (debugOverlayText != null)
         {
             debugOverlayText.text =
                 $"eventsystem null? {(EventSystem.current == null)}\n" +
                 $"{line}";
         }
-
-        //console
-    //    Debug.Log(msg);
     }
 
     private void LoadIngredientData()
@@ -110,8 +150,6 @@ public class IngredientHoverSnapUI : MonoBehaviour
             if (!string.IsNullOrEmpty(ing.id))
                 byId[ing.id] = ing;
         }
-
-        // debug logs disabled
     }
 
     private void ShowTooltipFor(string id)
@@ -126,7 +164,6 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
         if (!byId.TryGetValue(id, out IngredientData data))
         {
-            //if lookup fails, still show something so we know hover worked
             if (tooltipNameText != null) tooltipNameText.text = id;
             if (tooltipDescText != null) tooltipDescText.text = "(no json match)";
             if (tooltipEffectText != null) tooltipEffectText.text = "";
@@ -182,15 +219,6 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointer, results);
-
-        //debug what we're actually hitting (top-most ui element wins)
-        if (debugLogs && Time.unscaledTime >= nextDebugTime)
-        {
-      //      Debug.Log("raycast hits: " + results.Count);
-          //  if (results.Count > 0)
-               
-          /*      Debug.Log("top hit: " + results[0].gameObject.name + " tag=" + results[0].gameObject.tag); */
-        }
 
         foreach (RaycastResult r in results)
         {

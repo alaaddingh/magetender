@@ -1,0 +1,42 @@
+---
+description: C# and asset style guide for magetender (comments, formatting, naming, Unity)
+alwaysApply: true
+---
+
+# Magetender Style Guide
+
+## Comments
+- Do not comment when the variable/name explains intent. Only comment at the start of complicated functions or complicated loops.
+- Only useful comments that help reading. Less is more.
+
+## Indentation & Spacing
+- **Indentation:** Tabs only, one tab per scope (including class methods).
+- **Spacing:** Spaces for readability: `if (x == y)` not `if (x==y)`. Blank lines between major sections (e.g. fields vs methods).
+
+## Naming
+- **Case:** camelCase for variables, PascalCase for class names. Minor scope variables can be lower-case (e.g. `bool last = …`).
+- **Functions:** Name must clearly describe the single task. Split into separate functions if multiple significant tasks.
+
+## Braces (Allman style)
+- Class and function braces on their own lines:
+```csharp
+void FunctionName(int parameter)
+{
+}
+```
+
+## Formulas
+- Use parentheses to make order of operations obvious. Spaces around operators: `a + b`, `x * 0.5f`.
+- Short names like `i`, `j`, `t` are OK inside loops or simple math only; not for general gameplay values.
+
+## Readability
+- **Line length:** Target 80–120 characters; break longer lines.
+- Put related methods next to each other.
+- Short comments only when intent is not obvious. No joke names or unclear shortcuts.
+
+## Language & Unity
+- Code must compile and run under **Unity 6000.0.50f1**. Follow standard C# and Unity conventions. No experimental or preview C#. Compile with no warnings or errors before commit.
+
+## Asset Naming
+- **Sprites:** PNG. Variants: name describes character and state (e.g. `dracula_angry.png`). Location: respective `Art` subfolder (Objects, Ingredients, Monsters).
+- **Other assets:** Backgrounds, props, etc.: PNG under `Art` in the correct subfolder (e.g. Background).
