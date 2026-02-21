@@ -5,6 +5,16 @@
       "name": "Opening Night",
       "encounters": [
         {
+          "monster_id": "alien",
+          "tolerances": {
+            "anger_tolerance": 30,
+            "satisfied_tolerance": 20
+          },
+          "starting_score": { "x": 0.5, "y": 0.5 },
+          "goal_score": { "x": -0.5, "y": -0.3 },
+          "dialogue_key": "level_1"
+        },
+        {
           "monster_id": "slime",
           "tolerances": {
             "anger_tolerance": 28,
@@ -23,6 +33,22 @@
           "starting_score": { "x": 0.5, "y": 0.5 },
           "goal_score": { "x": -0.5, "y": -0.3 },
           "dialogue_key": "level_1"
+        }
+      ]
+    },
+    {
+      "id": "level_2",
+      "name": "Second Night",
+      "encounters": [
+        {
+          "monster_id": "alien",
+          "tolerances": {
+            "anger_tolerance": 15,
+            "satisfied_tolerance": 10
+          },
+          "starting_score": { "x": 0.5, "y": 0.5 },
+          "goal_score": { "x": -0.5, "y": -0.3 },
+          "dialogue_key": "level_2"
         }
       ]
     }

@@ -32,6 +32,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private bool clampMoodBoard = true;
     [SerializeField] private float clampMin = -1f;
     [SerializeField] private float clampMax = 1f;
+    private bool initializedFromMonster;
 
     private void LoadIngredients()
     {
@@ -42,23 +43,43 @@ public class ScoreManager : MonoBehaviour
     /* run before any Start() so score display and mood graph see correct starting mood on first frame and every new day (scene load) */
     private void Awake()
     {
-        if (currentMonsterManager == null)
-            currentMonsterManager = CurrentMonster.Instance;
         LoadIngredients();
         if (MixManagerObject != null)
             mixManager = MixManagerObject.GetComponent<MixManager>();
-        ScorePair starting = GetCurrentStartingScore();
-        if (starting == null) return;
-        ResetToMonsterStart();
-        if (mixManager != null)
-            RecalculateFullMood();
-        UpdateScoreText();
+        TryInitializeFromCurrentMonster();
     }
 
     private void Start()
     {
         if (mixManager != null)
             mixManager.OnStateChanged += OnMixManagerChanged;
+    }
+
+    private void Update()
+    {
+        if (!initializedFromMonster)
+            TryInitializeFromCurrentMonster();
+    }
+
+    private bool ResolveCurrentMonster()
+    {
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
+        return currentMonsterManager != null;
+    }
+
+    private void TryInitializeFromCurrentMonster()
+    {
+        if (!ResolveCurrentMonster()) return;
+
+        ScorePair starting = GetCurrentStartingScore();
+        if (starting == null) return;
+
+        ResetToMonsterStart();
+        if (mixManager != null)
+            RecalculateFullMood();
+        UpdateScoreText();
+        initializedFromMonster = true;
     }
 
     private void ResetToMonsterStart()
@@ -71,16 +92,19 @@ public class ScoreManager : MonoBehaviour
 
     public MonsterData GetCurrentMonster()
     {
+        ResolveCurrentMonster();
         return currentMonsterManager != null ? currentMonsterManager.Data : null;
     }
 
     public ScorePair GetCurrentStartingScore()
     {
+        ResolveCurrentMonster();
         return currentMonsterManager != null ? currentMonsterManager.GetStartingScore() : null;
     }
 
     public ScorePair GetCurrentGoalScore()
     {
+        ResolveCurrentMonster();
         return currentMonsterManager != null ? currentMonsterManager.GetGoalScore() : null;
     }
 

@@ -45,6 +45,48 @@
           ]
         }
       ]
+    },
+      {
+      "id": "dlg_alien",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "OOH I'm an alien..",
+            "....",
+            "Aren't you impressed??"
+          ],
+          "neutral": [
+            "Not unwordly... but okay "
+          ],
+          "satisfied": [
+            "ZOINKS! that's good"
+          ],
+          "angry": [
+            "BLEEP BLORP ZEEP ZORP!!",
+            "You are making me view earthling magic...unfavorably!"
+          ]
+        },
+         {
+          "level": "level_2",
+          "starting": [
+            "OOH I'm BACKK it's level 2!!",
+            "....",
+            "Aren't you impressed??"
+          ],
+          "neutral": [
+            "Not unwordly... but okay (level 2)"
+          ],
+          "satisfied": [
+            "ZOINKS! that's good (level 2)"
+          ],
+          "angry": [
+            "BLEEP BLORP ZEEP ZORP!!",
+            "You are making me view earthling magic...unfavorably! (level 2)"
+          ]
+        }
+      ]
+
     }
   ]
 }
