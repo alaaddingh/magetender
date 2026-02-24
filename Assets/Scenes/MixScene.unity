@@ -3446,6 +3446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingCoins: 0
   startingDay: 1
+  maintenanceCost: 80
 --- !u!1 &698331748
 GameObject:
   m_ObjectHideFlags: 0
@@ -4247,12 +4248,12 @@ MonoBehaviour:
   PreviousScreen: {fileID: 832843223}
   fillAmountPerDrop: 0.01
   maxFillLevel: 1
-  fillWidthMultiplier: 0.18
-  fillHeightMultiplier: 1
+  fillWidthMultiplier: 0
+  fillHeightMultiplier: 0.8
   fillAlpha: 0.6
-  baseBottlePosSmall: {x: 0, y: -225}
-  baseBottlePosMedium: {x: 0, y: -200}
-  baseBottlePosLarge: {x: 0, y: -170}
+  baseBottlePosSmall: {x: 0, y: -260}
+  baseBottlePosMedium: {x: 0, y: -240}
+  baseBottlePosLarge: {x: 0, y: -220}
   drainRatePerSecond: 0.1
   trashRect: {fileID: 1822492698}
 --- !u!1 &879334103
@@ -7415,9 +7416,9 @@ MonoBehaviour:
   smallBottle: {fileID: 338197908}
   mediumBottle: {fileID: 1003164639}
   largeBottle: {fileID: 730946031}
-  snapTargetPosSmall: {x: 600, y: -225}
-  snapTargetPosMedium: {x: 600, y: -200}
-  snapTargetPosLarge: {x: 600, y: -170}
+  snapTargetPosSmall: {x: 600, y: -260}
+  snapTargetPosMedium: {x: 600, y: -240}
+  snapTargetPosLarge: {x: 600, y: -220}
   nextButton: {fileID: 1500494316}
   hoverScale: 1.12
   pulseAmount: 0.03
