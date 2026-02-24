@@ -462,15 +462,16 @@ public class QTECombatManager : MonoBehaviour
 	/* call from Back to bar button OnClick */
 	public void OnBackToBarPressed()
 	{
-        // Come back to increment day problem later
-		/*if (GameManager.Instance != null)
+		var currentMonster = CurrentMonster.Instance;
+		if (currentMonster != null)
 		{
-			GameManager.Instance.IncrementDay();
-		}*/
-        if (!string.IsNullOrEmpty(backToBarSceneName))
-        {
-            SceneManager.LoadScene(backToBarSceneName);
-        }
+			bool hasNextMonster = currentMonster.HasNextMonsterInCurrentLevel();
+			currentMonster.PlanNextVisit(hasNextMonster);
+		}
+		if (!string.IsNullOrEmpty(backToBarSceneName))
+		{
+			SceneManager.LoadScene(backToBarSceneName);
+		}
 	}
 	
 	IEnumerator FlashCustomer()
