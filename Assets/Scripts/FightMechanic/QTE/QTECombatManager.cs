@@ -50,11 +50,6 @@ public class QTECombatManager : MonoBehaviour
 	public Color activeGlowColor = new Color(1f, 1f, 0.5f, 0.6f);
 	public Color inactiveGlowColor = new Color(0.3f, 0.3f, 0.3f, 0.2f);
 	
-	[Header("Customer Sprites")]
-	public Sprite customerAngrySprite;
-	public Sprite customerHurtSprite;
-	public Sprite customerDefeatedSprite;
-	
 	// WASD only per TA feedback - simpler and more accessible
 	private KeyCode[] availableKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
 	private int playerHealth;
@@ -68,6 +63,11 @@ public class QTECombatManager : MonoBehaviour
 	private Vector2 rightHandOriginalPos;
 	private bool useLeftHand = true;
 	
+	// Loaded customer sprites
+	private Sprite customerAngrySprite;
+	private Sprite customerNeutralSprite;
+	private Sprite customerHappySprite;
+	
 	// Bank system variables
 	private List<KeyCode> defendSequence = new List<KeyCode>();
 	private List<KeyCode> attackSequence = new List<KeyCode>();
@@ -76,9 +76,13 @@ public class QTECombatManager : MonoBehaviour
 	private float defendTimer;
 	private float attackTimer;
 	private bool defendBankActive = true; // start on defend since it's more urgent
+    private bool combatStarted = false; // Start paused for tutorial
 	
 	void Start()
 	{
+		// Load monster data from CurrentMonster
+		LoadMonsterData();
+		
 		playerHealth = playerMaxHealth;
 		customerHealth = customerMaxHealth;
 		
@@ -113,17 +117,63 @@ public class QTECombatManager : MonoBehaviour
 		}
 		
 		UpdateHealthDisplays();
-		GenerateNewSequence(true);
-		GenerateNewSequence(false);
-		UpdateBankVisuals();
+        // Don't start sequences yet - wait for tutorial
+	}
+
+    // Public method for tutorial to call
+    public void StartCombat()
+    {
+        combatStarted = true;
+        GenerateNewSequence(true);
+        GenerateNewSequence(false);
+        UpdateBankVisuals();
+    }
+	
+	void LoadMonsterData()
+	{
+		// Check if CurrentMonster exists
+		if (CurrentMonster.Instance == null)
+		{
+			Debug.LogWarning("CurrentMonster.Instance is null! Using default sprites.");
+			return;
+		}
+		
+		MonsterData monsterData = CurrentMonster.Instance.Data;
+		if (monsterData == null)
+		{
+			Debug.LogWarning("Monster data is null! Using default sprites.");
+			return;
+		}
+		
+		// Load sprites from Resources using the paths in the JSON
+		if (!string.IsNullOrEmpty(monsterData.sprites.angry))
+		{
+			customerAngrySprite = Resources.Load<Sprite>(monsterData.sprites.angry);
+		}
+		if (!string.IsNullOrEmpty(monsterData.sprites.neutral))
+		{
+			customerNeutralSprite = Resources.Load<Sprite>(monsterData.sprites.neutral);
+		}
+		if (!string.IsNullOrEmpty(monsterData.sprites.happy))
+		{
+			customerHappySprite = Resources.Load<Sprite>(monsterData.sprites.happy);
+		}
+		
+		Debug.Log($"Loaded monster: {monsterData.name}");
 	}
 	
 	void Update()
 	{
-		if (customerHealth <= 0 || playerHealth <= 0)
-		{
-			return;
-		}
+		// Don't run combat until tutorial dismissed
+        if (!combatStarted)
+        {
+            return;
+        }
+        
+        if (customerHealth <= 0 || playerHealth <= 0)
+        {
+            return;
+        }
 		
 		// both timers always run - this creates the pressure!
 		defendTimer -= Time.deltaTime;
@@ -381,10 +431,14 @@ public class QTECombatManager : MonoBehaviour
 		{
 			Debug.Log("VICTORY!");
 			
-			// Show defeated sprite
-			if (customerDefeatedSprite != null && customerSprite != null)
+			// Show defeated/happy sprite (monster is happy to be defeated and go home)
+			if (customerHappySprite != null && customerSprite != null)
 			{
-				customerSprite.sprite = customerDefeatedSprite;
+				customerSprite.sprite = customerHappySprite;
+			}
+			else if (customerNeutralSprite != null && customerSprite != null)
+			{
+				customerSprite.sprite = customerNeutralSprite;
 			}
 			
 			// Add coins for winning
@@ -420,10 +474,10 @@ public class QTECombatManager : MonoBehaviour
 	
 	IEnumerator FlashCustomer()
 	{
-		// Swap to hurt sprite
-		if (customerHurtSprite != null && customerSprite != null)
+		// Swap to hurt/neutral sprite
+		if (customerNeutralSprite != null && customerSprite != null)
 		{
-			customerSprite.sprite = customerHurtSprite;
+			customerSprite.sprite = customerNeutralSprite;
 		}
 		
 		Image[] allImages = customerSprite.GetComponentsInChildren<Image>();
