@@ -59,8 +59,8 @@ public class CombatTutorial : MonoBehaviour
         tutorialText.text = $"{monsterName} is looking for a fight!\n\n" +
                            "Press <color=yellow>WASD</color> to complete key sequences\n" +
                            "Press <color=yellow>SPACE</color> to switch between banks\n\n" +
-                           "<color=red>DEFEND</color> - Don't let the timer run out!\n" +
-                           "<color=blue>ATTACK</color> - Complete to deal damage\n\n" +
+                           "<color=blue>DEFEND</color> - Complete before time runs out to avoid taking damage\n" +
+                           "<color=red>ATTACK</color> - Complete to deal damage\n\n" +
                            "Press <color=yellow>SPACE</color> to begin...";
     }
 
