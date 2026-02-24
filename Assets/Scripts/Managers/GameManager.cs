@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int startingCoins = 0;
     [SerializeField] private int startingDay = 1;
 
+    [Header("Economy")]
+    [SerializeField] private int maintenanceCost = 80;
+
     public int Coins { get; private set; }
     public int Day { get; private set; }
 
@@ -29,11 +32,16 @@ public class GameManager : MonoBehaviour
 
     public void AddCoins(int amount)
     {
-        Coins = Mathf.Max(0, Coins + amount);
+        Coins += amount;
     }
 
     public void IncrementDay()
     {
         Day++;
+
+        if (Day > 1)
+        {
+            Coins -= maintenanceCost;
+        }
     }
 }
