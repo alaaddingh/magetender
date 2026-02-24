@@ -13,6 +13,7 @@ public class DialogueController : MonoBehaviour
 {
     [Header("UI variables")]
     [SerializeField] private TMP_Text monsterSpeech;
+    [SerializeField] private DialogueTypewriter typewriter;
 
     [Header("Buttons")]
     [SerializeField] private GameObject brewButtonObject;
@@ -39,6 +40,9 @@ public class DialogueController : MonoBehaviour
         if (currentMonsterManager == null)
             currentMonsterManager = CurrentMonster.Instance;
 
+        if (typewriter == null && monsterSpeech != null)
+            typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
+
         Dialogue();
     }
 
@@ -47,7 +51,7 @@ public class DialogueController : MonoBehaviour
     {
         if (currentMonsterManager == null) return new List<string>();
 
-        string state = monsterStateManager.MonsterState;
+        string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
         return currentMonsterManager.GetDialogue(state);
     }
 
@@ -57,18 +61,33 @@ public class DialogueController : MonoBehaviour
         List<string> activeDialogue = GetActiveDialogue();
         if (activeDialogue == null || activeDialogue.Count == 0)
         {
-            monsterSpeech.text = "";
+            if (typewriter != null)
+                typewriter.SetInstant(string.Empty);
+            else
+                monsterSpeech.text = string.Empty;
+
             brewButtonObject.SetActive(true);
             return;
         }
 
         dialogueIndex = Mathf.Clamp(dialogueIndex, 0, activeDialogue.Count - 1);
-        monsterSpeech.text = activeDialogue[dialogueIndex];
+        string line = activeDialogue[dialogueIndex];
+
+        if (typewriter != null)
+            typewriter.TypeLine(line);
+        else
+            monsterSpeech.text = line;
     }
 
     /* handles Next UI Button clicks (iteration + brew button visibility) */
     public void OnNextPressed()
     {
+        if (typewriter != null && typewriter.IsTyping)
+        {
+            typewriter.SkipTyping();
+            return;
+        }
+
         List<string> activeDialogue = GetActiveDialogue();
         if (activeDialogue == null || activeDialogue.Count == 0)
         {

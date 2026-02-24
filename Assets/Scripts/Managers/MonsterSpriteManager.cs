@@ -13,11 +13,19 @@ public class MonsterSpriteManager : MonoBehaviour
     [SerializeField] private string orderSpriteObjectName = "";
     [SerializeField] private string serveSpriteObjectName = "";
 
+    [Header("Idle animation")]
+    [SerializeField] private float bobAmplitude = 8f;
+    [SerializeField] private float bobFrequency = 0.25f;
+    [SerializeField] private float jitterAmplitude = 4f;
+    [SerializeField] private float jitterFrequency = 16f;
+
     private bool hadTargetsLastFrame;
     private Image lastOrderSpriteRef;
     private Image lastServeSpriteRef;
     private Sprite lastOrderSpriteValue;
     private Sprite lastServeSpriteValue;
+    private Vector2 baseOrderPosition;
+    private Vector2 baseServePosition;
 
     private void Awake()
     {
@@ -78,6 +86,8 @@ public class MonsterSpriteManager : MonoBehaviour
         if (orderBecameNone || serveBecameNone || orderSpriteCleared || serveSpriteCleared || newTargetHasNoSprite || (hasTargets && !hadTargetsLastFrame))
             RefreshSprite();
 
+        ApplyStateAnimation();
+
         hadTargetsLastFrame = hasTargets;
         lastOrderSpriteRef = orderSprite;
         lastServeSpriteRef = serveSprite;
@@ -92,28 +102,16 @@ public class MonsterSpriteManager : MonoBehaviour
         MonsterData monster = currentMonsterManager.Data;
         if (monster == null || monster.sprites == null) return;
 
-        Vector2 orderPos = currentMonsterManager.GetOrderSpritePosition();
-        Vector2 servePos = currentMonsterManager.GetServeSpritePosition();
-        if (orderSprite != null)
-            orderSprite.rectTransform.anchoredPosition = orderPos;
-        if (serveSprite != null)
-            serveSprite.rectTransform.anchoredPosition = servePos;
+        baseOrderPosition = currentMonsterManager.GetOrderSpritePosition();
+        baseServePosition = currentMonsterManager.GetServeSpritePosition();
 
         string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
         string path = ResolveSpritePathForState(monster.sprites, state);
         if (string.IsNullOrEmpty(path)) return;
 
-        Sprite sprite = Resources.Load<Sprite>(path);
-        if (sprite == null)
-        {
-            Debug.LogWarning($"MonsterSpriteManager: Could not load sprite at Resources path '{path}'.");
-            return;
-        }
+        ApplySprite(path);
 
-        if (orderSprite != null)
-            orderSprite.sprite = sprite;
-        if (serveSprite != null)
-            serveSprite.sprite = sprite;
+        ApplyStateAnimation();
     }
 
     private string ResolveSpritePathForState(MonsterSprites sprites, string state)
@@ -141,5 +139,37 @@ public class MonsterSpriteManager : MonoBehaviour
             if (go != null)
                 serveSprite = go.GetComponent<Image>();
         }
+    }
+
+    private void ApplyStateAnimation()
+    {
+        if (orderSprite == null && serveSprite == null) return;
+
+        string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
+        bool isAngry = state == "angry";
+
+        Vector2 offset = isAngry
+            ? AnimationHelper.GetJitterOffset(Time.time, jitterAmplitude, jitterFrequency)
+            : AnimationHelper.GetBobOffset(Time.time, bobAmplitude, bobFrequency);
+
+        if (orderSprite != null)
+            orderSprite.rectTransform.anchoredPosition = baseOrderPosition + offset;
+        if (serveSprite != null)
+            serveSprite.rectTransform.anchoredPosition = baseServePosition + offset;
+    }
+
+    private void ApplySprite(string path)
+    {
+        Sprite sprite = Resources.Load<Sprite>(path);
+        if (sprite == null)
+        {
+            Debug.LogWarning($"MonsterSpriteManager: Could not load sprite at Resources path '{path}'.");
+            return;
+        }
+
+        if (orderSprite != null)
+            orderSprite.sprite = sprite;
+        if (serveSprite != null)
+            serveSprite.sprite = sprite;
     }
 }

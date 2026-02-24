@@ -14,19 +14,104 @@
       "type": "topping",
       "effect": { "x": 0.45, "y": 0.05 }
     },
-    {
-      "id": "moon_shard",
-      "name": "Moon Shard",
-      "description": "Calming, mildly dissociative",
-      "type": "topping",
-      "effect": { "x": 0.00, "y": -0.5 }
-    },
+  
     {
       "id": "magic_mushroom",
       "name": "Magic Mushroom",
       "description": "Elevated, dissociative",
       "type": "topping",
       "effect": { "x": 0.35, "y": 0.30 }
+    },
+    {
+      "id": "lotus_flower",
+      "name": "Lotus Flower",
+      "description": "Very Calming, Grounding",
+      "type": "topping",
+      "effect": { "x": -0.20, "y": -0.40 }
+    },
+    {
+      "id": "unicorn_horn",
+      "name": "Unicorn Horn",
+      "description": "Calming",
+      "type": "topping",
+      "effect": { "x": 0.0, "y": -0.45 }
+    },
+    {
+      "id": "crow_feather",
+      "name": "Crow Feather",
+      "description": "Calming, Strongly grounding",
+      "type": "topping",
+      "effect": { "x": -0.40, "y": -0.10 }
+    },
+    {
+      "id": "forbidden_fruit",
+      "name": "Forbidden Fruit",
+      "description": "Calming",
+      "type": "topping",
+      "effect": { "x": 0.0, "y": -0.30 }
+    },
+    {
+      "id": "brain",
+      "name": "Brain",
+      "description": "Strongly dissociative",
+      "type": "topping",
+      "effect": { "x": 0.45, "y": 0.0 }
+    },
+    {
+      "id": "sword_shard",
+      "name": "Sword Shard",
+      "description": "Dissociative",
+      "type": "topping",
+      "effect": { "x": 0.35, "y": 0.0 }
+    },
+    {
+      "id": "rose_thorn",
+      "name": "Rose Thorn",
+      "description": "Grounding",
+      "type": "topping",
+      "effect": { "x": -0.40, "y": 0.0 }
+    },
+    {
+      "id": "cobweb",
+      "name": "Cobweb",
+      "description": "Very grounding",
+      "type": "topping",
+      "effect": { "x": -0.50, "y": 0.0 }
+    },
+    {
+      "id": "eternal_flame",
+      "name": "Eternal Flame",
+      "description": "Grounding",
+      "type": "topping",
+      "effect": { "x": -0.40, "y": 0.0 }
+    },
+    {
+      "id": "phoenix_feather",
+      "name": "Phoenix Feather",
+      "description": "Quite elevating",
+      "type": "topping",
+      "effect": { "x": 0.0, "y": 0.45 }
+    },
+    {
+      "id": "cupid_arrow",
+      "name": "Cupid Arrow",
+      "description": "Highly dissociative",
+      "type": "topping",
+      "effect": { "x": 0.0, "y": -0.50 }
+    },
+    {
+      "id": "wishbone",
+      "name": "Wishbone",
+      "description": "Elevated",
+      "type": "topping",
+      "effect": { "x": 0.0, "y": 0.35 }
+    },
+    {
+      "id": "pomegranate",
+      "name": "Persephone’s Pomegranate",
+      "description": "Calming, Dissociative",
+      "type": "topping",
+      "effect": { "x": -0.35, "y": -0.10 }
     },
     {
       "id": "blood",
