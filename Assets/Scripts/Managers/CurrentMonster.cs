@@ -7,6 +7,15 @@ public class CurrentMonster : MonoBehaviour
     public static CurrentMonster Instance { get; private set; }
     public event Action<string> OnMonsterChanged;
 
+	private enum NextVisitPlan
+	{
+		None,
+		NextMonsterSameDay,
+		NextDayFirstMonster
+	}
+
+	private NextVisitPlan nextVisitPlan = NextVisitPlan.None;
+
     [Header("Single source of truth")]
     public new string name = "";
 
@@ -154,6 +163,32 @@ public class CurrentMonster : MonoBehaviour
         if (level == null || level.encounters == null || level.encounters.Count == 0) return false;
         return currentEncounterIndex < level.encounters.Count - 1;
     }
+
+	public void PlanNextVisit(bool hasNextMonsterInCurrentLevel)
+	{
+		nextVisitPlan = hasNextMonsterInCurrentLevel
+			? NextVisitPlan.NextMonsterSameDay
+			: NextVisitPlan.NextDayFirstMonster;
+	}
+
+	public void ApplyPlannedVisit()
+	{
+		if (nextVisitPlan == NextVisitPlan.None)
+			return;
+
+		if (nextVisitPlan == NextVisitPlan.NextMonsterSameDay)
+		{
+			AdvanceToNextMonster();
+		}
+		else if (nextVisitPlan == NextVisitPlan.NextDayFirstMonster)
+		{
+			if (GameManager.Instance != null)
+				GameManager.Instance.IncrementDay();
+			ResetToFirstMonster();
+		}
+
+		nextVisitPlan = NextVisitPlan.None;
+	}
 
     public void SetCurrentMonsterName(string monsterName)
     {

@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 2a9c80b308e5bc24b8d3411dcebc3c3d
+guid: 992989230b146f142874865ab089ca9b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2418205243554611849
-    second: Magetender_Unicorn900_0
-  - first:
-      213: 5026309549076253796
-    second: Magetender_Unicorn900_1
-  - first:
-      213: 2288456694326958791
-    second: Magetender_Unicorn900_2
-  - first:
-      213: -7043645194853043842
-    second: Magetender_Unicorn900_3
-  - first:
-      213: -292769566499732930
-    second: Magetender_Unicorn900_4
+      213: 1340197532654558769
+    second: Mage_Drink_sizeNew_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Magetender_Unicorn900_0
+      name: Mage_Drink_sizeNew_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 356
-        width: 8
-        height: 8
+        x: 39
+        y: 29
+        width: 397
+        height: 417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,96 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9824f085bd03f8120800000000000000
-      internalID: 2418205243554611849
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Magetender_Unicorn900_1
-      rect:
-        serializedVersion: 2
-        x: 212
-        y: 0
-        width: 344
-        height: 832
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 46c08d387e901c540800000000000000
-      internalID: 5026309549076253796
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Magetender_Unicorn900_2
-      rect:
-        serializedVersion: 2
-        x: 572
-        y: 293
-        width: 14
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7ca193d1d3b32cf10800000000000000
-      internalID: 2288456694326958791
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Magetender_Unicorn900_3
-      rect:
-        serializedVersion: 2
-        x: 764
-        y: 296
-        width: 11
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e71b5ec9302ff3e90800000000000000
-      internalID: -7043645194853043842
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Magetender_Unicorn900_4
-      rect:
-        serializedVersion: 2
-        x: 767
-        y: 146
-        width: 8
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e320db361afdfebf0800000000000000
-      internalID: -292769566499732930
+      spriteID: 13edab62e86599210800000000000000
+      internalID: 1340197532654558769
       vertices: []
       indices: 
       edges: []
@@ -248,11 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Magetender_Unicorn900_0: 2418205243554611849
-      Magetender_Unicorn900_1: 5026309549076253796
-      Magetender_Unicorn900_2: 2288456694326958791
-      Magetender_Unicorn900_3: -7043645194853043842
-      Magetender_Unicorn900_4: -292769566499732930
+      Mage_Drink_sizeNew_0: 1340197532654558769
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

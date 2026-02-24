@@ -30,18 +30,34 @@
         {
           "level": "level_1",
           "starting": [
-            "Behold! A unicorn graces your establishment.",
-            "Make it elegant. Make it bright. Make it legendary."
+            "Hello MageTender! It is I, Anita Caberneigh, the prettiest Unicorn in town/",
+            "What's that? You haven't heard of me??",
+            "My... you Magetenders really need to get out more. Noses always in your potion books...",
+            "No matter. I am not here to lecture you. I am here for a brew.",
+            "I'm feeling.. a bit too elevated for my liking.",
+            "Don't let my aesthetics fool you, life isn't rainbows and... well unicorns for me.",
+            "Give me a brew that will calm me to a point in which my eyes shall grow heavy and my blood shall warm."
           ],
           "neutral": [
-            "It's... fine. The vibes are slightly misaligned."
+            "It's... fine. The vibes are slightly misaligned.",
+            "But it is clear I have misjudged you, Magetender. Although...",
+            "Not by much",
+            "Farewell until next time! Anita Caberneigh must be on her way.",
+            "What's that, why do I refer to myself in third person?",
+            "...",
+            "Goodbye!"
           ],
           "satisfied": [
-            "Exquisite. I feel my aura improving already."
+            "Ah yes! This calms my blood alright. I feel my eyes growing heavier. I feel... tranquility",
+            "You have done well magetender, please except my GENEROUS tip as a symbol of gratitude",
+            "Farewell until next time!"
           ],
           "angry": [
-            "This is an insult to my lineage.",
-            "Do you know how rare I am??"
+            "Wh-what is this??",
+            "Do you know how rare I am??",
+            "I am a UNICORN. And I am not afraid to use my horn!!",
+            "Put them up, Magetender. You will pay for your erronoeus ways!!"
+
           ]
         }
       ]
