@@ -57,18 +57,9 @@ public class AssessController : MonoBehaviour
     /* call from Assess Next button OnClick: go to next day and show day screen again */
     public void OnNextCustomerPressed()
     {
-        bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
-        if (hasNextMonster)
-        {
-            currentMonsterManager.AdvanceToNextMonster();
-        }
-        else
-        {
-            if (GameManager.Instance != null)
-                GameManager.Instance.IncrementDay();
-            if (currentMonsterManager != null)
-                currentMonsterManager.ResetToFirstMonster();
-        }
+		bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+		if (currentMonsterManager != null)
+			currentMonsterManager.PlanNextVisit(hasNextMonster);
 
         if (!string.IsNullOrEmpty(nextDaySceneName))
             SceneManager.LoadScene(nextDaySceneName);

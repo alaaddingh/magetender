@@ -27,6 +27,9 @@ public class DayScreenController : MonoBehaviour
             if (dc != null) orderScreen = dc.orderScreen;
         }
 
+		if (CurrentMonster.Instance != null)
+			CurrentMonster.Instance.ApplyPlannedVisit();
+
         if (dayPanel != null)
             dayPanel.SetActive(true);
         if (orderScreen != null)
