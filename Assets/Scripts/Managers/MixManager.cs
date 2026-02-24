@@ -1,4 +1,3 @@
-/* purpose of file: store data regarding potion decisions by user */
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -28,8 +27,6 @@ public class MixManager : MonoBehaviour
     public float MoonShineAmount = 0f;
 
     [Header("Base colors (for reference)")]
-
-    /* store each individual base quantity for score-keeping */
     public Color BloodColor = new Color(0.7f, 0.1f, 0.1f, 1f);
     public Color HolyWaterColor = new Color(0.7f, 0.9f, 1f, 1f);
     public Color SpiritsColor = new Color(0.85f, 0.95f, 0.8f, 1f);
@@ -62,6 +59,16 @@ public class MixManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
+    public bool RemoveIngredient(string ingredientKey)
+    {
+        int count = SelectedIngredients.Count;
+        if (count == 0) return false;
+        SelectedIngredients.RemoveAt(count - 1);
+        OnIngredientRemoved?.Invoke(SelectedIngredients[count - 1]);
+        OnStateChanged?.Invoke();
+        return true;
+    }
+
     public void AddDrip(string baseKey, float amount)
     {
         if (BaseAmounts.ContainsKey(baseKey))
@@ -78,7 +85,6 @@ public class MixManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
-    /// <summary>Reduces fill by amount while keeping same color/ratios. Scales all BaseAmounts proportionally. Fires OnStateChanged so mood updates.</summary>
     public void DrainFill(float amount)
     {
         if (FillLevel <= 0f) return;
@@ -93,11 +99,11 @@ public class MixManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
-    // event fired when a drip is added: (baseKey, amount) for scoremanager.cs */
     public Action<string, float> OnDripAdded;
     public Action OnStateChanged;
     public Action<string> OnBottleChanged;
     public Action<string> OnIngredientAdded;
+    public Action<string> OnIngredientRemoved;
 
     private void UpdateBaseDisplay(string baseKey)
     {
@@ -138,7 +144,6 @@ public class MixManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
-    /* call on scene load so next day starts with a clean mix and mood */
     public void ResetForNewDay()
     {
         SelectedBottle = "";

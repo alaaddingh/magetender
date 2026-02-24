@@ -1,4 +1,4 @@
-
+using System;
 using UnityEngine;
 
 /* State machine for monster.
@@ -6,10 +6,31 @@ using UnityEngine;
 public class MonsterStateManager : MonoBehaviour
 {
     public string MonsterState = "start";  /* starting state */
+    public event Action<string> OnStateChanged;
+
+    private string lastState;
+
+    private void Awake()
+    {
+        lastState = MonsterState;
+    }
+
+    private void Update()
+    {
+        if (MonsterState != lastState)
+        {
+            lastState = MonsterState;
+            OnStateChanged?.Invoke(MonsterState);
+        }
+    }
 
     public void SetState(string State)
+    {
+        MonsterState = State;
+        if (MonsterState != lastState)
         {
-           MonsterState = State;
-            
+            lastState = MonsterState;
+            OnStateChanged?.Invoke(MonsterState);
         }
+    }
 }

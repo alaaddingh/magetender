@@ -1,0 +1,92 @@
+{
+  "dialogue": [
+    {
+      "id": "dlg_slime",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "*plops onto the stool*",
+            "Hi. I would like... a drink. Preferably not judgmental."
+          ],
+          "neutral": [
+            "*wiggles*",
+            "Mmm. Acceptable."
+          ],
+          "satisfied": [
+            "*content bubbling*",
+            "Yes... that's the texture."
+          ],
+          "angry": [
+            "*aggressive sloshing*",
+            "NO. WRONG. I am offended on a molecular level."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dlg_unicorn",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "Behold! A unicorn graces your establishment.",
+            "Make it elegant. Make it bright. Make it legendary."
+          ],
+          "neutral": [
+            "It's... fine. The vibes are slightly misaligned."
+          ],
+          "satisfied": [
+            "Exquisite. I feel my aura improving already."
+          ],
+          "angry": [
+            "This is an insult to my lineage.",
+            "Do you know how rare I am??"
+          ]
+        }
+      ]
+    },
+      {
+      "id": "dlg_alien",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "OOH I'm an alien..",
+            "....",
+            "Aren't you impressed??"
+          ],
+          "neutral": [
+            "Not unwordly... but okay "
+          ],
+          "satisfied": [
+            "ZOINKS! that's good"
+          ],
+          "angry": [
+            "BLEEP BLORP ZEEP ZORP!!",
+            "You are making me view earthling magic...unfavorably!"
+          ]
+        },
+         {
+          "level": "level_2",
+          "starting": [
+            "OOH I'm BACKK it's level 2!!",
+            "....",
+            "Aren't you impressed??"
+          ],
+          "neutral": [
+            "Not unwordly... but okay (level 2)"
+          ],
+          "satisfied": [
+            "ZOINKS! that's good (level 2)"
+          ],
+          "angry": [
+            "BLEEP BLORP ZEEP ZORP!!",
+            "You are making me view earthling magic...unfavorably! (level 2)"
+          ]
+        }
+      ]
+
+    }
+  ]
+}
