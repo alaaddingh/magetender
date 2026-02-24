@@ -462,14 +462,15 @@ public class QTECombatManager : MonoBehaviour
 	/* call from Back to bar button OnClick */
 	public void OnBackToBarPressed()
 	{
-		if (GameManager.Instance != null)
+        // Come back to increment day problem later
+		/*if (GameManager.Instance != null)
 		{
 			GameManager.Instance.IncrementDay();
-		}
-		if (!string.IsNullOrEmpty(backToBarSceneName))
-		{
-			SceneManager.LoadScene(backToBarSceneName);
-		}
+		}*/
+        if (!string.IsNullOrEmpty(backToBarSceneName))
+        {
+            SceneManager.LoadScene(backToBarSceneName);
+        }
 	}
 	
 	IEnumerator FlashCustomer()
