@@ -6,9 +6,15 @@
         {
           "level": "level_1",
           "starting": [
-            "*plops onto the stool*",
-            "Hi. I would like... a drink. Preferably not judgmental."
-          ],
+            "GLURRGH… Yo.",
+            "I saw some reviews of this place on Kelp and had to check it out for myself.",
+            "NobleChadwick33 says here that you made him a drink so good that he was speechless for a week.",
+            "I've been feeling heavy all up in my insides and I can't for the slime of me figure out why- GLORGH",
+            "This morning- GLARGHH I woke up in my two bed one bath sewer drain feeling slushed up man.",
+            "Things must've gone out of slime last night because I can't remember a thing- GLURGHH",
+            "I keep hearing this muffled screaming coming from my body which usually doesn't happen.",
+            "So I'm sitting here asking myself, \"what's up?\""
+          ],  
           "neutral": [
             "*wiggles*",
             "Mmm. Acceptable."
@@ -34,20 +40,22 @@
             "What's that? You haven't heard of me??",
             "My... you Magetenders really need to get out more. Noses always in your potion books...",
 		        "What sort of establishment is this anyways? My, you run a dump…",
-            "Well anyways, I am Anita Caberneigh.. Known around these parts as an undeniable beauty.. unless you stand on my bad side",
+            "Well anyways, I am Anita Caberneigh.. Known around these parts as an undeniable beauty..",
+            "unless you stand on my bad side.",
             "But no matter..I am not here to scold you for living under a rock... I am here for a medium brew.",
 		        "Preferably one that will help take the edge off…",
             "You see, being praised for my beauty can get exhausting…",
 	          "Everyday, it’s never-ending beauty pageants, horse pageants, and routine groomings for my mane..",
-	          "Most would KILL to lead the life that Anita does… all except Anita herself",
-            "So don't let my aesthetics fool you, Magetender, life isn't always rainbows and... well unicorns for me.", 
+	          "Most would KILL to lead the life that Anita does… all except Anita herself.",
+            "So don't let my aesthetics fool you, life isn't always rainbows and... well unicorns for me.", 
             "The pressures of perfection are non-forgiving!",
-		        "What I wouldn’t give to experience the present once again, to feel my high-blood pressure settle and actually enjoy the fruits of my labour…"
+		        "What I wouldn’t give to experience the present once again.",
+            "to feel my high-blood pressure settle and actually enjoy the fruits of my labour…"
           ],
           "neutral": [
             "It's... fine. The vibes are slightly misaligned.",
             "It is clear I have misjudged you, Magetender. Although...",
-            "not by much",
+            "not by much.",
             "Farewell until next time! Anita Caberneigh must be on her way.",
             "What's that? Why do I refer to myself in third-person?",
             "...",
@@ -60,7 +68,7 @@
           ],
           "angry": [
             "Wh-what is this??",
-            "My blood-pressure… it has risen",
+            "My blood-pressure… it has risen.",
 		        "Magetender, this drink has not taken my edge off.. quite the opposite actually…",
             "You think Anita is just a prissy pageant pony who won’t stand up for herself??",
             "I am a UNICORN.. And I am NOT afraid to use my horn!!",
