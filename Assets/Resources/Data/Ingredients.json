@@ -3,143 +3,144 @@
     {
       "id": "pixie_dust",
       "name": "Pixie Dust",
-      "description": "Elevates, slightly dissociative",
+      "description": "Elevated, dissociative",
       "type": "topping",
-      "effect": { "x": 0.15, "y": 0.40 }
+      "effect": { "x": 0.53, "y": 0.14 }
     },
-    {
-      "id": "eyeball",
-      "name": "Eyeball",
-      "description": "Strongly dissociative, unsettling",
-      "type": "topping",
-      "effect": { "x": 0.45, "y": 0.05 }
-    },
-  
     {
       "id": "magic_mushroom",
       "name": "Magic Mushroom",
       "description": "Elevated, dissociative",
       "type": "topping",
-      "effect": { "x": 0.35, "y": 0.30 }
+      "effect": { "x": 0.48, "y": 0.27 }
     },
     {
-      "id": "lotus_flower",
-      "name": "Lotus Flower",
-      "description": "Very Calming, Grounding",
+      "id": "eyeball",
+      "name": "Eyeball",
+      "description": "Strongly dissociative, elevated",
       "type": "topping",
-      "effect": { "x": -0.20, "y": -0.40 }
-    },
-    {
-      "id": "unicorn_horn",
-      "name": "Unicorn Horn",
-      "description": "Calming",
-      "type": "topping",
-      "effect": { "x": 0.0, "y": -0.45 }
-    },
-    {
-      "id": "crow_feather",
-      "name": "Crow Feather",
-      "description": "Calming, Strongly grounding",
-      "type": "topping",
-      "effect": { "x": -0.40, "y": -0.10 }
-    },
-    {
-      "id": "forbidden_fruit",
-      "name": "Forbidden Fruit",
-      "description": "Calming",
-      "type": "topping",
-      "effect": { "x": 0.0, "y": -0.30 }
+      "effect": { "x": 0.39, "y": 0.39 }
     },
     {
       "id": "brain",
       "name": "Brain",
-      "description": "Strongly dissociative",
+      "description": "Strongly dissociative, elevated",
       "type": "topping",
-      "effect": { "x": 0.45, "y": 0.0 }
-    },
-    {
-      "id": "sword_shard",
-      "name": "Sword Shard",
-      "description": "Dissociative",
-      "type": "topping",
-      "effect": { "x": 0.35, "y": 0.0 }
-    },
-    {
-      "id": "rose_thorn",
-      "name": "Rose Thorn",
-      "description": "Grounding",
-      "type": "topping",
-      "effect": { "x": -0.40, "y": 0.0 }
-    },
-    {
-      "id": "cobweb",
-      "name": "Cobweb",
-      "description": "Very grounding",
-      "type": "topping",
-      "effect": { "x": -0.50, "y": 0.0 }
-    },
-    {
-      "id": "eternal_flame",
-      "name": "Eternal Flame",
-      "description": "Grounding",
-      "type": "topping",
-      "effect": { "x": -0.40, "y": 0.0 }
-    },
-    {
-      "id": "phoenix_feather",
-      "name": "Phoenix Feather",
-      "description": "Quite elevating",
-      "type": "topping",
-      "effect": { "x": 0.0, "y": 0.45 }
+      "effect": { "x": 0.28, "y": 0.48 }
     },
     {
       "id": "cupid_arrow",
       "name": "Cupid Arrow",
-      "description": "Highly dissociative",
+      "description": "Dissociative, calming",
       "type": "topping",
-      "effect": { "x": 0.0, "y": -0.50 }
+      "effect": { "x": 0.53, "y": -0.14 }
+    },
+    {
+      "id": "eden_apple",
+      "name": "Forbidden Fruit",
+      "description": "Calming, dissociative",
+      "type": "topping",
+      "effect": { "x": 0.48, "y": -0.27 }
+    },
+    {
+      "id": "broken_sword",
+      "name": "Sword Shard",
+      "description": "Dissociative, calming",
+      "type": "topping",
+      "effect": { "x": 0.39, "y": -0.39 }
     },
     {
       "id": "wishbone",
       "name": "Wishbone",
-      "description": "Elevated",
+      "description": "Calming, dissociative",
       "type": "topping",
-      "effect": { "x": 0.0, "y": 0.35 }
+      "effect": { "x": 0.28, "y": -0.48 }
+    },
+
+    {
+      "id": "lotus_flower",
+      "name": "Lotus Flower",
+      "description": "Very calming, grounding",
+      "type": "topping",
+      "effect": { "x": -0.28, "y": -0.48 }
+    },
+    {
+      "id": "unicorn_horn",
+      "name": "Unicorn Horn",
+      "description": "Calming, grounding",
+      "type": "topping",
+      "effect": { "x": -0.39, "y": -0.39 }
+    },
+    {
+      "id": "crow_feather",
+      "name": "Crow Feather",
+      "description": "Calming, strongly grounding",
+      "type": "topping",
+      "effect": { "x": -0.53, "y": -0.14 }
     },
     {
       "id": "pomegranate",
       "name": "Persephone’s Pomegranate",
-      "description": "Calming, Dissociative",
+      "description": "Calming and grounding",
       "type": "topping",
-      "effect": { "x": -0.35, "y": -0.10 }
+      "effect": { "x": -0.48, "y": -0.27 }
+    },
+
+    {
+      "id": "rose_thorn",
+      "name": "Rose Thorn",
+      "description": "Grounding, elevated",
+      "type": "topping",
+      "effect": { "x": -0.48, "y": 0.27 }
+    },
+    {
+      "id": "spiderweb",
+      "name": "Spider Web",
+      "description": "Very grounding, elevated",
+      "type": "topping",
+      "effect": { "x": -0.53, "y": 0.14 }
+    },
+    {
+      "id": "eternal_flame",
+      "name": "Eternal Flame",
+      "description": "Grounding, elevated",
+      "type": "topping",
+      "effect": { "x": -0.39, "y": 0.39 }
+    },
+    {
+      "id": "phoenix_feather",
+      "name": "Phoenix Feather",
+      "description": "Elevated, grounding",
+      "type": "topping",
+      "effect": { "x": -0.28, "y": 0.48 }
     },
     {
       "id": "blood",
       "name": "Blood",
       "description": "Grounding",
       "type": "base",
-      "effect": { "x": -0.30, "y": 0 }
+      "effect": { "x": -0.85, "y": 0 }
     },
     {
       "id": "holy_water",
       "name": "Holy Water",
       "description": "Elevating",
       "type": "base",
-      "effect": { "x": 0, "y": 0.30 }
+      "effect": { "x": 0, "y": 0.85 }
     },
     {
       "id": "spirits",
       "name": "Spirits",
       "description": "Dissociative",
       "type": "base",
-      "effect": { "x": 0.30, "y": 0 }
+      "effect": { "x": 0.85, "y": 0 }
     },
     {
       "id": "moonshine",
       "name": "Moon-Shine",
       "description": "Calming",
       "type": "base",
-      "effect": { "x": 0, "y": -0.30 }
+      "effect": { "x": 0, "y": -0.85 }
     }
   ]
 }

@@ -108,26 +108,54 @@ public class AssessController : MonoBehaviour
             return;
         }
 
-        float angerTolerance = currentMonsterManager.GetAngerTolerance();
         float satisfiedTolerance = currentMonsterManager.GetSatisfiedTolerance();
         float error = 100f - accuracy;
+        bool sameQuadrantAsGoal = IsFinalScoreInGoalQuadrant();
 
-        if (error >= angerTolerance)
+        if (error <= satisfiedTolerance)
         {
-            /* accuracy is too low for monster */
-            FightButton.SetActive(true);
-            MonsterStateManager.SetState("angry");
-        }
-        else if (error <= satisfiedTolerance)
-        {
-            /* accuracy is exceptional */
+            /* inside satisfied circle */
+            if (FightButton != null)
+                FightButton.SetActive(false);
             MonsterStateManager.SetState("satisfied");
+        }
+        else if (sameQuadrantAsGoal)
+        {
+            /* in goal quadrant but outside satisfied circle */
+            if (FightButton != null)
+                FightButton.SetActive(false);
+            MonsterStateManager.SetState("neutral");
         }
         else
         {
-            /* not bad or good */
-            MonsterStateManager.SetState("neutral");
+            /* outside goal quadrant */
+            if (FightButton != null)
+                FightButton.SetActive(true);
+            MonsterStateManager.SetState("angry");
         }
+    }
+
+    private bool IsFinalScoreInGoalQuadrant()
+    {
+        if (scoreManager == null || currentMonsterManager == null)
+            return false;
+
+        ScorePair goal = currentMonsterManager.GetGoalScore();
+        if (goal == null)
+            return false;
+
+        int goalQuadrant = GetQuadrant(goal.x, goal.y);
+        int finalQuadrant = GetQuadrant(scoreManager.CurrMoodBoardX, scoreManager.CurrMoodBoardY);
+        return goalQuadrant != 0 && goalQuadrant == finalQuadrant;
+    }
+
+    private int GetQuadrant(float x, float y)
+    {
+        if (x > 0f && y > 0f) return 1;
+        if (x < 0f && y > 0f) return 2;
+        if (x < 0f && y < 0f) return 3;
+        if (x > 0f && y < 0f) return 4;
+        return 0; // on axis/origin
     }
 }
 

@@ -27,8 +27,11 @@ public class ScoreManager : MonoBehaviour
 
     [Header("tuning knobs")]
     [SerializeField] private float glassScorePercent = 0.3f;
-    [SerializeField] private float baseMaxStepPercent = 0.5f;   
-    [SerializeField] private float toppingStepPercent = 0.35f; 
+    [SerializeField] private float baseMaxStepPercent = 0.7f;   
+    [SerializeField] private float toppingStepPercent = 0.2f; 
+    [SerializeField] private float wrongBottlePenaltyPercent = 0.15f;
+    [SerializeField] private float minToppingInfluenceWhenBaseMisaligned = 0.02f;
+    [SerializeField] private float wrongBottleToppingMultiplier = 0.7f;
     [SerializeField] private bool clampMoodBoard = true;
     [SerializeField] private float clampMin = -1f;
     [SerializeField] private float clampMax = 1f;
@@ -144,11 +147,35 @@ public class ScoreManager : MonoBehaviour
         float x = starting.x;
         float y = starting.y;
 
-        EvalGlassChoice(currentMonster, goal, ref x, ref y);
+        bool correctBottle = EvalGlassChoice(currentMonster, goal, ref x, ref y);
 
-        EvalBaseChoice(ref x, ref y);
+        Vector2 baseTarget;
+        float baseStep;
+        bool hasBase = TryGetBaseBlendTarget(out baseTarget, out baseStep);
+        if (hasBase)
+        {
+            x += baseStep * (baseTarget.x - x);
+            y += baseStep * (baseTarget.y - y);
+        }
 
-        EvalToppingsChoice(ref x, ref y);
+        Vector2 toppingsTarget;
+        float toppingsStep;
+        int toppingCount;
+        bool hasToppings = TryGetToppingsBlendTarget(out toppingsTarget, out toppingsStep, out toppingCount);
+        if (hasToppings)
+        {
+            float baseAlignment = ComputeAlignmentToGoal(
+                new Vector2(starting.x, starting.y),
+                new Vector2(goal.x, goal.y),
+                hasBase ? baseTarget : new Vector2(starting.x, starting.y));
+
+            float baseGate = Mathf.Lerp(minToppingInfluenceWhenBaseMisaligned, 1f, baseAlignment);
+            float bottleGate = correctBottle ? 1f : wrongBottleToppingMultiplier;
+            float finalToppingStep = toppingsStep * baseGate * bottleGate;
+
+            x += finalToppingStep * (toppingsTarget.x - x);
+            y += finalToppingStep * (toppingsTarget.y - y);
+        }
 
         CurrMoodBoardX = x;
         CurrMoodBoardY = y;
@@ -160,15 +187,21 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private void EvalGlassChoice(MonsterData currentMonster, ScorePair goal, ref float x, ref float y)
+    private bool EvalGlassChoice(MonsterData currentMonster, ScorePair goal, ref float x, ref float y)
     {
-        if (mixManager == null || currentMonster == null || goal == null || string.IsNullOrEmpty(mixManager.SelectedBottle)) return;
+        if (mixManager == null || currentMonster == null || goal == null || string.IsNullOrEmpty(mixManager.SelectedBottle))
+            return false;
 
         if (mixManager.SelectedBottle == currentMonster.glassPreference)
         {
             x += glassScorePercent * (goal.x - x);
             y += glassScorePercent * (goal.y - y);
+            return true;
         }
+
+        x -= wrongBottlePenaltyPercent * (goal.x - x);
+        y -= wrongBottlePenaltyPercent * (goal.y - y);
+        return false;
     }
 
     /* map key used in mix mannager to ingredient id in JSON */
@@ -204,18 +237,18 @@ public class ScoreManager : MonoBehaviour
         return null;
     }
 
-    /* for each base Eval its drips
-       and tug CurrMoodBoardX/Y by `stepPercent` toward 
-       the base's destination from ingredients.json.
-       
-    */
-    private void EvalBaseChoice(ref float x, ref float y)
+    private bool TryGetBaseBlendTarget(out Vector2 target, out float stepPercent)
     {
-        if (mixManager.FillLevel <= 0f) return;
+        target = Vector2.zero;
+        stepPercent = 0f;
+        if (mixManager == null || mixManager.FillLevel <= 0f) return false;
 
         float totalFill = mixManager.FillLevel;
         float fillStrength = Mathf.Clamp01(mixManager.FillLevel);
-        float stepPercent = baseMaxStepPercent * fillStrength;
+        stepPercent = baseMaxStepPercent * fillStrength;
+        float weightedTargetX = 0f;
+        float weightedTargetY = 0f;
+        float totalValidWeight = 0f;
 
         foreach (var kvp in mixManager.BaseAmounts)
         {
@@ -227,28 +260,63 @@ public class ScoreManager : MonoBehaviour
             if (eff == null) continue;
 
             float weight = amount / totalFill;
-            x += stepPercent * weight * (eff.x - x);
-            y += stepPercent * weight * (eff.y - y);
+            weightedTargetX += eff.x * weight;
+            weightedTargetY += eff.y * weight;
+            totalValidWeight += weight;
         }
+
+        if (totalValidWeight <= 0f) return false;
+
+        weightedTargetX /= totalValidWeight;
+        weightedTargetY /= totalValidWeight;
+        target = new Vector2(weightedTargetX, weightedTargetY);
+        return true;
     }
 
 
-    /* similar to base choice, nudges towards ingredients.json but by 35% */
-    private void EvalToppingsChoice(ref float x, ref float y)
+    private bool TryGetToppingsBlendTarget(out Vector2 target, out float combinedStep, out int validCount)
     {
+        target = Vector2.zero;
+        combinedStep = 0f;
+        validCount = 0;
+        if (mixManager == null) return false;
+
         if (mixManager.SelectedIngredients == null || mixManager.SelectedIngredients.Count == 0)
         {
-            return;
+            return false;
         }
+
+        float avgX = 0f;
+        float avgY = 0f;
 
         foreach (var ingredientKey in mixManager.SelectedIngredients)
         {
             var eff = GetEffectForIngredient(ingredientKey);
             if (eff == null) continue;
 
-            x += toppingStepPercent * (eff.x - x);
-            y += toppingStepPercent * (eff.y - y);
+            avgX += eff.x;
+            avgY += eff.y;
+            validCount++;
         }
+
+        if (validCount <= 0) return false;
+
+        avgX /= validCount;
+        avgY /= validCount;
+        target = new Vector2(avgX, avgY);
+        combinedStep = 1f - Mathf.Pow(1f - toppingStepPercent, validCount);
+        return true;
+    }
+
+    private float ComputeAlignmentToGoal(Vector2 starting, Vector2 goal, Vector2 baseTarget)
+    {
+        Vector2 toGoal = goal - starting;
+        Vector2 toBase = baseTarget - starting;
+        if (toGoal.sqrMagnitude <= 0.0001f || toBase.sqrMagnitude <= 0.0001f)
+            return 0f;
+
+        float dot = Vector2.Dot(toGoal.normalized, toBase.normalized);
+        return Mathf.Clamp01((dot + 1f) * 0.5f);
     }
 
     private void OnDestroy()

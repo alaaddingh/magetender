@@ -13,6 +13,7 @@ public class DialogueController : MonoBehaviour
 {
     [Header("UI variables")]
     [SerializeField] private TMP_Text monsterSpeech;
+    [SerializeField] private TMP_Text monsterName;
     [SerializeField] private DialogueTypewriter typewriter;
 
     [Header("Buttons")]
@@ -33,16 +34,32 @@ public class DialogueController : MonoBehaviour
 
     private int dialogueIndex = 0;
 
+    private void Awake()
+    {
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
+    }
+
+    private void OnEnable()
+    {
+        if (currentMonsterManager != null)
+            currentMonsterManager.OnMonsterChanged += HandleMonsterChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (currentMonsterManager != null)
+            currentMonsterManager.OnMonsterChanged -= HandleMonsterChanged;
+    }
+
     private void Start()
     {
         brewButtonObject.SetActive(false);
 
-        if (currentMonsterManager == null)
-            currentMonsterManager = CurrentMonster.Instance;
-
         if (typewriter == null && monsterSpeech != null)
             typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
 
+        UpdateMonsterName();
         Dialogue();
     }
 
@@ -118,5 +135,24 @@ public class DialogueController : MonoBehaviour
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
         selectingGlassScreen.SetActive(true);
+    }
+
+    private void HandleMonsterChanged(string _)
+    {
+        dialogueIndex = 0;
+        UpdateMonsterName();
+        Dialogue();
+    }
+
+    private void UpdateMonsterName()
+    {
+        if (monsterName == null) return;
+        if (currentMonsterManager == null || currentMonsterManager.Data == null)
+        {
+            monsterName.text = string.Empty;
+            return;
+        }
+
+        monsterName.text = currentMonsterManager.Data.name;
     }
 }

@@ -2045,8 +2045,11 @@ MonoBehaviour:
   CurrMoodBoardY: 0
   ScoreDisplay: {fileID: 2073579210}
   glassScorePercent: 0.3
-  baseMaxStepPercent: 1
-  toppingStepPercent: 0.35
+  baseMaxStepPercent: 0.7
+  toppingStepPercent: 0.2
+  wrongBottlePenaltyPercent: 0.15
+  minToppingInfluenceWhenBaseMisaligned: 0.02
+  wrongBottleToppingMultiplier: 0.7
   clampMoodBoard: 1
   clampMin: -1
   clampMax: 1
@@ -2416,7 +2419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &526496291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4239,14 +4242,14 @@ MonoBehaviour:
   mediumBottleUI: {fileID: 1003164639}
   largeBottleUI: {fileID: 730946031}
   mixManager: {fileID: 9305688}
-  dropSpawnInterval: 0.1
+  dropSpawnInterval: 0.08
   dropSize: 40
   dropSpawnOffsetY: 0
   nextButton: {fileID: 1821739358}
   CurrentScreen: {fileID: 1228855948}
   NextScreen: {fileID: 906567377}
   PreviousScreen: {fileID: 832843223}
-  fillAmountPerDrop: 0.01
+  fillAmountPerDrop: 0.05
   maxFillLevel: 1
   fillWidthMultiplier: 0
   fillHeightMultiplier: 0.8
@@ -4254,7 +4257,7 @@ MonoBehaviour:
   baseBottlePosSmall: {x: 0, y: -260}
   baseBottlePosMedium: {x: 0, y: -240}
   baseBottlePosLarge: {x: 0, y: -220}
-  drainRatePerSecond: 0.1
+  drainRatePerSecond: 40
   trashRect: {fileID: 1822492698}
 --- !u!1 &879334103
 GameObject:
@@ -5916,6 +5919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterSpeech: {fileID: 1601185387}
+  monsterName: {fileID: 0}
   typewriter: {fileID: 0}
   brewButtonObject: {fileID: 42081995}
   currentMonsterManager: {fileID: 1245897901}
@@ -7146,6 +7150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterSpeech: {fileID: 660517148}
+  monsterName: {fileID: 0}
   typewriter: {fileID: 0}
   brewButtonObject: {fileID: 42081995}
   currentMonsterManager: {fileID: 1245897901}
@@ -7633,7 +7638,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1909847249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

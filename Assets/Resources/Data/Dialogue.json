@@ -30,38 +30,47 @@
         {
           "level": "level_1",
           "starting": [
-            "Hello MageTender! It is I, Anita Caberneigh, the prettiest Unicorn in town/",
+            "Hello Magetender! It is I, the one and only Unicorn in town!",
             "What's that? You haven't heard of me??",
             "My... you Magetenders really need to get out more. Noses always in your potion books...",
-            "No matter. I am not here to lecture you. I am here for a brew.",
-            "I'm feeling.. a bit too elevated for my liking.",
-            "Don't let my aesthetics fool you, life isn't rainbows and... well unicorns for me.",
-            "Give me a brew that will calm me to a point in which my eyes shall grow heavy and my blood shall warm."
+		        "What sort of establishment is this anyways? My, you run a dump…",
+            "Well anyways, I am Anita Caberneigh.. Known around these parts as an undeniable beauty.. unless you stand on my bad side",
+            "But no matter..I am not here to scold you for living under a rock... I am here for a medium brew.",
+		        "Preferably one that will help take the edge off…",
+            "You see, being praised for my beauty can get exhausting…",
+	          "Everyday, it’s never-ending beauty pageants, horse pageants, and routine groomings for my mane..",
+	          "Most would KILL to lead the life that Anita does… all except Anita herself",
+            "So don't let my aesthetics fool you, Magetender, life isn't always rainbows and... well unicorns for me.", 
+            "The pressures of perfection are non-forgiving!",
+		        "What I wouldn’t give to experience the present once again, to feel my high-blood pressure settle and actually enjoy the fruits of my labour…"
           ],
           "neutral": [
             "It's... fine. The vibes are slightly misaligned.",
-            "But it is clear I have misjudged you, Magetender. Although...",
-            "Not by much",
+            "It is clear I have misjudged you, Magetender. Although...",
+            "not by much",
             "Farewell until next time! Anita Caberneigh must be on her way.",
-            "What's that, why do I refer to myself in third person?",
+            "What's that? Why do I refer to myself in third-person?",
             "...",
             "Goodbye!"
           ],
           "satisfied": [
-            "Ah yes! This calms my blood alright. I feel my eyes growing heavier. I feel... tranquility",
-            "You have done well magetender, please except my GENEROUS tip as a symbol of gratitude",
+            "Ah yes! This calms my blood alright. I feel... tranquil.",
+            "You have done well Magetender, please accept my GENEROUS tip as a symbol of gratitude.",
             "Farewell until next time!"
           ],
           "angry": [
             "Wh-what is this??",
-            "Do you know how rare I am??",
-            "I am a UNICORN. And I am not afraid to use my horn!!",
-            "Put them up, Magetender. You will pay for your erronoeus ways!!"
-
+            "My blood-pressure… it has risen",
+		        "Magetender, this drink has not taken my edge off.. quite the opposite actually…",
+            "You think Anita is just a prissy pageant pony who won’t stand up for herself??",
+            "I am a UNICORN.. And I am NOT afraid to use my horn!!",
+            "I hope you're well-equipped for a bout, Magetender. You will pay for your erroneous ways!!"
           ]
         }
       ]
     },
+
+   
       {
       "id": "dlg_alien",
       "levels": [
