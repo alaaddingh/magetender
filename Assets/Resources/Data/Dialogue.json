@@ -6,26 +6,31 @@
         {
           "level": "level_1",
           "starting": [
-            "GLURRGH… Yo.",
+            "*GLURRGH*… Hi.",
             "I saw some reviews of this place on Kelp and had to check it out for myself.",
-            "NobleChadwick33 says here that you made him a drink so good that he was speechless for a week.",
-            "I've been feeling heavy all up in my insides and I can't for the slime of me figure out why- GLORGH",
-            "This morning- GLARGHH I woke up in my two bed one bath sewer drain feeling slushed up man.",
-            "Things must've gone out of slime last night because I can't remember a thing- GLURGHH",
-            "I keep hearing this muffled screaming coming from my body which usually doesn't happen.",
-            "So I'm sitting here asking myself, \"what's up?\""
-          ],  
+            "NobleChadwick33 says here that you made him a drink so good he quit his desk job to pursue his love for juggling.",
+            "*GLAURHG* I think I need some of that fire you put in him and A LOT of it.",
+            "I’ve been feeling jumbled all up in my insides and I can’t for the slime of me figure out why *GLORGH*.",
+            "This morning *GLARGHH* I woke up in my two bed one bath sewer drain feeling slushed up. Things must’ve gotten out of slime last night because I can’t remember a thing. *GLURGHH*",
+            "Last I recall I was talking to some guy. One moment he’s in front of me, the next he disappears. It was the strangest *GLARGHH* I’ve ever seen.",
+            "Now I keep hearing this muffled screaming coming from my body which usually doesn’t happen so I’m sitting here asking myself, \"=what’s going on?\"",
+            "You gotta help me prick this in the bud because it's been sliming with me all day.",
+            "If you could brew up something grand that will go down silky smooth and bring me back to my senses I would be forever in your *GLAURGH*"
+          ],
           "neutral": [
-            "*wiggles*",
-            "Mmm. Acceptable."
+            "*GLOURGH* Hmm… Well it’s definitely a drink.",
+            "It’s not bad but… not great.",
+            "Maybe I should’ve looked at some other reviews."
           ],
           "satisfied": [
-            "*content bubbling*",
-            "Yes... that's the texture."
+            "*Happy GLORGH* WOW! I haven’t felt this way since I was a little globule.",
+            "You know how to make a drink alright. I’ll have to let the rest of my sewer complex know about this place.",
+            "Here’s a little something for making my slime tingle."
           ],
           "angry": [
-            "*aggressive sloshing*",
-            "NO. WRONG. I am offended on a molecular level."
+            "*Angry GLOARGH* What the slime is this!?",
+            "You think I’m just some sludge you can use as a trash can? This is like *GLORUGH* totally not cool.",
+            "This one star rating won’t be the only thing hitting you in the face!"
           ]
         }
       ]
