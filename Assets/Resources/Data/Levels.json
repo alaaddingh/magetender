@@ -18,7 +18,7 @@
           {
           "monster_id": "alien",
           "tolerances": {
-            "satisfied_tolerance": 2.2
+            "satisfied_tolerance": 3
           },
           "starting_score": { "x": 0.5, "y": 0.5 },
           "goal_score": { "x": -0.35, "y": 0.20}, 
