@@ -13,7 +13,7 @@
             "I’ve been feeling jumbled all up in my insides and I can’t for the slime of me figure out why *GLORGH*.",
             "This morning *GLARGHH* I woke up in my two bed one bath sewer drain feeling slushed up. Things must’ve gotten out of slime last night because I can’t remember a thing. *GLURGHH*",
             "Last I recall I was talking to some guy. One moment he’s in front of me, the next he disappears. It was the strangest *GLARGHH* I’ve ever seen.",
-            "Now I keep hearing this muffled screaming coming from my body which usually doesn’t happen so I’m sitting here asking myself, \"=what’s going on?\"",
+            "Now I keep hearing this muffled screaming coming from my body which usually doesn’t happen so I’m sitting here asking myself, \"what’s going on?\"",
             "You gotta help me prick this in the bud because it's been sliming with me all day.",
             "If you could brew up something grand that will go down silky smooth and bring me back to my senses I would be forever in your *GLAURGH*"
           ],
@@ -41,7 +41,7 @@
         {
           "level": "level_1",
           "starting": [
-            "Hello Magetender! It is I, the one and only Unicorn in town!",
+            "Hello Magetender! It is I, Anita Caberneigh, the prettiest Unicorn in town.",
             "What's that? You haven't heard of me??",
             "My... you Magetenders really need to get out more. Noses always in your potion books...",
 		        "What sort of establishment is this anyways? My, you run a dump…",
@@ -82,36 +82,32 @@
         }
       ]
     },
-
-   
-      {
+    {
       "id": "dlg_alien",
       "levels": [
         {
           "level": "level_1",
           "starting": [
-            "Hey, fellow adult! I’ll just get the usual, heh.",
-            "You need some ID? I’m a quadrillion years old! Way over the legal drinking age of you earthlings.",
-            "See, told you I’m old enough. It’s my skincare, you know. Mucus from the snails of Draugr.", 
-            "Keeps me looking young!",
-            "Anyways, I’m looking to feel a little bit more ‘down to Earth’. Hehe, see what I did there?",
-             "But really, I need to get used to the gravity here."
-          ],
-          "satisfied": [
-            "Wow! This is the stuff. It’s like I’m standing back on my home planet, but not…",
-            "You earthlings really know your drinks! I’ll have to let all the Glorplings know of this tavern, MageTender! Till we meet again!"
+            "Hey, fellow adult! I'll just get the usual, heh.",
+            "You need some ID? I'm a quadrillion years old! Way over the legal drinking age of you Earthlings.",
+            "See, told you I'm old enough. It's my skincare, you know.",
+            "Mucus from the snails of Draugr. Keeps me looking young!",
+            "Anyways, I'm looking to feel a little bit more 'down to Earth'. Hehe, see what I did there?",
+            "But really, I need to get used to the gravity here"
           ],
           "neutral": [
             "I suppose this will do. Not quite like the drinks I had when I stopped by Janssen… But I am satisfied."
           ],
+          "satisfied": [
+            "Wow! This is the stuff. It's like I'm standing back on my home planet, but not…",
+            "You Earthlings really know your drinks! I'll have to let all the Glorplings know of this tavern, MageTender!"
+          ],
           "angry": [
             "What is this? How dare you! The only one allowed to make a fool out of me is me!",
-            "I hope you have been trained in battle since before you were born. I have quadrillions of years of experience on you!",
-            "I’m trained in Martian Martial Arts, I’ll have you know!"
+            "I'm trained in Martian Martial Arts, I'll have you know!"
           ]
         },
-
-         {
+        {
           "level": "level_2",
           "starting": [
             "OOH I'm BACKK it's level 2!!",
@@ -130,7 +126,6 @@
           ]
         }
       ]
-
     }
   ]
 }
