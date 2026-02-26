@@ -17,9 +17,9 @@
     {
       "id": "eyeball",
       "name": "Eyeball",
-      "description": "Strongly dissociative, elevated",
+      "description": "Strongly calming, elevated",
       "type": "topping",
-      "effect": { "x": 0.39, "y": 0.39 }
+      "effect": { "x": -0.70, "y": 0.1 }
     },
     {
       "id": "brain",

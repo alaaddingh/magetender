@@ -7,6 +7,15 @@
       
       "encounters": [
           {
+          "monster_id": "alien",
+          "tolerances": {
+            "satisfied_tolerance": 2.2
+          },
+          "starting_score": { "x": 0.5, "y": 0.5 },
+          "goal_score": { "x": -0.35, "y": 0.20}, 
+          "dialogue_key": "level_1"
+        },
+          {
           "monster_id": "slime",
           "tolerances": {
             "satisfied_tolerance": 0.5
@@ -24,19 +33,7 @@
           "starting_score": { "x": -0.5, "y": 0.5 },
           "goal_score": { "x": -0.58, "y": -0.12 },
           "dialogue_key": "level_1"
-        },
-      
-       
-                {
-          "monster_id": "alien",
-          "tolerances": {
-            "anger_tolerance": 30,
-            "satisfied_tolerance": 20
-          },
-          "starting_score": { "x": 0.5, "y": 0.5 },
-          "goal_score": { "x": -0.5, "y": -0.3 },
-          "dialogue_key": "level_1"
-        }
+        }  
 
       ]
     },
@@ -47,11 +44,10 @@
         {
           "monster_id": "alien",
           "tolerances": {
-            "anger_tolerance": 15,
-            "satisfied_tolerance": 10
+            "satisfied_tolerance": 1.2
           },
           "starting_score": { "x": 0.5, "y": 0.5 },
-          "goal_score": { "x": -0.5, "y": -0.3 },
+          "goal_score": { "x": -0.4, "y": 0.35 }, 
           "dialogue_key": "level_2"
         }
       ]

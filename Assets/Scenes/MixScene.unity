@@ -2045,9 +2045,11 @@ MonoBehaviour:
   CurrMoodBoardY: 0
   ScoreDisplay: {fileID: 2073579210}
   glassScorePercent: 0.3
+  glassFinalInfluencePercent: 0.3
   baseMaxStepPercent: 0.7
   toppingStepPercent: 0.2
   wrongBottlePenaltyPercent: 0.15
+  wrongBottleFinalPenaltyPercent: 0.2
   minToppingInfluenceWhenBaseMisaligned: 0.02
   wrongBottleToppingMultiplier: 0.7
   clampMoodBoard: 1
@@ -2419,7 +2421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &526496291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11099,7 +11101,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &2128562757
 RectTransform:

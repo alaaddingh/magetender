@@ -27,9 +27,11 @@ public class ScoreManager : MonoBehaviour
 
     [Header("tuning knobs")]
     [SerializeField] private float glassScorePercent = 0.3f;
+    [SerializeField] private float glassFinalInfluencePercent = 0.3f;
     [SerializeField] private float baseMaxStepPercent = 0.7f;   
     [SerializeField] private float toppingStepPercent = 0.2f; 
     [SerializeField] private float wrongBottlePenaltyPercent = 0.15f;
+    [SerializeField] private float wrongBottleFinalPenaltyPercent = 0.2f;
     [SerializeField] private float minToppingInfluenceWhenBaseMisaligned = 0.02f;
     [SerializeField] private float wrongBottleToppingMultiplier = 0.7f;
     [SerializeField] private bool clampMoodBoard = true;
@@ -177,6 +179,8 @@ public class ScoreManager : MonoBehaviour
             y += finalToppingStep * (toppingsTarget.y - y);
         }
 
+        ApplyFinalGlassInfluence(goal, correctBottle, ref x, ref y);
+
         CurrMoodBoardX = x;
         CurrMoodBoardY = y;
 
@@ -192,7 +196,12 @@ public class ScoreManager : MonoBehaviour
         if (mixManager == null || currentMonster == null || goal == null || string.IsNullOrEmpty(mixManager.SelectedBottle))
             return false;
 
-        if (mixManager.SelectedBottle == currentMonster.glassPreference)
+        string selectedBottle = mixManager.SelectedBottle.Trim().ToLowerInvariant();
+        string preferredBottle = currentMonster.glassPreference != null
+            ? currentMonster.glassPreference.Trim().ToLowerInvariant()
+            : string.Empty;
+
+        if (selectedBottle == preferredBottle)
         {
             x += glassScorePercent * (goal.x - x);
             y += glassScorePercent * (goal.y - y);
@@ -202,6 +211,22 @@ public class ScoreManager : MonoBehaviour
         x -= wrongBottlePenaltyPercent * (goal.x - x);
         y -= wrongBottlePenaltyPercent * (goal.y - y);
         return false;
+    }
+
+    private void ApplyFinalGlassInfluence(ScorePair goal, bool correctBottle, ref float x, ref float y)
+    {
+        if (goal == null) return;
+
+        if (correctBottle)
+        {
+            x += glassFinalInfluencePercent * (goal.x - x);
+            y += glassFinalInfluencePercent * (goal.y - y);
+        }
+        else
+        {
+            x -= wrongBottleFinalPenaltyPercent * (goal.x - x);
+            y -= wrongBottleFinalPenaltyPercent * (goal.y - y);
+        }
     }
 
     /* map key used in mix mannager to ingredient id in JSON */

@@ -16,7 +16,7 @@
     },
      {
       "id": "slime",
-      "name": "Sloshberg Florpton",
+      "name": "Slimuel Sluggington",
       "glassPreference": "large",
 
       "sprites": {
@@ -31,7 +31,7 @@
      {
       "id": "alien",
       "name": "Zip Zorp the Glorp",
-      "glassPreference": "small",
+      "glassPreference": "large",
 
       "sprites": {
         "neutral": "Art/Monsters/Alien/alien_neutral",

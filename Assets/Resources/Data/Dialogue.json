@@ -85,21 +85,25 @@
         {
           "level": "level_1",
           "starting": [
-            "OOH I'm an alien..",
-            "....",
-            "Aren't you impressed??"
-          ],
-          "neutral": [
-            "Not unwordly... but okay "
+            "Hey, fellow adult! I’ll just get the usual, heh.",
+            "You need some ID? I’m a quadrillion years old! Way over the legal drinking age of you earthlings.",
+            "See, told you I’m old enough. It’s my skincare, you know. Mucus from the snails of Draugr. Keeps me looking young!",
+            "Anyways, I’m looking to feel a little bit more ‘down to Earth’. Hehe, see what I did there? But really, I need to get used to the gravity here."
           ],
           "satisfied": [
-            "ZOINKS! that's good"
+            "Wow! This is the stuff. It’s like I’m standing back on my home planet, but not…",
+            "You earthlings really know your drinks! I’ll have to let all the Glorplings know of this tavern, MageTender! Till we meet again!"
+          ],
+          "neutral": [
+            "I suppose this will do. Not quite like the drinks I had when I stopped by Janssen… But I am satisfied."
           ],
           "angry": [
-            "BLEEP BLORP ZEEP ZORP!!",
-            "You are making me view earthling magic...unfavorably!"
+            "What is this? How dare you! The only one allowed to make a fool out of me is me!",
+            "I hope you have been trained in battle since before you were born. I have quadrillions of years of experience on you!",
+            "I’m trained in Martian Martial Arts, I’ll have you know!"
           ]
         },
+
          {
           "level": "level_2",
           "starting": [
