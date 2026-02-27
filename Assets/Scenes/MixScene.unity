@@ -3062,13 +3062,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
-  titleText: {fileID: 0}
-  valueText: {fileID: 0}
+  tooltipText: {fileID: 1090703556}
   label: goal mood
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
-  extremeThreshold: 0.6
-  mildThreshold: 0.2
 --- !u!1 &649498983
 GameObject:
   m_ObjectHideFlags: 0
@@ -6507,13 +6504,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
-  titleText: {fileID: 0}
-  valueText: {fileID: 0}
+  tooltipText: {fileID: 1090703556}
   label: current mood
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
-  extremeThreshold: 0.6
-  mildThreshold: 0.2
 --- !u!1 &1377992929
 GameObject:
   m_ObjectHideFlags: 0
@@ -8634,7 +8628,7 @@ MonoBehaviour:
   scoreManager: {fileID: 440574829}
   graphRect: {fileID: 415680509}
   markerRect: {fileID: 1327146925}
-  goalMarkerRect: {fileID: 639295278}
+  goalMarkerRect: {fileID: 0}
   nameText: {fileID: 1413550741}
   minX: -1
   maxX: 1
