@@ -12,6 +12,12 @@ public class MoodGraphUI : MonoBehaviour
     [SerializeField] private RectTransform goalMarkerRect;
     [SerializeField] private TMP_Text nameText;
 
+    [Header("data source")]
+    [SerializeField] private CurrentMonster currentMonster;
+
+    [Header("behavior")]
+    [SerializeField] private bool useStartingScoreFallbackForCurrentMarker = true;
+
     [Header("graph range")]
     [SerializeField] private float minX = -1f;
     [SerializeField] private float maxX = 1f;
@@ -24,31 +30,35 @@ public class MoodGraphUI : MonoBehaviour
     private string lastMonsterId = "";
     private float lastX = float.NaN;
     private float lastY = float.NaN;
+    private float lastGoalX = float.NaN;
+    private float lastGoalY = float.NaN;
 
     private void Awake()
     {
         if (scoreManager == null)
             scoreManager = FindFirstObjectByType<ScoreManager>();
-    }
 
-    private void Start()
-    {
-        RefreshAll(true);
+        if (currentMonster == null)
+            currentMonster = CurrentMonster.Instance;
     }
 
     private void OnEnable()
     {
-        lastX = float.NaN;
-        lastY = float.NaN;
-        RefreshAll(true);
+        if (currentMonster == null)
+            currentMonster = CurrentMonster.Instance;
+
+        if (currentMonster != null)
+            currentMonster.OnMonsterChanged += HandleMonsterChanged;
     }
 
-    /* call when showing order screen after new day so graph shows starting mood */
-    public void ForceRefresh()
+    private void OnDisable()
     {
-        lastX = float.NaN;
-        lastY = float.NaN;
-        lastMonsterId = "";
+        if (currentMonster != null)
+            currentMonster.OnMonsterChanged -= HandleMonsterChanged;
+    }
+
+    private void Start()
+    {
         RefreshAll(true);
     }
 
@@ -57,14 +67,31 @@ public class MoodGraphUI : MonoBehaviour
         RefreshAll(false);
     }
 
+    private void HandleMonsterChanged(string _)
+    {
+        //force update of both markers + name when encounter changes
+        ForceRefresh();
+    }
+
+    public void ForceRefresh()
+    {
+        lastMonsterId = "";
+        lastX = float.NaN;
+        lastY = float.NaN;
+        lastGoalX = float.NaN;
+        lastGoalY = float.NaN;
+
+        RefreshAll(true);
+    }
+
     private void RefreshAll(bool force)
     {
-        if (scoreManager == null) return;
+        //resolve current monster source
+        if (currentMonster == null)
+            currentMonster = CurrentMonster.Instance;
 
-        MonsterData monster = scoreManager.GetCurrentMonster();
-        ScorePair starting = scoreManager.GetCurrentStartingScore();
-        ScorePair goal = scoreManager.GetCurrentGoalScore();
-        if (monster == null || starting == null || goal == null)
+        MonsterData monster = currentMonster != null ? currentMonster.Data : null;
+        if (monster == null)
         {
             SetMarkerVisible(markerRect, false);
             SetMarkerVisible(goalMarkerRect, false);
@@ -73,7 +100,6 @@ public class MoodGraphUI : MonoBehaviour
         }
 
         bool monsterChanged = force || monster.id != lastMonsterId;
-
         if (monsterChanged)
         {
             lastMonsterId = monster.id;
@@ -81,37 +107,72 @@ public class MoodGraphUI : MonoBehaviour
             if (nameText != null)
                 nameText.text = monster.name;
 
-            Vector2 goalPos = new Vector2(goal.x, goal.y);
-            SetMarkerVisible(goalMarkerRect, true);
-            UpdateMarkerPosition(goalMarkerRect, goalPos);
+            
+            lastGoalX = float.NaN;
+            lastGoalY = float.NaN;
         }
 
-        float x;
-        float y;
-        if (force)
+        bool hasLiveMood = scoreManager != null;
+        float x = hasLiveMood ? scoreManager.CurrMoodBoardX : 0f;
+        float y = hasLiveMood ? scoreManager.CurrMoodBoardY : 0f;
+
+        if (!hasLiveMood && useStartingScoreFallbackForCurrentMarker && currentMonster != null)
         {
-            x = starting.x;
-            y = starting.y;
+            ScorePair start = currentMonster.GetStartingScore();
+            if (start != null)
+            {
+                x = start.x;
+                y = start.y;
+                hasLiveMood = true;
+            }
+        }
+
+        if (hasLiveMood)
+        {
+            bool moodChanged =
+                force ||
+                float.IsNaN(lastX) ||
+                Mathf.Abs(x - lastX) > updateEpsilon ||
+                Mathf.Abs(y - lastY) > updateEpsilon;
+
+            if (moodChanged)
+            {
+                lastX = x;
+                lastY = y;
+
+                SetMarkerVisible(markerRect, true);
+                UpdateMarkerPosition(markerRect, new Vector2(x, y));
+            }
         }
         else
         {
-            x = scoreManager.CurrMoodBoardX;
-            y = scoreManager.CurrMoodBoardY;
+            SetMarkerVisible(markerRect, false);
         }
 
-        bool moodChanged =
+        ScorePair goal = currentMonster != null ? currentMonster.GetGoalScore() : null;
+        if (goal == null)
+        {
+            SetMarkerVisible(goalMarkerRect, false);
+            return;
+        }
+
+        float gx = goal.x;
+        float gy = goal.y;
+
+        bool goalChanged =
             force ||
-            float.IsNaN(lastX) ||
-            Mathf.Abs(x - lastX) > updateEpsilon ||
-            Mathf.Abs(y - lastY) > updateEpsilon;
+            float.IsNaN(lastGoalX) ||
+            Mathf.Abs(gx - lastGoalX) > updateEpsilon ||
+            Mathf.Abs(gy - lastGoalY) > updateEpsilon;
 
-        if (!moodChanged) return;
+        if (goalChanged)
+        {
+            lastGoalX = gx;
+            lastGoalY = gy;
 
-        lastX = x;
-        lastY = y;
-
-        SetMarkerVisible(markerRect, true);
-        UpdateMarkerPosition(markerRect, new Vector2(x, y));
+            SetMarkerVisible(goalMarkerRect, true);
+            UpdateMarkerPosition(goalMarkerRect, new Vector2(gx, gy));
+        }
     }
 
     private void UpdateMarkerPosition(RectTransform rect, Vector2 mood)
@@ -151,7 +212,6 @@ public class MoodGraphUI : MonoBehaviour
         ClampMarkerInsideGraph(rect);
     }
 
-    // Helper function ensures marker stays in bounds
     private void ClampMarkerInsideGraph(RectTransform rect)
     {
         if (graphRect == null || rect == null) return;
