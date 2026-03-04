@@ -56,10 +56,10 @@ public class DayScreenController : MonoBehaviour
 
         if (dayText != null)
             dayText.text = coinsText == null
-                ? "Day " + day + "\n" + coins + " coins"
-                : "Day " + day;
+                ? L.Get("day_prefix") + day + "\n" + coins + L.Get("coins_suffix")
+                : L.Get("day_prefix") + day;
         if (coinsText != null)
-            coinsText.text = coins + " coins";
+            coinsText.text = coins + L.Get("coins_suffix");
     }
 
     /* Call from Next button OnClick */

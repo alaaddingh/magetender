@@ -8,8 +8,8 @@ public class MoodMarkerTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] private GameObject tooltipRoot;
     [SerializeField] private TMP_Text tooltipText;
 
-    [Header("label")]
-    [SerializeField] private string label = "current mood";
+    [Header("label (leave empty to use localized mood_tooltip_label)")]
+    [SerializeField] private string labelOverride = "";
 
     [Header("positioning")]
     [SerializeField] private Vector2 screenOffset = new Vector2(8f, -8f);
@@ -53,7 +53,7 @@ public class MoodMarkerTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (tooltipRoot == null || tooltipText == null) return;
 
-        tooltipText.text = label;
+        tooltipText.text = !string.IsNullOrEmpty(labelOverride) ? labelOverride : L.Get("mood_tooltip_label");
         tooltipRoot.SetActive(true);
     }
 

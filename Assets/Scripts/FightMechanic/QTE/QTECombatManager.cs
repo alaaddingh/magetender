@@ -599,12 +599,12 @@ public class QTECombatManager : MonoBehaviour
 	{
 		if (playerHealthText != null)
 		{
-			playerHealthText.text = playerHealth + " / " + playerMaxHealth;
+			playerHealthText.text = playerHealth + L.Get("health_separator") + playerMaxHealth;
 		}
 		
 		if (customerHealthText != null)
 		{
-			customerHealthText.text = customerHealth + " / " + customerMaxHealth;
+			customerHealthText.text = customerHealth + L.Get("health_separator") + customerMaxHealth;
 		}
 	}
 }

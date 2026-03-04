@@ -1,0 +1,14 @@
+{
+  "entries": [
+    { "key": "mood_tooltip_label", "value": "current mood" },
+    { "key": "score_display_format", "value": "Mood: ({0:F2}, {1:F2})" },
+    { "key": "coins_suffix", "value": " coins" },
+    { "key": "day_prefix", "value": "Day " },
+    { "key": "tutorial_default_customer", "value": "This customer" },
+    { "key": "tutorial_body", "value": "{0} is looking for a fight!\n\nPress <color=yellow>WASD</color> to complete key sequences\nPress <color=yellow>SPACE</color> to switch between banks\n\n<color=blue>DEFEND</color> - Complete before time runs out to avoid taking damage\n<color=red>ATTACK</color> - Complete to deal damage\n\nPress <color=yellow>SPACE</color> to begin..." },
+    { "key": "ingredient_no_match", "value": "(no json match)" },
+    { "key": "ingredient_axis_x", "value": "grounded↔dissociative" },
+    { "key": "ingredient_axis_y", "value": "calm↕elevated" },
+    { "key": "health_separator", "value": " / " }
+  ]
+}

@@ -47,21 +47,10 @@ public class CombatTutorial : MonoBehaviour
             return;
         }
 
-        // Get monster name if available
-        string monsterName = "This customer";
-        if (CurrentMonster.Instance != null && CurrentMonster.Instance.Data != null)
-        {
-            monsterName = CurrentMonster.Instance.Data.name;
-        }
-
-        // TODO: Move to localization system (UIStrings.json)
-        // Current language: English
-        tutorialText.text = $"{monsterName} is looking for a fight!\n\n" +
-                           "Press <color=yellow>WASD</color> to complete key sequences\n" +
-                           "Press <color=yellow>SPACE</color> to switch between banks\n\n" +
-                           "<color=blue>DEFEND</color> - Complete before time runs out to avoid taking damage\n" +
-                           "<color=red>ATTACK</color> - Complete to deal damage\n\n" +
-                           "Press <color=yellow>SPACE</color> to begin...";
+        string monsterName = CurrentMonster.Instance != null && CurrentMonster.Instance.Data != null
+            ? CurrentMonster.Instance.Data.name
+            : L.Get("tutorial_default_customer");
+        tutorialText.text = L.Get("tutorial_body", monsterName);
     }
 
     void DismissTutorial()
