@@ -20,43 +20,42 @@ public static class L
     private static Dictionary<string, string> _table;
     private static string _loadedForLanguage;
 
-    private static Dictionary<string, string> GetEnglishFallback()
-    {
-        return new Dictionary<string, string>
-        {
-            { "mood_tooltip_label", "current mood" },
-            { "score_display_format", "Mood: ({0:F2}, {1:F2})" },
-            { "coins_suffix", " coins" },
-            { "day_prefix", "Day " },
-            { "tutorial_default_customer", "This customer" },
-            { "tutorial_body", "{0} is looking for a fight!\n\nPress <color=yellow>WASD</color> to complete key sequences\nPress <color=yellow>SPACE</color> to switch between banks\n\n<color=blue>DEFEND</color> - Complete before time runs out to avoid taking damage\n<color=red>ATTACK</color> - Complete to deal damage\n\nPress <color=yellow>SPACE</color> to begin..." },
-            { "ingredient_no_match", "(no json match)" },
-            { "ingredient_axis_x", "grounded↔dissociative" },
-            { "ingredient_axis_y", "calm↕elevated" },
-            { "health_separator", " / " }
-        };
-    }
-
     private static void EnsureLoaded()
     {
-        string lang = LanguageManager.Instance != null ? LanguageManager.Instance.CurrentLanguage : LanguageManager.LangEnglish;
+        string lang = LanguageManager.Instance != null
+            ? LanguageManager.Instance.CurrentLanguage
+            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
         if (_table != null && _loadedForLanguage == lang) return;
 
         _loadedForLanguage = lang;
-        _table = new Dictionary<string, string>(GetEnglishFallback());
+        _table = new Dictionary<string, string>();
 
-        string path = LanguageManager.Instance != null ? LanguageManager.Instance.GetUIStringsResourcePath() : "Data/UIStrings_en";
+        string path = LanguageManager.Instance != null
+            ? LanguageManager.Instance.GetUIStringsResourcePath()
+            : (lang == LanguageManager.LangSpanish ? "Data/UIStrings_es" : "Data/UIStrings_en");
+
         TextAsset asset = Resources.Load<TextAsset>(path);
-        if (asset != null)
+        Debug.Log($"[UIStrings] Loading for lang='{lang}' from '{path}'");
+        if (asset == null)
         {
-            var data = JsonUtility.FromJson<UIStringTable>(asset.text);
-            if (data?.entries != null)
-            {
-                foreach (var e in data.entries)
-                    if (!string.IsNullOrEmpty(e.key))
-                        _table[e.key] = e.value ?? "";
-            }
+            Debug.LogWarning($"[UIStrings] TextAsset not found at '{path}'");
+            return;
         }
+
+        var data = JsonUtility.FromJson<UIStringTable>(asset.text);
+        if (data?.entries == null)
+        {
+            Debug.LogWarning("[UIStrings] Parsed JSON but entries list is null.");
+            return;
+        }
+
+        foreach (var e in data.entries)
+        {
+            if (!string.IsNullOrEmpty(e.key))
+                _table[e.key] = e.value ?? "";
+        }
+
+        Debug.Log($"[UIStrings] Loaded {_table.Count} entries.");
     }
 
     public static string Get(string key)

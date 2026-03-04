@@ -29,6 +29,22 @@ public class LanguageManager : MonoBehaviour
         }
     }
 
+    public static void SetLanguage(string code)
+    {
+        if (string.IsNullOrEmpty(code))
+            return;
+
+        if (Instance != null)
+        {
+            Instance.CurrentLanguage = code;
+        }
+        else
+        {
+            PlayerPrefs.SetString(PlayerPrefsKey, code);
+            PlayerPrefs.Save();
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -48,8 +64,7 @@ public class LanguageManager : MonoBehaviour
     // Resource path for the dialogue JSON for the current language (e.g. "Data/Dialogue", "Data/Dialogue_es").
     public string GetDialogueResourcePath()
     {
-        if (_currentLanguage == LangEnglish)
-            return "Data/Dialogue";
+        Debug.Log("GetDialogueResourcePath: " + _currentLanguage);
         if (_currentLanguage == LangSpanish)
             return "Data/Dialogue_es";
         // if (_currentLanguage == LangArabic) return "Data/Dialogue_ar";

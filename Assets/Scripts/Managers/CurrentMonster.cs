@@ -221,14 +221,28 @@ public class CurrentMonster : MonoBehaviour
 
     private void LoadDialogue()
     {
-        string path = LanguageManager.Instance != null
-            ? LanguageManager.Instance.GetDialogueResourcePath()
-            : dialogueJsonResourcePath;
+        string lang = LanguageManager.Instance != null
+            ? LanguageManager.Instance.CurrentLanguage
+            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+
+        string path;
+        if (lang == LanguageManager.LangSpanish)
+            path = "Data/Dialogue_es";
+        else
+            path = "Data/Dialogue";
+
+        Debug.Log($"[CurrentMonster] LoadDialogue lang='{lang}' path='{path}'");
+
         TextAsset asset = Resources.Load<TextAsset>(path);
         if (asset != null)
+        {
             dialogueFile = JsonUtility.FromJson<DialogueFile>(asset.text);
+        }
         else
+        {
             dialogueFile = null;
+            Debug.LogWarning($"[CurrentMonster] Dialogue TextAsset not found at Resources path '{path}'");
+        }
     }
 
     /// <summary>Call when language changes (e.g. from settings) to reload dialogue without reloading monsters/levels.</summary>

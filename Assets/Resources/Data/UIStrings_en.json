@@ -9,6 +9,11 @@
     { "key": "ingredient_no_match", "value": "(no json match)" },
     { "key": "ingredient_axis_x", "value": "grounded↔dissociative" },
     { "key": "ingredient_axis_y", "value": "calm↕elevated" },
-    { "key": "health_separator", "value": " / " }
+    { "key": "current mood", "value": "current mood" },
+    { "key": "goal mood", "value": "goal mood" },
+    { "key": "calm", "value": "calm" },
+    { "key": "elevated", "value": "Elevated" },
+    { "key": "grounded", "value": "Grounded" },
+    { "key": "dissociative", "value": "dissociative" }
   ]
 }

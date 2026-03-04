@@ -1,0 +1,20 @@
+{
+  "entries": [
+    { "key": "mood_tooltip_label", "value": "estado actual" },
+    { "key": "score_display_format", "value": "Ánimo: ({0:F2}, {1:F2})" },
+    { "key": "coins_suffix", "value": " monedas" },
+    { "key": "day_prefix", "value": "Día " },
+    { "key": "tutorial_default_customer", "value": "Este cliente" },
+    { "key": "tutorial_body", "value": "{0} quiere pelear.\n\nPulsa <color=yellow>WASD</color> para completar las secuencias de teclas\nPulsa <color=yellow>ESPACIO</color> para cambiar de banco\n\n<color=blue>DEFENSA</color> - Completa antes de que se acabe el tiempo para evitar daño\n<color=red>ATAQUE</color> - Completa para causar daño\n\nPulsa <color=yellow>ESPACIO</color> para empezar..." },
+    { "key": "ingredient_no_match", "value": "(sin coincidencia en json)" },
+    { "key": "ingredient_axis_x", "value": "aterrizado↔disociativo" },
+    { "key": "ingredient_axis_y", "value": "calmo↕elevado" },
+    { "key": "current mood", "value": "estado actual" },
+    { "key": "goal mood", "value": "estado objetivo" },
+    { "key": "calm", "value": "calmo" },
+    { "key": "elevated", "value": "Elevado" },
+    { "key": "grounded", "value": "Aterrizado" },
+    { "key": "dissociative", "value": "disociativo" }
+  ]
+}
+

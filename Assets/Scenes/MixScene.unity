@@ -2148,7 +2148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: 
+  labelOverride: calm
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!1 &497501493
@@ -3160,7 +3160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: 
+  labelOverride: goal mood
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!1 &649498983
@@ -3474,6 +3474,7 @@ Transform:
   m_Children:
   - {fileID: 1245897900}
   - {fileID: 2117493560}
+  - {fileID: 1903095557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &670419799
@@ -4624,7 +4625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: 
+  labelOverride: grounded
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!114 &868091042
@@ -6967,7 +6968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: 
+  labelOverride: current mood
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!1 &1377992929
@@ -8736,7 +8737,6 @@ Transform:
   - {fileID: 9305687}
   - {fileID: 440574828}
   - {fileID: 1091468759}
-  - {fileID: 1903095557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1785447977
@@ -8791,7 +8791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: 
+  labelOverride: elevated
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!114 &1785447980
@@ -9917,12 +9917,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903095556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -678.7438, y: -74.17735, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1780717590}
+  m_Father: {fileID: 670419798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1903095558
 MonoBehaviour:
@@ -9936,7 +9936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e0feea892b3ed48b4dfc7cca5c41a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultLanguage: es
+  defaultLanguage: en
 --- !u!1 &1909847248
 GameObject:
   m_ObjectHideFlags: 0
@@ -10066,7 +10066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: 
+  labelOverride: dissociative
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!114 &1914812121
