@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MonsterSpriteManager : MonoBehaviour
 {
@@ -27,10 +28,26 @@ public class MonsterSpriteManager : MonoBehaviour
     private Vector2 baseOrderPosition;
     private Vector2 baseServePosition;
 
+    private void RebindStateManager()
+    {
+        var resolved = FindFirstObjectByType<MonsterStateManager>();
+        if (resolved == monsterStateManager)
+            return;
+
+        if (monsterStateManager != null)
+            monsterStateManager.OnStateChanged -= HandleStateChanged;
+
+        monsterStateManager = resolved;
+
+        if (isActiveAndEnabled && monsterStateManager != null)
+            monsterStateManager.OnStateChanged += HandleStateChanged;
+    }
+
     private void Awake()
     {
         if (currentMonsterManager == null)
             currentMonsterManager = CurrentMonster.Instance;
+        RebindStateManager();
         TryResolveMissingTargets();
         lastOrderSpriteRef = orderSprite;
         lastServeSpriteRef = serveSprite;
@@ -44,6 +61,7 @@ public class MonsterSpriteManager : MonoBehaviour
             currentMonsterManager.OnMonsterChanged += HandleMonsterChanged;
         if (monsterStateManager != null)
             monsterStateManager.OnStateChanged += HandleStateChanged;
+        SceneManager.sceneLoaded += HandleSceneLoaded;
 
         TryResolveMissingTargets();
         RefreshSprite();
@@ -51,10 +69,18 @@ public class MonsterSpriteManager : MonoBehaviour
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
         if (currentMonsterManager != null)
             currentMonsterManager.OnMonsterChanged -= HandleMonsterChanged;
         if (monsterStateManager != null)
             monsterStateManager.OnStateChanged -= HandleStateChanged;
+    }
+
+    private void HandleSceneLoaded(Scene _, LoadSceneMode __)
+    {
+        RebindStateManager();
+        TryResolveMissingTargets();
+        RefreshSprite();
     }
 
     private void HandleMonsterChanged(string _)
@@ -69,6 +95,9 @@ public class MonsterSpriteManager : MonoBehaviour
 
     private void Update()
     {
+        if (monsterStateManager == null)
+            RebindStateManager();
+
         bool orderBecameNone = lastOrderSpriteRef != null && orderSprite == null;
         bool serveBecameNone = lastServeSpriteRef != null && serveSprite == null;
 

@@ -27,6 +27,7 @@ public class DayScreenController : MonoBehaviour
             if (dc != null) orderScreen = dc.orderScreen;
         }
 
+        bool skipDayCounter = CurrentMonster.Instance != null && CurrentMonster.Instance.IsPlannedVisitSameDay();
 		if (CurrentMonster.Instance != null)
 			CurrentMonster.Instance.ApplyPlannedVisit();
 
@@ -42,6 +43,9 @@ public class DayScreenController : MonoBehaviour
             scoreDisplayCanvas.SetActive(false);
 
         RefreshDisplay();
+
+        if (skipDayCounter)
+            OnNextPressed();
     }
 
     public void RefreshDisplay()
