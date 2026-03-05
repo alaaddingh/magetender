@@ -1,0 +1,147 @@
+{
+  "ingredients": [
+    {
+      "id": "pixie_dust",
+      "name": "Polvo de hada",
+      "description": "Elevado, disociativo",
+      "type": "topping",
+      "effect": { "x": 0.53, "y": 0.14 }
+    },
+    {
+      "id": "magic_mushroom",
+      "name": "Hongo mágico",
+      "description": "Elevado, disociativo",
+      "type": "topping",
+      "effect": { "x": 0.48, "y": 0.27 }
+    },
+    {
+      "id": "eyeball",
+      "name": "Globo ocular",
+      "description": "Muy calmante, elevado",
+      "type": "topping",
+      "effect": { "x": -0.70, "y": 0.1 }
+    },
+    {
+      "id": "brain",
+      "name": "Cerebro",
+      "description": "Muy disociativo, elevado",
+      "type": "topping",
+      "effect": { "x": 0.28, "y": 0.48 }
+    },
+    {
+      "id": "cupid_arrow",
+      "name": "Flecha de Cupido",
+      "description": "Disociativo, calmante",
+      "type": "topping",
+      "effect": { "x": 0.53, "y": -0.14 }
+    },
+    {
+      "id": "eden_apple",
+      "name": "Fruta prohibida",
+      "description": "Calmante, disociativa",
+      "type": "topping",
+      "effect": { "x": 0.48, "y": -0.27 }
+    },
+    {
+      "id": "broken_sword",
+      "name": "Fragmento de espada",
+      "description": "Disociativo, calmante",
+      "type": "topping",
+      "effect": { "x": 0.39, "y": -0.39 }
+    },
+    {
+      "id": "wishbone",
+      "name": "Hueso de los deseos",
+      "description": "Calmante, disociativo",
+      "type": "topping",
+      "effect": { "x": 0.28, "y": -0.48 }
+    },
+
+    {
+      "id": "lotus_flower",
+      "name": "Flor de loto",
+      "description": "Muy calmante, arraigante",
+      "type": "topping",
+      "effect": { "x": -0.28, "y": -0.48 }
+    },
+    {
+      "id": "unicorn_horn",
+      "name": "Cuerno de unicornio",
+      "description": "Calmante, arraigante",
+      "type": "topping",
+      "effect": { "x": -0.39, "y": -0.39 }
+    },
+    {
+      "id": "crow_feather",
+      "name": "Pluma de cuervo",
+      "description": "Calmante, muy arraigante",
+      "type": "topping",
+      "effect": { "x": -0.53, "y": -0.14 }
+    },
+    {
+      "id": "pomegranate",
+      "name": "Granada de Perséfone",
+      "description": "Calmante y arraigante",
+      "type": "topping",
+      "effect": { "x": -0.48, "y": -0.27 }
+    },
+
+    {
+      "id": "rose_thorn",
+      "name": "Espina de rosa",
+      "description": "Arraigante, elevado",
+      "type": "topping",
+      "effect": { "x": -0.48, "y": 0.27 }
+    },
+    {
+      "id": "spiderweb",
+      "name": "Tela de araña",
+      "description": "Muy arraigante, elevado",
+      "type": "topping",
+      "effect": { "x": -0.53, "y": 0.14 }
+    },
+    {
+      "id": "eternal_flame",
+      "name": "Llama eterna",
+      "description": "Arraigante, elevado",
+      "type": "topping",
+      "effect": { "x": -0.39, "y": 0.39 }
+    },
+    {
+      "id": "phoenix_feather",
+      "name": "Pluma de fénix",
+      "description": "Elevado, arraigante",
+      "type": "topping",
+      "effect": { "x": -0.28, "y": 0.48 }
+    },
+    {
+      "id": "blood",
+      "name": "Sangre",
+      "description": "Arraigante",
+      "type": "base",
+      "effect": { "x": -0.85, "y": 0 }
+    },
+    {
+      "id": "holy_water",
+      "name": "Agua bendita",
+      "description": "Elevadora",
+      "type": "base",
+      "effect": { "x": 0, "y": 0.85 }
+    },
+    {
+      "id": "spirits",
+      "name": "Espíritus",
+      "description": "Disociativa",
+      "type": "base",
+      "effect": { "x": 0.85, "y": 0 }
+    },
+    {
+      "id": "moonshine",
+      "name": "Luz de luna",
+      "description": "Calmante",
+      "type": "base",
+      "effect": { "x": 0, "y": -0.85 }
+    }
+  ]
+}
+

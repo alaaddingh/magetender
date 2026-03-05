@@ -14,6 +14,22 @@
     { "key": "calm", "value": "calm" },
     { "key": "elevated", "value": "Elevated" },
     { "key": "grounded", "value": "Grounded" },
-    { "key": "dissociative", "value": "dissociative" }
+    { "key": "dissociative", "value": "dissociative" },
+    { "key": "start_button", "value": "Start" },
+    { "key": "next_button", "value": "Next" },
+    { "key": "next_day_button", "value": "Next Day" },
+    { "key": "back_button", "value": "Back" },
+    { "key": "begin_brew_button", "value": "Begin Brew" },
+    { "key": "options_button", "value": "Options" },
+    { "key": "credits_button", "value": "Credits" },
+    { "key": "mood_profile_title", "value": "Mood Profile" },
+    { "key": "mood_graph_hint", "value": "Hover icons for mood details" },
+    { "key": "mood_graph_description", "value": "Adjust your customer's mood by choosing a base and toppings. Aim to move from their current mood to their goal mood on the graph." },
+    { "key": "continue_button", "value": "Continue" },
+    { "key": "attack_label", "value": "ATTACK" },
+    { "key": "defend_label", "value": "DEFEND" },
+    { "key": "player_label", "value": "PLAYER" },
+    { "key": "customer_label", "value": "CUSTOMER" },
+    { "key": "to_bar_button", "value": "To Bar" }
   ]
 }

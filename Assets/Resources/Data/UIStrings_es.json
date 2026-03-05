@@ -14,7 +14,23 @@
     { "key": "calm", "value": "calmo" },
     { "key": "elevated", "value": "Elevado" },
     { "key": "grounded", "value": "Aterrizado" },
-    { "key": "dissociative", "value": "disociativo" }
+    { "key": "dissociative", "value": "disociativo" },
+    { "key": "start_button", "value": "Comenzar" },
+    { "key": "next_button", "value": "Siguiente" },
+    { "key": "next_day_button", "value": "Siguiente día" },
+    { "key": "back_button", "value": "Volver" },
+    { "key": "begin_brew_button", "value": "Empezar mezcla" },
+    { "key": "options_button", "value": "Opciones" },
+    { "key": "credits_button", "value": "Créditos" },
+    { "key": "mood_profile_title", "value": "Perfil de ánimo" },
+    { "key": "mood_graph_hint", "value": "Pasa el cursor sobre los iconos para ver detalles de ánimo" },
+    { "key": "mood_graph_description", "value": "Ajusta el estado de ánimo de tu cliente eligiendo una base y los toppings. Intenta pasar de su estado actual a su estado objetivo en la gráfica." },
+    { "key": "continue_button", "value": "Continuar" },
+    { "key": "attack_label", "value": "ATAQUE" },
+    { "key": "defend_label", "value": "DEFENSA" },
+    { "key": "player_label", "value": "JUGADOR" },
+    { "key": "customer_label", "value": "CLIENTE" },
+    { "key": "to_bar_button", "value": "A la barra" }
   ]
 }
 

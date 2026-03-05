@@ -78,4 +78,12 @@ public class LanguageManager : MonoBehaviour
         if (_currentLanguage == LangSpanish) return "Data/UIStrings_es";
         return "Data/UIStrings_en";
     }
+
+	// Resource path for ingredients JSON (e.g. "Data/Ingredients", "Data/Ingredients_es").
+	public string GetIngredientsResourcePath()
+	{
+		if (_currentLanguage == LangEnglish) return "Data/Ingredients";
+		if (_currentLanguage == LangSpanish) return "Data/Ingredients_es";
+		return "Data/Ingredients";
+	}
 }

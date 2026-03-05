@@ -132,7 +132,14 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
     private void LoadIngredientData()
     {
-        TextAsset json = Resources.Load<TextAsset>("Data/Ingredients");
+		string path = "Data/Ingredients";
+
+		if (LanguageManager.Instance != null)
+		{
+			path = LanguageManager.Instance.GetIngredientsResourcePath();
+		}
+
+		TextAsset json = Resources.Load<TextAsset>(path);
         if (json == null)
         {
             return;
