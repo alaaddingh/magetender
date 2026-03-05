@@ -60,10 +60,10 @@ public class DayScreenController : MonoBehaviour
 
         if (dayText != null)
             dayText.text = coinsText == null
-                ? "Day " + day + "\n" + coins + " coins"
+                ? "Day " + day + "\n" + coins
                 : "Day " + day;
         if (coinsText != null)
-            coinsText.text = coins + " coins";
+            coinsText.text = coins.ToString();
     }
 
     /* Call from Next button OnClick */

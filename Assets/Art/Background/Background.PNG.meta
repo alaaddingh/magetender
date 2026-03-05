@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8230bbc2578850a4dbee5b7d7ba37c31
+guid: db2f42076080c1848ade2b604c127771
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2482070131706425504
-    second: dialogueBox-Adan_0
+      213: 6812329906654873740
+    second: backgroundStillFireplace_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dialogueBox-Adan_0
+      name: backgroundStillFireplace_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 145
-        width: 895
-        height: 295
+        x: 0
+        y: 149
+        width: 640
+        height: 211
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a0f7fb52a5127220800000000000000
-      internalID: 2482070131706425504
+      spriteID: c880fe2f4f14a8e50800000000000000
+      internalID: 6812329906654873740
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      dialogueBox-Adan_0: 2482070131706425504
+      backgroundStillFireplace_0: 6812329906654873740
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
