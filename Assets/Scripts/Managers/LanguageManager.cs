@@ -26,8 +26,11 @@ public class LanguageManager : MonoBehaviour
             _currentLanguage = value ?? defaultLanguage;
             PlayerPrefs.SetString(PlayerPrefsKey, _currentLanguage);
             PlayerPrefs.Save();
+            OnLanguageChanged?.Invoke();
         }
     }
+
+    public static System.Action OnLanguageChanged;
 
     public static void SetLanguage(string code)
     {
@@ -42,6 +45,7 @@ public class LanguageManager : MonoBehaviour
         {
             PlayerPrefs.SetString(PlayerPrefsKey, code);
             PlayerPrefs.Save();
+            OnLanguageChanged?.Invoke();
         }
     }
 

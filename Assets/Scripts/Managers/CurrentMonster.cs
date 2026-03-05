@@ -226,17 +226,11 @@ public class CurrentMonster : MonoBehaviour
 
     private void LoadDialogue()
     {
-        string lang = LanguageManager.Instance != null
-            ? LanguageManager.Instance.CurrentLanguage
-            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+        string path = LanguageManager.Instance != null
+            ? LanguageManager.Instance.GetDialogueResourcePath()
+            : (PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangSpanish ? "Data/Dialogue_es" : "Data/Dialogue");
 
-        string path;
-        if (lang == LanguageManager.LangSpanish)
-            path = "Data/Dialogue_es";
-        else
-            path = "Data/Dialogue";
-
-        Debug.Log($"[CurrentMonster] LoadDialogue lang='{lang}' path='{path}'");
+        Debug.Log($"[CurrentMonster] LoadDialogue path='{path}'");
 
         TextAsset asset = Resources.Load<TextAsset>(path);
         if (asset != null)

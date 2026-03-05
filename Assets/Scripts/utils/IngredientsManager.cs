@@ -41,6 +41,16 @@ public class IngredientHoverSnapUI : MonoBehaviour
         RecordShelfPositions();
     }
 
+    private void OnEnable()
+    {
+        LanguageManager.OnLanguageChanged += LoadIngredientData;
+    }
+
+    private void OnDisable()
+    {
+        LanguageManager.OnLanguageChanged -= LoadIngredientData;
+    }
+
     private void RecordShelfPositions()
     {
         shelfPositions.Clear();
@@ -133,11 +143,10 @@ public class IngredientHoverSnapUI : MonoBehaviour
     private void LoadIngredientData()
     {
 		string path = "Data/Ingredients";
-
 		if (LanguageManager.Instance != null)
-		{
 			path = LanguageManager.Instance.GetIngredientsResourcePath();
-		}
+		else if (PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangSpanish)
+			path = "Data/Ingredients_es";
 
 		TextAsset json = Resources.Load<TextAsset>(path);
         if (json == null)

@@ -23,12 +23,14 @@
     { "key": "options_button", "value": "Opciones" },
     { "key": "credits_button", "value": "Créditos" },
     { "key": "mood_profile_title", "value": "Perfil de ánimo" },
-    { "key": "mood_graph_hint", "value": "Pasa el cursor sobre los iconos para ver detalles de ánimo" },{ "key": "continue_button", "value": "Continuar" },
+    { "key": "mood_graph_hint", "value": "Pasa el cursor sobre los iconos para ver detalles de ánimo" },
+    { "key": "continue_button", "value": "Continuar" },
     { "key": "attack_label", "value": "ATAQUE" },
     { "key": "defend_label", "value": "DEFENSA" },
     { "key": "player_label", "value": "JUGADOR" },
     { "key": "customer_label", "value": "CLIENTE" },
-    { "key": "to_bar_button", "value": "A la barra" }
+    { "key": "to_bar_button", "value": "A la barra" },
+    { "key": "fight_button", "value": "Pelear?" }
   ]
 }
 

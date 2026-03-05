@@ -29,6 +29,7 @@
     { "key": "defend_label", "value": "DEFEND" },
     { "key": "player_label", "value": "PLAYER" },
     { "key": "customer_label", "value": "CUSTOMER" },
-    { "key": "to_bar_button", "value": "To Bar" }
+    { "key": "to_bar_button", "value": "To Bar" },
+    { "key": "fight_button", "value": "Fight?" }
   ]
 }
