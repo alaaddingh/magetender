@@ -24,7 +24,6 @@
     { "key": "credits_button", "value": "Credits" },
     { "key": "mood_profile_title", "value": "Mood Profile" },
     { "key": "mood_graph_hint", "value": "Hover icons for mood details" },
-    { "key": "mood_graph_description", "value": "Adjust your customer's mood by choosing a base and toppings. Aim to move from their current mood to their goal mood on the graph." },
     { "key": "continue_button", "value": "Continue" },
     { "key": "attack_label", "value": "ATTACK" },
     { "key": "defend_label", "value": "DEFEND" },
