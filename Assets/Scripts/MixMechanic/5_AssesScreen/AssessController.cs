@@ -69,7 +69,7 @@ public class AssessController : MonoBehaviour
     {
         if (coinsDisplay == null) return;
         int coins = GameManager.Instance != null ? GameManager.Instance.Coins : 0;
-        coinsDisplay.text = coins + L.Get("coins_suffix");
+        coinsDisplay.text = coins.ToString();
     }
 
     /* assesses percentage difference of the final mix's X and Y,

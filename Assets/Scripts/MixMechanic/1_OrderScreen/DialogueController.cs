@@ -36,8 +36,7 @@ public class DialogueController : MonoBehaviour
 
     private void Awake()
     {
-        if (currentMonsterManager == null)
-            currentMonsterManager = CurrentMonster.Instance;
+        currentMonsterManager = CurrentMonster.Instance;
     }
 
     private void OnEnable()

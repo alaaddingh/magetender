@@ -49,6 +49,7 @@ public class ScoreManager : MonoBehaviour
     private void Awake()
     {
         LoadIngredients();
+        currentMonsterManager = CurrentMonster.Instance;
         if (MixManagerObject != null)
             mixManager = MixManagerObject.GetComponent<MixManager>();
         TryInitializeFromCurrentMonster();
@@ -68,8 +69,7 @@ public class ScoreManager : MonoBehaviour
 
     private bool ResolveCurrentMonster()
     {
-        if (currentMonsterManager == null)
-            currentMonsterManager = CurrentMonster.Instance;
+        currentMonsterManager = CurrentMonster.Instance;
         return currentMonsterManager != null;
     }
 
