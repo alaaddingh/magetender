@@ -171,6 +171,11 @@ public class CurrentMonster : MonoBehaviour
 			: NextVisitPlan.NextDayFirstMonster;
 	}
 
+    public bool IsPlannedVisitSameDay()
+    {
+        return nextVisitPlan == NextVisitPlan.NextMonsterSameDay;
+    }
+
 	public void ApplyPlannedVisit()
 	{
 		if (nextVisitPlan == NextVisitPlan.None)

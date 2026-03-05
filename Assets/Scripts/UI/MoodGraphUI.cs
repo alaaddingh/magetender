@@ -38,14 +38,12 @@ public class MoodGraphUI : MonoBehaviour
         if (scoreManager == null)
             scoreManager = FindFirstObjectByType<ScoreManager>();
 
-        if (currentMonster == null)
-            currentMonster = CurrentMonster.Instance;
+        currentMonster = CurrentMonster.Instance;
     }
 
     private void OnEnable()
     {
-        if (currentMonster == null)
-            currentMonster = CurrentMonster.Instance;
+        currentMonster = CurrentMonster.Instance;
 
         if (currentMonster != null)
             currentMonster.OnMonsterChanged += HandleMonsterChanged;
@@ -86,9 +84,8 @@ public class MoodGraphUI : MonoBehaviour
 
     private void RefreshAll(bool force)
     {
-        //resolve current monster source
-        if (currentMonster == null)
-            currentMonster = CurrentMonster.Instance;
+        // resolve current monster source every refresh so scene refs never go stale after reload
+        currentMonster = CurrentMonster.Instance;
 
         MonsterData monster = currentMonster != null ? currentMonster.Data : null;
         if (monster == null)
