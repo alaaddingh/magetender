@@ -13,9 +13,9 @@ public class QTECombatManager : MonoBehaviour
 	[Header("UI References")]
 	public Image customerSprite;
 	public Image backgroundImage;
-	public Image screenFlashOverlay;
-	public TextMeshProUGUI playerHealthText;
-	public TextMeshProUGUI customerHealthText;
+		public Image screenFlashOverlay;
+	public HealthBarUI playerHealthBar;
+	public HealthBarUI customerHealthBar;
 	public TextMeshProUGUI playerHealthLabel;
 	public TextMeshProUGUI customerHealthLabel;
 	public Canvas mainCanvas;
@@ -50,9 +50,8 @@ public class QTECombatManager : MonoBehaviour
 	public Color activeGlowColor = new Color(1f, 1f, 0.5f, 0.6f);
 	public Color inactiveGlowColor = new Color(0.3f, 0.3f, 0.3f, 0.2f);
 	
-	// WASD only per TA feedback - simpler and more accessible
-	private KeyCode[] availableKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
-	private int playerHealth;
+	
+	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };	private int playerHealth;
 	private int customerHealth;
 	private Color originalCustomerColor;
 	private Vector3 originalCustomerPosition;
@@ -77,6 +76,11 @@ public class QTECombatManager : MonoBehaviour
 	private float attackTimer;
 	private bool defendBankActive = true; // start on defend since it's more urgent
     private bool combatStarted = false; // Start paused for tutorial
+	private bool tutorialMode = false;
+	private bool combatPaused = false;
+
+	public System.Action OnDefendSequenceCompleted;
+	public System.Action OnAttackSequenceCompleted;
 	
 	void Start()
 	{
@@ -85,7 +89,16 @@ public class QTECombatManager : MonoBehaviour
 		
 		playerHealth = playerMaxHealth;
 		customerHealth = customerMaxHealth;
-		
+
+		if (playerHealthBar != null)
+		{
+			playerHealthBar.Initialize(playerMaxHealth);
+		}
+		if (customerHealthBar != null)
+		{
+			customerHealthBar.Initialize(customerMaxHealth);
+		}
+				
 		if (customerSprite != null)
 		{
 			originalCustomerColor = customerSprite.color;
@@ -128,6 +141,26 @@ public class QTECombatManager : MonoBehaviour
         GenerateNewSequence(false);
         UpdateBankVisuals();
     }
+
+	public void SetTutorialMode(bool enabled)
+	{
+		tutorialMode = enabled;
+	}
+
+	public bool IsDefendBankActive()
+	{
+		return defendBankActive;
+	}
+
+	public void PauseCombat()
+	{
+		combatPaused = true;
+	}
+
+	public void ResumeCombat()
+	{
+		combatPaused = false;
+	}
 	
 	void LoadMonsterData()
 	{
@@ -169,15 +202,36 @@ public class QTECombatManager : MonoBehaviour
         {
             return;
         }
+
+			if (combatPaused)
+		{
+			return;  // Don't update anything while paused
+		}
         
         if (customerHealth <= 0 || playerHealth <= 0)
         {
             return;
         }
 		
-		// both timers always run - this creates the pressure!
-		defendTimer -= Time.deltaTime;
-		attackTimer -= Time.deltaTime;
+		// Tutorial mode: only active bank timer runs
+		// Real combat: both timers run simultaneously
+		if (tutorialMode)
+		{
+			if (defendBankActive)
+			{
+				defendTimer -= Time.deltaTime;
+			}
+			else
+			{
+				attackTimer -= Time.deltaTime;
+			}
+		}
+		else
+		{
+			// both timers always run - this creates the pressure!
+			defendTimer -= Time.deltaTime;
+			attackTimer -= Time.deltaTime;
+		}
 		
 		if (defendTimerBar != null)
 		{
@@ -269,6 +323,9 @@ public class QTECombatManager : MonoBehaviour
 	void HandleDefendSuccess()
 	{
 		Debug.Log("Defense successful! Blocked attack!");
+		
+		OnDefendSequenceCompleted?.Invoke();
+		
 		GenerateNewSequence(true);
 		UpdateBankVisuals();
 	}
@@ -285,6 +342,9 @@ public class QTECombatManager : MonoBehaviour
 	{
 		Debug.Log("Attack successful!");
 		CustomerTakesDamage();
+		
+		OnAttackSequenceCompleted?.Invoke();  
+		
 		GenerateNewSequence(false);
 		UpdateBankVisuals();
 	}
@@ -337,7 +397,7 @@ public class QTECombatManager : MonoBehaviour
 		{
 			if (defendKeyTexts[i] != null)
 			{
-				defendKeyTexts[i].text = defendSequence[i].ToString();
+				defendKeyTexts[i].text = GetKeyDisplayText(defendSequence[i]);;
 				
 				// gray out done keys, highlight current one yellow
 				if (i < defendProgress)
@@ -360,7 +420,7 @@ public class QTECombatManager : MonoBehaviour
 		{
 			if (attackKeyTexts[i] != null)
 			{
-				attackKeyTexts[i].text = attackSequence[i].ToString();
+				attackKeyTexts[i].text = GetKeyDisplayText(attackSequence[i]);
 				
 				if (i < attackProgress)
 				{
@@ -597,14 +657,31 @@ public class QTECombatManager : MonoBehaviour
 	
 	void UpdateHealthDisplays()
 	{
-		if (playerHealthText != null)
+		if (playerHealthBar != null)
 		{
-			playerHealthText.text = playerHealth + " / " + playerMaxHealth;
+			playerHealthBar.UpdateHealth(playerHealth);
 		}
 		
-		if (customerHealthText != null)
+		if (customerHealthBar != null)
 		{
-			customerHealthText.text = customerHealth + " / " + customerMaxHealth;
+			customerHealthBar.UpdateHealth(customerHealth);
+		}
+	}
+
+	string GetKeyDisplayText(KeyCode key)
+	{
+		switch (key)
+		{
+			case KeyCode.UpArrow:
+				return "↑";
+			case KeyCode.DownArrow:
+				return "↓";
+			case KeyCode.LeftArrow:
+				return "←";
+			case KeyCode.RightArrow:
+				return "→";
+			default:
+				return key.ToString();
 		}
 	}
 }
