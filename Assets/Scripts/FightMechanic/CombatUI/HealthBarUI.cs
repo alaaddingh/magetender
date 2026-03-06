@@ -1,24 +1,42 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// Manages health bar fill (no text, just visual bar)
+// Manages health bar fill using width 
 public class HealthBarUI : MonoBehaviour
 {
 	[Header("UI References")]
-	public Image fillImage;  // The colored bar that drains
+	public RectTransform fillRect;  // The colored bar RectTransform
+	public Image fillImage;         // The colored bar Image (for color changes)
 	
 	[Header("Settings")]
 	public Color fullHealthColor = new Color(0.3f, 1f, 0.3f);  // Green
 	public Color midHealthColor = new Color(1f, 1f, 0.3f);     // Yellow
 	public Color lowHealthColor = new Color(1f, 0.3f, 0.3f);   // Red
-	public float lowHealthThreshold = 0.3f;  // 30%
-	public float midHealthThreshold = 0.6f;  // 60%
+	public float lowHealthThreshold = 0.3f;  
+	public float midHealthThreshold = 0.6f; 
 	
 	private int maxHealth;
+	private float maxWidth;
+	
+	void Start()
+	{
+		// Store the max width (full health width)
+		if (fillRect != null)
+		{
+			maxWidth = fillRect.rect.width;
+		}
+	}
 	
 	public void Initialize(int max)
 	{
 		maxHealth = max;
+		
+		// Store max width if not already set
+		if (fillRect != null && maxWidth == 0)
+		{
+			maxWidth = fillRect.rect.width;
+		}
+		
 		UpdateHealth(max);
 	}
 	
@@ -26,23 +44,27 @@ public class HealthBarUI : MonoBehaviour
 	{
 		float fillPercent = (float)current / maxHealth;
 		
-		// Update fill bar
-		if (fillImage != null)
+		// Update bar width
+		if (fillRect != null)
 		{
-			fillImage.fillAmount = Mathf.Clamp01(fillPercent);
+			// Change the Right anchor position to shrink the bar
+			fillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, maxWidth * fillPercent);
 			
 			// Change color based on health
-			if (fillPercent <= lowHealthThreshold)
+			if (fillImage != null)
 			{
-				fillImage.color = lowHealthColor;
-			}
-			else if (fillPercent <= midHealthThreshold)
-			{
-				fillImage.color = midHealthColor;
-			}
-			else
-			{
-				fillImage.color = fullHealthColor;
+				if (fillPercent <= lowHealthThreshold)
+				{
+					fillImage.color = lowHealthColor;
+				}
+				else if (fillPercent <= midHealthThreshold)
+				{
+					fillImage.color = midHealthColor;
+				}
+				else
+				{
+					fillImage.color = fullHealthColor;
+				}
 			}
 		}
 	}
