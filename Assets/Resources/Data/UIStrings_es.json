@@ -31,8 +31,14 @@
     { "key": "customer_label", "value": "CLIENTE" },
     { "key": "to_bar_button", "value": "A la barra" },
     { "key": "fight_button", "value": "Pelear?" },
-    {"key": "retry_button", "value": "Otra vez"}
-
+    {"key": "retry_button", "value": "Otra vez"},
+    {"key": "tutorial_stage1_title", "value": "¡{0} está enojado!"},
+    {"key": "tutorial_stage1_instructions", "value": "¡Completa la secuencia de DEFENSA!\\nPresiona las Flechas en orden"},
+    {"key": "tutorial_stage1_prompt", "value": "Presiona ESPACIO para intentarlo..."},
+    {"key": "tutorial_stage2_instructions", "value": "¡Bien! ¡Ahora puedes ATACAR!\\n\\nPresiona ESPACIO para cambiar de banco\\n¡Completa una secuencia de ataque!"},
+    {"key": "tutorial_stage2_prompt", "value": "Presiona ESPACIO para intentarlo..."},
+    {"key": "tutorial_stage3_warning", "value": "¿Listo para la pelea real?\\n\\n¡Ambos bancos funcionan al mismo tiempo!\\n¡No dejes que DEFENSA se agote o recibirás daño!"},
+    {"key": "tutorial_stage3_prompt", "value": "Presiona ESPACIO para comenzar..."}
   ]
 }
 

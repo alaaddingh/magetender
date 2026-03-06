@@ -48,6 +48,7 @@ public class BankVisualFeedback : MonoBehaviour
 	// Set whether this bank is active
 	public void SetActive(bool active)
 	{
+        //Debug.Log($"[{gameObject.name}] SetActive called: {active}");
 		isActive = active;
 		
 		// Update glow color (optional)
