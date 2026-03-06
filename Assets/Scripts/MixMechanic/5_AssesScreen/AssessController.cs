@@ -15,6 +15,7 @@ public class AssessController : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private MonsterStateManager MonsterStateManager;
     [SerializeField] private CurrentMonster currentMonsterManager;
+    public LoseManager loseManager;
 
     [Header("UI")]
     [SerializeField] private TMP_Text coinsDisplay;
@@ -58,8 +59,12 @@ public class AssessController : MonoBehaviour
     public void OnNextCustomerPressed()
     {
 		bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
-		if (currentMonsterManager != null)
-			currentMonsterManager.PlanNextVisit(hasNextMonster);
+
+        if (!hasNextMonster && loseManager.CheckLoseAndLoad()) {
+            return;
+        }
+
+		currentMonsterManager.PlanNextVisit(hasNextMonster);
 
         if (!string.IsNullOrEmpty(nextDaySceneName))
             SceneManager.LoadScene(nextDaySceneName);

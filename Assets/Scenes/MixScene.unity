@@ -3676,6 +3676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingCoins: 0
   startingDay: 1
+  LoseManager: {fileID: 1600586149}
   maintenanceCost: 80
 --- !u!1 &698331748
 GameObject:
@@ -5319,7 +5320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &906567379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9079,6 +9080,51 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &1600586149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1600586150}
+  - component: {fileID: 1600586151}
+  m_Layer: 0
+  m_Name: LoseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1600586150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600586149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1780717590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1600586151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600586149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f03a3b3a6df2d94b896c52e2160d0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loseSceneName: LoseScene
 --- !u!1 &1601185386
 GameObject:
   m_ObjectHideFlags: 0
@@ -9283,6 +9329,7 @@ MonoBehaviour:
   scoreManager: {fileID: 440574829}
   MonsterStateManager: {fileID: 1091468760}
   currentMonsterManager: {fileID: 1245897901}
+  loseManager: {fileID: 1600586151}
   coinsDisplay: {fileID: 2092445570}
   coinCanvas: {fileID: 2128562753}
   nextDaySceneName: MixScene
@@ -9685,6 +9732,7 @@ Transform:
   - {fileID: 9305687}
   - {fileID: 440574828}
   - {fileID: 1091468759}
+  - {fileID: 1600586150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1785447977
