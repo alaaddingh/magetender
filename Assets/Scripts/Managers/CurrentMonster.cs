@@ -209,7 +209,7 @@ public class CurrentMonster : MonoBehaviour
     {
         monstersFile = JsonUtility.FromJson<MonstersFile>(Resources.Load<TextAsset>(monstersJsonResourcePath).text);
         levelsFile = JsonUtility.FromJson<LevelsFile>(Resources.Load<TextAsset>(levelsJsonResourcePath).text);
-        dialogueFile = JsonUtility.FromJson<DialogueFile>(Resources.Load<TextAsset>(dialogueJsonResourcePath).text);
+        LoadDialogue();
 
         dataLoaded = true;
         currentEncounterIndex = 0;
@@ -222,6 +222,32 @@ public class CurrentMonster : MonoBehaviour
             SetCurrentMonsterNameById(encounter.monster_id);
         else if (monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
             name = monstersFile.monsters[0].name;
+    }
+
+    private void LoadDialogue()
+    {
+        string path = LanguageManager.Instance != null
+            ? LanguageManager.Instance.GetDialogueResourcePath()
+            : (PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangSpanish ? "Data/Dialogue_es" : "Data/Dialogue");
+
+        Debug.Log($"[CurrentMonster] LoadDialogue path='{path}'");
+
+        TextAsset asset = Resources.Load<TextAsset>(path);
+        if (asset != null)
+        {
+            dialogueFile = JsonUtility.FromJson<DialogueFile>(asset.text);
+        }
+        else
+        {
+            dialogueFile = null;
+            Debug.LogWarning($"[CurrentMonster] Dialogue TextAsset not found at Resources path '{path}'");
+        }
+    }
+
+    /// <summary>Call when language changes (e.g. from settings) to reload dialogue without reloading monsters/levels.</summary>
+    public void ReloadDialogue()
+    {
+        LoadDialogue();
     }
 
     private int GetCurrentDay()

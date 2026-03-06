@@ -1,0 +1,131 @@
+{
+  "dialogue": [
+    {
+      "id": "dlg_slime",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "*GLURRGH*… Hola.",
+            "Vi reseñas de este lugar en Kelp y tuve que venir a ver.",
+            "NobleChadwick33 dice aquí que le hiciste un trago tan bueno que dejó su trabajo de escritorio para dedicarse a hacer malabares.",
+            "*GLAURHG* Creo que necesito un poco de ese fuego que le pusiste, y MUCHO.",
+            "Llevo un lío por dentro y no doy con la baba de mí por qué *GLORGH*.",
+            "Esta mañana *GLARGHH* me desperté en mi alcantarilla de dos camas un baño, hecho un desastre. Las cosas se debieron salir de control anoche porque no recuerdo nada. *GLURGHH*",
+            "Lo último que recuerdo es hablar con un tipo. Un momento está delante de mí, al siguiente desaparece. Fue lo más raro *GLARGHH* que he visto.",
+            "Ahora no paro de oír unos gritos apagados que vienen de mi cuerpo, que no suele pasar, así que me pregunto: \"¿qué está pasando?\"",
+            "Tienes que ayudarme a cortar esto de raíz porque me viene persiguiendo todo el día.",
+            "Si pudieras preparar algo grande que baje suave y me devuelva el juicio, te lo agradecería para siempre *GLAURGH*"
+          ],
+          "neutral": [
+            "*GLOURGH* Hmm… Bueno, desde luego es un trago.",
+            "No está mal pero… no es la gran cosa.",
+            "Tal vez debería haber mirado otras reseñas."
+          ],
+          "satisfied": [
+            "*Happy GLORGH* ¡GUAU! No me sentía así desde que era un glóbulo pequeño.",
+            "Sabes hacer un trago, no hay duda. Tendré que contarle al resto del complejo de alcantarillas sobre este lugar.",
+            "Toma, un detalle por hacer que me hormiguee la baba."
+          ],
+          "angry": [
+            "*Angry GLOARGH* ¡¿Qué demonios es esto?!",
+            "¿Crees que soy un cubo de basura? Esto *GLORUGH* no mola nada.",
+            "¡Esta reseña de una estrella no será lo único que te vuele a la cara!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dlg_unicorn",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "¡Hola, Magetender! Soy yo, Anita Caberneigh, el Unicornio más bello del pueblo.",
+            "¿Cómo? ¿No me conoces?",
+            "Vaya… los Magetenders tenéis que salir más. Siempre con la nariz en los libros de pociones...",
+            "¿Qué clase de establecimiento es este? Vaya, qué pocilga tenéis…",
+            "En fin, soy Anita Caberneigh. Conocida por estos lares como una belleza indiscutible.",
+            "a menos que te pongas de mi lado malo.",
+            "Pero da igual. No he venido a regañarte por vivir debajo de una piedra... He venido por un brebaje mediano.",
+            "Preferiblemente uno que me quite un poco el estrés.",
+            "Verás, que alaben mi belleza puede ser agotador…",
+            "Todos los días, concursos de belleza sin fin, concursos equinos y arreglos de crin.",
+            "La mayoría MATARÍA por llevar la vida de Anita… excepto la propia Anita.",
+            "Así que no te dejes engañar por mi estética; la vida no es siempre arcoíris y... bueno, unicornios para mí.",
+            "¡Las presiones de la perfección no perdonan!",
+            "Lo que daría por vivir el presente de nuevo.",
+            "por sentir que se me baja la tensión y disfrutar de verdad los frutos de mi trabajo…"
+          ],
+          "neutral": [
+            "Está... bien. Las vibraciones no cuadran del todo.",
+            "Está claro que te he juzgado mal, Magetender. Aunque...",
+            "no por mucho.",
+            "¡Hasta la próxima! Anita Caberneigh debe seguir camino.",
+            "¿Qué? ¿Por qué me refiero a mí misma en tercera persona?",
+            "...",
+            "¡Adiós!"
+          ],
+          "satisfied": [
+            "¡Ah, sí! Esto me calma la sangre. Me siento... tranquila.",
+            "Lo has hecho bien, Magetender; acepta mi GENEROSA propina como muestra de gratitud.",
+            "¡Hasta la próxima!"
+          ],
+          "angry": [
+            "¿Q-qué es esto??",
+            "Mi tensión… se ha disparado.",
+            "Magetender, este brebaje no me ha quitado el estrés... más bien lo contrario…",
+            "¿Crees que Anita es una yegua presumida que no se defiende??",
+            "¡Soy un UNICORNIO y NO tengo miedo de usar mi cuerno!",
+            "¡Espero que estés preparado para el combate, Magetender! ¡Pagarás por tus errores!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dlg_alien",
+      "levels": [
+        {
+          "level": "level_1",
+          "starting": [
+            "¡Hey, colega adulto! Me pongo lo de siempre, je.",
+            "¿Necesitas documentación? ¡Tengo un cuatrillón de años! Muy por encima de la mayoría de edad de vosotros los terrícolas.",
+            "¿Ves? Te dije que tengo edad. Es mi skincare, ya sabes.",
+            "¡Moco de los caracoles de Draugr! ¡Me mantiene joven!",
+            "En fin, quiero sentirme un poco más \"con los pies en la Tierra\". Je, je, ¿pillas?",
+            "Pero en serio, necesito acostumbrarme a la gravedad de aquí."
+          ],
+          "neutral": [
+            "Supongo que esto valdrá. No es como los tragos que tomé en Janssen… Pero me conformo."
+          ],
+          "satisfied": [
+            "¡Guau! Esto sí que es. Es como si estuviera de vuelta en mi planeta, pero no…",
+            "¡Los terrícolas sabéis de tragos! ¡Tendré que contarle a todos los Glorplings de esta taberna, MageTender!"
+          ],
+          "angry": [
+            "¿Qué es esto? ¡Cómo te atreves! ¡El único que puede dejarme en ridículo soy yo!",
+            "¡Estoy entrenado en Artes Marciales Marcianas, para que lo sepas!"
+          ]
+        },
+        {
+          "level": "level_2",
+          "starting": [
+            "¡OOOH he VUELTO, es nivel 2!!",
+            "....",
+            "¿No estás impresionado??"
+          ],
+          "neutral": [
+            "No está mal... pero vale (nivel 2)"
+          ],
+          "satisfied": [
+            "¡ZOINKS! está bueno (nivel 2)"
+          ],
+          "angry": [
+            "¡BLEEP BLORP ZEEP ZORP!",
+            "¡Me estás haciendo ver la magia terrícola... con malos ojos! (nivel 2)"
+          ]
+        }
+      ]
+    }
+  ]
+}

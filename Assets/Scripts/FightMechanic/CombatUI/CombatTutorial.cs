@@ -23,6 +23,8 @@ public class CombatTutorial : MonoBehaviour
 	private TutorialPhase currentPhase = TutorialPhase.LearnDefend;
 	private Stage currentStage = Stage.ShowingText;
 	
+	private bool tutorialDismissed = false;
+	
 	void Start()
 	{
 		// Subscribe to combat events
@@ -46,9 +48,6 @@ public class CombatTutorial : MonoBehaviour
 	
 	void Update()
 	{
-		// Update bank feedback based on which bank is active
-		UpdateBankFeedback();
-		
 		// Wait for SPACE to advance
 		if (currentStage == Stage.ShowingText && Input.GetKeyDown(KeyCode.Space))
 		{
@@ -74,13 +73,8 @@ public class CombatTutorial : MonoBehaviour
 			spotlight.ShowSpotlightOn(defendBankContainer);
 		}
 		
-		// Show text
-		SetTutorialText(
-			$"<b>{GetMonsterName()}</b> is angry!\n\n" +
-			"Complete the <color=red>DEFEND</color> sequence!\n" +
-			"Use <color=yellow>the Arrow Keys</color> in order →\n\n" +
-			"<size=28>Press <color=yellow>SPACE</color> to try it...</size>"
-		);
+		// Set tutorial text using localization
+		SetTutorialTextLocalized("tutorial_stage1");
 		
 		// Start combat (but paused)
 		combatManager.StartCombat();
@@ -111,13 +105,8 @@ public class CombatTutorial : MonoBehaviour
 			spotlight.ShowSpotlightOn(attackBankContainer);
 		}
 		
-		// Show text
-		SetTutorialText(
-			"Good! Now you can <color=blue>ATTACK</color>!\n\n" +
-			"Press <color=yellow>SPACE</color> to switch banks\n" +
-			"Complete an attack sequence!\n\n" +
-			"<size=28>Press <color=yellow>SPACE</color> to try it...</size>"
-		);
+		// Set tutorial text
+		SetTutorialTextLocalized("tutorial_stage2");
 	}
 	
 	void OnAttackCompleted()
@@ -142,13 +131,8 @@ public class CombatTutorial : MonoBehaviour
 			spotlight.HideSpotlight();
 		}
 		
-		// Show warning
-		SetTutorialText(
-			"<b>Ready for the real fight?</b>\n\n" +
-			"⚠️ <color=red>Both banks run at the same time!</color>\n" +
-			"⚠️ Don't let DEFEND time out or you take damage!\n\n" +
-			"Press <color=yellow>SPACE</color> to begin..."
-		);
+		// Set warning text
+		SetTutorialTextLocalized("tutorial_stage3");
 	}
 	
 	// Start practicing current phase
@@ -176,6 +160,7 @@ public class CombatTutorial : MonoBehaviour
 	void CompleteTutorial()
 	{
 		currentStage = Stage.Complete;
+		tutorialDismissed = true;
 		
 		// Hide tutorial
 		tutorialPanel.SetActive(false);
@@ -186,13 +171,66 @@ public class CombatTutorial : MonoBehaviour
 	}
 	
 	// ===== Helpers =====
-	void SetTutorialText(string text)
+	void SetTutorialTextLocalized(string stageKey)
 	{
-		if (tutorialText != null)
+		if (tutorialText == null) return;
+		
+		// Get monster name
+		string monsterName = GetMonsterName();
+		
+		// Try to use localization system if available
+		if (LocalizationManager.Instance != null)
 		{
+			// Get localized text based on stage
+			string text = "";
+			
+			switch (stageKey)
+			{
+				case "tutorial_stage1":
+					text = LocalizationManager.Instance.GetString("tutorial_stage1_title", monsterName) + "\n\n" +
+					       LocalizationManager.Instance.GetString("tutorial_stage1_instructions") + "\n\n" +
+					       LocalizationManager.Instance.GetString("tutorial_stage1_prompt");
+					break;
+					
+				case "tutorial_stage2":
+					text = LocalizationManager.Instance.GetString("tutorial_stage2_instructions") + "\n\n" +
+					       LocalizationManager.Instance.GetString("tutorial_stage2_prompt");
+					break;
+					
+				case "tutorial_stage3":
+					text = LocalizationManager.Instance.GetString("tutorial_stage3_warning") + "\n\n" +
+					       LocalizationManager.Instance.GetString("tutorial_stage3_prompt");
+					break;
+			}
+			
 			tutorialText.text = text;
-			tutorialText.isRightToLeftText = false;
-			tutorialText.alignment = TMPro.TextAlignmentOptions.Center;
+		}
+		else
+		{
+			// Fallback to hardcoded English
+			switch (stageKey)
+			{
+				case "tutorial_stage1":
+					tutorialText.text = $"<b>{monsterName}</b> is angry!\n\n" +
+					                   "Complete the <color=red>DEFEND</color> sequence!\n" +
+					                   "Press <color=yellow>Arrow Keys</color> in order →\n\n" +
+					                   "<size=28>Press <color=yellow>SPACE</color> to try it...</size>";
+					break;
+					
+				case "tutorial_stage2":
+					tutorialText.text = "Good! Now you can <color=blue>ATTACK</color>!\n\n" +
+					                   "Press <color=yellow>SPACE</color> to switch banks\n" +
+					                   "Complete an attack sequence!\n\n" +
+					                   "<size=28>Press <color=yellow>SPACE</color> to try it...</size>";
+					break;
+					
+				case "tutorial_stage3":
+					tutorialText.text = "<b>Ready for the real fight?</b>\n\n" +
+					                   "⚠️ <color=red>Both banks run at the same time!</color>\n" +
+					                   "⚠️ Don't let DEFEND time out or you take damage!\n\n" +
+					                   "Press <color=yellow>SPACE</color> to begin...";
+					break;
+			}
 		}
 		
 		// Show panel
@@ -209,23 +247,5 @@ public class CombatTutorial : MonoBehaviour
 			return CurrentMonster.Instance.Data.name;
 		}
 		return "This customer";
-	}
-	
-	// Update visual feedback based on active bank
-	void UpdateBankFeedback()
-	{
-		if (combatManager == null) return;
-		
-		bool defendActive = combatManager.IsDefendBankActive();
-		
-		if (defendBankFeedback != null)
-		{
-			defendBankFeedback.SetActive(defendActive);
-		}
-		
-		if (attackBankFeedback != null)
-		{
-			attackBankFeedback.SetActive(!defendActive);
-		}
 	}
 }

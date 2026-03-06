@@ -1,0 +1,38 @@
+{
+  "entries": [
+    { "key": "mood_tooltip_label", "value": "estado actual" },
+    { "key": "score_display_format", "value": "Ánimo: ({0:F2}, {1:F2})" },
+    { "key": "coins_suffix", "value": " monedas" },
+    { "key": "day_prefix", "value": "Día " },
+    { "key": "tutorial_default_customer", "value": "Este cliente" },
+    { "key": "tutorial_body", "value": "{0} quiere pelear.\n\nPulsa <color=yellow>WASD</color> para completar las secuencias de teclas\nPulsa <color=yellow>ESPACIO</color> para cambiar de banco\n\n<color=blue>DEFENSA</color> - Completa antes de que se acabe el tiempo para evitar daño\n<color=red>ATAQUE</color> - Completa para causar daño\n\nPulsa <color=yellow>ESPACIO</color> para empezar..." },
+    { "key": "ingredient_no_match", "value": "(sin coincidencia en json)" },
+    { "key": "ingredient_axis_x", "value": "aterrizado↔disociativo" },
+    { "key": "ingredient_axis_y", "value": "calmo↕elevado" },
+    { "key": "current mood", "value": "estado actual" },
+    { "key": "goal mood", "value": "estado objetivo" },
+    { "key": "calm", "value": "calmo" },
+    { "key": "elevated", "value": "Elevado" },
+    { "key": "grounded", "value": "Aterrizado" },
+    { "key": "dissociative", "value": "disociativo" },
+    { "key": "start_button", "value": "Comenzar" },
+    { "key": "next_button", "value": "Siguiente" },
+    { "key": "next_day_button", "value": "Siguiente día" },
+    { "key": "back_button", "value": "Volver" },
+    { "key": "begin_brew_button", "value": "Empezar mezcla" },
+    { "key": "options_button", "value": "Opciones" },
+    { "key": "credits_button", "value": "Créditos" },
+    { "key": "mood_profile_title", "value": "Perfil de ánimo" },
+    { "key": "mood_graph_hint", "value": "Pasa el cursor sobre los iconos para ver detalles de ánimo" },
+    { "key": "continue_button", "value": "Continuar" },
+    { "key": "attack_label", "value": "ATAQUE" },
+    { "key": "defend_label", "value": "DEFENSA" },
+    { "key": "player_label", "value": "JUGADOR" },
+    { "key": "customer_label", "value": "CLIENTE" },
+    { "key": "to_bar_button", "value": "A la barra" },
+    { "key": "fight_button", "value": "Pelear?" },
+    {"key": "retry_button", "value": "Otra vez"}
+
+  ]
+}
+

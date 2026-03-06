@@ -9,8 +9,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int startingCoins = 0;
     [SerializeField] private int startingDay = 1;
 
+    [SerializeField] private GameObject LoseManager;
+
+
+
     [Header("Economy")]
     [SerializeField] private int maintenanceCost = 80;
+    public int MaintenanceCost => maintenanceCost;
+
 
     public int Coins { get; private set; }
     public int Day { get; private set; }

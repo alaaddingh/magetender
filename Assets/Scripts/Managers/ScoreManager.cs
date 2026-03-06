@@ -122,7 +122,7 @@ public class ScoreManager : MonoBehaviour
     private void UpdateScoreText()
     {
         if (ScoreDisplay != null)
-            ScoreDisplay.text = $"Mood: ({CurrMoodBoardX:F2}, {CurrMoodBoardY:F2})";
+            ScoreDisplay.text = L.Get("score_display_format", CurrMoodBoardX, CurrMoodBoardY);
     }
 
     /* call when showing score display (e.g. after new day); shows monster starting mood only */

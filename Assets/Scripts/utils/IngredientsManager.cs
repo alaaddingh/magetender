@@ -41,6 +41,16 @@ public class IngredientHoverSnapUI : MonoBehaviour
         RecordShelfPositions();
     }
 
+    private void OnEnable()
+    {
+        LanguageManager.OnLanguageChanged += LoadIngredientData;
+    }
+
+    private void OnDisable()
+    {
+        LanguageManager.OnLanguageChanged -= LoadIngredientData;
+    }
+
     private void RecordShelfPositions()
     {
         shelfPositions.Clear();
@@ -132,7 +142,13 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
     private void LoadIngredientData()
     {
-        TextAsset json = Resources.Load<TextAsset>("Data/Ingredients");
+		string path = "Data/Ingredients";
+		if (LanguageManager.Instance != null)
+			path = LanguageManager.Instance.GetIngredientsResourcePath();
+		else if (PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangSpanish)
+			path = "Data/Ingredients_es";
+
+		TextAsset json = Resources.Load<TextAsset>(path);
         if (json == null)
         {
             return;
@@ -165,7 +181,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
         if (!byId.TryGetValue(id, out IngredientData data))
         {
             if (tooltipNameText != null) tooltipNameText.text = id;
-            if (tooltipDescText != null) tooltipDescText.text = "(no json match)";
+            if (tooltipDescText != null) tooltipDescText.text = L.Get("ingredient_no_match");
             if (tooltipEffectText != null) tooltipEffectText.text = "";
 
             DebugTick($"json lookup failed for id: {id}");
@@ -186,8 +202,8 @@ public class IngredientHoverSnapUI : MonoBehaviour
         if (tooltipEffectText != null)
         {
             tooltipEffectText.text =
-                $"x: {x:+0.00;-0.00} (grounded↔dissociative)\n" +
-                $"y: {y:+0.00;-0.00} (calm↕elevated)";
+                $"x: {x:+0.00;-0.00} ({L.Get("ingredient_axis_x")})\n" +
+                $"y: {y:+0.00;-0.00} ({L.Get("ingredient_axis_y")})";
         }
     }
 
