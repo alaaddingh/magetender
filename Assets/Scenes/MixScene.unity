@@ -3345,7 +3345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: goal_mood
+  labelOverride: goal mood
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!1 &649498983
@@ -7470,7 +7470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 1526025943}
   tooltipText: {fileID: 1090703556}
-  labelOverride: current_mood
+  labelOverride: current mood
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!1 &1334243940
