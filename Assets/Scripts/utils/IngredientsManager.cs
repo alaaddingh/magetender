@@ -6,8 +6,10 @@ using TMPro;
 
 public class IngredientHoverSnapUI : MonoBehaviour
 {
-    [Header("target position")]
-    public Vector2 snapTargetPos;
+    [Header("target position (per bottle size)")]
+    public Vector2 snapTargetPosSmall;
+    public Vector2 snapTargetPosMedium;
+    public Vector2 snapTargetPosLarge;
 
     [Header("tooltip ui")]
     public GameObject tooltipRoot;
@@ -105,22 +107,33 @@ public class IngredientHoverSnapUI : MonoBehaviour
             {
                 if (!shelfPositions.ContainsKey(hoveredIngredient.name))
                     shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
-                hoveredIngredient.rectTransform.anchoredPosition = snapTargetPos;
+                hoveredIngredient.rectTransform.anchoredPosition = GetSnapTarget();
                 mixManager.AddIngredient(hoveredIngredient.name);
             }
             s_processedClickThisFrame = true;
         }
     }
 
+    private Vector2 GetSnapTarget()
+    {
+        if (mixManager == null) return snapTargetPosMedium;
+        switch (mixManager.SelectedBottle)
+        {
+            case "small": return snapTargetPosSmall;
+            case "large": return snapTargetPosLarge;
+            default: return snapTargetPosMedium;
+        }
+    }
+
     private bool IsInDrink(Image img)
     {
         Vector2 pos = img.rectTransform.anchoredPosition;
-        return (pos - snapTargetPos).sqrMagnitude <= inDrinkThreshold * inDrinkThreshold;
+        return (pos - GetSnapTarget()).sqrMagnitude <= inDrinkThreshold * inDrinkThreshold;
     }
 
     private Vector2 GetShelfPosition(string ingredientName)
     {
-        return shelfPositions.TryGetValue(ingredientName, out Vector2 pos) ? pos : snapTargetPos;
+        return shelfPositions.TryGetValue(ingredientName, out Vector2 pos) ? pos : GetSnapTarget();
     }
 
     private void DebugTick(string line)

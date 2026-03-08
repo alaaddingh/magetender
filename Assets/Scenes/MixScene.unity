@@ -817,7 +817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &155716012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3135,9 +3135,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IngredientsBottle: {fileID: 1742341212}
   BaseBottle: {fileID: 992086412}
-  fillWidthMultiplier: 0.18
-  fillHeightMultiplier: 1
-  fillAlpha: 0.6
+  baseController: {fileID: 851963204}
+  ingredientsBottlePosSmall: {x: 0, y: -160}
+  ingredientsBottlePosMedium: {x: 0, y: -140}
+  ingredientsBottlePosLarge: {x: 0, y: -120}
   CurrentScreen: {fileID: 906567377}
   NextScreen: {fileID: 1163726008}
 --- !u!1 &609399854
@@ -4538,7 +4539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &832843224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4764,10 +4765,12 @@ MonoBehaviour:
   CurrentScreen: {fileID: 1228855948}
   NextScreen: {fileID: 906567377}
   PreviousScreen: {fileID: 832843223}
-  fillAmountPerDrop: 0.01
+  fillAmountPerDrop: 0.02
   maxFillLevel: 1
-  fillWidthMultiplier: 0
-  fillHeightMultiplier: 0.8
+  fillWidthMultiplier: 0.975
+  fillCircleAspect: 0.7895
+  fillBottomOffsetY: 35
+  fillYCutoff: 0.95
   fillAlpha: 0.6
   baseBottlePosSmall: {x: 0, y: -260}
   baseBottlePosMedium: {x: 0, y: -240}
@@ -5662,7 +5665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a52f8ecf9651a4fadbf324f1fb7db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapTargetPos: {x: 0, y: -195}
+  snapTargetPosSmall: {x: 0, y: -180}
+  snapTargetPosMedium: {x: 0, y: -150}
+  snapTargetPosLarge: {x: 0, y: -120}
   tooltipRoot: {fileID: 1267240447}
   tooltipNameText: {fileID: 1899898777}
   tooltipDescText: {fileID: 342661633}
@@ -5800,7 +5805,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9388a35f1ac2db418497b3bf3eda878, type: 3}
+  m_Sprite: {fileID: 21300000, guid: beadb1f6a99b7af41a943636a7330d94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6021,7 +6026,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1013163211
@@ -7591,7 +7596,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a52f8ecf9651a4fadbf324f1fb7db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapTargetPos: {x: 0, y: 0}
+  snapTargetPosSmall: {x: 0, y: 0}
+  snapTargetPosMedium: {x: 0, y: 0}
+  snapTargetPosLarge: {x: 0, y: 0}
   tooltipRoot: {fileID: 1267240447}
   tooltipNameText: {fileID: 1899898777}
   tooltipDescText: {fileID: 342661633}
@@ -10208,7 +10215,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: -178}
+  m_AnchoredPosition: {x: 800, y: -201}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1822492699

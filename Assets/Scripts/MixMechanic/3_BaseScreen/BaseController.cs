@@ -43,15 +43,21 @@ public class BaseController : MonoBehaviour
     private Coroutine pouringCoroutine = null;
     private Canvas canvas;
     private int skipInputFrames;
-    private bool allowInput; // set true after short delay when panel enables so Next button release doesn't block drag/pour
+    private bool allowInput;
 
     [Header("Fill Settings")]
     public float fillAmountPerDrop = 0.01f;
     public float maxFillLevel = 1.0f;
     [Range(0f, 1f)]
     public float fillWidthMultiplier = 0.8f;
-    [Range(0f, 1f)]
-    public float fillHeightMultiplier = 0.5f;
+    [Tooltip("Circle aspect: 1 = round, <1 = wider than tall, >1 = taller than wide.")]
+    [Range(0.5f, 1.5f)]
+    public float fillCircleAspect = 1f;
+    [Tooltip("Pixels to move the fill up from the bottom of the bottle (starts fill above inner glass).")]
+    public float fillBottomOffsetY = 0f;
+    [Tooltip("Y cutoff: only draw fill below this height (0–1). 0.5 = flat top at middle, 1 = full circle.")]
+    [Range(0.3f, 1f)]
+    public float fillYCutoff = 0.5f;
     [Range(0f, 1f)]
     public float fillAlpha = 0.7f;
 
@@ -66,7 +72,7 @@ public class BaseController : MonoBehaviour
     public RectTransform trashRect;
 
     private float currentFillLevel = 0f;
-    private Dictionary<string, float> baseAmounts = new Dictionary<string, float>(); // base name -> amount (0.0 to 1.0)
+    private Dictionary<string, float> baseAmounts = new Dictionary<string, float>();
     private Image fillImage;
 
     private void Awake()
@@ -137,16 +143,18 @@ public class BaseController : MonoBehaviour
             fillObj.transform.SetParent(BaseBottle.transform, false);
 
             RectTransform fillRect = fillObj.AddComponent<RectTransform>();
-            
-            // Anchor to bottom-center, stretch horizontally
-            fillRect.anchorMin = new Vector2(0.1f, 0f);
-            fillRect.anchorMax = new Vector2(0.9f, 0f);
-            fillRect.pivot = new Vector2(0.5f, 0f); // Pivot at bottom
+            fillRect.anchorMin = new Vector2(0.5f, 0f);
+            fillRect.anchorMax = new Vector2(0.5f, 0f);
+            fillRect.pivot = new Vector2(0.5f, 0f);
             fillRect.anchoredPosition = Vector2.zero;
-            fillRect.sizeDelta = new Vector2(0, 0); // Start with no height
+            fillRect.sizeDelta = Vector2.zero;
 
-            // Add Image component
             fillImage = fillObj.AddComponent<Image>();
+            fillImage.sprite = FillCircleSprite.Get(fillYCutoff);
+            fillImage.type = Image.Type.Filled;
+            fillImage.fillMethod = Image.FillMethod.Vertical;
+            fillImage.fillOrigin = (int)Image.OriginVertical.Bottom;
+            fillImage.fillAmount = 0f;
             Color initialColor = Color.white;
             initialColor.a = fillAlpha;
             fillImage.color = initialColor;
@@ -155,6 +163,14 @@ public class BaseController : MonoBehaviour
         else
         {
             fillImage = fillTransform.GetComponent<Image>();
+            fillImage.sprite = FillCircleSprite.Get(fillYCutoff);
+            fillImage.type = Image.Type.Filled;
+            fillImage.fillMethod = Image.FillMethod.Vertical;
+            fillImage.fillOrigin = (int)Image.OriginVertical.Bottom;
+            RectTransform fillRect = fillImage.rectTransform;
+            fillRect.anchorMin = new Vector2(0.5f, 0f);
+            fillRect.anchorMax = new Vector2(0.5f, 0f);
+            fillRect.pivot = new Vector2(0.5f, 0f);
         }
 
         UpdateFillVisual();
@@ -204,8 +220,6 @@ public class BaseController : MonoBehaviour
             if (canvas != null)
             {
                 RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-                
-                // Convert mouse position to canvas local space
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     canvasRect,
                     Input.mousePosition,
@@ -258,34 +272,28 @@ public class BaseController : MonoBehaviour
         return maxAx > minBx && minAx < maxBx && maxAy > minBy && minAy < maxBy;
     }
 
- private void ApplySelectedBottleToBaseBottle()
-{
-
-    /* update: only scale is copied over from small/medium/large glass (since separate sprites) */
-    Vector2 pos = BaseBottle.rectTransform.anchoredPosition;
-    Vector3 scale = BaseBottle.rectTransform.localScale;
-
-    switch (mixManager.SelectedBottle)
+    private void ApplySelectedBottleToBaseBottle()
     {
-        case "small":
-            pos = baseBottlePosSmall;
-            scale = smallBottleUI.rectTransform.localScale;
-            break;
-
-        case "medium":
-            pos = baseBottlePosMedium;
-            scale =  mediumBottleUI.rectTransform.localScale;
-            break;
-
-        case "large":
-            pos = baseBottlePosLarge;
-            scale = largeBottleUI.rectTransform.localScale;
-            break;
+        Vector2 pos = BaseBottle.rectTransform.anchoredPosition;
+        Vector3 scale = BaseBottle.rectTransform.localScale;
+        switch (mixManager.SelectedBottle)
+        {
+            case "small":
+                pos = baseBottlePosSmall;
+                scale = smallBottleUI.rectTransform.localScale;
+                break;
+            case "medium":
+                pos = baseBottlePosMedium;
+                scale = mediumBottleUI.rectTransform.localScale;
+                break;
+            case "large":
+                pos = baseBottlePosLarge;
+                scale = largeBottleUI.rectTransform.localScale;
+                break;
+        }
+        BaseBottle.rectTransform.anchoredPosition = pos;
+        BaseBottle.rectTransform.localScale = scale;
     }
-
-    BaseBottle.rectTransform.anchoredPosition = pos;
-    BaseBottle.rectTransform.localScale = scale;
-}
 
     private void SetBase(string baseKey, Color tint)
     {
@@ -467,14 +475,12 @@ public class BaseController : MonoBehaviour
 
         RectTransform fillRect = fillImage.rectTransform;
         RectTransform bottleRect = BaseBottle.rectTransform;
-        
-        // Use rect instead of sizeDelta to get actual rendered size (accounts for sprite not filling RectTransform)
-        float bottleHeight = bottleRect.rect.height;
         float bottleWidth = bottleRect.rect.width;
-        float fillHeight = bottleHeight * fillHeightMultiplier * mixManager.FillLevel;
-        float fillWidth = bottleWidth * fillWidthMultiplier;
-        
-        fillRect.sizeDelta = new Vector2(fillWidth, fillHeight);
+        float diameter = bottleWidth * fillWidthMultiplier;
+        fillRect.sizeDelta = new Vector2(diameter, diameter * fillCircleAspect);
+        fillRect.anchoredPosition = new Vector2(0f, fillBottomOffsetY);
+        fillImage.sprite = FillCircleSprite.Get(fillYCutoff);
+        fillImage.fillAmount = mixManager.FillLevel;
 
         Color mixedColor = CalculateMixedColor();
         mixedColor.a = fillAlpha;

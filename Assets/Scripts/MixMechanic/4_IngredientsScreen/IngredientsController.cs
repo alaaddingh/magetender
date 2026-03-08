@@ -2,12 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-/*
-purpose: 
-    simply copy over the existing BaseBottle (size + color)
-    to ingredients screen 
-    
-*/
+/* Copies BaseBottle appearance and position to Ingredients screen; fill settings from BaseController. */
 public class IngredientController : MonoBehaviour
 {
     [Header("Ingredients bottle to target")]
@@ -15,18 +10,16 @@ public class IngredientController : MonoBehaviour
 
     [Header("Base screen bottle in scene")]
     public Image BaseBottle;
+    [SerializeField] private BaseController baseController;
 
-    [Header("Fill Settings")]
-    [Range(0f, 1f)]
-    public float fillWidthMultiplier = 0.18f;
-    [Range(0f, 1f)]
-    public float fillHeightMultiplier = 0.5f;
-    [Range(0f, 1f)]
-    public float fillAlpha = 0.7f;
+    [Header("Ingredients bottle position (per size, so it sits on counter)")]
+    public Vector2 ingredientsBottlePosSmall = new Vector2(0f, -120f);
+    public Vector2 ingredientsBottlePosMedium = new Vector2(0f, -160f);
+    public Vector2 ingredientsBottlePosLarge = new Vector2(0f, -200f);
 
-      [Header("UI Panels")]
-      public GameObject CurrentScreen;
-      public GameObject NextScreen;
+    [Header("UI Panels")]
+    public GameObject CurrentScreen;
+    public GameObject NextScreen;
 
     private MixManager mixManager;
     private Image fillImage;
@@ -34,6 +27,8 @@ public class IngredientController : MonoBehaviour
     private void Awake()
     {
         mixManager = FindFirstObjectByType<MixManager>();
+        if (baseController == null)
+            baseController = FindFirstObjectByType<BaseController>();
     }
 
     private void OnEnable()
@@ -51,35 +46,58 @@ public class IngredientController : MonoBehaviour
     private void ApplyFromBaseBottle()
     {
         UIImgUtil.CopyAppearance(BaseBottle, IngredientsBottle);
+        if (IngredientsBottle == null || mixManager == null) return;
+        Vector2 pos;
+        switch (mixManager.SelectedBottle)
+        {
+            case "small": pos = ingredientsBottlePosSmall; break;
+            case "medium": pos = ingredientsBottlePosMedium; break;
+            case "large": pos = ingredientsBottlePosLarge; break;
+            default: pos = ingredientsBottlePosMedium; break;
+        }
+        IngredientsBottle.rectTransform.anchoredPosition = pos;
     }
 
     private void InitializeFillRectangle()
     {
-        if (IngredientsBottle == null || mixManager == null) return;
+        if (IngredientsBottle == null || mixManager == null || baseController == null) return;
 
         Transform fillTransform = IngredientsBottle.transform.Find("FillRectangle");
-        
+
         if (fillTransform == null)
         {
             GameObject fillObj = new GameObject("FillRectangle");
             fillObj.transform.SetParent(IngredientsBottle.transform, false);
 
             RectTransform fillRect = fillObj.AddComponent<RectTransform>();
-            fillRect.anchorMin = new Vector2(0.1f, 0f);
-            fillRect.anchorMax = new Vector2(0.9f, 0f);
+            fillRect.anchorMin = new Vector2(0.5f, 0f);
+            fillRect.anchorMax = new Vector2(0.5f, 0f);
             fillRect.pivot = new Vector2(0.5f, 0f);
             fillRect.anchoredPosition = Vector2.zero;
-            fillRect.sizeDelta = new Vector2(0, 0);
+            fillRect.sizeDelta = Vector2.zero;
 
             fillImage = fillObj.AddComponent<Image>();
+            fillImage.sprite = FillCircleSprite.Get(baseController.fillYCutoff);
+            fillImage.type = Image.Type.Filled;
+            fillImage.fillMethod = Image.FillMethod.Vertical;
+            fillImage.fillOrigin = (int)Image.OriginVertical.Bottom;
+            fillImage.fillAmount = 0f;
             Color initialColor = Color.white;
-            initialColor.a = fillAlpha;
+            initialColor.a = baseController.fillAlpha;
             fillImage.color = initialColor;
             fillImage.raycastTarget = false;
         }
         else
         {
             fillImage = fillTransform.GetComponent<Image>();
+            fillImage.sprite = FillCircleSprite.Get(baseController.fillYCutoff);
+            fillImage.type = Image.Type.Filled;
+            fillImage.fillMethod = Image.FillMethod.Vertical;
+            fillImage.fillOrigin = (int)Image.OriginVertical.Bottom;
+            RectTransform fillRect = fillImage.rectTransform;
+            fillRect.anchorMin = new Vector2(0.5f, 0f);
+            fillRect.anchorMax = new Vector2(0.5f, 0f);
+            fillRect.pivot = new Vector2(0.5f, 0f);
         }
 
         UpdateFillVisual();
@@ -87,20 +105,19 @@ public class IngredientController : MonoBehaviour
 
     private void UpdateFillVisual()
     {
-        if (fillImage == null || IngredientsBottle == null || mixManager == null) return;
+        if (fillImage == null || IngredientsBottle == null || mixManager == null || baseController == null) return;
 
         RectTransform fillRect = fillImage.rectTransform;
         RectTransform bottleRect = IngredientsBottle.rectTransform;
-        
-        float bottleHeight = bottleRect.rect.height;
         float bottleWidth = bottleRect.rect.width;
-        float fillHeight = bottleHeight * fillHeightMultiplier * mixManager.FillLevel;
-        float fillWidth = bottleWidth * fillWidthMultiplier;
-        
-        fillRect.sizeDelta = new Vector2(fillWidth, fillHeight);
+        float diameter = bottleWidth * baseController.fillWidthMultiplier;
+        fillRect.sizeDelta = new Vector2(diameter, diameter * baseController.fillCircleAspect);
+        fillRect.anchoredPosition = new Vector2(0f, baseController.fillBottomOffsetY);
+        fillImage.sprite = FillCircleSprite.Get(baseController.fillYCutoff);
+        fillImage.fillAmount = mixManager.FillLevel;
 
         Color mixedColor = CalculateMixedColor();
-        mixedColor.a = fillAlpha;
+        mixedColor.a = baseController.fillAlpha;
         fillImage.color = mixedColor;
     }
 
@@ -111,8 +128,6 @@ public class IngredientController : MonoBehaviour
             return Color.white;
         }
 
-        // Weighted color blending: each base contributes based on its percentage
-        // Calculate total amount first to get accurate percentages
         Color mixedColor = Color.black;
         float totalAmount = 0f;
 
@@ -163,10 +178,9 @@ public class IngredientController : MonoBehaviour
         }
     }
 
-    /* tbh, should probably be its own utility in the future */
     public void NextPressed()
-        {
-            CurrentScreen.SetActive(false);
-            NextScreen.SetActive(true);
-        }
+    {
+        CurrentScreen.SetActive(false);
+        NextScreen.SetActive(true);
+    }
 }
