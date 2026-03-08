@@ -12,7 +12,7 @@
       },
   
       "dialogueId": "dlg_unicorn",
-      "position": {"pos_x": -169, "pos_y": 170}
+      "position": {"pos_x": -100, "pos_y": 170}
     },
      {
       "id": "slime",

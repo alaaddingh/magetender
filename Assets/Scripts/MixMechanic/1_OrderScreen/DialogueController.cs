@@ -18,6 +18,7 @@ public class DialogueController : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] private GameObject brewButtonObject;
+    public GameObject continueButtonObject;
 
     [Header("Data source")]
     [SerializeField] private CurrentMonster currentMonsterManager;
@@ -54,6 +55,8 @@ public class DialogueController : MonoBehaviour
     private void Start()
     {
         brewButtonObject.SetActive(false);
+        if (continueButtonObject != null)
+            continueButtonObject.SetActive(false);
 
         if (typewriter == null && monsterSpeech != null)
             typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
@@ -83,6 +86,7 @@ public class DialogueController : MonoBehaviour
                 monsterSpeech.text = string.Empty;
 
             brewButtonObject.SetActive(true);
+            UpdateContinueButtonState(activeDialogue);
             return;
         }
 
@@ -93,6 +97,8 @@ public class DialogueController : MonoBehaviour
             typewriter.TypeLine(line);
         else
             monsterSpeech.text = line;
+
+        UpdateContinueButtonState(activeDialogue);
     }
 
     /* handles Next UI Button clicks (iteration + brew button visibility) */
@@ -108,6 +114,7 @@ public class DialogueController : MonoBehaviour
         if (activeDialogue == null || activeDialogue.Count == 0)
         {
             brewButtonObject.SetActive(true);
+            UpdateContinueButtonState(activeDialogue);
             return;
         }
 
@@ -116,6 +123,7 @@ public class DialogueController : MonoBehaviour
         if (last)
         {
             brewButtonObject.SetActive(true);
+            UpdateContinueButtonState(activeDialogue);
             return;
         }
 
@@ -126,6 +134,8 @@ public class DialogueController : MonoBehaviour
         {
             brewButtonObject.SetActive(true);
         }
+
+        UpdateContinueButtonState(activeDialogue);
     }
 
     public void BrewingPressed()
@@ -153,5 +163,24 @@ public class DialogueController : MonoBehaviour
         }
 
         monsterName.text = currentMonsterManager.Data.name;
+    }
+
+    private void UpdateContinueButtonState(List<string> activeDialogue)
+    {
+        if (continueButtonObject == null)
+            return;
+
+        bool showContinue = activeDialogue != null && activeDialogue.Count > 0 && dialogueIndex >= activeDialogue.Count - 1;
+        continueButtonObject.SetActive(showContinue);
+
+        if (!showContinue)
+            return;
+
+        bool isLastMonsterOfDay = currentMonsterManager == null || !currentMonsterManager.HasNextMonsterInCurrentLevel();
+        string key = isLastMonsterOfDay ? "next_day_button" : "continue_button";
+
+        var localizedText = continueButtonObject.GetComponentInChildren<LocalizedTMPText>(true);
+        if (localizedText != null)
+            localizedText.SetKey(key);
     }
 }
