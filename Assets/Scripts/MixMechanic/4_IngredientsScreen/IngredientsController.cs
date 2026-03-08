@@ -21,6 +21,9 @@ public class IngredientController : MonoBehaviour
     public GameObject CurrentScreen;
     public GameObject NextScreen;
 
+    [Header("Selection Rules")]
+    [Min(1)] public int MaxIngredients = 3;
+
     private MixManager mixManager;
     private Image fillImage;
 
@@ -33,14 +36,25 @@ public class IngredientController : MonoBehaviour
 
     private void OnEnable()
     {
+        ApplyIngredientSelectionCap();
         ApplyFromBaseBottle();
         InitializeFillRectangle();
     }
 
     private void Start()
     {
+        ApplyIngredientSelectionCap();
         ApplyFromBaseBottle();
         InitializeFillRectangle();
+    }
+
+    private void ApplyIngredientSelectionCap()
+    {
+        if (mixManager == null)
+            mixManager = FindFirstObjectByType<MixManager>();
+        if (mixManager == null) return;
+
+        mixManager.SetMaxIngredients(MaxIngredients);
     }
 
     private void ApplyFromBaseBottle()

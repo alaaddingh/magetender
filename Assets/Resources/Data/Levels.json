@@ -9,7 +9,7 @@
          {
           "monster_id": "unicorn",
           "tolerances": {
-            "satisfied_tolerance": 1.2
+            "satisfied_tolerance": 3
           },
           "starting_score": { "x": -0.5, "y": 0.5 },
           "goal_score": { "x": -0.58, "y": -0.12 },

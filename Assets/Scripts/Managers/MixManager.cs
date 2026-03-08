@@ -15,6 +15,7 @@ public class MixManager : MonoBehaviour
 
     [Header("Ingredients")]
     public List<string> SelectedIngredients = new List<string>();
+    [SerializeField, Min(1)] private int maxSelectedIngredients = 3;
 
     [Header("Fill Data")]
     public float FillLevel = 0f;
@@ -52,11 +53,15 @@ public class MixManager : MonoBehaviour
         OnStateChanged?.Invoke();
     }
 
-    public void AddIngredient(string ingredientKey)
+    public bool AddIngredient(string ingredientKey)
     {
+        if (string.IsNullOrEmpty(ingredientKey)) return false;
+        if (SelectedIngredients.Count >= maxSelectedIngredients) return false;
+
         SelectedIngredients.Add(ingredientKey);
         OnIngredientAdded?.Invoke(ingredientKey);
         OnStateChanged?.Invoke();
+        return true;
     }
 
     public bool RemoveIngredient(string ingredientKey)
@@ -175,5 +180,10 @@ public class MixManager : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    public void SetMaxIngredients(int max)
+    {
+        maxSelectedIngredients = Mathf.Max(1, max);
     }
 }

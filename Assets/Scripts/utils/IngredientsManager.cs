@@ -105,10 +105,13 @@ public class IngredientHoverSnapUI : MonoBehaviour
             }
             else
             {
-                if (!shelfPositions.ContainsKey(hoveredIngredient.name))
-                    shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
-                hoveredIngredient.rectTransform.anchoredPosition = GetSnapTarget();
-                mixManager.AddIngredient(hoveredIngredient.name);
+                bool added = mixManager.AddIngredient(hoveredIngredient.name);
+                if (added)
+                {
+                    if (!shelfPositions.ContainsKey(hoveredIngredient.name))
+                        shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
+                    hoveredIngredient.rectTransform.anchoredPosition = GetSnapTarget();
+                }
             }
             s_processedClickThisFrame = true;
         }
