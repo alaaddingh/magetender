@@ -4081,6 +4081,7 @@ GameObject:
   - component: {fileID: 752509157}
   - component: {fileID: 752509159}
   - component: {fileID: 752509158}
+  - component: {fileID: 752509160}
   m_Layer: 5
   m_Name: DayText
   m_TagString: Untagged
@@ -4206,6 +4207,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752509156}
   m_CullTransparentMesh: 1
+--- !u!114 &752509160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752509156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6569405e492e09448a61a58cc859c240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: day_count
+  style: 1
 --- !u!1 &757739534
 GameObject:
   m_ObjectHideFlags: 0

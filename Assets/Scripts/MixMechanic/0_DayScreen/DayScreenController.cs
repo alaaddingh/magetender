@@ -1,4 +1,5 @@
 using TMPro;
+using RTLTMPro;
 using UnityEngine;
 
 /* Shows day and coins; Next button hides day panel and shows order screen. */
@@ -18,6 +19,7 @@ public class DayScreenController : MonoBehaviour
     [Header("Score Display Canvas - hide on Day, show on Order")]
     [SerializeField] private GameObject scoreDisplayCanvas;
     [SerializeField] private ScoreManager scoreManager;
+    private readonly FastStringBuilder rtlBuffer = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
     private void Start()
     {
@@ -28,8 +30,8 @@ public class DayScreenController : MonoBehaviour
         }
 
         bool skipDayCounter = CurrentMonster.Instance != null && CurrentMonster.Instance.IsPlannedVisitSameDay();
-		if (CurrentMonster.Instance != null)
-			CurrentMonster.Instance.ApplyPlannedVisit();
+        if (CurrentMonster.Instance != null)
+            CurrentMonster.Instance.ApplyPlannedVisit();
 
         if (dayPanel != null)
             dayPanel.SetActive(true);
@@ -58,12 +60,28 @@ public class DayScreenController : MonoBehaviour
             coins = GameManager.Instance.Coins;
         }
 
+        string dayLabel = FormatDayLabel(day);
         if (dayText != null)
             dayText.text = coinsText == null
-                ? L.Get("day_prefix") + day + "\n" + coins
-                : L.Get("day_prefix") + day;
+                ? dayLabel + "\n" + coins
+                : dayLabel;
         if (coinsText != null)
             coinsText.text = coins.ToString();
+    }
+
+    private string FormatDayLabel(int day)
+    {
+        string text = L.Get("day_count", day);
+        bool isArabic = LanguageManager.Instance != null
+            ? LanguageManager.Instance.CurrentLanguage == LanguageManager.LangArabic
+            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangArabic;
+
+        if (!isArabic)
+            return text;
+
+        rtlBuffer.Clear();
+        RTLSupport.FixRTL(text, rtlBuffer, farsi: false, fixTextTags: true, preserveNumbers: false);
+        return rtlBuffer.ToString();
     }
 
     /* Call from Next button OnClick */

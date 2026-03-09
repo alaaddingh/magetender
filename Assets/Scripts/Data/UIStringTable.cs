@@ -32,7 +32,9 @@ public static class L
 
         string path = LanguageManager.Instance != null
             ? LanguageManager.Instance.GetUIStringsResourcePath()
-            : (lang == LanguageManager.LangSpanish ? "Data/UIStrings_es" : "Data/UIStrings_en");
+            : (lang == LanguageManager.LangSpanish
+                ? "Data/UIStrings_es"
+                : (lang == LanguageManager.LangArabic ? "Data/UIStrings_ar" : "Data/UIStrings_en"));
 
         TextAsset asset = Resources.Load<TextAsset>(path);
         Debug.Log($"[UIStrings] Loading for lang='{lang}' from '{path}'");

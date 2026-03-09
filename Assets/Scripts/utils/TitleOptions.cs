@@ -18,7 +18,12 @@ public class TitleOptions : MonoBehaviour
             ? LanguageManager.Instance.CurrentLanguage
             : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
 
-        int index = lang == LanguageManager.LangSpanish ? 1 : 0;
+        int index = 0;
+        if (lang == LanguageManager.LangSpanish)
+            index = 1;
+        else if (lang == LanguageManager.LangArabic)
+            index = 2;
+
         languageDropdown.value = index;
         languageDropdown.RefreshShownValue();
     }
@@ -41,6 +46,7 @@ public class TitleOptions : MonoBehaviour
             LanguageManager.SetLanguage(LanguageManager.LangEnglish);
         else if (index == 1)
             LanguageManager.SetLanguage(LanguageManager.LangSpanish);
+        else if (index == 2)
+            LanguageManager.SetLanguage(LanguageManager.LangArabic);
     }
 }
-

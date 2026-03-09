@@ -1,0 +1,60 @@
+﻿{
+  "entries": [
+    { "key": "mood_tooltip_label", "value": "المزاج هسا" },
+    { "key": "score_display_format", "value": "المزاج: ({0:F2}, {1:F2})" },
+    { "key": "coins_suffix", "value": " عملات" },
+    { "key": "day_count", "value": "اليوم {0}" },
+    { "key": "tutorial_default_customer", "value": "هالزبون" },
+
+    { "key": "tutorial_body", "value": "الزبون بده يتخانق!\n\nاضغط الأسهم لإكمال التسلسل\nاضغط زر التبديل للتغيير بين المسارين\n\n<color=blue>الدفاع</color> - خلّص التسلسل قبل ما يخلص الوقت عشان ما يوصلك ضرر\n<color=red>الهجوم</color> - خلّص التسلسل عشان تضرب\n\nاضغط زر التبديل عشان نبلّش..." },
+
+    { "key": "ingredient_no_match", "value": "(ما في تطابق بالبيانات)" },
+
+    { "key": "ingredient_axis_x", "value": "مركّز ↔ شارِد" },
+    { "key": "ingredient_axis_y", "value": "هادئ ↕ متحمّس" },
+
+    { "key": "current mood", "value": "المزاج هسا" },
+    { "key": "goal mood", "value": "المزاج المطلوب" },
+
+    { "key": "calm", "value": "هادئ" },
+    { "key": "elevated", "value": "متحمّس" },
+    { "key": "grounded", "value": "مركّز" },
+    { "key": "dissociative", "value": "شارِد" },
+
+    { "key": "start_button", "value": "ابدأ" },
+    { "key": "next_button", "value": "التالي" },
+    { "key": "next_day_button", "value": "اليوم اللي بعده" },
+    { "key": "back_button", "value": "ارجع" },
+    { "key": "begin_brew_button", "value": "ابدأ التحضير" },
+    { "key": "options_button", "value": "الإعدادات" },
+    { "key": "credits_button", "value": "الأسماء" },
+
+    { "key": "mood_profile_title", "value": "وضعية المزاج" },
+    { "key": "mood_graph_hint", "value": "مرّر على الأيقونات عشان تشوف تفاصيل المزاج" },
+
+    { "key": "continue_button", "value": "كمّل" },
+
+    { "key": "attack_label", "value": "هجوم" },
+    { "key": "defend_label", "value": "دفاع" },
+    { "key": "player_label", "value": "اللاعب" },
+    { "key": "customer_label", "value": "الزبون" },
+
+    { "key": "to_bar_button", "value": "عالحانة" },
+    { "key": "fight_button", "value": "نتخانق؟" },
+    { "key": "retry_button", "value": "جرّب مرة ثانية" },
+
+    { "key": "tutorial_stage1_title", "value": "الزبون معصّب!" },
+
+    { "key": "tutorial_stage1_instructions", "value": "كمّل تسلسل الدفاع!\nاضغط الأسهم بالترتيب" },
+
+    { "key": "tutorial_stage1_prompt", "value": "اضغط زر التبديل عشان تجرّب..." },
+
+    { "key": "tutorial_stage2_instructions", "value": "تمام! هسا فيك تهاجم!\n\nاضغط زر التبديل للتغيير بين المسارين\nكمّل تسلسل الهجوم!" },
+
+    { "key": "tutorial_stage2_prompt", "value": "اضغط زر التبديل عشان تجرّب..." },
+
+    { "key": "tutorial_stage3_warning", "value": "جاهز للقتال الحقيقي؟\n\nالمسارين بيشتغلوا بنفس الوقت!\nإذا خلص وقت الدفاع رح يوصلك ضرر!" },
+
+    { "key": "tutorial_stage3_prompt", "value": "اضغط زر التبديل عشان نبلّش..." }
+  ]
+}

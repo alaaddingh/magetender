@@ -7,7 +7,7 @@ public class LanguageManager : MonoBehaviour
 
     public const string LangEnglish = "en";
     public const string LangSpanish = "es";
-    // public const string LangArabic = "ar"; // for Arabic
+    public const string LangArabic = "ar";
 
     private const string PlayerPrefsKey = "GameLanguage";
 
@@ -71,7 +71,8 @@ public class LanguageManager : MonoBehaviour
         Debug.Log("GetDialogueResourcePath: " + _currentLanguage);
         if (_currentLanguage == LangSpanish)
             return "Data/Dialogue_es";
-        // if (_currentLanguage == LangArabic) return "Data/Dialogue_ar";
+        if (_currentLanguage == LangArabic)
+            return "Data/Dialogue_ar";
         return "Data/Dialogue";
     }
 
@@ -80,14 +81,16 @@ public class LanguageManager : MonoBehaviour
     {
         if (_currentLanguage == LangEnglish) return "Data/UIStrings_en";
         if (_currentLanguage == LangSpanish) return "Data/UIStrings_es";
+        if (_currentLanguage == LangArabic) return "Data/UIStrings_ar";
         return "Data/UIStrings_en";
     }
 
-	// Resource path for ingredients JSON (e.g. "Data/Ingredients", "Data/Ingredients_es").
+	// Resource path for ingredients JSON (e.g. "Data/Ingredients", "Data/Ingredients_es", "Data/Ingredients_ar").
 	public string GetIngredientsResourcePath()
 	{
 		if (_currentLanguage == LangEnglish) return "Data/Ingredients";
 		if (_currentLanguage == LangSpanish) return "Data/Ingredients_es";
+		if (_currentLanguage == LangArabic) return "Data/Ingredients_ar";
 		return "Data/Ingredients";
 	}
 }

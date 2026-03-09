@@ -73,6 +73,12 @@ public class CombatTutorial : MonoBehaviour
 		{
 			path = LanguageManager.Instance.GetUIStringsResourcePath();
 		}
+		else
+		{
+			string lang = PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+			if (lang == LanguageManager.LangSpanish) path = "Data/UIStrings_es";
+			else if (lang == LanguageManager.LangArabic) path = "Data/UIStrings_ar";
+		}
 		
 		// Load JSON
 		TextAsset jsonFile = Resources.Load<TextAsset>(path);

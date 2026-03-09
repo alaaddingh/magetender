@@ -228,7 +228,7 @@ public class CurrentMonster : MonoBehaviour
     {
         string path = LanguageManager.Instance != null
             ? LanguageManager.Instance.GetDialogueResourcePath()
-            : (PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangSpanish ? "Data/Dialogue_es" : "Data/Dialogue");
+            : GetDialoguePathFromPrefs();
 
         Debug.Log($"[CurrentMonster] LoadDialogue path='{path}'");
 
@@ -248,6 +248,14 @@ public class CurrentMonster : MonoBehaviour
     public void ReloadDialogue()
     {
         LoadDialogue();
+    }
+
+    private static string GetDialoguePathFromPrefs()
+    {
+        string lang = PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+        if (lang == LanguageManager.LangSpanish) return "Data/Dialogue_es";
+        if (lang == LanguageManager.LangArabic) return "Data/Dialogue_ar";
+        return "Data/Dialogue";
     }
 
     private int GetCurrentDay()

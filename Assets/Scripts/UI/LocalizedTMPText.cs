@@ -1,4 +1,5 @@
 using TMPro;
+using RTLTMPro;
 using UnityEngine;
 
 public class LocalizedTMPText : MonoBehaviour
@@ -15,6 +16,7 @@ public class LocalizedTMPText : MonoBehaviour
 	[SerializeField] private Style style = Style.None;
 
 	private TMP_Text tmpText;
+	private readonly FastStringBuilder rtlOutput = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
 	private void Awake()
 	{
@@ -24,7 +26,13 @@ public class LocalizedTMPText : MonoBehaviour
 
 	private void OnEnable()
 	{
+		LanguageManager.OnLanguageChanged += Refresh;
 		Refresh();
+	}
+
+	private void OnDisable()
+	{
+		LanguageManager.OnLanguageChanged -= Refresh;
 	}
 
 	public void SetKey(string newKey)
@@ -43,30 +51,43 @@ public class LocalizedTMPText : MonoBehaviour
 	public void Refresh()
 	{
 		if (tmpText == null)
-		{
 			tmpText = GetComponent<TMP_Text>();
-		}
-
 		if (tmpText == null)
-		{
 			return;
-		}
-
 		if (string.IsNullOrEmpty(key))
-		{
 			return;
-		}
 
-		tmpText.text = L.Get(key);
+		string localized = L.Get(key);
+		bool useRtlTmpComponent = tmpText is RTLTextMeshPro;
+		if (IsArabicLanguage() && !useRtlTmpComponent)
+			localized = FixArabic(localized);
+
+		tmpText.text = localized;
 		ApplyStyle();
+	}
+
+	private static bool IsArabicLanguage()
+	{
+		string lang = LanguageManager.Instance != null
+			? LanguageManager.Instance.CurrentLanguage
+			: PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+		return lang == LanguageManager.LangArabic;
+	}
+
+	private string FixArabic(string input)
+	{
+		if (string.IsNullOrEmpty(input))
+			return input;
+
+		rtlOutput.Clear();
+		RTLSupport.FixRTL(input, rtlOutput, farsi: false, fixTextTags: true, preserveNumbers: false);
+		return rtlOutput.ToString();
 	}
 
 	private void ApplyStyle()
 	{
 		if (tmpText == null || style == Style.None)
-		{
 			return;
-		}
 
 		float baseSize = tmpText.fontSize;
 

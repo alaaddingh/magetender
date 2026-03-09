@@ -161,8 +161,14 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		string path = "Data/Ingredients";
 		if (LanguageManager.Instance != null)
 			path = LanguageManager.Instance.GetIngredientsResourcePath();
-		else if (PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangSpanish)
-			path = "Data/Ingredients_es";
+		else
+		{
+			string lang = PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+			if (lang == LanguageManager.LangSpanish)
+				path = "Data/Ingredients_es";
+			else if (lang == LanguageManager.LangArabic)
+				path = "Data/Ingredients_ar";
+		}
 
 		TextAsset json = Resources.Load<TextAsset>(path);
         if (json == null)
