@@ -38,6 +38,7 @@
     {"key": "tutorial_stage2_instructions", "value": "Good! Now you can ATTACK!\\n\\nPress SPACE to switch banks\\nComplete an attack sequence!"},
     {"key": "tutorial_stage2_prompt", "value": "Press SPACE to try it..."},
     {"key": "tutorial_stage3_warning", "value": "Ready for the real fight?\\n\\nBoth banks run at the same time!\\nDon't let DEFEND time out or you take damage!"},
-    {"key": "tutorial_stage3_prompt", "value": "Press SPACE to begin..."}
+    {"key": "tutorial_stage3_prompt", "value": "Press SPACE to begin..."},
+    {"key": "cap_message", "value": "Select up to 3  Ingredients"}
   ]
 }
