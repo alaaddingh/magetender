@@ -55,6 +55,8 @@
 
     { "key": "tutorial_stage3_warning", "value": "جاهز للقتال الحقيقي؟\n\nالمسارين بيشتغلوا بنفس الوقت!\nإذا خلص وقت الدفاع رح يوصلك ضرر!" },
 
-    { "key": "tutorial_stage3_prompt", "value": "اضغط زر التبديل عشان نبلّش..." }
+    { "key": "tutorial_stage3_prompt", "value": "اضغط زر التبديل عشان نبلّش..." },
+    {"key": "cap_message", "value": "اختر بحد أقصى 3 مكونات"}
+
   ]
 }

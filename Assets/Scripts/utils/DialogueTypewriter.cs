@@ -19,8 +19,17 @@ public class DialogueTypewriter : MonoBehaviour
             targetText = GetComponent<TMP_Text>();
     }
 
+    public void SetTargetText(TMP_Text newTarget)
+    {
+        if (newTarget == null)
+            return;
+        targetText = newTarget;
+    }
+
     public void TypeLine(string line)
     {
+        if (targetText == null)
+            targetText = GetComponent<TMP_Text>();
         if (targetText == null)
             return;
 
@@ -33,6 +42,8 @@ public class DialogueTypewriter : MonoBehaviour
 
     public void SkipTyping()
     {
+        if (targetText == null)
+            targetText = GetComponent<TMP_Text>();
         if (targetText == null)
             return;
 
@@ -49,6 +60,8 @@ public class DialogueTypewriter : MonoBehaviour
     public void SetInstant(string text)
     {
         if (targetText == null)
+            targetText = GetComponent<TMP_Text>();
+        if (targetText == null)
             return;
 
         if (typingRoutine != null)
@@ -63,6 +76,14 @@ public class DialogueTypewriter : MonoBehaviour
     {
         IsTyping = true;
         targetText.text = string.Empty;
+
+        // Arabic shaping requires the full string; per-character typing causes disconnected glyphs / wrong order.
+        if (IsArabicLanguage())
+        {
+            targetText.text = line ?? string.Empty;
+            IsTyping = false;
+            yield break;
+        }
 
         float delay = charsPerSecond > 0f ? (1f / charsPerSecond) : 0f;
 
@@ -80,5 +101,13 @@ public class DialogueTypewriter : MonoBehaviour
         }
 
         IsTyping = false;
+    }
+
+    private static bool IsArabicLanguage()
+    {
+        string lang = LanguageManager.Instance != null
+            ? LanguageManager.Instance.CurrentLanguage
+            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+        return lang == LanguageManager.LangArabic;
     }
 }

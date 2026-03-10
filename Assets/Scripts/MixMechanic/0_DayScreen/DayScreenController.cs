@@ -1,5 +1,4 @@
 using TMPro;
-using RTLTMPro;
 using UnityEngine;
 
 /* Shows day and coins; Next button hides day panel and shows order screen. */
@@ -19,7 +18,6 @@ public class DayScreenController : MonoBehaviour
     [Header("Score Display Canvas - hide on Day, show on Order")]
     [SerializeField] private GameObject scoreDisplayCanvas;
     [SerializeField] private ScoreManager scoreManager;
-    private readonly FastStringBuilder rtlBuffer = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
     private void Start()
     {
@@ -60,28 +58,21 @@ public class DayScreenController : MonoBehaviour
             coins = GameManager.Instance.Coins;
         }
 
-        string dayLabel = FormatDayLabel(day);
+        string dayLabel = L.Get("day_count", day);
         if (dayText != null)
-            dayText.text = coinsText == null
-                ? dayLabel + "\n" + coins
+        {
+            // Keep day formatting consistent with the rest of the UI.
+            bool isArabic = RtlText.IsArabic();
+            dayText.isRightToLeftText = isArabic;
+            dayText.text = isArabic
+                ? RtlText.FixIfArabic(dayLabel, preserveNumbers: true, fixTags: true, reverseOutput: true)
                 : dayLabel;
+
+            if (coinsText == null)
+                dayText.text += "\n" + coins;
+        }
         if (coinsText != null)
             coinsText.text = coins.ToString();
-    }
-
-    private string FormatDayLabel(int day)
-    {
-        string text = L.Get("day_count", day);
-        bool isArabic = LanguageManager.Instance != null
-            ? LanguageManager.Instance.CurrentLanguage == LanguageManager.LangArabic
-            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish) == LanguageManager.LangArabic;
-
-        if (!isArabic)
-            return text;
-
-        rtlBuffer.Clear();
-        RTLSupport.FixRTL(text, rtlBuffer, farsi: false, fixTextTags: true, preserveNumbers: false);
-        return rtlBuffer.ToString();
     }
 
     /* Call from Next button OnClick */
