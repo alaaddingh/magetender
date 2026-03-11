@@ -13,7 +13,7 @@ public class QTECombatManager : MonoBehaviour
 	[Header("UI References")]
 	public Image customerSprite;
 	public Image backgroundImage;
-		public Image screenFlashOverlay;
+	public Image screenFlashOverlay;
 	public HealthBarUI playerHealthBar;
 	public HealthBarUI customerHealthBar;
 	public TextMeshProUGUI playerHealthLabel;
@@ -21,7 +21,7 @@ public class QTECombatManager : MonoBehaviour
 	public Canvas mainCanvas;
 	public RectTransform leftHand;
 	public RectTransform rightHand;
-	
+
 	[Header("Back to bar (show when fight ends)")]
 	public GameObject backToBarButton;
 	public string backToBarSceneName = "MixScene";
@@ -33,8 +33,14 @@ public class QTECombatManager : MonoBehaviour
 	public Image attackBankGlow;
 	public Image defendTimerBar;
 	public Image attackTimerBar;
-	public TextMeshProUGUI[] defendKeyTexts;
-	public TextMeshProUGUI[] attackKeyTexts;
+	public Image[] defendKeyImages;
+	public Image[] attackKeyImages;
+
+	[Header("Arrow Key Sprites")]
+	public Sprite arrowUpSprite;
+	public Sprite arrowDownSprite;
+	public Sprite arrowLeftSprite;
+	public Sprite arrowRightSprite;
 	
 	[Header("Combat Settings")]
 	public int playerMaxHealth = 100;
@@ -393,46 +399,48 @@ public class QTECombatManager : MonoBehaviour
 		}
 		
 		// Update defend bank key displays
-		for (int i = 0; i < defendKeyTexts.Length && i < defendSequence.Count; i++)
+		for (int i = 0; i < defendKeyImages.Length && i < defendSequence.Count; i++)
 		{
-			if (defendKeyTexts[i] != null)
+			if (defendKeyImages[i] != null)
 			{
-				defendKeyTexts[i].text = GetKeyDisplayText(defendSequence[i]);;
+				// Set the sprite based on the key
+				defendKeyImages[i].sprite = GetKeySprite(defendSequence[i]);
 				
 				// gray out done keys, highlight current one yellow
 				if (i < defendProgress)
 				{
-					defendKeyTexts[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+					defendKeyImages[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 				}
 				else if (i == defendProgress)
 				{
-					defendKeyTexts[i].color = Color.yellow;
+					defendKeyImages[i].color = Color.yellow;
 				}
 				else
 				{
-					defendKeyTexts[i].color = Color.white;
+					defendKeyImages[i].color = Color.white;
 				}
 			}
 		}
 		
 		// Update attack bank key displays
-		for (int i = 0; i < attackKeyTexts.Length && i < attackSequence.Count; i++)
+		for (int i = 0; i < attackKeyImages.Length && i < attackSequence.Count; i++)
 		{
-			if (attackKeyTexts[i] != null)
+			if (attackKeyImages[i] != null)
 			{
-				attackKeyTexts[i].text = GetKeyDisplayText(attackSequence[i]);
+				// Set the sprite based on the key
+				attackKeyImages[i].sprite = GetKeySprite(attackSequence[i]);
 				
 				if (i < attackProgress)
 				{
-					attackKeyTexts[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+					attackKeyImages[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 				}
 				else if (i == attackProgress)
 				{
-					attackKeyTexts[i].color = Color.yellow;
+					attackKeyImages[i].color = Color.yellow;
 				}
 				else
 				{
-					attackKeyTexts[i].color = Color.white;
+					attackKeyImages[i].color = Color.white;
 				}
 			}
 		}
@@ -668,20 +676,20 @@ public class QTECombatManager : MonoBehaviour
 		}
 	}
 
-	string GetKeyDisplayText(KeyCode key)
+	Sprite GetKeySprite(KeyCode key)
 	{
 		switch (key)
 		{
 			case KeyCode.UpArrow:
-				return "↑";
+				return arrowUpSprite;
 			case KeyCode.DownArrow:
-				return "↓";
+				return arrowDownSprite;
 			case KeyCode.LeftArrow:
-				return "←";
+				return arrowLeftSprite;
 			case KeyCode.RightArrow:
-				return "→";
+				return arrowRightSprite;
 			default:
-				return key.ToString();
+				return null;
 		}
 	}
 }
