@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using RTLTMPro;
 
 public class IngredientHoverSnapUI : MonoBehaviour
 {
@@ -22,11 +23,18 @@ public class IngredientHoverSnapUI : MonoBehaviour
     public bool debugLogs = true;
     public TextMeshProUGUI debugOverlayText;
 
+    [Header("Arabic (optional)")]
+    [SerializeField] private TMP_FontAsset arabicFontOverride;
+
     private Image hoveredIngredient;
     private MixManager mixManager;
     private Dictionary<string, Vector2> shelfPositions = new Dictionary<string, Vector2>();
 
     private Dictionary<string, IngredientData> byId = new Dictionary<string, IngredientData>();
+
+    private TMP_FontAsset tooltipNameOriginalFont;
+    private TMP_FontAsset tooltipDescOriginalFont;
+    private TMP_FontAsset tooltipEffectOriginalFont;
 
     [Tooltip("Max distance from snap target to consider ingredient 'in drink' for toggle-off")]
     public float inDrinkThreshold = 15f;
@@ -41,6 +49,10 @@ public class IngredientHoverSnapUI : MonoBehaviour
         HideTooltip();
         mixManager = FindFirstObjectByType<MixManager>();
         RecordShelfPositions();
+
+        tooltipNameOriginalFont = tooltipNameText != null ? tooltipNameText.font : null;
+        tooltipDescOriginalFont = tooltipDescText != null ? tooltipDescText.font : null;
+        tooltipEffectOriginalFont = tooltipEffectText != null ? tooltipEffectText.font : null;
     }
 
     private void OnEnable()
@@ -202,16 +214,16 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
         if (!byId.TryGetValue(id, out IngredientData data))
         {
-            if (tooltipNameText != null) tooltipNameText.text = id;
-            if (tooltipDescText != null) tooltipDescText.text = L.Get("ingredient_no_match");
-            if (tooltipEffectText != null) tooltipEffectText.text = "";
+            SetTooltipText(tooltipNameText, tooltipNameOriginalFont, id, preserveNumbers: true);
+            SetTooltipText(tooltipDescText, tooltipDescOriginalFont, L.Get("ingredient_no_match"), preserveNumbers: true);
+            SetTooltipText(tooltipEffectText, tooltipEffectOriginalFont, "", preserveNumbers: true);
 
             DebugTick($"json lookup failed for id: {id}");
             return;
         }
 
-        if (tooltipNameText != null) tooltipNameText.text = data.name;
-        if (tooltipDescText != null) tooltipDescText.text = data.description;
+        SetTooltipText(tooltipNameText, tooltipNameOriginalFont, data.name, preserveNumbers: true);
+        SetTooltipText(tooltipDescText, tooltipDescOriginalFont, data.description, preserveNumbers: true);
 
         float x = 0f;
         float y = 0f;
@@ -223,9 +235,10 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
         if (tooltipEffectText != null)
         {
-            tooltipEffectText.text =
+            string effect =
                 $"x: {x:+0.00;-0.00} ({L.Get("ingredient_axis_x")})\n" +
                 $"y: {y:+0.00;-0.00} ({L.Get("ingredient_axis_y")})";
+            SetTooltipText(tooltipEffectText, tooltipEffectOriginalFont, effect, preserveNumbers: true);
         }
     }
 
@@ -269,5 +282,48 @@ public class IngredientHoverSnapUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static bool IsArabicLanguage()
+    {
+        string lang = LanguageManager.Instance != null
+            ? LanguageManager.Instance.CurrentLanguage
+            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+        return lang == LanguageManager.LangArabic;
+    }
+
+    private void SetTooltipText(TextMeshProUGUI t, TMP_FontAsset originalFont, string raw, bool preserveNumbers)
+    {
+        if (t == null)
+            return;
+
+        bool isArabic = IsArabicLanguage();
+
+        // Ensure fonts revert cleanly when switching back to EN/ES.
+        if (isArabic && arabicFontOverride != null)
+            t.font = arabicFontOverride;
+        else if (originalFont != null)
+            t.font = originalFont;
+
+        if (t is RTLTextMeshPro rtl)
+        {
+            rtl.Farsi = false;
+            rtl.FixTags = true;
+            rtl.PreserveNumbers = preserveNumbers;
+            rtl.ForceFix = isArabic;
+            rtl.text = raw ?? string.Empty;
+            return;
+        }
+
+        if (isArabic)
+        {
+            t.isRightToLeftText = true;
+            t.text = RtlText.FixIfArabic(raw, preserveNumbers: preserveNumbers, fixTags: true, reverseOutput: true);
+        }
+        else
+        {
+            t.isRightToLeftText = false;
+            t.text = raw ?? string.Empty;
+        }
     }
 }

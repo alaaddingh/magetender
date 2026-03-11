@@ -15,12 +15,18 @@ public class LocalizedTMPText : MonoBehaviour
 	[SerializeField] private string key;
 	[SerializeField] private Style style = Style.None;
 
+	[Header("Arabic (optional)")]
+	[SerializeField] private TMP_FontAsset arabicFontOverride;
+
 	private TMP_Text tmpText;
+	private TMP_FontAsset originalFont;
 	private readonly FastStringBuilder rtlOutput = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
 	private void Awake()
 	{
 		tmpText = GetComponent<TMP_Text>();
+		if (tmpText != null)
+			originalFont = tmpText.font;
 		Refresh();
 	}
 
@@ -58,11 +64,36 @@ public class LocalizedTMPText : MonoBehaviour
 			return;
 
 		string localized = L.Get(key);
-		bool useRtlTmpComponent = tmpText is RTLTextMeshPro;
-		if (IsArabicLanguage() && !useRtlTmpComponent)
-			localized = FixArabic(localized);
+		bool isArabic = IsArabicLanguage();
 
-		tmpText.text = localized;
+		// Keep fonts consistent (and revert cleanly) when switching languages.
+		if (isArabic && arabicFontOverride != null)
+			tmpText.font = arabicFontOverride;
+		else if (originalFont != null)
+			tmpText.font = originalFont;
+
+		if (tmpText is RTLTextMeshPro rtl)
+		{
+			rtl.Farsi = false;
+			rtl.FixTags = true;
+			rtl.PreserveNumbers = true;
+			rtl.ForceFix = isArabic;
+			rtl.text = localized;
+		}
+		else
+		{
+			if (isArabic)
+			{
+				tmpText.isRightToLeftText = true;
+				localized = FixArabic(localized);
+			}
+			else
+			{
+				tmpText.isRightToLeftText = false;
+			}
+			tmpText.text = localized;
+		}
+
 		ApplyStyle();
 	}
 
@@ -80,7 +111,8 @@ public class LocalizedTMPText : MonoBehaviour
 			return input;
 
 		rtlOutput.Clear();
-		RTLSupport.FixRTL(input, rtlOutput, farsi: false, fixTextTags: true, preserveNumbers: false);
+		RTLSupport.FixRTL(input, rtlOutput, farsi: false, fixTextTags: true, preserveNumbers: true);
+		rtlOutput.Reverse();
 		return rtlOutput.ToString();
 	}
 

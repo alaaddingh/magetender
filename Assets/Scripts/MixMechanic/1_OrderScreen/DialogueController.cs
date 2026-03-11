@@ -7,6 +7,7 @@
  */
 using System.Collections.Generic;
 using TMPro;
+using RTLTMPro;
 using UnityEngine;
 
 public class DialogueController : MonoBehaviour
@@ -26,6 +27,9 @@ public class DialogueController : MonoBehaviour
     [Header("State source")]
     [SerializeField] private MonsterStateManager monsterStateManager;
 
+    [Header("Arabic (optional)")]
+    [SerializeField] private TMP_FontAsset arabicFontOverride;
+
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
     public GameObject selectingGlassScreen;
@@ -34,22 +38,32 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private GameObject coinCanvas;
 
     private int dialogueIndex = 0;
+    private TMP_FontAsset monsterSpeechOriginalFont;
+    private TMP_FontAsset monsterNameOriginalFont;
 
     private void Awake()
     {
         currentMonsterManager = CurrentMonster.Instance;
+        if (monsterSpeech != null)
+            monsterSpeechOriginalFont = monsterSpeech.font;
+        if (monsterName != null)
+            monsterNameOriginalFont = monsterName.font;
     }
 
     private void OnEnable()
     {
         if (currentMonsterManager != null)
             currentMonsterManager.OnMonsterChanged += HandleMonsterChanged;
+
+        LanguageManager.OnLanguageChanged += HandleLanguageChanged;
     }
 
     private void OnDisable()
     {
         if (currentMonsterManager != null)
             currentMonsterManager.OnMonsterChanged -= HandleMonsterChanged;
+
+        LanguageManager.OnLanguageChanged -= HandleLanguageChanged;
     }
 
     private void Start()
@@ -60,7 +74,18 @@ public class DialogueController : MonoBehaviour
 
         if (typewriter == null && monsterSpeech != null)
             typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
+        if (typewriter != null && monsterSpeech != null)
+            typewriter.SetTargetText(monsterSpeech);
 
+        UpdateTypewriterEnabledState();
+        ApplyDialogueFontsForLanguage();
+        UpdateMonsterName();
+        Dialogue();
+    }
+
+    private void HandleLanguageChanged()
+    {
+        ApplyDialogueFontsForLanguage();
         UpdateMonsterName();
         Dialogue();
     }
@@ -83,7 +108,7 @@ public class DialogueController : MonoBehaviour
             if (typewriter != null)
                 typewriter.SetInstant(string.Empty);
             else
-                monsterSpeech.text = string.Empty;
+                SetText(monsterSpeech, string.Empty, preserveNumbers: true);
 
             brewButtonObject.SetActive(true);
             UpdateContinueButtonState(activeDialogue);
@@ -91,12 +116,20 @@ public class DialogueController : MonoBehaviour
         }
 
         dialogueIndex = Mathf.Clamp(dialogueIndex, 0, activeDialogue.Count - 1);
-        string line = activeDialogue[dialogueIndex];
+        string rawLine = activeDialogue[dialogueIndex] ?? string.Empty;
 
-        if (typewriter != null)
-            typewriter.TypeLine(line);
+        UpdateTypewriterEnabledState();
+        bool isArabic = RtlText.IsArabic();
+        bool useTypewriter = typewriter != null && typewriter.enabled && !isArabic;
+        if (useTypewriter)
+        {
+            typewriter.TypeLine(rawLine);
+        }
         else
-            monsterSpeech.text = line;
+        {
+            // For Arabic, set full string at once to preserve glyph shaping.
+            SetText(monsterSpeech, rawLine, preserveNumbers: true);
+        }
 
         UpdateContinueButtonState(activeDialogue);
     }
@@ -104,7 +137,8 @@ public class DialogueController : MonoBehaviour
     /* handles Next UI Button clicks (iteration + brew button visibility) */
     public void OnNextPressed()
     {
-        if (typewriter != null && typewriter.IsTyping)
+        UpdateTypewriterEnabledState();
+        if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
             typewriter.SkipTyping();
             return;
@@ -149,6 +183,8 @@ public class DialogueController : MonoBehaviour
     private void HandleMonsterChanged(string _)
     {
         dialogueIndex = 0;
+        UpdateTypewriterEnabledState();
+        ApplyDialogueFontsForLanguage();
         UpdateMonsterName();
         Dialogue();
     }
@@ -158,11 +194,72 @@ public class DialogueController : MonoBehaviour
         if (monsterName == null) return;
         if (currentMonsterManager == null || currentMonsterManager.Data == null)
         {
-            monsterName.text = string.Empty;
+            SetText(monsterName, string.Empty, preserveNumbers: true);
             return;
         }
 
-        monsterName.text = currentMonsterManager.Data.name;
+        SetText(monsterName, currentMonsterManager.Data.name, preserveNumbers: true);
+    }
+
+    private void UpdateTypewriterEnabledState()
+    {
+        if (typewriter == null && monsterSpeech != null)
+            typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
+        if (typewriter == null)
+            return;
+
+        if (monsterSpeech != null)
+            typewriter.SetTargetText(monsterSpeech);
+
+        typewriter.enabled = !RtlText.IsArabic();
+    }
+
+    private void ApplyDialogueFontsForLanguage()
+    {
+        bool isArabic = RtlText.IsArabic();
+
+        ApplyFont(monsterSpeech, monsterSpeechOriginalFont, isArabic);
+        ApplyFont(monsterName, monsterNameOriginalFont, isArabic);
+    }
+
+    private void ApplyFont(TMP_Text t, TMP_FontAsset originalFont, bool isArabic)
+    {
+        if (t == null)
+            return;
+        if (isArabic && arabicFontOverride != null)
+            t.font = arabicFontOverride;
+        else if (originalFont != null)
+            t.font = originalFont;
+    }
+
+    private void SetText(TMP_Text t, string raw, bool preserveNumbers)
+    {
+        if (t == null)
+            return;
+
+        bool isArabic = RtlText.IsArabic();
+
+        // If the scene is already using RTLTextMeshPro, let the plugin do the shaping.
+        if (t is RTLTextMeshPro rtl)
+        {
+            rtl.Farsi = false;
+            rtl.FixTags = true;
+            rtl.PreserveNumbers = preserveNumbers;
+            rtl.ForceFix = isArabic;
+            rtl.text = raw ?? string.Empty;
+            return;
+        }
+
+        if (isArabic)
+        {
+            t.isRightToLeftText = true;
+            t.text = RtlText.FixIfArabic(raw, preserveNumbers: preserveNumbers, fixTags: true, reverseOutput: true);
+        }
+        else
+        {
+            t.isRightToLeftText = false;
+            t.text = raw ?? string.Empty;
+        }
     }
 
     private void UpdateContinueButtonState(List<string> activeDialogue)

@@ -2017,6 +2017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: mood_graph_hint
   style: 2
+  arabicFontOverride: {fileID: 0}
 --- !u!114 &414921221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2402,6 +2403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: next_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2924,6 +2926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: cap_message
   style: 0
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &565941386
 GameObject:
   m_ObjectHideFlags: 0
@@ -4236,6 +4239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: day_count
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &757739534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4462,6 +4466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: next_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &797067393
 GameObject:
   m_ObjectHideFlags: 0
@@ -4607,6 +4612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: begin_brew_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!114 &812262517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5113,6 +5119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: next_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &875492484
 GameObject:
   m_ObjectHideFlags: 0
@@ -5861,6 +5868,7 @@ MonoBehaviour:
   tooltipOffset: {x: 16, y: -16}
   debugLogs: 1
   debugOverlayText: {fileID: 0}
+  arabicFontOverride: {fileID: 0}
   inDrinkThreshold: 15
 --- !u!4 &964721726
 Transform:
@@ -6966,6 +6974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: back_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &1173224761
 GameObject:
   m_ObjectHideFlags: 0
@@ -7189,6 +7198,7 @@ MonoBehaviour:
   continueButtonObject: {fileID: 0}
   currentMonsterManager: {fileID: 1245897901}
   monsterStateManager: {fileID: 1091468760}
+  arabicFontOverride: {fileID: 0}
   orderScreen: {fileID: 118565731}
   selectingGlassScreen: {fileID: 832843223}
   coinCanvas: {fileID: 2128562753}
@@ -7792,6 +7802,7 @@ MonoBehaviour:
   tooltipOffset: {x: 16, y: -16}
   debugLogs: 1
   debugOverlayText: {fileID: 0}
+  arabicFontOverride: {fileID: 0}
   inDrinkThreshold: 15
 --- !u!1 &1278819124
 GameObject:
@@ -7845,6 +7856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: mood_profile_title
   style: 3
+  arabicFontOverride: {fileID: 0}
 --- !u!114 &1278819127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8613,7 +8625,7 @@ MonoBehaviour:
   BaseScreen: {fileID: 1228855948}
   IngredientsScreen: {fileID: 906567377}
   AssessScreen: {fileID: 1163726008}
-  OrderX: 850
+  OrderX: 660
   OrderY: -150
   OrderScale: 1
   PickGlassX: 780
@@ -8625,7 +8637,7 @@ MonoBehaviour:
   IngredientsX: 0
   IngredientsY: 280
   IngredientsScale: 0.6
-  AssessX: 850
+  AssessX: 660
   AssessY: -150
   AssessScale: 1
 --- !u!1 &1500494316
@@ -9142,6 +9154,7 @@ MonoBehaviour:
   continueButtonObject: {fileID: 1739821511}
   currentMonsterManager: {fileID: 1245897901}
   monsterStateManager: {fileID: 1091468760}
+  arabicFontOverride: {fileID: 0}
   orderScreen: {fileID: 118565731}
   selectingGlassScreen: {fileID: 832843223}
   coinCanvas: {fileID: 2128562753}
@@ -9296,6 +9309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: next_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &1566938323
 GameObject:
   m_ObjectHideFlags: 0
@@ -10950,6 +10964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: continue_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &1899898775
 GameObject:
   m_ObjectHideFlags: 0
@@ -11237,6 +11252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: fight_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &1908581325
 GameObject:
   m_ObjectHideFlags: 0
@@ -12329,6 +12345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: continue_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &2030705483
 GameObject:
   m_ObjectHideFlags: 0
@@ -13368,6 +13385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: next_button
   style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &2110272763
 GameObject:
   m_ObjectHideFlags: 0
