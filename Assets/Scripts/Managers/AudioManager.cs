@@ -13,7 +13,6 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioClip startOfDayBellClip;
 	[SerializeField] private AudioClip buttonClickClip;
 	[SerializeField] private AudioClip pourLoopClip;
-	[SerializeField] private AudioClip pourDripClip;
 	[SerializeField] private AudioClip monsterWalkInClip;
 	[SerializeField] private AudioClip ambienceClip;
 
@@ -88,16 +87,6 @@ public class AudioManager : MonoBehaviour
 			loopSource.Stop();
 			loopSource.clip = null;
 		}
-	}
-
-	public void PlayPourDrip()
-	{
-		if (sfxSource == null || pourDripClip == null)
-		{
-			return;
-		}
-
-		sfxSource.PlayOneShot(pourDripClip);
 	}
 
 	public void PlayAmbience()
