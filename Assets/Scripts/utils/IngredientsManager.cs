@@ -112,6 +112,8 @@ public class IngredientHoverSnapUI : MonoBehaviour
                 bool removed = mixManager.RemoveIngredient(hoveredIngredient.name);
                 if (removed)
                 {
+					if (AudioManager.Instance != null)
+						AudioManager.Instance.PlayButtonClick();
                     hoveredIngredient.rectTransform.anchoredPosition = GetShelfPosition(hoveredIngredient.name);
                 }
             }
@@ -120,6 +122,8 @@ public class IngredientHoverSnapUI : MonoBehaviour
                 bool added = mixManager.AddIngredient(hoveredIngredient.name);
                 if (added)
                 {
+					if (AudioManager.Instance != null)
+						AudioManager.Instance.PlayButtonClick();
                     if (!shelfPositions.ContainsKey(hoveredIngredient.name))
                         shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
                     hoveredIngredient.rectTransform.anchoredPosition = GetSnapTarget();
