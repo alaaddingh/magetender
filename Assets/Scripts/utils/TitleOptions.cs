@@ -24,7 +24,7 @@ public class TitleOptions : MonoBehaviour
         else if (lang == LanguageManager.LangArabic)
             index = 2;
 
-        languageDropdown.value = index;
+        languageDropdown.SetValueWithoutNotify(index);
         languageDropdown.RefreshShownValue();
     }
 
