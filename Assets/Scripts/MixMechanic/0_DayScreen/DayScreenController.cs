@@ -19,8 +19,12 @@ public class DayScreenController : MonoBehaviour
     [SerializeField] private GameObject scoreDisplayCanvas;
     [SerializeField] private ScoreManager scoreManager;
 
+	private bool playedFirstWalkIn;
+
     private void Start()
     {
+		playedFirstWalkIn = false;
+
         if (orderScreen == null)
         {
             var dc = FindObjectOfType<DialogueController>();
@@ -43,6 +47,12 @@ public class DayScreenController : MonoBehaviour
             scoreDisplayCanvas.SetActive(false);
 
         RefreshDisplay();
+
+		if (!skipDayCounter && AudioManager.Instance != null)
+			AudioManager.Instance.PlayStartOfDayBell();
+
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayAmbience();
 
         if (skipDayCounter)
             OnNextPressed();
@@ -84,6 +94,13 @@ public class DayScreenController : MonoBehaviour
             dayPanel.SetActive(false);
         if (orderScreen != null)
             orderScreen.SetActive(true);
+
+		if (!playedFirstWalkIn && AudioManager.Instance != null)
+		{
+			playedFirstWalkIn = true;
+			AudioManager.Instance.PlayMonsterWalkIn();
+		}
+
         if (scoreManager != null)
             scoreManager.RefreshScoreDisplay();
         if (scoreDisplayCanvas != null)

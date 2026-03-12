@@ -20,13 +20,29 @@ public class LocalizedTMPText : MonoBehaviour
 
 	private TMP_Text tmpText;
 	private TMP_FontAsset originalFont;
+	private HorizontalAlignmentOptions originalHorizontalAlignment;
+	private VerticalAlignmentOptions originalVerticalAlignment;
+	private bool originalAutoSizing;
+	private float originalFontSizeMin;
+	private float originalFontSizeMax;
+	private bool originalWordWrapping;
+	private TextOverflowModes originalOverflowMode;
 	private readonly FastStringBuilder rtlOutput = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
 	private void Awake()
 	{
 		tmpText = GetComponent<TMP_Text>();
 		if (tmpText != null)
+		{
 			originalFont = tmpText.font;
+			originalHorizontalAlignment = tmpText.horizontalAlignment;
+			originalVerticalAlignment = tmpText.verticalAlignment;
+			originalAutoSizing = tmpText.enableAutoSizing;
+			originalFontSizeMin = tmpText.fontSizeMin;
+			originalFontSizeMax = tmpText.fontSizeMax;
+			originalWordWrapping = tmpText.enableWordWrapping;
+			originalOverflowMode = tmpText.overflowMode;
+		}
 		Refresh();
 	}
 
@@ -95,6 +111,33 @@ public class LocalizedTMPText : MonoBehaviour
 		}
 
 		ApplyStyle();
+
+		if (IsKegLabelKey(key))
+		{
+			tmpText.horizontalAlignment = originalHorizontalAlignment;
+			tmpText.verticalAlignment = VerticalAlignmentOptions.Middle;
+
+			tmpText.enableAutoSizing = true;
+			tmpText.fontSizeMax = tmpText.fontSize;
+			tmpText.fontSizeMin = tmpText.fontSize * 0.6f;
+			tmpText.enableWordWrapping = false;
+			tmpText.overflowMode = TextOverflowModes.Overflow;
+		}
+		else if (isArabic && style == Style.Button)
+		{
+			tmpText.horizontalAlignment = originalHorizontalAlignment;
+			tmpText.verticalAlignment = VerticalAlignmentOptions.Middle;
+		}
+		else
+		{
+			tmpText.horizontalAlignment = originalHorizontalAlignment;
+			tmpText.verticalAlignment = originalVerticalAlignment;
+			tmpText.enableAutoSizing = originalAutoSizing;
+			tmpText.fontSizeMin = originalFontSizeMin;
+			tmpText.fontSizeMax = originalFontSizeMax;
+			tmpText.enableWordWrapping = originalWordWrapping;
+			tmpText.overflowMode = originalOverflowMode;
+		}
 	}
 
 	private static bool IsArabicLanguage()
@@ -103,6 +146,11 @@ public class LocalizedTMPText : MonoBehaviour
 			? LanguageManager.Instance.CurrentLanguage
 			: PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
 		return lang == LanguageManager.LangArabic;
+	}
+
+	private static bool IsKegLabelKey(string k)
+	{
+		return k == "blood_label" || k == "holywater_label" || k == "moonshine_label" || k == "spirits_label";
 	}
 
 	private string FixArabic(string input)

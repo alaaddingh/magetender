@@ -71,6 +71,8 @@ public class BottleHoverSnapUI : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && hovered != null)
         {
+			if (AudioManager.Instance != null)
+				AudioManager.Instance.PlayButtonClick();
             if (selectedBottle != null && selectedBottle != hovered)
             {
                 selectedBottle.rectTransform.anchoredPosition = GetShelfPosition(selectedBottle);

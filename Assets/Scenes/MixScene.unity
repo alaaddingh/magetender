@@ -8416,8 +8416,8 @@ RectTransform:
   m_GameObject: {fileID: 1252470797}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1.7808, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 812262515}
   m_Father: {fileID: 118565735}
@@ -8878,9 +8878,8 @@ MonoBehaviour:
   loopSource: {fileID: 1266327015}
   startOfDayBellClip: {fileID: 0}
   buttonClickClip: {fileID: 8300000, guid: bac5771af1d0db6458aebf037cc0a2d8, type: 3}
-  pourLoopClip: {fileID: 0}
-  pourDripClip: {fileID: 0}
-  monsterWalkInClip: {fileID: 0}
+  pourLoopClip: {fileID: 8300000, guid: 71583cc1faf1edc40ba3d67f1ef0769c, type: 3}
+  monsterWalkInClip: {fileID: 8300000, guid: 6cc53a143accc994aa19a003540e2435, type: 3}
   ambienceClip: {fileID: 0}
 --- !u!82 &1266327015
 AudioSource:
@@ -8992,7 +8991,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0

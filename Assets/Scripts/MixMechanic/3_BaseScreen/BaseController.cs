@@ -308,6 +308,9 @@ public class BaseController : MonoBehaviour
         if (baseJar == null) return;
 
         currentPouringBase = baseJar;
+
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayPourLoop();
         
         // Start coroutine to spawn drops continuously
         if (pouringCoroutine != null)
@@ -325,6 +328,9 @@ public class BaseController : MonoBehaviour
             StopCoroutine(pouringCoroutine);
             pouringCoroutine = null;
         }
+
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopPourLoop();
     }
 
     private IEnumerator PourLiquid(Image baseJar)
