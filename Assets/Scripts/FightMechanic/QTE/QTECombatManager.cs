@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.XR;
 
 // QTE Bank Combat System
 // Two banks (defend/attack) with key sequences
@@ -75,7 +76,9 @@ public class QTECombatManager : MonoBehaviour
 	private Coroutine currentScreenFlash;
 	private Vector2 leftHandOriginalPos;
 	private Vector2 rightHandOriginalPos;
-	// private bool useLeftHand = true;
+	private HandAnimation leftHandFloat;
+	private HandAnimation rightHandFloat;
+	private CustomerMovement customerShake;
 	
 	// Loaded customer sprites
 	private Sprite customerAngrySprite;
@@ -103,6 +106,20 @@ public class QTECombatManager : MonoBehaviour
 	{
 		// Load monster data from CurrentMonster
 		LoadMonsterData();
+
+		if (customerSprite != null)
+		{
+			originalCustomerColor = customerSprite.color;
+			originalCustomerPosition = customerSprite.transform.localPosition;
+			
+			if (customerAngrySprite != null)
+			{
+				customerSprite.sprite = customerAngrySprite;
+			}
+			
+			// Get component
+			customerShake = customerSprite.GetComponent<CustomerMovement>();
+		}
 		
 		playerHealth = playerMaxHealth;
 		customerHealth = customerMaxHealth;
@@ -133,10 +150,12 @@ public class QTECombatManager : MonoBehaviour
 		if (leftHand != null)
 		{
 			leftHandOriginalPos = leftHand.anchoredPosition;
+			leftHandFloat = leftHand.GetComponent<HandAnimation>();
 		}
 		if (rightHand != null)
 		{
 			rightHandOriginalPos = rightHand.anchoredPosition;
+			rightHandFloat = rightHand.GetComponent<HandAnimation>();
 		}
 		
 		if (screenFlashOverlay != null)
@@ -459,11 +478,23 @@ public class QTECombatManager : MonoBehaviour
 	
 	void CustomerTakesDamage()
 	{
+		// Always play animations
+		if (customerSprite != null)
+		{
+			if (currentCustomerFlash != null)
+			{
+				StopCoroutine(currentCustomerFlash);
+			}
+			currentCustomerFlash = StartCoroutine(FlashCustomer());
+		}
+		
+		StartCoroutine(PunchAnimation());
+		
 		// Prevent damage during tutorial
 		if (tutorialMode)
-        {
-            return;
-        }
+		{
+			return;  
+		}
 
 		customerHealth -= damagePerHit;
 		customerHealth = Mathf.Max(0, customerHealth);
@@ -476,17 +507,6 @@ public class QTECombatManager : MonoBehaviour
 			EndFight(true);
 			return;
 		}
-		
-		if (customerSprite != null)
-		{
-			if (currentCustomerFlash != null)
-			{
-				StopCoroutine(currentCustomerFlash);
-			}
-			currentCustomerFlash = StartCoroutine(FlashCustomer());
-		}
-		
-		StartCoroutine(PunchAnimation());
 	}
 	
 	void PlayerTakesDamage()
@@ -520,6 +540,12 @@ public class QTECombatManager : MonoBehaviour
 	{
 		fightEnded = true;
 		lastFightPlayerWon = playerWon;
+
+		// Stop shake
+		if (customerShake != null)
+		{
+			customerShake.SetEnabled(false);
+		}
 
 		if (playerWon)
 		{
@@ -668,6 +694,11 @@ public class QTECombatManager : MonoBehaviour
 		{
 			yield break;
 		}
+
+		if (rightHandFloat != null)
+		{
+			rightHandFloat.SetEnabled(false); // Pause floating animation during punch
+		}
 		
 		// Get direction to customer
 		RectTransform customerRect = customerSprite.GetComponent<RectTransform>();
@@ -759,6 +790,11 @@ public class QTECombatManager : MonoBehaviour
 		
 		// Destroy orb
 		Destroy(orb);
+
+		if (rightHandFloat != null)
+		{
+			rightHandFloat.SetEnabled(true); // Resume floating animation
+		}
 	}
 	
 	void UpdateHealthDisplays()
