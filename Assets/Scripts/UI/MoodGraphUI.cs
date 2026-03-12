@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class MoodGraphUI : MonoBehaviour
 {
-    [Header("scene refs")]
-    [SerializeField] private ScoreManager scoreManager;
-
     [Header("ui refs")]
     [SerializeField] private RectTransform graphRect;
     [SerializeField] private RectTransform markerRect;
@@ -15,8 +12,9 @@ public class MoodGraphUI : MonoBehaviour
     [Header("data source")]
     [SerializeField] private CurrentMonster currentMonster;
 
-    [Header("behavior")]
-    [SerializeField] private bool useStartingScoreFallbackForCurrentMarker = true;
+    [Header("optional: assess behavior")]
+    public GameObject assessPanel;
+    [SerializeField] private ScoreManager scoreManager;
 
     [Header("graph range")]
     [SerializeField] private float minX = -1f;
@@ -35,9 +33,6 @@ public class MoodGraphUI : MonoBehaviour
 
     private void Awake()
     {
-        if (scoreManager == null)
-            scoreManager = FindFirstObjectByType<ScoreManager>();
-
         currentMonster = CurrentMonster.Instance;
     }
 
@@ -67,7 +62,6 @@ public class MoodGraphUI : MonoBehaviour
 
     private void HandleMonsterChanged(string _)
     {
-        //force update of both markers + name when encounter changes
         ForceRefresh();
     }
 
@@ -84,7 +78,6 @@ public class MoodGraphUI : MonoBehaviour
 
     private void RefreshAll(bool force)
     {
-        // resolve current monster source every refresh so scene refs never go stale after reload
         currentMonster = CurrentMonster.Instance;
 
         MonsterData monster = currentMonster != null ? currentMonster.Data : null;
@@ -104,27 +97,30 @@ public class MoodGraphUI : MonoBehaviour
             if (nameText != null)
                 nameText.text = monster.name;
 
-            
             lastGoalX = float.NaN;
             lastGoalY = float.NaN;
         }
 
-        bool hasLiveMood = scoreManager != null;
-        float x = hasLiveMood ? scoreManager.CurrMoodBoardX : 0f;
-        float y = hasLiveMood ? scoreManager.CurrMoodBoardY : 0f;
+        bool isAssessActive = assessPanel != null && assessPanel.activeInHierarchy;
 
-        if (!hasLiveMood && useStartingScoreFallbackForCurrentMarker && currentMonster != null)
+        ScorePair start = currentMonster.GetStartingScore();
+        float x = start != null ? start.x : float.NaN;
+        float y = start != null ? start.y : float.NaN;
+        bool hasMood = start != null;
+
+        if (isAssessActive)
         {
-            ScorePair start = currentMonster.GetStartingScore();
-            if (start != null)
+            if (scoreManager == null)
+                scoreManager = FindFirstObjectByType<ScoreManager>();
+            if (scoreManager != null)
             {
-                x = start.x;
-                y = start.y;
-                hasLiveMood = true;
+                x = scoreManager.CurrMoodBoardX;
+                y = scoreManager.CurrMoodBoardY;
+                hasMood = true;
             }
         }
 
-        if (hasLiveMood)
+        if (hasMood)
         {
             bool moodChanged =
                 force ||
@@ -146,7 +142,7 @@ public class MoodGraphUI : MonoBehaviour
             SetMarkerVisible(markerRect, false);
         }
 
-        ScorePair goal = currentMonster != null ? currentMonster.GetGoalScore() : null;
+        ScorePair goal = currentMonster.GetGoalScore();
         if (goal == null)
         {
             SetMarkerVisible(goalMarkerRect, false);
