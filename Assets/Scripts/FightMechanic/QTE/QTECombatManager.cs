@@ -22,6 +22,12 @@ public class QTECombatManager : MonoBehaviour
 	public RectTransform leftHand;
 	public RectTransform rightHand;
 
+	[Header("Attack Orb")]
+	public Sprite orbSprite;
+	public float orbSpeed = 2000f;
+	public float orbWobbleAmount = 15f;
+	public float orbSize = 250f;
+
 	[Header("Back to bar (show when fight ends)")]
 	public GameObject backToBarButton;
 	public string backToBarSceneName = "MixScene";
@@ -66,7 +72,7 @@ public class QTECombatManager : MonoBehaviour
 	private Coroutine currentScreenFlash;
 	private Vector2 leftHandOriginalPos;
 	private Vector2 rightHandOriginalPos;
-	private bool useLeftHand = true;
+	// private bool useLeftHand = true;
 	
 	// Loaded customer sprites
 	private Sprite customerAngrySprite;
@@ -627,52 +633,102 @@ public class QTECombatManager : MonoBehaviour
 	
 	IEnumerator PunchAnimation()
 	{
-		// alternate hands for variety
-		RectTransform handToPunch = useLeftHand ? leftHand : rightHand;
-		Vector2 originalPos = useLeftHand ? leftHandOriginalPos : rightHandOriginalPos;
-		useLeftHand = !useLeftHand;
-		
-		if (handToPunch == null || customerSprite == null)
+		// Only attack from right hand
+		if (rightHand == null || customerSprite == null)
 		{
 			yield break;
 		}
 		
+		// Get direction to customer
 		RectTransform customerRect = customerSprite.GetComponent<RectTransform>();
-		Vector3 handWorldPos = handToPunch.position;
+		Vector3 handWorldPos = rightHand.position;
 		Vector3 customerWorldPos = customerRect.position;
 		Vector2 direction = (customerWorldPos - handWorldPos).normalized;
 		
-		float punchDistance = 300f;
-		Vector2 targetOffset = direction * punchDistance;
-		Vector2 targetPos = originalPos + targetOffset;
+		// Calculate hand thrust target
+		float thrustDistance = 300f;
+		Vector2 targetOffset = direction * thrustDistance;
+		Vector2 handTargetPos = rightHandOriginalPos + targetOffset;
 		
-		float punchDuration = 0.08f; // super fast punch
+		// THRUST HAND FORWARD 
+		float thrustDuration = 0.08f;
 		float elapsed = 0f;
 		
-		while (elapsed < punchDuration)
+		while (elapsed < thrustDuration)
 		{
-			float t = elapsed / punchDuration;
+			float t = elapsed / thrustDuration;
 			float easeT = 1f - Mathf.Pow(1f - t, 3f);
-			handToPunch.anchoredPosition = Vector2.Lerp(originalPos, targetPos, easeT);
+			rightHand.anchoredPosition = Vector2.Lerp(rightHandOriginalPos, handTargetPos, easeT);
 			elapsed += Time.deltaTime;
 			yield return null;
 		}
 		
-		handToPunch.anchoredPosition = targetPos;
-		yield return new WaitForSeconds(0.02f);
+		rightHand.anchoredPosition = handTargetPos;
 		
-		float returnDuration = 0.15f;
+		// CREATE ORB
+		GameObject orb = new GameObject("MagicOrb");
+		orb.transform.SetParent(mainCanvas.transform, false);
+		
+		Image orbImage = orb.AddComponent<Image>();
+		orbImage.sprite = orbSprite;
+		orbImage.raycastTarget = false;
+		
+		RectTransform orbRect = orb.GetComponent<RectTransform>();
+		orbRect.sizeDelta = new Vector2(orbSize, orbSize); 
+		orbRect.position = rightHand.position; 
+		
+		Vector3 targetPos = customerSprite.transform.position;
+		Vector3 startPos = orbRect.position;
+		
+		// LAUNCH ORB
+		float orbDuration = Vector3.Distance(startPos, targetPos) / orbSpeed;
 		elapsed = 0f;
 		
-		while (elapsed < returnDuration)
+		// Start hand return immediately
+		float returnDuration = 0.15f;
+		float returnElapsed = 0f;
+		
+		while (elapsed < orbDuration)
 		{
-			float t = elapsed / returnDuration;
-			handToPunch.anchoredPosition = Vector2.Lerp(targetPos, originalPos, t);
+			float t = elapsed / orbDuration;
+			
+			// Return hand
+			if (returnElapsed < returnDuration)
+			{
+				float returnT = returnElapsed / returnDuration;
+				rightHand.anchoredPosition = Vector2.Lerp(handTargetPos, rightHandOriginalPos, returnT);
+				returnElapsed += Time.deltaTime;
+			}
+			else
+			{
+				rightHand.anchoredPosition = rightHandOriginalPos;
+			}
+			
+			// Wobble side to side
+			float wobble = Mathf.Sin(t * 20f) * orbWobbleAmount;
+			Vector3 perpendicular = Vector3.Cross((targetPos - startPos).normalized, Vector3.forward);
+			Vector3 wobbleOffset = perpendicular * wobble;
+			
+			// Move orb toward target with wobble
+			orbRect.position = Vector3.Lerp(startPos, targetPos, t) + wobbleOffset;
+			
+			// Fade out near end
+			if (t > 0.8f)
+			{
+				Color color = orbImage.color;
+				color.a = Mathf.Lerp(1f, 0f, (t - 0.8f) / 0.2f);
+				orbImage.color = color;
+			}
+			
 			elapsed += Time.deltaTime;
 			yield return null;
 		}
 		
-		handToPunch.anchoredPosition = originalPos;
+		// Ensure hand is back
+		rightHand.anchoredPosition = rightHandOriginalPos;
+		
+		// Destroy orb
+		Destroy(orb);
 	}
 	
 	void UpdateHealthDisplays()

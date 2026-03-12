@@ -467,8 +467,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PLAYER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
+  m_sharedMaterial: {fileID: 5913279729684426973, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1289,8 +1289,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CUSTOMER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
+  m_sharedMaterial: {fileID: 5913279729684426973, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2402,7 +2402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -100.6}
+  m_AnchoredPosition: {x: -250, y: 60}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1711433353
@@ -2581,7 +2581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -100.6}
+  m_AnchoredPosition: {x: 250, y: 60}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1746499931
@@ -3509,6 +3509,10 @@ MonoBehaviour:
   mainCanvas: {fileID: 1806325902}
   leftHand: {fileID: 360995940}
   rightHand: {fileID: 1548752017}
+  orbSprite: {fileID: -8729194206272633596, guid: ebc350e9b5b3949fca5f44494358e9e9, type: 3}
+  orbSpeed: 1900
+  orbWobbleAmount: 70
+  orbSize: 300
   backToBarButton: {fileID: 1669427279}
   backToBarSceneName: MixScene
   defendBankContainer: {fileID: 1746499928}
@@ -3535,8 +3539,8 @@ MonoBehaviour:
   arrowRightSprite: {fileID: 7635563162873571100, guid: 8c97fc0c37fd845e68b3f3f48ad56efd, type: 3}
   playerMaxHealth: 80
   customerMaxHealth: 100
-  damagePerHit: 20
-  bankTimeLimit: 5
+  damagePerHit: 5
+  bankTimeLimit: 20
   sequenceLength: 5
   coinsForWin: 10
   shakeIntensity: 15
