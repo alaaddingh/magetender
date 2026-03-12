@@ -3743,8 +3743,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3961,7 +3961,7 @@ MonoBehaviour:
   playerMaxHealth: 100
   customerMaxHealth: 100
   damagePerHit: 15
-  bankTimeLimit: 8
+  bankTimeLimit: 6
   sequenceLength: 5
   coinsForWin: 10
   shakeIntensity: 15
