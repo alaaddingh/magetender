@@ -158,6 +158,8 @@ public class BottleHoverSnapUI : MonoBehaviour
 
     public void NextPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         NextScreen.SetActive(true);
         CurrentScreen.SetActive(false);
     }

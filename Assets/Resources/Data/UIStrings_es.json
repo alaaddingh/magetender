@@ -39,7 +39,13 @@
     {"key": "tutorial_stage2_prompt", "value": "Presiona ESPACIO para intentarlo..."},
     {"key": "tutorial_stage3_warning", "value": "¿Listo para la pelea real?\\n\\n¡Ambos bancos funcionan al mismo tiempo!\\n¡No dejes que DEFENSA se agote o recibirás daño!"},
     {"key": "tutorial_stage3_prompt", "value": "Presiona ESPACIO para comenzar..."},
-    {"key": "cap_message", "value": "Selecciona hasta 3 Ingredientes"}
+    {"key": "cap_message", "value": "Selecciona hasta 3 Ingredientes"},
+    {"key": "holywater_label", "value": "Agua Bendita"},
+    {"key": "blood_label", "value": "Sangre"},
+    {"key": "moonshine_label", "value": "Luz de luna"},
+    {"key": "spirits_label", "value": "Espíritus"},
+    { "key": "lose_title", "value": "Fin de la partida" },
+    { "key": "lose_cannot_afford_maintenance", "value": "No pudiste pagar el mantenimiento." }
   ]
 }
 

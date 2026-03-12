@@ -31,6 +31,9 @@ public class QTECombatManager : MonoBehaviour
 	[Header("Back to bar (show when fight ends)")]
 	public GameObject backToBarButton;
 	public string backToBarSceneName = "MixScene";
+
+	[Header("Lose condition")]
+	public string loseSceneName = "LoseScene";
 	
 	[Header("Prompt Bank References")]
 	public GameObject defendBankContainer;
@@ -87,9 +90,11 @@ public class QTECombatManager : MonoBehaviour
 	private float defendTimer;
 	private float attackTimer;
 	private bool defendBankActive = true; // start on defend since it's more urgent
-    private bool combatStarted = false; // Start paused for tutorial
+	private bool combatStarted = false; // Start paused for tutorial
 	private bool tutorialMode = false;
 	private bool combatPaused = false;
+	private bool fightEnded = false;
+	private bool lastFightPlayerWon = false;
 
 	public System.Action OnDefendSequenceCompleted;
 	public System.Action OnAttackSequenceCompleted;
@@ -513,6 +518,9 @@ public class QTECombatManager : MonoBehaviour
 	
 	void EndFight(bool playerWon)
 	{
+		fightEnded = true;
+		lastFightPlayerWon = playerWon;
+
 		if (playerWon)
 		{
 			Debug.Log("VICTORY!");
@@ -548,6 +556,28 @@ public class QTECombatManager : MonoBehaviour
 	/* call from Back to bar button OnClick */
 	public void OnBackToBarPressed()
 	{
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
+		if (fightEnded)
+		{
+			var cm = CurrentMonster.Instance;
+			if (cm != null && !cm.HasNextMonsterInCurrentLevel())
+			{
+				var loseManager = FindFirstObjectByType<LoseManager>();
+				if (loseManager != null && loseManager.CheckLoseAndLoad())
+				{
+					return;
+				}
+
+				var gm = GameManager.Instance;
+				if (gm != null && gm.Coins < gm.MaintenanceCost)
+				{
+					SceneManager.LoadScene(loseSceneName);
+					return;
+				}
+			}
+		}
+
 		var currentMonster = CurrentMonster.Instance;
 		if (currentMonster != null)
 		{

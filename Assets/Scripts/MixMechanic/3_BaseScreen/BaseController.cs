@@ -496,12 +496,16 @@ public class BaseController : MonoBehaviour
 
     public void NextPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (CurrentScreen != null) CurrentScreen.SetActive(false);
         if (NextScreen != null) NextScreen.SetActive(true);
     }
 
     public void BackPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (mixManager != null)
             mixManager.ResetFillData();
         if (CurrentScreen != null) CurrentScreen.SetActive(false);

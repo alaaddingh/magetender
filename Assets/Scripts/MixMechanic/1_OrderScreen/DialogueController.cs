@@ -41,6 +41,26 @@ public class DialogueController : MonoBehaviour
     private TMP_FontAsset monsterSpeechOriginalFont;
     private TMP_FontAsset monsterNameOriginalFont;
 
+    public bool IsDialogueFinished
+    {
+        get
+        {
+            List<string> activeDialogue = GetActiveDialogue();
+            if (activeDialogue == null || activeDialogue.Count == 0)
+                return true;
+
+            bool atLast = dialogueIndex >= activeDialogue.Count - 1;
+            if (!atLast)
+                return false;
+
+            // If typewriter is running, the last line isn't fully displayed yet.
+            if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
+                return false;
+
+            return true;
+        }
+    }
+
     private void Awake()
     {
         currentMonsterManager = CurrentMonster.Instance;
@@ -69,6 +89,7 @@ public class DialogueController : MonoBehaviour
     private void Start()
     {
         brewButtonObject.SetActive(false);
+        ResolveContinueButtonIfNeeded();
         if (continueButtonObject != null)
             continueButtonObject.SetActive(false);
 
@@ -137,6 +158,8 @@ public class DialogueController : MonoBehaviour
     /* handles Next UI Button clicks (iteration + brew button visibility) */
     public void OnNextPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         UpdateTypewriterEnabledState();
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
@@ -174,6 +197,8 @@ public class DialogueController : MonoBehaviour
 
     public void BrewingPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
@@ -264,10 +289,13 @@ public class DialogueController : MonoBehaviour
 
     private void UpdateContinueButtonState(List<string> activeDialogue)
     {
+        ResolveContinueButtonIfNeeded();
         if (continueButtonObject == null)
             return;
 
         bool showContinue = activeDialogue != null && activeDialogue.Count > 0 && dialogueIndex >= activeDialogue.Count - 1;
+        if (showContinue && typewriter != null && typewriter.enabled && typewriter.IsTyping)
+            showContinue = false;
         continueButtonObject.SetActive(showContinue);
 
         if (!showContinue)
@@ -279,5 +307,27 @@ public class DialogueController : MonoBehaviour
         var localizedText = continueButtonObject.GetComponentInChildren<LocalizedTMPText>(true);
         if (localizedText != null)
             localizedText.SetKey(key);
+    }
+
+    private void ResolveContinueButtonIfNeeded()
+    {
+        if (continueButtonObject != null)
+            return;
+
+        // OrderDialogueController in MixScene doesn't have this wired; try to find it under the order screen first.
+        if (orderScreen != null)
+        {
+            var t = orderScreen.transform.Find("ContinueButton") ?? orderScreen.transform.Find("ContinueButtonController");
+            if (t != null)
+            {
+                continueButtonObject = t.gameObject;
+                return;
+            }
+        }
+
+        // Fallback: scene-wide lookup (last resort).
+        var go = GameObject.Find("ContinueButton") ?? GameObject.Find("ContinueButtonController");
+        if (go != null)
+            continueButtonObject = go;
     }
 }

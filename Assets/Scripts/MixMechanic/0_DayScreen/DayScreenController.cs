@@ -78,6 +78,8 @@ public class DayScreenController : MonoBehaviour
     /* Call from Next button OnClick */
     public void OnNextPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (dayPanel != null)
             dayPanel.SetActive(false);
         if (orderScreen != null)

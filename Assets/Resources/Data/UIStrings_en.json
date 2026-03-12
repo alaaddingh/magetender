@@ -39,6 +39,12 @@
     {"key": "tutorial_stage2_prompt", "value": "Press SPACE to try it..."},
     {"key": "tutorial_stage3_warning", "value": "Ready for the real fight?\\n\\nBoth banks run at the same time!\\nDon't let DEFEND time out or you take damage!"},
     {"key": "tutorial_stage3_prompt", "value": "Press SPACE to begin..."},
-    {"key": "cap_message", "value": "Select up to 3  Ingredients"}
+    {"key": "cap_message", "value": "Select up to 3  Ingredients"},
+    {"key": "holywater_label", "value": "Holy Water"},
+    {"key": "blood_label", "value": "Blood"},
+    {"key": "moonshine_label", "value": "MoonShine"},
+    {"key": "spirits_label", "value": "Spirits"},
+    { "key": "lose_title", "value": "Game Over" },
+    { "key": "lose_cannot_afford_maintenance", "value": "You could not afford maintenance." }
   ]
 }

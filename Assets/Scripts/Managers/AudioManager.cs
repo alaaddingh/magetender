@@ -1,0 +1,134 @@
+using UnityEngine;
+
+public class AudioManager : MonoBehaviour
+{
+	public static AudioManager Instance { get; private set; }
+
+	[Header("Sources")]
+	[SerializeField] private AudioSource uiSource;
+	[SerializeField] private AudioSource sfxSource;
+	[SerializeField] private AudioSource loopSource;
+
+	[Header("Clips")]
+	[SerializeField] private AudioClip startOfDayBellClip;
+	[SerializeField] private AudioClip buttonClickClip;
+	[SerializeField] private AudioClip pourLoopClip;
+	[SerializeField] private AudioClip pourDripClip;
+	[SerializeField] private AudioClip monsterWalkInClip;
+	[SerializeField] private AudioClip ambienceClip;
+
+	private void Awake()
+	{
+		if (Instance != null && Instance != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
+
+		Instance = this;
+		DontDestroyOnLoad(gameObject);
+	}
+
+	public void PlayButtonClick()
+	{
+		if (uiSource == null || buttonClickClip == null)
+		{
+			return;
+		}
+
+		uiSource.PlayOneShot(buttonClickClip);
+	}
+
+	public void PlayStartOfDayBell()
+	{
+		if (uiSource == null || startOfDayBellClip == null)
+		{
+			return;
+		}
+
+		uiSource.PlayOneShot(startOfDayBellClip);
+	}
+
+	public void PlayMonsterWalkIn()
+	{
+		if (sfxSource == null || monsterWalkInClip == null)
+		{
+			return;
+		}
+
+		sfxSource.PlayOneShot(monsterWalkInClip);
+	}
+
+	public void PlayPourLoop()
+	{
+		if (loopSource == null || pourLoopClip == null)
+		{
+			return;
+		}
+
+		if (loopSource.isPlaying && loopSource.clip == pourLoopClip)
+		{
+			return;
+		}
+
+		loopSource.clip = pourLoopClip;
+		loopSource.loop = true;
+		loopSource.Play();
+	}
+
+	public void StopPourLoop()
+	{
+		if (loopSource == null)
+		{
+			return;
+		}
+
+		if (loopSource.isPlaying && loopSource.clip == pourLoopClip)
+		{
+			loopSource.Stop();
+			loopSource.clip = null;
+		}
+	}
+
+	public void PlayPourDrip()
+	{
+		if (sfxSource == null || pourDripClip == null)
+		{
+			return;
+		}
+
+		sfxSource.PlayOneShot(pourDripClip);
+	}
+
+	public void PlayAmbience()
+	{
+		if (loopSource == null || ambienceClip == null)
+		{
+			return;
+		}
+
+		if (loopSource.isPlaying && loopSource.clip == ambienceClip)
+		{
+			return;
+		}
+
+		loopSource.clip = ambienceClip;
+		loopSource.loop = true;
+		loopSource.Play();
+	}
+
+	public void StopAmbience()
+	{
+		if (loopSource == null)
+		{
+			return;
+		}
+
+		if (loopSource.isPlaying && loopSource.clip == ambienceClip)
+		{
+			loopSource.Stop();
+			loopSource.clip = null;
+		}
+	}
+}
+

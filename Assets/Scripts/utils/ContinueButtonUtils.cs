@@ -27,6 +27,8 @@ public class ContinueButtonUtils : MonoBehaviour
     // Hook this to the Continue button OnClick.
     public void ContinueToNextMonster()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (currentMonsterManager == null)
             currentMonsterManager = CurrentMonster.Instance;
 
