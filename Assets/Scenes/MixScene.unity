@@ -7102,13 +7102,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168af49567d0fe94bbf3955c3505edbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreManager: {fileID: 440574829}
   graphRect: {fileID: 1460992678}
   markerRect: {fileID: 797067394}
   goalMarkerRect: {fileID: 1177180210}
   nameText: {fileID: 1908581327}
   currentMonster: {fileID: 1245897901}
-  useStartingScoreFallbackForCurrentMarker: 1
+  assessPanel: {fileID: 1163726008}
+  scoreManager: {fileID: 440574829}
   minX: -1
   maxX: 1
   minY: -1
@@ -11296,6 +11296,8 @@ MonoBehaviour:
   coinsDisplay: {fileID: 2092445570}
   coinCanvas: {fileID: 2128562753}
   nextDaySceneName: MixScene
+  nextDayButtonObject: {fileID: 2127072629}
+  serveDialogueController: {fileID: 0}
   coinsSatisfied: 50
   coinsNeutral: 35
   coinsAngry: 0

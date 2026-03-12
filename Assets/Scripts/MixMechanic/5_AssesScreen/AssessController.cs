@@ -21,6 +21,8 @@ public class AssessController : MonoBehaviour
     [SerializeField] private TMP_Text coinsDisplay;
     [SerializeField] private GameObject coinCanvas;
     [SerializeField] private string nextDaySceneName = "MixScene";
+    public GameObject nextDayButtonObject;
+    public DialogueController serveDialogueController;
 
     [Header("Coin rewards by mood (sweet spot = most, angry = 0)")]
     [SerializeField] private int coinsSatisfied = 30;
@@ -36,6 +38,17 @@ public class AssessController : MonoBehaviour
         if (currentMonsterManager == null)
             currentMonsterManager = CurrentMonster.Instance;
 
+        if (serveDialogueController == null)
+        {
+            var go = GameObject.Find("AssessDialogueController");
+            if (go != null)
+                serveDialogueController = go.GetComponent<DialogueController>();
+        }
+
+        if (nextDayButtonObject != null)
+            nextDayButtonObject.SetActive(false);
+        RefreshNextDayButton();
+
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
         AwardCoinsForDrink();
@@ -44,6 +57,25 @@ public class AssessController : MonoBehaviour
             coinCanvas.SetActive(true);
 
         RefreshCoinsDisplay();
+    }
+
+    private void Update()
+    {
+        RefreshNextDayButton();
+    }
+
+    private void RefreshNextDayButton()
+    {
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
+
+        bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+
+        if (nextDayButtonObject != null)
+        {
+            bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
+            nextDayButtonObject.SetActive(!hasNextMonster && dialogueFinished);
+        }
     }
 
     private void AwardCoinsForDrink()

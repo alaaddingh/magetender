@@ -17,7 +17,7 @@
     {
       "id": "eyeball",
       "name": "Eyeball",
-      "description": "Strongly calming, elevated",
+      "description": "Strongly grounding, elevated",
       "type": "topping",
       "effect": { "x": -0.70, "y": 0.1 }
     },
