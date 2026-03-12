@@ -194,6 +194,8 @@ public class IngredientController : MonoBehaviour
 
     public void NextPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         CurrentScreen.SetActive(false);
         NextScreen.SetActive(true);
     }

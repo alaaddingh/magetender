@@ -19,8 +19,6 @@ public class DayScreenController : MonoBehaviour
     [SerializeField] private GameObject scoreDisplayCanvas;
     [SerializeField] private ScoreManager scoreManager;
 
-    public AudioSource audioSource;
-
     private void Start()
     {
         if (orderScreen == null)
@@ -80,7 +78,8 @@ public class DayScreenController : MonoBehaviour
     /* Call from Next button OnClick */
     public void OnNextPressed()
     {
-        audioSource.Play();
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (dayPanel != null)
             dayPanel.SetActive(false);
         if (orderScreen != null)

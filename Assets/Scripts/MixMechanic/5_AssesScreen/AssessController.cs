@@ -58,6 +58,8 @@ public class AssessController : MonoBehaviour
     /* call from Assess Next button OnClick: go to next day and show day screen again */
     public void OnNextCustomerPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
 		bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
 
         if (!hasNextMonster && loseManager.CheckLoseAndLoad()) {

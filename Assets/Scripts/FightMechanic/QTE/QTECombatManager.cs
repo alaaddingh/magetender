@@ -522,6 +522,8 @@ public class QTECombatManager : MonoBehaviour
 	/* call from Back to bar button OnClick */
 	public void OnBackToBarPressed()
 	{
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
 		var currentMonster = CurrentMonster.Instance;
 		if (currentMonster != null)
 		{

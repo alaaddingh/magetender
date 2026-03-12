@@ -137,6 +137,8 @@ public class DialogueController : MonoBehaviour
     /* handles Next UI Button clicks (iteration + brew button visibility) */
     public void OnNextPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         UpdateTypewriterEnabledState();
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
@@ -174,6 +176,8 @@ public class DialogueController : MonoBehaviour
 
     public void BrewingPressed()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayButtonClick();
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
