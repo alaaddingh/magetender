@@ -968,7 +968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &155716012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3155,7 +3155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1761528664}
   FadeDuration: 5
-  fadeInOnStart: 0
+  fadeInOnStart: 1
   disableGameObjectWhenDone: 0
 --- !u!114 &551666807
 MonoBehaviour:
@@ -7342,7 +7342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4199da6705a026f4ca52665254ca471e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dc2b58d41dc162a4caa01cbe5a81cd61, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8244,7 +8244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1228855949
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9460,7 +9460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dc2b58d41dc162a4caa01cbe5a81cd61, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4199da6705a026f4ca52665254ca471e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11161,7 +11161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1592750062}
-  FadeDuration: 20
+  FadeDuration: 3
   fadeInOnStart: 1
   disableGameObjectWhenDone: 0
 --- !u!114 &1592750059
@@ -11910,7 +11910,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1761528665
 MonoBehaviour:
@@ -11925,9 +11925,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1761528664}
-  FadeDuration: 1
+  FadeDuration: 2
   fadeInOnStart: 1
-  disableGameObjectWhenDone: 0
+  disableGameObjectWhenDone: 1
 --- !u!114 &1761528666
 MonoBehaviour:
   m_ObjectHideFlags: 0
