@@ -13,7 +13,7 @@ public class QTECombatManager : MonoBehaviour
 	[Header("UI References")]
 	public Image customerSprite;
 	public Image backgroundImage;
-		public Image screenFlashOverlay;
+	public Image screenFlashOverlay;
 	public HealthBarUI playerHealthBar;
 	public HealthBarUI customerHealthBar;
 	public TextMeshProUGUI playerHealthLabel;
@@ -21,7 +21,13 @@ public class QTECombatManager : MonoBehaviour
 	public Canvas mainCanvas;
 	public RectTransform leftHand;
 	public RectTransform rightHand;
-	
+
+	[Header("Attack Orb")]
+	public Sprite orbSprite;
+	public float orbSpeed = 2000f;
+	public float orbWobbleAmount = 15f;
+	public float orbSize = 250f;
+
 	[Header("Back to bar (show when fight ends)")]
 	public GameObject backToBarButton;
 	public string backToBarSceneName = "MixScene";
@@ -34,10 +40,16 @@ public class QTECombatManager : MonoBehaviour
 	public GameObject attackBankContainer;
 	public Image defendBankGlow;
 	public Image attackBankGlow;
-	public Image defendTimerBar;
-	public Image attackTimerBar;
-	public TextMeshProUGUI[] defendKeyTexts;
-	public TextMeshProUGUI[] attackKeyTexts;
+	public RectTransform defendTimerBar;
+	public RectTransform attackTimerBar;
+	public Image[] defendKeyImages;
+	public Image[] attackKeyImages;
+
+	[Header("Arrow Key Sprites")]
+	public Sprite arrowUpSprite;
+	public Sprite arrowDownSprite;
+	public Sprite arrowLeftSprite;
+	public Sprite arrowRightSprite;
 	
 	[Header("Combat Settings")]
 	public int playerMaxHealth = 100;
@@ -63,7 +75,7 @@ public class QTECombatManager : MonoBehaviour
 	private Coroutine currentScreenFlash;
 	private Vector2 leftHandOriginalPos;
 	private Vector2 rightHandOriginalPos;
-	private bool useLeftHand = true;
+	// private bool useLeftHand = true;
 	
 	// Loaded customer sprites
 	private Sprite customerAngrySprite;
@@ -152,6 +164,13 @@ public class QTECombatManager : MonoBehaviour
 		tutorialMode = enabled;
 	}
 
+	public void ResetHealthToFull()
+	{
+		playerHealth = playerMaxHealth;
+		customerHealth = customerMaxHealth;
+		UpdateHealthDisplays();
+	}
+
 	public bool IsDefendBankActive()
 	{
 		return defendBankActive;
@@ -218,33 +237,26 @@ public class QTECombatManager : MonoBehaviour
             return;
         }
 		
-		// Tutorial mode: only active bank timer runs
+		// Tutorial mode: NO timers run at all
 		// Real combat: both timers run simultaneously
-		if (tutorialMode)
+		if (!tutorialMode)
 		{
-			if (defendBankActive)
-			{
-				defendTimer -= Time.deltaTime;
-			}
-			else
-			{
-				attackTimer -= Time.deltaTime;
-			}
-		}
-		else
-		{
-			// both timers always run - this creates the pressure!
+			// both timers always run outside of tutorial
 			defendTimer -= Time.deltaTime;
 			attackTimer -= Time.deltaTime;
 		}
 		
 		if (defendTimerBar != null)
 		{
-			defendTimerBar.fillAmount = Mathf.Max(0, defendTimer / bankTimeLimit);
+			float fillPercent = Mathf.Max(0, defendTimer / bankTimeLimit);
+			float maxWidth = defendTimerBar.parent.GetComponent<RectTransform>().rect.width;
+			defendTimerBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxWidth * fillPercent);
 		}
 		if (attackTimerBar != null)
 		{
-			attackTimerBar.fillAmount = Mathf.Max(0, attackTimer / bankTimeLimit);
+			float fillPercent = Mathf.Max(0, attackTimer / bankTimeLimit);
+			float maxWidth = attackTimerBar.parent.GetComponent<RectTransform>().rect.width;
+			attackTimerBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxWidth * fillPercent);
 		}
 		
 		// Check for timeouts
@@ -398,46 +410,48 @@ public class QTECombatManager : MonoBehaviour
 		}
 		
 		// Update defend bank key displays
-		for (int i = 0; i < defendKeyTexts.Length && i < defendSequence.Count; i++)
+		for (int i = 0; i < defendKeyImages.Length && i < defendSequence.Count; i++)
 		{
-			if (defendKeyTexts[i] != null)
+			if (defendKeyImages[i] != null)
 			{
-				defendKeyTexts[i].text = GetKeyDisplayText(defendSequence[i]);;
+				// Set the sprite based on the key
+				defendKeyImages[i].sprite = GetKeySprite(defendSequence[i]);
 				
 				// gray out done keys, highlight current one yellow
 				if (i < defendProgress)
 				{
-					defendKeyTexts[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+					defendKeyImages[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 				}
 				else if (i == defendProgress)
 				{
-					defendKeyTexts[i].color = Color.yellow;
+					defendKeyImages[i].color = Color.yellow;
 				}
 				else
 				{
-					defendKeyTexts[i].color = Color.white;
+					defendKeyImages[i].color = Color.white;
 				}
 			}
 		}
 		
 		// Update attack bank key displays
-		for (int i = 0; i < attackKeyTexts.Length && i < attackSequence.Count; i++)
+		for (int i = 0; i < attackKeyImages.Length && i < attackSequence.Count; i++)
 		{
-			if (attackKeyTexts[i] != null)
+			if (attackKeyImages[i] != null)
 			{
-				attackKeyTexts[i].text = GetKeyDisplayText(attackSequence[i]);
+				// Set the sprite based on the key
+				attackKeyImages[i].sprite = GetKeySprite(attackSequence[i]);
 				
 				if (i < attackProgress)
 				{
-					attackKeyTexts[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+					attackKeyImages[i].color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 				}
 				else if (i == attackProgress)
 				{
-					attackKeyTexts[i].color = Color.yellow;
+					attackKeyImages[i].color = Color.yellow;
 				}
 				else
 				{
-					attackKeyTexts[i].color = Color.white;
+					attackKeyImages[i].color = Color.white;
 				}
 			}
 		}
@@ -445,6 +459,12 @@ public class QTECombatManager : MonoBehaviour
 	
 	void CustomerTakesDamage()
 	{
+		// Prevent damage during tutorial
+		if (tutorialMode)
+        {
+            return;
+        }
+
 		customerHealth -= damagePerHit;
 		customerHealth = Mathf.Max(0, customerHealth);
 		
@@ -471,6 +491,12 @@ public class QTECombatManager : MonoBehaviour
 	
 	void PlayerTakesDamage()
 	{
+		// No damage during tutorial
+		if (tutorialMode)
+		{
+			return;
+		}
+
 		playerHealth -= damagePerHit;
 		playerHealth = Mathf.Max(0, playerHealth);
 		
@@ -637,52 +663,102 @@ public class QTECombatManager : MonoBehaviour
 	
 	IEnumerator PunchAnimation()
 	{
-		// alternate hands for variety
-		RectTransform handToPunch = useLeftHand ? leftHand : rightHand;
-		Vector2 originalPos = useLeftHand ? leftHandOriginalPos : rightHandOriginalPos;
-		useLeftHand = !useLeftHand;
-		
-		if (handToPunch == null || customerSprite == null)
+		// Only attack from right hand
+		if (rightHand == null || customerSprite == null)
 		{
 			yield break;
 		}
 		
+		// Get direction to customer
 		RectTransform customerRect = customerSprite.GetComponent<RectTransform>();
-		Vector3 handWorldPos = handToPunch.position;
+		Vector3 handWorldPos = rightHand.position;
 		Vector3 customerWorldPos = customerRect.position;
 		Vector2 direction = (customerWorldPos - handWorldPos).normalized;
 		
-		float punchDistance = 300f;
-		Vector2 targetOffset = direction * punchDistance;
-		Vector2 targetPos = originalPos + targetOffset;
+		// Calculate hand thrust target
+		float thrustDistance = 300f;
+		Vector2 targetOffset = direction * thrustDistance;
+		Vector2 handTargetPos = rightHandOriginalPos + targetOffset;
 		
-		float punchDuration = 0.08f; // super fast punch
+		// THRUST HAND FORWARD 
+		float thrustDuration = 0.08f;
 		float elapsed = 0f;
 		
-		while (elapsed < punchDuration)
+		while (elapsed < thrustDuration)
 		{
-			float t = elapsed / punchDuration;
+			float t = elapsed / thrustDuration;
 			float easeT = 1f - Mathf.Pow(1f - t, 3f);
-			handToPunch.anchoredPosition = Vector2.Lerp(originalPos, targetPos, easeT);
+			rightHand.anchoredPosition = Vector2.Lerp(rightHandOriginalPos, handTargetPos, easeT);
 			elapsed += Time.deltaTime;
 			yield return null;
 		}
 		
-		handToPunch.anchoredPosition = targetPos;
-		yield return new WaitForSeconds(0.02f);
+		rightHand.anchoredPosition = handTargetPos;
 		
-		float returnDuration = 0.15f;
+		// CREATE ORB
+		GameObject orb = new GameObject("MagicOrb");
+		orb.transform.SetParent(mainCanvas.transform, false);
+		
+		Image orbImage = orb.AddComponent<Image>();
+		orbImage.sprite = orbSprite;
+		orbImage.raycastTarget = false;
+		
+		RectTransform orbRect = orb.GetComponent<RectTransform>();
+		orbRect.sizeDelta = new Vector2(orbSize, orbSize); 
+		orbRect.position = rightHand.position; 
+		
+		Vector3 targetPos = customerSprite.transform.position;
+		Vector3 startPos = orbRect.position;
+		
+		// LAUNCH ORB
+		float orbDuration = Vector3.Distance(startPos, targetPos) / orbSpeed;
 		elapsed = 0f;
 		
-		while (elapsed < returnDuration)
+		// Start hand return immediately
+		float returnDuration = 0.15f;
+		float returnElapsed = 0f;
+		
+		while (elapsed < orbDuration)
 		{
-			float t = elapsed / returnDuration;
-			handToPunch.anchoredPosition = Vector2.Lerp(targetPos, originalPos, t);
+			float t = elapsed / orbDuration;
+			
+			// Return hand
+			if (returnElapsed < returnDuration)
+			{
+				float returnT = returnElapsed / returnDuration;
+				rightHand.anchoredPosition = Vector2.Lerp(handTargetPos, rightHandOriginalPos, returnT);
+				returnElapsed += Time.deltaTime;
+			}
+			else
+			{
+				rightHand.anchoredPosition = rightHandOriginalPos;
+			}
+			
+			// Wobble side to side
+			float wobble = Mathf.Sin(t * 20f) * orbWobbleAmount;
+			Vector3 perpendicular = Vector3.Cross((targetPos - startPos).normalized, Vector3.forward);
+			Vector3 wobbleOffset = perpendicular * wobble;
+			
+			// Move orb toward target with wobble
+			orbRect.position = Vector3.Lerp(startPos, targetPos, t) + wobbleOffset;
+			
+			// Fade out near end
+			if (t > 0.8f)
+			{
+				Color color = orbImage.color;
+				color.a = Mathf.Lerp(1f, 0f, (t - 0.8f) / 0.2f);
+				orbImage.color = color;
+			}
+			
 			elapsed += Time.deltaTime;
 			yield return null;
 		}
 		
-		handToPunch.anchoredPosition = originalPos;
+		// Ensure hand is back
+		rightHand.anchoredPosition = rightHandOriginalPos;
+		
+		// Destroy orb
+		Destroy(orb);
 	}
 	
 	void UpdateHealthDisplays()
@@ -698,20 +774,20 @@ public class QTECombatManager : MonoBehaviour
 		}
 	}
 
-	string GetKeyDisplayText(KeyCode key)
+	Sprite GetKeySprite(KeyCode key)
 	{
 		switch (key)
 		{
 			case KeyCode.UpArrow:
-				return "↑";
+				return arrowUpSprite;
 			case KeyCode.DownArrow:
-				return "↓";
+				return arrowDownSprite;
 			case KeyCode.LeftArrow:
-				return "←";
+				return arrowLeftSprite;
 			case KeyCode.RightArrow:
-				return "→";
+				return arrowRightSprite;
 			default:
-				return key.ToString();
+				return null;
 		}
 	}
 }
