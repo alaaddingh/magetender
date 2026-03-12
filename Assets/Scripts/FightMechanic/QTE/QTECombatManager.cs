@@ -31,8 +31,8 @@ public class QTECombatManager : MonoBehaviour
 	public GameObject attackBankContainer;
 	public Image defendBankGlow;
 	public Image attackBankGlow;
-	public Image defendTimerBar;
-	public Image attackTimerBar;
+	public RectTransform defendTimerBar;
+	public RectTransform attackTimerBar;
 	public Image[] defendKeyImages;
 	public Image[] attackKeyImages;
 
@@ -153,6 +153,13 @@ public class QTECombatManager : MonoBehaviour
 		tutorialMode = enabled;
 	}
 
+	public void ResetHealthToFull()
+	{
+		playerHealth = playerMaxHealth;
+		customerHealth = customerMaxHealth;
+		UpdateHealthDisplays();
+	}
+
 	public bool IsDefendBankActive()
 	{
 		return defendBankActive;
@@ -219,33 +226,26 @@ public class QTECombatManager : MonoBehaviour
             return;
         }
 		
-		// Tutorial mode: only active bank timer runs
+		// Tutorial mode: NO timers run at all
 		// Real combat: both timers run simultaneously
-		if (tutorialMode)
+		if (!tutorialMode)
 		{
-			if (defendBankActive)
-			{
-				defendTimer -= Time.deltaTime;
-			}
-			else
-			{
-				attackTimer -= Time.deltaTime;
-			}
-		}
-		else
-		{
-			// both timers always run - this creates the pressure!
+			// both timers always run outside of tutorial
 			defendTimer -= Time.deltaTime;
 			attackTimer -= Time.deltaTime;
 		}
 		
 		if (defendTimerBar != null)
 		{
-			defendTimerBar.fillAmount = Mathf.Max(0, defendTimer / bankTimeLimit);
+			float fillPercent = Mathf.Max(0, defendTimer / bankTimeLimit);
+			float maxWidth = defendTimerBar.parent.GetComponent<RectTransform>().rect.width;
+			defendTimerBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxWidth * fillPercent);
 		}
 		if (attackTimerBar != null)
 		{
-			attackTimerBar.fillAmount = Mathf.Max(0, attackTimer / bankTimeLimit);
+			float fillPercent = Mathf.Max(0, attackTimer / bankTimeLimit);
+			float maxWidth = attackTimerBar.parent.GetComponent<RectTransform>().rect.width;
+			attackTimerBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxWidth * fillPercent);
 		}
 		
 		// Check for timeouts
@@ -448,6 +448,12 @@ public class QTECombatManager : MonoBehaviour
 	
 	void CustomerTakesDamage()
 	{
+		// Prevent damage during tutorial
+		if (tutorialMode)
+        {
+            return;
+        }
+
 		customerHealth -= damagePerHit;
 		customerHealth = Mathf.Max(0, customerHealth);
 		
@@ -474,6 +480,12 @@ public class QTECombatManager : MonoBehaviour
 	
 	void PlayerTakesDamage()
 	{
+		// No damage during tutorial
+		if (tutorialMode)
+		{
+			return;
+		}
+
 		playerHealth -= damagePerHit;
 		playerHealth = Mathf.Max(0, playerHealth);
 		

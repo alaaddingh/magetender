@@ -224,6 +224,9 @@ public class CombatTutorial : MonoBehaviour
 		
 		// Hide tutorial
 		tutorialPanel.SetActive(false);
+
+		// Reset health to full for real combat
+		combatManager.ResetHealthToFull();
 		
 		// Start real combat
 		combatManager.SetTutorialMode(false);
