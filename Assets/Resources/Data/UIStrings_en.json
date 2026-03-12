@@ -42,7 +42,9 @@
     {"key": "cap_message", "value": "Select up to 3  Ingredients"},
     {"key": "holywater_label", "value": "Holy Water"},
     {"key": "blood_label", "value": "Blood"},
-    {"key": "moonshine_label", "value": "Moon Shine"},
-    {"key": "spirits_label", "value": "Spirits"}
+    {"key": "moonshine_label", "value": "MoonShine"},
+    {"key": "spirits_label", "value": "Spirits"},
+    { "key": "lose_title", "value": "Game Over" },
+    { "key": "lose_cannot_afford_maintenance", "value": "You could not afford maintenance." }
   ]
 }
