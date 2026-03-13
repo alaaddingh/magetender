@@ -5443,7 +5443,7 @@ MonoBehaviour:
   mediumBottleUI: {fileID: 1003164639}
   largeBottleUI: {fileID: 730946031}
   mixManager: {fileID: 9305688}
-  dropSpawnInterval: 0.1
+  dropSpawnInterval: 0.08
   dropSize: 40
   dropSpawnOffsetY: 0
   nextButton: {fileID: 1821739358}
