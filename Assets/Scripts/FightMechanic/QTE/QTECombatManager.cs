@@ -23,6 +23,10 @@ public class QTECombatManager : MonoBehaviour
 	public RectTransform leftHand;
 	public RectTransform rightHand;
 
+	[Header("Victory/Defeat UI")]
+	public GameObject victoryText;
+	public GameObject defeatText;
+
 	[Header("Attack Orb")]
 	public Sprite orbSprite;
 	public float orbSpeed = 2000f;
@@ -58,6 +62,8 @@ public class QTECombatManager : MonoBehaviour
 	public int damagePerHit = 20;
 	public float bankTimeLimit = 5f;
 	public int sequenceLength = 5;
+	public float healthDrainPerSecond = 5f;
+	public int defendHealAmount = 15;
 	[SerializeField] private int coinsForWin = 10;
 	
 	[Header("Visual Settings")]
@@ -69,6 +75,7 @@ public class QTECombatManager : MonoBehaviour
 	
 	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };	private int playerHealth;
 	private int customerHealth;
+	private float playerHealthFloat; // for constant health drain
 	private Color originalCustomerColor;
 	private Vector3 originalCustomerPosition;
 	private Vector3 originalCanvasPosition;
@@ -79,6 +86,7 @@ public class QTECombatManager : MonoBehaviour
 	private HandAnimation leftHandFloat;
 	private HandAnimation rightHandFloat;
 	private CustomerMovement customerShake;
+	private CombatVisualEffects visualEffects;
 	
 	// Loaded customer sprites
 	private Sprite customerAngrySprite;
@@ -122,6 +130,7 @@ public class QTECombatManager : MonoBehaviour
 		}
 		
 		playerHealth = playerMaxHealth;
+		playerHealthFloat = playerMaxHealth;
 		customerHealth = customerMaxHealth;
 
 		if (playerHealthBar != null)
@@ -164,6 +173,8 @@ public class QTECombatManager : MonoBehaviour
 			overlayColor.a = 0f;
 			screenFlashOverlay.color = overlayColor;
 		}
+
+		visualEffects = GetComponent<CombatVisualEffects>();
 		
 		UpdateHealthDisplays();
         // Don't start sequences yet - wait for tutorial
@@ -263,6 +274,18 @@ public class QTECombatManager : MonoBehaviour
 			// both timers always run outside of tutorial
 			defendTimer -= Time.deltaTime;
 			attackTimer -= Time.deltaTime;
+
+			// Constant health drain
+			playerHealthFloat -= healthDrainPerSecond * Time.deltaTime;
+			playerHealthFloat = Mathf.Max(0, playerHealthFloat);
+			playerHealth = Mathf.RoundToInt(playerHealthFloat);
+			UpdateHealthDisplays();
+
+			if (playerHealth <= 0)
+			{
+				EndFight(false);
+				return;
+			}
 		}
 		
 		if (defendTimerBar != null)
@@ -358,7 +381,18 @@ public class QTECombatManager : MonoBehaviour
 	
 	void HandleDefendSuccess()
 	{
-		Debug.Log("Defense successful! Blocked attack!");
+		Debug.Log("Defense successful!");
+		
+		// Heal player instead of blocking damage
+		playerHealthFloat += defendHealAmount;
+		playerHealthFloat = Mathf.Min(playerHealthFloat, playerMaxHealth);
+		playerHealth = Mathf.RoundToInt(playerHealthFloat);
+		UpdateHealthDisplays();
+
+		if (visualEffects != null)
+		{
+			visualEffects.PlayHealEffect();
+		}
 		
 		OnDefendSequenceCompleted?.Invoke();
 		
@@ -369,7 +403,7 @@ public class QTECombatManager : MonoBehaviour
 	void HandleDefendFail()
 	{
 		Debug.Log("Defense failed!");
-		PlayerTakesDamage();
+		//PlayerTakesDamage();
 		GenerateNewSequence(true);
 		UpdateBankVisuals();
 	}
@@ -550,6 +584,11 @@ public class QTECombatManager : MonoBehaviour
 		if (playerWon)
 		{
 			Debug.Log("VICTORY!");
+
+			if (victoryText != null)
+			{
+				victoryText.SetActive(true);
+			}
 			
 			// Show defeated/happy sprite (monster is happy to be defeated and go home)
 			if (customerHappySprite != null && customerSprite != null)
@@ -570,6 +609,11 @@ public class QTECombatManager : MonoBehaviour
 		else
 		{
 			Debug.Log("DEFEATED!");
+
+			if (defeatText != null)
+			{
+				defeatText.SetActive(true);
+			}
 		}
 		
 		// Show back to bar button

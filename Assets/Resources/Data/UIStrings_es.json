@@ -36,6 +36,8 @@
     {"key": "tutorial_stage2_prompt", "value": "Presiona ESPACIO para intentarlo..."},
     {"key": "tutorial_stage3_warning", "value": "¿Listo para la pelea real?\\n\\n¡Ambos bancos funcionan al mismo tiempo!\\n¡No dejes que DEFENSA se agote o recibirás daño!"},
     {"key": "tutorial_stage3_prompt", "value": "Presiona ESPACIO para comenzar..."},
+    {"key": "combat_victory", "value": "¡VICTORIA!"},
+    {"key": "combat_defeat", "value": "DERROTA."},
     {"key": "cap_message", "value": "Selecciona hasta 3 Ingredientes"},
     {"key": "holywater_label", "value": "Agua Bendita"},
     {"key": "blood_label", "value": "Sangre"},

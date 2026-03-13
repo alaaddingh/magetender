@@ -39,6 +39,8 @@
     { "key": "tutorial_stage2_prompt", "value": "اضغط زر التبديل عشان تجرّب..." },
     { "key": "tutorial_stage3_warning", "value": "جاهز للقتال الحقيقي؟\n\nالمسارين بيشتغلوا بنفس الوقت!\nإذا خلص وقت الدفاع رح يوصلك ضرر!" },
     { "key": "tutorial_stage3_prompt", "value": "اضغط زر التبديل عشان نبلّش..." },
+    {"key": "combat_victory", "value": "انتصار!"},
+    {"key": "combat_defeat", "value": "هزيمة!"},
     {"key": "cap_message", "value": "اختر بحد أقصى 3 مكونات"},
     {"key": "holywater_label", "value": "ميّة مقدّسة"},
     {"key": "blood_label", "value": "دم"},
