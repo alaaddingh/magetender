@@ -119,28 +119,28 @@
       "name": "Blood",
       "description": "Grounding",
       "type": "base",
-      "effect": { "x": -0.85, "y": 0 }
+      "effect": { "x": -1, "y": 0 }
     },
     {
       "id": "holy_water",
       "name": "Holy Water",
       "description": "Elevating",
       "type": "base",
-      "effect": { "x": 0, "y": 0.85 }
+      "effect": { "x": 0, "y": 1 }
     },
     {
       "id": "spirits",
       "name": "Spirits",
       "description": "Dissociative",
       "type": "base",
-      "effect": { "x": 0.85, "y": 0 }
+      "effect": { "x": 1, "y": 0 }
     },
     {
       "id": "moonshine",
       "name": "Moon-Shine",
       "description": "Calming",
       "type": "base",
-      "effect": { "x": 0, "y": -0.85 }
+      "effect": { "x": 0, "y": -1 }
     }
   ]
 }

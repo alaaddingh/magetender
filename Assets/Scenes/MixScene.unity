@@ -968,7 +968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &155716012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2514,8 +2514,8 @@ MonoBehaviour:
   glassFinalInfluencePercent: 0
   baseMaxStepPercent: 1
   toppingStepPercent: 0.35
-  wrongBottlePenaltyPercent: 0.15
-  wrongBottleFinalPenaltyPercent: 0.2
+  wrongBottlePenaltyPercent: 0
+  wrongBottleFinalPenaltyPercent: 0
   minToppingInfluenceWhenBaseMisaligned: 0.02
   wrongBottleToppingMultiplier: 0.7
   clampMoodBoard: 1
@@ -7297,7 +7297,7 @@ GameObject:
   - component: {fileID: 1122515527}
   - component: {fileID: 1122515526}
   m_Layer: 5
-  m_Name: Elevated
+  m_Name: Calm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8244,7 +8244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1228855949
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9415,7 +9415,7 @@ GameObject:
   - component: {fileID: 1286613189}
   - component: {fileID: 1286613188}
   m_Layer: 5
-  m_Name: Calm
+  m_Name: Elevated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10044,7 +10044,7 @@ GameObject:
   - component: {fileID: 1463517262}
   - component: {fileID: 1463517261}
   m_Layer: 5
-  m_Name: 'Dissociative '
+  m_Name: Dissaciative
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11127,7 +11127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1592750057
 RectTransform:
   m_ObjectHideFlags: 0

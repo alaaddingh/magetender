@@ -156,8 +156,8 @@ public class ScoreManager : MonoBehaviour
         bool hasBase = TryGetBaseBlendTarget(out baseTarget, out baseStep);
         if (hasBase)
         {
-            x += baseStep * (baseTarget.x - x);
-            y += baseStep * (baseTarget.y - y);
+            x += baseStep * baseTarget.x;
+            y += baseStep * baseTarget.y;
         }
 
         Vector2 toppingsTarget;
@@ -169,7 +169,7 @@ public class ScoreManager : MonoBehaviour
             float baseAlignment = ComputeAlignmentToGoal(
                 new Vector2(starting.x, starting.y),
                 new Vector2(goal.x, goal.y),
-                hasBase ? baseTarget : new Vector2(starting.x, starting.y));
+                hasBase ? (new Vector2(starting.x, starting.y) + baseTarget) : new Vector2(starting.x, starting.y));
 
             float baseGate = Mathf.Lerp(minToppingInfluenceWhenBaseMisaligned, 1f, baseAlignment);
             float bottleGate = correctBottle ? 1f : wrongBottleToppingMultiplier;
