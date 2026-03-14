@@ -72,7 +72,11 @@ public class QTECombatManager : MonoBehaviour
 	public Color activeGlowColor = new Color(1f, 1f, 0.5f, 0.6f);
 	public Color inactiveGlowColor = new Color(0.3f, 0.3f, 0.3f, 0.2f);
 	
-	
+	[Header("Heal Flash Settings")]
+	public int healFlashCount = 2;
+	public float healFlashOpacity = 0.2f;
+	public float healFlashDuration = 0.1f;
+		
 	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };	private int playerHealth;
 	private int customerHealth;
 	private float playerHealthFloat; // for constant health drain
@@ -389,10 +393,17 @@ public class QTECombatManager : MonoBehaviour
 		playerHealth = Mathf.RoundToInt(playerHealthFloat);
 		UpdateHealthDisplays();
 
+		if (leftHandFloat != null)
+        {
+            StartCoroutine(SpinHealingHand());
+        }
+
 		if (visualEffects != null)
 		{
 			visualEffects.PlayHealEffect();
 		}
+
+		StartCoroutine(FlashHeal());
 		
 		OnDefendSequenceCompleted?.Invoke();
 		
@@ -562,12 +573,6 @@ public class QTECombatManager : MonoBehaviour
 			EndFight(false);
 			return;
 		}
-		
-		if (currentScreenFlash != null)
-		{
-			StopCoroutine(currentScreenFlash);
-		}
-		currentScreenFlash = StartCoroutine(FlashScreen());
 	}
 	
 	void EndFight(bool playerWon)
@@ -700,34 +705,34 @@ public class QTECombatManager : MonoBehaviour
 			customerSprite.sprite = customerAngrySprite;
 		}
 	}
-	
-	IEnumerator FlashScreen()
+
+	IEnumerator FlashHeal()
 	{
-		if (screenFlashOverlay != null)
+		for (int i = 0; i < healFlashCount; i++)
 		{
-			Color overlayColor = screenFlashOverlay.color;
-			overlayColor.a = 0.4f;
-			screenFlashOverlay.color = overlayColor;
-		}
-		
-		float elapsed = 0f;
-		while (elapsed < shakeDuration)
-		{
-			float xOffset = Random.Range(-shakeIntensity, shakeIntensity);
-			float yOffset = Random.Range(-shakeIntensity, shakeIntensity);
-			mainCanvas.transform.localPosition = originalCanvasPosition + new Vector3(xOffset, yOffset, 0);
+			// Flash on
+			if (screenFlashOverlay != null)
+			{
+				Color overlayColor = Color.green;
+				overlayColor.a = healFlashOpacity;
+				screenFlashOverlay.color = overlayColor;
+			}
 			
-			elapsed += Time.deltaTime;
-			yield return null;
-		}
-		
-		mainCanvas.transform.localPosition = originalCanvasPosition;
-		
-		if (screenFlashOverlay != null)
-		{
-			Color overlayColor = screenFlashOverlay.color;
-			overlayColor.a = 0f;
-			screenFlashOverlay.color = overlayColor;
+			yield return new WaitForSeconds(healFlashDuration);
+			
+			// Flash off
+			if (screenFlashOverlay != null)
+			{
+				Color overlayColor = screenFlashOverlay.color;
+				overlayColor.a = 0f;
+				screenFlashOverlay.color = overlayColor;
+			}
+			
+			// Small pause between flashes
+			if (i < healFlashCount - 1)
+			{
+				yield return new WaitForSeconds(healFlashDuration * 0.5f);
+			}
 		}
 	}
 	
@@ -838,6 +843,48 @@ public class QTECombatManager : MonoBehaviour
 		if (rightHandFloat != null)
 		{
 			rightHandFloat.SetEnabled(true); // Resume floating animation
+		}
+	}
+
+	IEnumerator SpinHealingHand()
+	{
+		// Pause floating animation
+		if (leftHandFloat != null)
+		{
+			leftHandFloat.SetEnabled(false);
+		}
+		
+		// Move in a clockwise circle
+		float duration = 0.3f;
+		float elapsed = 0f;
+		float radius = 100f; // Size of the circle (adjust to taste)
+		Vector2 startPos = leftHandOriginalPos;
+		float startAngle = 270f * Mathf.Deg2Rad; // Start at bottom
+		
+		while (elapsed < duration)
+		{
+			float t = elapsed / duration;
+			
+			// Move clockwise (positive angle increment)
+			float currentAngle = startAngle + (t * 360f * Mathf.Deg2Rad);
+			
+			// Calculate position on circle
+			float offsetX = Mathf.Cos(currentAngle) * radius;
+			float offsetY = Mathf.Sin(currentAngle) * radius;
+			
+			leftHand.anchoredPosition = startPos + new Vector2(offsetX, offsetY);
+			
+			elapsed += Time.deltaTime;
+			yield return null;
+		}
+		
+		// Return to original position
+		leftHand.anchoredPosition = leftHandOriginalPos;
+		
+		// Resume floating animation
+		if (leftHandFloat != null)
+		{
+			leftHandFloat.SetEnabled(true);
 		}
 	}
 	

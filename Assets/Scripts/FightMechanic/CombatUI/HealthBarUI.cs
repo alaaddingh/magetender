@@ -43,29 +43,11 @@ public class HealthBarUI : MonoBehaviour
 	public void UpdateHealth(int current)
 	{
 		float fillPercent = (float)current / maxHealth;
-		
-		// Update bar width
-		if (fillRect != null)
+				
+		// Mask the fill width based on health percentage
+		if (fillImage != null)
 		{
-			// Change the Right anchor position to shrink the bar
-			fillRect.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0, maxWidth * fillPercent);
-			
-			// Change color based on health
-			if (fillImage != null)
-			{
-				if (fillPercent <= lowHealthThreshold)
-				{
-					fillImage.color = lowHealthColor;
-				}
-				else if (fillPercent <= midHealthThreshold)
-				{
-					fillImage.color = midHealthColor;
-				}
-				else
-				{
-					fillImage.color = fullHealthColor;
-				}
-			}
+			fillImage.fillAmount = fillPercent;
 		}
 	}
 }
