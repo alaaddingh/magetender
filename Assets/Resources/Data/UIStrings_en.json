@@ -44,6 +44,9 @@
     {"key": "blood_label", "value": "Blood"},
     {"key": "moonshine_label", "value": "Moonshine"},
     {"key": "spirits_label", "value": "Spirits"},
+    { "key": "ingredient_no_match", "value": "(no match in data)" },
+    { "key": "ingredient_axis_x", "value": "grounded ↔ dissociative" },
+    { "key": "ingredient_axis_y", "value": "calm ↕ elevated" },
     { "key": "lose_title", "value": "Game Over" },
     { "key": "lose_maintenance", "value": "You could not afford maintenance." },
     { "key": "newgame_button", "value": "New Game" }
