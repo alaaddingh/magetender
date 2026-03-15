@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +15,11 @@ public class DayScreenController : MonoBehaviour
 
     [Header("Global coin canvas - show only on Day / Order / Assess")]
     [SerializeField] private GameObject coinCanvas;
+
+    [Header("Maintenance cost loss popup (when surviving to next day)")]
+    [SerializeField] private TMP_Text coinLossPopup;
+    [SerializeField] private float coinLossFadeDuration = 1.5f;
+    [SerializeField] private float coinLossMoveUp = 30f;
 
     [Header("Score Display Canvas - hide on Day, show on Order")]
     [SerializeField] private GameObject scoreDisplayCanvas;
@@ -52,6 +58,12 @@ public class DayScreenController : MonoBehaviour
             scoreDisplayCanvas.SetActive(false);
 
         RefreshDisplay();
+
+        if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1 && coinLossPopup != null)
+        {
+            int maintenance = GameManager.Instance.MaintenanceCost;
+            ShowCoinLossPopup(maintenance);
+        }
 
         if (skipDayCounter)
             OnNextPressed();
@@ -112,5 +124,38 @@ public class DayScreenController : MonoBehaviour
         var graph = FindObjectOfType<MoodGraphUI>();
         if (graph != null)
             graph.ForceRefresh();
+    }
+
+    private void ShowCoinLossPopup(int amount)
+    {
+        if (coinLossPopup == null) return;
+        coinLossPopup.text = "-" + amount;
+        coinLossPopup.gameObject.SetActive(true);
+        CanvasGroup cg = coinLossPopup.GetComponent<CanvasGroup>();
+        if (cg == null)
+            cg = coinLossPopup.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+        var rect = coinLossPopup.rectTransform;
+        Vector2 startPos = rect.anchoredPosition;
+        StartCoroutine(FadeOutCoinLossPopup(rect, startPos));
+    }
+
+    private IEnumerator FadeOutCoinLossPopup(RectTransform rect, Vector2 startPos)
+    {
+        float elapsed = 0f;
+        CanvasGroup cg = coinLossPopup.GetComponent<CanvasGroup>();
+        while (elapsed < coinLossFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / coinLossFadeDuration;
+            if (cg != null)
+                cg.alpha = 1f - t;
+            rect.anchoredPosition = startPos + new Vector2(0f, coinLossMoveUp * t);
+            yield return null;
+        }
+        if (cg != null)
+            cg.alpha = 0f;
+        coinLossPopup.gameObject.SetActive(false);
+        rect.anchoredPosition = startPos;
     }
 }

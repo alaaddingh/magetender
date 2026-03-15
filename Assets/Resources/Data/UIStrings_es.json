@@ -13,7 +13,7 @@
     { "key": "grounded", "value": "Arraigo" },
     { "key": "dissociative", "value": "Disociar" },
     { "key": "start_button", "value": "Comenzar" },
-    { "key": "new_game_button", "value": "Nueva partida" },
+    { "key": "newgame_button", "value": "Nueva partida" },
     { "key": "next_button", "value": "Siguiente" },
     { "key": "next_day_button", "value": "Proximo día" },
     { "key": "back_button", "value": "Volver" },
