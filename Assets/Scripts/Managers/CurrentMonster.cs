@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Magetender.Data;
 
 public class CurrentMonster : MonoBehaviour
 {
@@ -29,11 +30,23 @@ public class CurrentMonster : MonoBehaviour
     private DialogueFile dialogueFile;
     private string lastMonsterName;
     private bool dataLoaded;
-    private int currentEncounterIndex;
+    public int currentEncounterIndex;
     private int lastSeenDay;
 
     public MonsterData Data => GetCurrentMonsterData();
     public LevelEncounterData CurrentEncounter => GetCurrentEncounter();
+
+    public void ApplySaveProgress(int encounterIndex)
+    {
+        EnsureDataLoaded();
+
+        lastSeenDay = GetCurrentDay();
+        currentEncounterIndex = encounterIndex;
+
+        var encounter = GetCurrentEncounter();
+        if (encounter != null)
+            SetCurrentMonsterNameById(encounter.monster_id);
+    }
 
     private void Awake()
     {
@@ -192,6 +205,7 @@ public class CurrentMonster : MonoBehaviour
 			ResetToFirstMonster();
 		}
 
+        SaveSystem.WriteData();
 		nextVisitPlan = NextVisitPlan.None;
 	}
 

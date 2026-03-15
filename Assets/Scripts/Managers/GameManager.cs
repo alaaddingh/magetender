@@ -1,4 +1,5 @@
 using UnityEngine;
+using Magetender.Data;
 
 /* Holds coins and day. Put one GameManager in the scene; it survives scene load via DontDestroyOnLoad. */
 public class GameManager : MonoBehaviour
@@ -21,6 +22,9 @@ public class GameManager : MonoBehaviour
     public int Coins { get; private set; }
     public int Day { get; private set; }
 
+    private int EncounterIndex;
+    private bool SavedEncounterIndex;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -34,11 +38,30 @@ public class GameManager : MonoBehaviour
 
         Coins = startingCoins;
         Day = startingDay;
+
+        var data = SaveSystem.LoadGame();
+        if (data != null)
+        {
+            Coins = data.coins;
+            Day = Mathf.Max(1, data.day);
+            EncounterIndex = data.currentEncounterIndex;
+            SavedEncounterIndex = true;
+        }
+    }
+
+    private void Start()
+    {
+        if (SavedEncounterIndex && CurrentMonster.Instance != null)
+        {
+            CurrentMonster.Instance.ApplySaveProgress(EncounterIndex);
+            SavedEncounterIndex = false;
+        }
     }
 
     public void AddCoins(int amount)
     {
         Coins += amount;
+        SaveSystem.WriteData();
     }
 
     public void IncrementDay()
@@ -49,5 +72,7 @@ public class GameManager : MonoBehaviour
         {
             Coins -= maintenanceCost;
         }
+
+        SaveSystem.WriteData();
     }
 }

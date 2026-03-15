@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Magetender.Data;
 
 public class GameOverButton : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameOverButton : MonoBehaviour
             better solution when more levels are added */
             GameManager.Instance.AddCoins(-GameManager.Instance.Coins);
             CurrentMonster.Instance.ResetToFirstMonster();
+            SaveSystem.WriteData();
 
         SceneManager.LoadScene(MixScene);
     }

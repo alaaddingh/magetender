@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Magetender.Data;
 
 public class LoseManager : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class LoseManager : MonoBehaviour
 
     public void LoadLoseScene()
     {
+        // save lose-state to avoid loophole */
+        SaveSystem.WriteLoseState();
+
         SceneManager.LoadScene(loseSceneName);
     }
 }

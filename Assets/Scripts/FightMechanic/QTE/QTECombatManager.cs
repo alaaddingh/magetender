@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR;
+using Magetender.Data;
 
 // QTE Bank Combat System
 // Two banks (defend/attack) with key sequences
@@ -647,6 +648,7 @@ public class QTECombatManager : MonoBehaviour
 				var gm = GameManager.Instance;
 				if (gm != null && gm.Coins < gm.MaintenanceCost)
 				{
+					SaveSystem.WriteLoseState();
 					SceneManager.LoadScene(loseSceneName);
 					return;
 				}
