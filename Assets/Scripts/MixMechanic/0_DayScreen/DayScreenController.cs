@@ -50,9 +50,6 @@ public class DayScreenController : MonoBehaviour
 
         RefreshDisplay();
 
-		if (AudioManager.Instance != null)
-			AudioManager.Instance.PlayAmbience();
-
         if (skipDayCounter)
             OnNextPressed();
     }
@@ -101,6 +98,8 @@ public class DayScreenController : MonoBehaviour
 			playedFirstWalkIn = true;
 			AudioManager.Instance.PlayMonsterWalkIn();
 		}
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayAmbience();
 
         if (scoreManager != null)
             scoreManager.RefreshScoreDisplay();

@@ -19,6 +19,14 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioClip monsterWalkInClip;
 	[SerializeField] private AudioClip ambienceClip;
 
+	[Header("Assess screen ambience (by mood)")]
+	[SerializeField] private AudioClip assessAmbienceHappyClip;
+	[SerializeField] private AudioClip assessAmbienceNeutralClip;
+	[SerializeField] private AudioClip assessAmbienceAngryClip;
+
+	[Header("Register")]
+	[SerializeField] private AudioClip registerChaChingClip;
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -157,6 +165,29 @@ public class AudioManager : MonoBehaviour
 			loopSource.Stop();
 			loopSource.clip = null;
 		}
+	}
+
+	public void PlayAssessAmbience(string state)
+	{
+		if (sfxSource == null)
+			return;
+		AudioClip clip = null;
+		if (state == "satisfied" && assessAmbienceHappyClip != null)
+			clip = assessAmbienceHappyClip;
+		else if (state == "angry" && assessAmbienceAngryClip != null)
+			clip = assessAmbienceAngryClip;
+		else if (assessAmbienceNeutralClip != null)
+			clip = assessAmbienceNeutralClip;
+		if (clip == null)
+			return;
+		sfxSource.PlayOneShot(clip);
+	}
+
+	public void PlayRegisterChaChing()
+	{
+		if (uiSource == null || registerChaChingClip == null)
+			return;
+		uiSource.PlayOneShot(registerChaChingClip);
 	}
 }
 

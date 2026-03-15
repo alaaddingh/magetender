@@ -5,6 +5,7 @@
 4) shows coins on assess screen; Next button goes to next day (reload day screen)
 */
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -19,6 +20,9 @@ public class AssessController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text coinsDisplay;
+    [SerializeField] private TMP_Text coinGainPopup;
+    [SerializeField] private float coinGainFadeDuration = 1.5f;
+    [SerializeField] private float coinGainMoveUp = 30f;
     [SerializeField] private GameObject coinCanvas;
     [SerializeField] private string nextDaySceneName = "MixScene";
     public GameObject nextDayButtonObject;
@@ -51,7 +55,15 @@ public class AssessController : MonoBehaviour
 
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
-        AwardCoinsForDrink();
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayAssessAmbience(MonsterStateManager.MonsterState);
+        int amount = AwardCoinsForDrink();
+        if (amount > 0)
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayRegisterChaChing();
+            ShowCoinGainPopup(amount);
+        }
 
         if (coinCanvas != null)
             coinCanvas.SetActive(true);
@@ -78,13 +90,48 @@ public class AssessController : MonoBehaviour
         }
     }
 
-    private void AwardCoinsForDrink()
+    private int AwardCoinsForDrink()
     {
-        if (GameManager.Instance == null) return;
+        if (GameManager.Instance == null) return 0;
         string state = MonsterStateManager.MonsterState;
-        if (state == "satisfied") GameManager.Instance.AddCoins(coinsSatisfied);
-        else if (state == "neutral") GameManager.Instance.AddCoins(coinsNeutral);
-        else if (state == "angry") GameManager.Instance.AddCoins(coinsAngry);
+        int amount = 0;
+        if (state == "satisfied") { amount = coinsSatisfied; GameManager.Instance.AddCoins(amount); }
+        else if (state == "neutral") { amount = coinsNeutral; GameManager.Instance.AddCoins(amount); }
+        else if (state == "angry") { amount = coinsAngry; GameManager.Instance.AddCoins(amount); }
+        return amount;
+    }
+
+    private void ShowCoinGainPopup(int amount)
+    {
+        if (coinGainPopup == null) return;
+        coinGainPopup.text = "+" + amount;
+        coinGainPopup.gameObject.SetActive(true);
+        CanvasGroup cg = coinGainPopup.GetComponent<CanvasGroup>();
+        if (cg == null)
+            cg = coinGainPopup.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+        var rect = coinGainPopup.rectTransform;
+        Vector2 startPos = rect.anchoredPosition;
+        StartCoroutine(FadeOutCoinGainPopup(rect, startPos));
+    }
+
+    private IEnumerator FadeOutCoinGainPopup(RectTransform rect, Vector2 startPos)
+    {
+        float elapsed = 0f;
+        CanvasGroup cg = coinGainPopup.GetComponent<CanvasGroup>();
+        while (elapsed < coinGainFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / coinGainFadeDuration;
+            if (cg != null)
+                cg.alpha = 1f - t;
+            rect.anchoredPosition = startPos + new Vector2(0f, coinGainMoveUp * t);
+            yield return null;
+        }
+        if (cg != null)
+            cg.alpha = 0f;
+        coinGainPopup.gameObject.SetActive(false);
+        rect.anchoredPosition = startPos;
     }
 
     /* call from Assess Next button OnClick: go to next day and show day screen again */

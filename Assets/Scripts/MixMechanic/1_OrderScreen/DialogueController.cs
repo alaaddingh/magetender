@@ -199,6 +199,8 @@ public class DialogueController : MonoBehaviour
     {
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopAmbience();
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
