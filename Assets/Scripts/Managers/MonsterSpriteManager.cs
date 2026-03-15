@@ -85,8 +85,8 @@ public class MonsterSpriteManager : MonoBehaviour
 
     private void HandleMonsterChanged(string _)
     {
-		if (AudioManager.Instance != null)
-			AudioManager.Instance.PlayMonsterWalkIn();
+        if (DayScreenController.OrderScreenRevealedThisSession && AudioManager.Instance != null)
+            AudioManager.Instance.PlayMonsterWalkIn();
         RefreshSprite();
     }
 

@@ -13,10 +13,11 @@
     { "key": "grounded", "value": "Arraigo" },
     { "key": "dissociative", "value": "Disociar" },
     { "key": "start_button", "value": "Comenzar" },
+    { "key": "new_game_button", "value": "Nueva partida" },
     { "key": "next_button", "value": "Siguiente" },
     { "key": "next_day_button", "value": "Proximo día" },
     { "key": "back_button", "value": "Volver" },
-    { "key": "begin_brew_button", "value": "Empezar mezcla" },
+    { "key": "begin_brew_button", "value": "A Mezclar" },
     { "key": "options_button", "value": "Opciones" },
     { "key": "credits_button", "value": "Créditos" },
     { "key": "mood_profile_title", "value": "Perfil de ánimo" },
@@ -44,7 +45,7 @@
     {"key": "moonshine_label", "value": "Luz de luna"},
     {"key": "spirits_label", "value": "Espíritus"},
     { "key": "lose_title", "value": "Fin de la partida" },
-    { "key": "lose_cannot_afford_maintenance", "value": "No pudiste pagar el mantenimiento." }
+    { "key": "lose_maintenance", "value": "No pudiste pagar el mantenimiento." }
   ]
 }
 

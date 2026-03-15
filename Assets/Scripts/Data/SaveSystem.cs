@@ -50,5 +50,15 @@ namespace Magetender.Data
             string json = File.ReadAllText(path);
             return JsonUtility.FromJson<SaveData>(json);
         }
+
+        public static void ClearSave()
+        {
+            string path = Path.Combine(Application.persistentDataPath, FileName);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                Debug.Log("[SaveSystem] Save cleared.");
+            }
+        }
     }
 }

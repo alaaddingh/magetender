@@ -22,9 +22,12 @@ public class DayScreenController : MonoBehaviour
 	private bool playedFirstWalkIn;
 	private bool showedDayPanelThisLoad;
 
+	public static bool OrderScreenRevealedThisSession { get; private set; }
+
     private void Start()
     {
 		playedFirstWalkIn = false;
+		OrderScreenRevealedThisSession = false;
 
         if (orderScreen == null)
         {
@@ -92,6 +95,7 @@ public class DayScreenController : MonoBehaviour
             dayPanel.SetActive(false);
         if (orderScreen != null)
             orderScreen.SetActive(true);
+        OrderScreenRevealedThisSession = true;
 
 		if (!playedFirstWalkIn && AudioManager.Instance != null)
 		{

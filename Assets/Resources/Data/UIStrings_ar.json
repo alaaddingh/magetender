@@ -16,6 +16,7 @@
     { "key": "grounded", "value": "مركّز" },
     { "key": "dissociative", "value": "شارِد" },
     { "key": "start_button", "value": "ابدأ" },
+    { "key": "new_game_button", "value": "لعبة جديدة" },
     { "key": "next_button", "value": "التالي" },
     { "key": "next_day_button", "value": "اليوم اللي بعده" },
     { "key": "back_button", "value": "ارجع" },
@@ -47,6 +48,7 @@
     {"key": "moonshine_label", "value": "مونشاين"},
     {"key": "spirits_label", "value": "سبيرتس"},
     { "key": "lose_title", "value": "انتهت اللعبة" },
-    { "key": "lose_cannot_afford_maintenance", "value": "لم تتمكن من دفع تكاليف الصيانة." }
+    { "key": "lose_maintenance", "value": "لم تتمكن من دفع تكاليف الصيانة." },
+    { "key": "newgame_button", "value": "لعبة جديدة" }
   ]
 }

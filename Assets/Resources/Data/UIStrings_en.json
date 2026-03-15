@@ -13,6 +13,7 @@
     { "key": "grounded", "value": "Grounded" },
     { "key": "dissociative", "value": "Dissociative" },
     { "key": "start_button", "value": "Start" },
+    { "key": "new_game_button", "value": "New Game" },
     { "key": "next_button", "value": "Next" },
     { "key": "next_day_button", "value": "Next Day" },
     { "key": "back_button", "value": "Back" },
@@ -44,6 +45,7 @@
     {"key": "moonshine_label", "value": "Moonshine"},
     {"key": "spirits_label", "value": "Spirits"},
     { "key": "lose_title", "value": "Game Over" },
-    { "key": "lose_cannot_afford_maintenance", "value": "You could not afford maintenance." }
+    { "key": "lose_maintenance", "value": "You could not afford maintenance." },
+    { "key": "newgame_button", "value": "New Game" }
   ]
 }
