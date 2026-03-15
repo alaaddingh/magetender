@@ -32,10 +32,12 @@
     { "key": "retry_button", "value": "حاول مرة ثانية" },
     { "key": "tutorial_stage1_title", "value": "{0} معصّب!" },
     { "key": "tutorial_stage1_instructions", "value": "صحّتك بتنقص باستمرار!\\nاستخدم أسهم الحركة لإكمال تسلسل الشفاء واسترجاع الصحّة!" },
-    { "key": "tutorial_stage1_prompt", "value": "اضغط المسافة لتجرب" },
-    { "key": "tutorial_stage2_instructions", "value": "ممتاز! هسا بتقدر تتبدل بين مسار الدفاع والهجوم\\n\\nاضغط المسافة للتبديل لمسار الهجوم\\nأكمّل تسلسل الهجوم!" },
-    { "key": "tutorial_stage2_prompt", "value": "اضغط المسافة لتجرب..." },
-    { "key": "tutorial_stage3_warning", "value": "جاهز للقتال الحقيقي؟\\n\\nالمسارين بيشتغلوا بنفس الوقت\\nهاجم بس تأكد تشفي قبل ما تنتهي صحّتك!" },
+    { "key": "tutorial_stage1_prompt", "value": "اضغط زر المسافة لتجرب" },
+    { "key": "tutorial_stage2_instructions", "value": "ممتاز! هسا بتقدر تبدّل بين مسار الدفاع والهجوم\\n\\nاضغط زر المسافة للتبديل لمسار الهجوم\\nأكمِل تسلسل الهجوم!" },
+    { "key": "tutorial_stage2_prompt", "value": "اضغط زر المسافة لتجرب..." },
+    { "key": "tutorial_stage3_warning", "value": "جاهز للقتال الحقيقي؟\\n\\nالمساران بيشتغلوا بنفس الوقت\\nهاجم لكن تأكد إنك تشفي قبل ما تنتهي صحّتك!" },
+    { "key": "combat_victory", "value": "انتصار!" },
+    { "key": "combat_defeat", "value": "هزيمة." },
     { "key": "combat_victory", "value": "انتصار!" },
     { "key": "combat_defeat", "value": "هزيمة." },
     { "key": "tutorial_stage3_prompt", "value": "اضغط المسافة للبدء..." },
@@ -49,6 +51,9 @@
     { "key": "ingredient_axis_y", "value": "هادئ ↕ متحمّس" },
     { "key": "lose_title", "value": "انتهت اللعبة" },
     { "key": "lose_maintenance", "value": "لم تتمكن من دفع تكاليف الصيانة." },
-    { "key": "newgame_button", "value": "لعبة جديدة" }
+    { "key": "newgame_button", "value": "لعبة جديدة" },
+    { "key": "pause_button", "value": "إيقاف مؤقت" },
+    { "key": "resume_button", "value": "متابعة" },
+    { "key": "mainmenu_button", "value": "القائمة الرئيسية" }
   ]
 }
