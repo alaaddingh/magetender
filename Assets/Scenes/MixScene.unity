@@ -8144,6 +8144,7 @@ MonoBehaviour:
   monsterName: {fileID: 0}
   typewriter: {fileID: 0}
   brewButtonObject: {fileID: 1252470797}
+  nextButtonObject: {fileID: 2081417178}
   continueButtonObject: {fileID: 0}
   currentMonsterManager: {fileID: 1245897901}
   monsterStateManager: {fileID: 1091468760}
@@ -8388,6 +8389,7 @@ MonoBehaviour:
   monstersJsonResourcePath: Data/Monsters
   levelsJsonResourcePath: Data/Levels
   dialogueJsonResourcePath: Data/Dialogue
+  currentEncounterIndex: 0
 --- !u!1 &1252470797
 GameObject:
   m_ObjectHideFlags: 0
@@ -10741,6 +10743,7 @@ MonoBehaviour:
   monsterName: {fileID: 0}
   typewriter: {fileID: 0}
   brewButtonObject: {fileID: 1252470797}
+  nextButtonObject: {fileID: 1254634521}
   continueButtonObject: {fileID: 1739821511}
   currentMonsterManager: {fileID: 1245897901}
   monsterStateManager: {fileID: 1091468760}

@@ -27,10 +27,10 @@
           {
           "monster_id": "slime",
           "tolerances": {
-            "satisfied_tolerance": 8
+            "satisfied_tolerance": 10
           },
-          "starting_score": {"x": 0.7, "y": 0.3},
-          "goal_score": {"x":-0.37,"y": 0.31}, 
+          "starting_score": {"x": -0.5, "y": -0.5},
+          "goal_score": {"x": 0.33,"y": 0.33}, 
           "dialogue_key": "level_1" 
         }
       ]

@@ -86,7 +86,8 @@ public class AssessController : MonoBehaviour
         if (nextDayButtonObject != null)
         {
             bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
-            nextDayButtonObject.SetActive(!hasNextMonster && dialogueFinished);
+            bool angry = MonsterStateManager.MonsterState == "angry";
+            nextDayButtonObject.SetActive(!angry && !hasNextMonster && dialogueFinished);
         }
     }
 

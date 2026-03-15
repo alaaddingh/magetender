@@ -5,18 +5,14 @@
       "levels": [
         {
           "level": "level_1",
-          "starting": [
-            "*GLURRGH*… Hola.",
-            "Vi reseñas de este lugar en Kelp y tuve que venir a ver.",
-            "NobleChadwick33 dice aquí que le hiciste un trago tan bueno que dejó su trabajo de escritorio para dedicarse a hacer malabares.",
-            "*GLAURHG* Creo que necesito un poco de ese cosa que le pusiste, y MUCHO.",
-            "Llevo un lío por dentro y no doy con la baba de mí por qué *GLORGH*.",
-            "Esta mañana *GLARGHH* me desperté en mi alcantarilla de dos camas un baño, hecho un desastre. Las cosas se debieron salir de control anoche porque no recuerdo nada. *GLURGHH*",
-            "Lo último que recuerdo es hablar con un tipo. Un momento está delante de mí, al siguiente desaparece. Fue lo más raro *GLARGHH* que he visto.",
-            "Ahora no paro de oír unos gritos apagados que vienen de mi cuerpo, que no suele pasar, así que me pregunto: \"¿qué está pasando?\"",
-            "Tienes que ayudarme a cortar esto de raíz porque me viene persiguiendo todo el día.",
-            "Si pudieras preparar algo grande que baje suave y me devuelva el juicio, te lo agradecería para siempre *GLAURGH*"
-          ],
+         "starting": [
+          "*GLURRGH*… Hola.",
+          "Vi algunas reseñas de este lugar en Kelp y tuve que venir a comprobarlo por mí mismo.",
+          "NobleChadwick33 dice aquí que le preparaste un trago tan bueno que dejó su trabajo de oficina para dedicarse a hacer malabares.",
+          "Pensé que era la oportunidad perfecta *GLAURGH* para venir a visitarte.",
+          "He estado demasiado lento estos últimos días... siento como si mis entrañas se hubieran vuelto gelatina.",
+          "Si pudieras prepararme algo que me ponga en marcha otra vez, te lo agradecería mucho."
+        ],
           "neutral": [
             "*GLOURGH* Hmm… Bueno, desde luego es un trago.",
             "No está mal pero… no es la gran cosa.",

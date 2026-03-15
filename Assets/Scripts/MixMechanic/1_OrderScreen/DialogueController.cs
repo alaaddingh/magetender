@@ -19,6 +19,7 @@ public class DialogueController : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] private GameObject brewButtonObject;
+    [SerializeField] private GameObject nextButtonObject; // optional (dialogue next)
     public GameObject continueButtonObject; // optional
 
     [Header("Data source")]
@@ -212,6 +213,7 @@ public class DialogueController : MonoBehaviour
             else SetText(monsterSpeech, string.Empty, preserveNumbers: true);
 
             brewButtonObject.SetActive(true);
+            UpdateNextButtonState(lines);
             UpdateContinueButtonState(lines);
             return;
         }
@@ -225,7 +227,14 @@ public class DialogueController : MonoBehaviour
         else SetText(monsterSpeech, rawLine, preserveNumbers: true);
 
         brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1);
+        UpdateNextButtonState(lines);
         UpdateContinueButtonState(lines);
+    }
+
+    private void UpdateNextButtonState(List<string> activeDialogue)
+    {
+        bool hasNextLine = activeDialogue.Count > 0 && dialogueIndex < activeDialogue.Count - 1;
+        nextButtonObject.SetActive(hasNextLine);
     }
 
     private void SetText(TMP_Text t, string raw, bool preserveNumbers)
@@ -259,6 +268,12 @@ public class DialogueController : MonoBehaviour
     {
         if (continueButtonObject == null)
             return;
+
+        if (monsterStateManager != null && monsterStateManager.MonsterState == "angry")
+        {
+            continueButtonObject.SetActive(false);
+            return;
+        }
 
         bool showContinue = activeDialogue.Count > 0 && dialogueIndex >= activeDialogue.Count - 1;
         if (showContinue && typewriter != null && typewriter.enabled && typewriter.IsTyping)
