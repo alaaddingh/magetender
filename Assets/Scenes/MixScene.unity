@@ -1072,6 +1072,9 @@ MonoBehaviour:
   dayText: {fileID: 752509158}
   coinsText: {fileID: 2092445570}
   coinCanvas: {fileID: 2128562753}
+  coinLossPopup: {fileID: 0}
+  coinLossFadeDuration: 1.5
+  coinLossMoveUp: 30
   scoreDisplayCanvas: {fileID: 526496290}
   scoreManager: {fileID: 440574829}
 --- !u!1 &155795670
@@ -14396,6 +14399,9 @@ MonoBehaviour:
   dayText: {fileID: 752509158}
   coinsText: {fileID: 2092445570}
   coinCanvas: {fileID: 2128562753}
+  coinLossPopup: {fileID: 1801666424}
+  coinLossFadeDuration: 3.5
+  coinLossMoveUp: 30
   scoreDisplayCanvas: {fileID: 526496290}
   scoreManager: {fileID: 440574829}
 --- !u!1 &2044713969
@@ -15725,7 +15731,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 103
   m_TargetDisplay: 0
 --- !u!224 &2128562757
 RectTransform:

@@ -59,10 +59,13 @@ public class DayScreenController : MonoBehaviour
 
         RefreshDisplay();
 
-        if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1 && coinLossPopup != null)
+        if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1)
         {
             int maintenance = GameManager.Instance.MaintenanceCost;
-            ShowCoinLossPopup(maintenance);
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayRegisterChaChing();
+            if (coinLossPopup != null)
+                ShowCoinLossPopup(maintenance);
         }
 
         if (skipDayCounter)

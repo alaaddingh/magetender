@@ -56,7 +56,12 @@ public class AssessController : MonoBehaviour
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
         if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayAssessAmbience(MonsterStateManager.MonsterState);
+        {
+            if (MonsterStateManager.MonsterState == "neutral")
+                AudioManager.Instance.PlayAmbience();
+            else
+                AudioManager.Instance.PlayAssessAmbience(MonsterStateManager.MonsterState);
+        }
         int amount = AwardCoinsForDrink();
         if (amount > 0)
         {
@@ -145,6 +150,9 @@ public class AssessController : MonoBehaviour
         }
 
 		currentMonsterManager.PlanNextVisit(hasNextMonster);
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.StopAmbience();
 
         if (!string.IsNullOrEmpty(nextDaySceneName))
             SceneManager.LoadScene(nextDaySceneName);
