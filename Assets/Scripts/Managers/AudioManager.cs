@@ -12,9 +12,20 @@ public class AudioManager : MonoBehaviour
 	[Header("Clips")]
 	[SerializeField] private AudioClip startOfDayBellClip;
 	[SerializeField] private AudioClip buttonClickClip;
+	[SerializeField] private AudioClip glassSelectClip;
+	[SerializeField] private AudioClip ingredientClickClip;
+	[SerializeField] private AudioClip trashClip;
 	[SerializeField] private AudioClip pourLoopClip;
 	[SerializeField] private AudioClip monsterWalkInClip;
 	[SerializeField] private AudioClip ambienceClip;
+
+	[Header("Assess screen ambience (by mood)")]
+	[SerializeField] private AudioClip assessAmbienceHappyClip;
+	[SerializeField] private AudioClip assessAmbienceNeutralClip;
+	[SerializeField] private AudioClip assessAmbienceAngryClip;
+
+	[Header("Register")]
+	[SerializeField] private AudioClip registerChaChingClip;
 
 	private void Awake()
 	{
@@ -36,6 +47,42 @@ public class AudioManager : MonoBehaviour
 		}
 
 		uiSource.PlayOneShot(buttonClickClip);
+	}
+
+	public void PlayGlassSelect()
+	{
+		if (sfxSource == null || glassSelectClip == null)
+			return;
+		sfxSource.PlayOneShot(glassSelectClip);
+	}
+
+	public void PlayIngredientClick()
+	{
+		if (sfxSource == null || ingredientClickClip == null)
+			return;
+		sfxSource.PlayOneShot(ingredientClickClip);
+	}
+
+	public void PlayTrashLoop()
+	{
+		if (loopSource == null || trashClip == null)
+			return;
+		if (loopSource.isPlaying && loopSource.clip == trashClip)
+			return;
+		loopSource.clip = trashClip;
+		loopSource.loop = true;
+		loopSource.Play();
+	}
+
+	public void StopTrashLoop()
+	{
+		if (loopSource == null)
+			return;
+		if (loopSource.isPlaying && loopSource.clip == trashClip)
+		{
+			loopSource.Stop();
+			loopSource.clip = null;
+		}
 	}
 
 	public void PlayStartOfDayBell()
@@ -118,6 +165,29 @@ public class AudioManager : MonoBehaviour
 			loopSource.Stop();
 			loopSource.clip = null;
 		}
+	}
+
+	public void PlayAssessAmbience(string state)
+	{
+		if (sfxSource == null)
+			return;
+		AudioClip clip = null;
+		if (state == "satisfied" && assessAmbienceHappyClip != null)
+			clip = assessAmbienceHappyClip;
+		else if (state == "angry" && assessAmbienceAngryClip != null)
+			clip = assessAmbienceAngryClip;
+		else if (assessAmbienceNeutralClip != null)
+			clip = assessAmbienceNeutralClip;
+		if (clip == null)
+			return;
+		sfxSource.PlayOneShot(clip);
+	}
+
+	public void PlayRegisterChaChing()
+	{
+		if (uiSource == null || registerChaChingClip == null)
+			return;
+		uiSource.PlayOneShot(registerChaChingClip);
 	}
 }
 

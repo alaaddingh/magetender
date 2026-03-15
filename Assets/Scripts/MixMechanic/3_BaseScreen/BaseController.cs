@@ -74,6 +74,7 @@ public class BaseController : MonoBehaviour
     private float currentFillLevel = 0f;
     private Dictionary<string, float> baseAmounts = new Dictionary<string, float>();
     private Image fillImage;
+    private bool wasOverTrash;
 
     private void Awake()
     {
@@ -91,6 +92,7 @@ public class BaseController : MonoBehaviour
         isDragging = false;
         currentPouringBase = null;
         allowInput = false;
+        wasOverTrash = false;
         if (pouringCoroutine != null)
         {
             StopCoroutine(pouringCoroutine);
@@ -246,12 +248,28 @@ public class BaseController : MonoBehaviour
         }
 
         // Drain fill when bottle is over trash (same color/ratios; mood updates via OnStateChanged)
-        if (trashRect != null && mixManager != null && mixManager.FillLevel > 0f && RectOverlaps(BaseBottle.rectTransform, trashRect))
+        bool overTrash = trashRect != null && mixManager != null && mixManager.FillLevel > 0f && RectOverlaps(BaseBottle.rectTransform, trashRect);
+        if (overTrash)
         {
+            if (!wasOverTrash && AudioManager.Instance != null)
+                AudioManager.Instance.PlayTrashLoop();
+            wasOverTrash = true;
             mixManager.DrainFill(drainRatePerSecond * Time.deltaTime);
             UpdateFillVisual();
-            if (mixManager.FillLevel <= 0f && nextButton != null)
-                nextButton.SetActive(false);
+            if (mixManager.FillLevel <= 0f)
+            {
+                if (nextButton != null)
+                    nextButton.SetActive(false);
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.StopTrashLoop();
+                wasOverTrash = false;
+            }
+        }
+        else
+        {
+            if (wasOverTrash && AudioManager.Instance != null)
+                AudioManager.Instance.StopTrashLoop();
+            wasOverTrash = false;
         }
     }
 

@@ -2908,11 +2908,18 @@ MonoBehaviour:
   uiSource: {fileID: 1878228771}
   sfxSource: {fileID: 1878228774}
   loopSource: {fileID: 1878228775}
-  startOfDayBellClip: {fileID: 0}
+  startOfDayBellClip: {fileID: 8300000, guid: 121724dd8a8355840a339bd9e2abaf53, type: 3}
   buttonClickClip: {fileID: 8300000, guid: bac5771af1d0db6458aebf037cc0a2d8, type: 3}
+  glassSelectClip: {fileID: 8300000, guid: d335fd584da6ccc47818a30f9a74d062, type: 3}
+  ingredientClickClip: {fileID: 8300000, guid: 331a1f3e0d3cac846903c0eaaba994d1, type: 3}
+  trashClip: {fileID: 8300000, guid: 067a18807b7ae0f44a4f6c202ee64367, type: 3}
   pourLoopClip: {fileID: 8300000, guid: 71583cc1faf1edc40ba3d67f1ef0769c, type: 3}
   monsterWalkInClip: {fileID: 8300000, guid: 6cc53a143accc994aa19a003540e2435, type: 3}
-  ambienceClip: {fileID: 0}
+  ambienceClip: {fileID: 8300000, guid: 6b3df00376168aa4a8f603107fad8cb2, type: 3}
+  assessAmbienceHappyClip: {fileID: 8300000, guid: 5c9170f2ce1652042a848dd71289d983, type: 3}
+  assessAmbienceNeutralClip: {fileID: 8300000, guid: 6b3df00376168aa4a8f603107fad8cb2, type: 3}
+  assessAmbienceAngryClip: {fileID: 8300000, guid: a116963ce10a0ec4e82c3a1122214963, type: 3}
+  registerChaChingClip: {fileID: 8300000, guid: 3aaf4b5e8015a4e4da1a23258482b669, type: 3}
 --- !u!4 &1878228773
 Transform:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class DayScreenController : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
 
 	private bool playedFirstWalkIn;
+	private bool showedDayPanelThisLoad;
 
     private void Start()
     {
@@ -32,6 +33,7 @@ public class DayScreenController : MonoBehaviour
         }
 
         bool skipDayCounter = CurrentMonster.Instance != null && CurrentMonster.Instance.IsPlannedVisitSameDay();
+        showedDayPanelThisLoad = !skipDayCounter;
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ApplyPlannedVisit();
 
@@ -47,12 +49,6 @@ public class DayScreenController : MonoBehaviour
             scoreDisplayCanvas.SetActive(false);
 
         RefreshDisplay();
-
-		if (!skipDayCounter && AudioManager.Instance != null)
-			AudioManager.Instance.PlayStartOfDayBell();
-
-		if (AudioManager.Instance != null)
-			AudioManager.Instance.PlayAmbience();
 
         if (skipDayCounter)
             OnNextPressed();
@@ -90,6 +86,8 @@ public class DayScreenController : MonoBehaviour
     {
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
+		if (showedDayPanelThisLoad && AudioManager.Instance != null)
+			AudioManager.Instance.PlayStartOfDayBell();
         if (dayPanel != null)
             dayPanel.SetActive(false);
         if (orderScreen != null)
@@ -100,6 +98,8 @@ public class DayScreenController : MonoBehaviour
 			playedFirstWalkIn = true;
 			AudioManager.Instance.PlayMonsterWalkIn();
 		}
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayAmbience();
 
         if (scoreManager != null)
             scoreManager.RefreshScoreDisplay();
