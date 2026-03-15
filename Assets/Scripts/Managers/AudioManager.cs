@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
 	[Header("Clips")]
 	[SerializeField] private AudioClip startOfDayBellClip;
 	[SerializeField] private AudioClip buttonClickClip;
+	[SerializeField] private AudioClip glassSelectClip;
+	[SerializeField] private AudioClip ingredientClickClip;
+	[SerializeField] private AudioClip trashClip;
 	[SerializeField] private AudioClip pourLoopClip;
 	[SerializeField] private AudioClip monsterWalkInClip;
 	[SerializeField] private AudioClip ambienceClip;
@@ -36,6 +39,42 @@ public class AudioManager : MonoBehaviour
 		}
 
 		uiSource.PlayOneShot(buttonClickClip);
+	}
+
+	public void PlayGlassSelect()
+	{
+		if (sfxSource == null || glassSelectClip == null)
+			return;
+		sfxSource.PlayOneShot(glassSelectClip);
+	}
+
+	public void PlayIngredientClick()
+	{
+		if (sfxSource == null || ingredientClickClip == null)
+			return;
+		sfxSource.PlayOneShot(ingredientClickClip);
+	}
+
+	public void PlayTrashLoop()
+	{
+		if (loopSource == null || trashClip == null)
+			return;
+		if (loopSource.isPlaying && loopSource.clip == trashClip)
+			return;
+		loopSource.clip = trashClip;
+		loopSource.loop = true;
+		loopSource.Play();
+	}
+
+	public void StopTrashLoop()
+	{
+		if (loopSource == null)
+			return;
+		if (loopSource.isPlaying && loopSource.clip == trashClip)
+		{
+			loopSource.Stop();
+			loopSource.clip = null;
+		}
 	}
 
 	public void PlayStartOfDayBell()
