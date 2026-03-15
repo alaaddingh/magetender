@@ -2916,6 +2916,10 @@ MonoBehaviour:
   pourLoopClip: {fileID: 8300000, guid: 71583cc1faf1edc40ba3d67f1ef0769c, type: 3}
   monsterWalkInClip: {fileID: 8300000, guid: 6cc53a143accc994aa19a003540e2435, type: 3}
   ambienceClip: {fileID: 8300000, guid: 6b3df00376168aa4a8f603107fad8cb2, type: 3}
+  assessAmbienceHappyClip: {fileID: 8300000, guid: 5c9170f2ce1652042a848dd71289d983, type: 3}
+  assessAmbienceNeutralClip: {fileID: 8300000, guid: 6b3df00376168aa4a8f603107fad8cb2, type: 3}
+  assessAmbienceAngryClip: {fileID: 8300000, guid: a116963ce10a0ec4e82c3a1122214963, type: 3}
+  registerChaChingClip: {fileID: 8300000, guid: 3aaf4b5e8015a4e4da1a23258482b669, type: 3}
 --- !u!4 &1878228773
 Transform:
   m_ObjectHideFlags: 0
