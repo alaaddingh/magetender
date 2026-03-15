@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f3a54409b06624169be1f3f7276a1813
+guid: 4aed0d5773a284ed0932cbeaadb182c8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8389479429925889108
-    second: HealthFill_0
+      213: -4211831094526531430
+    second: BankLabelBackground_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HealthFill_0
+      name: BankLabelBackground_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 5
         y: 0
-        width: 359
-        height: 30
+        width: 188
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cab12d868e4929b80800000000000000
-      internalID: -8389479429925889108
+      spriteID: a982dcc4fe19c85c0800000000000000
+      internalID: -4211831094526531430
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HealthFill_0: -8389479429925889108
+      BankLabelBackground_0: -4211831094526531430
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
