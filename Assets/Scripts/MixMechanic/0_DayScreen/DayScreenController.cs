@@ -48,9 +48,6 @@ public class DayScreenController : MonoBehaviour
 
         RefreshDisplay();
 
-		if (!skipDayCounter && AudioManager.Instance != null)
-			AudioManager.Instance.PlayStartOfDayBell();
-
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayAmbience();
 
@@ -90,6 +87,8 @@ public class DayScreenController : MonoBehaviour
     {
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayStartOfDayBell();
         if (dayPanel != null)
             dayPanel.SetActive(false);
         if (orderScreen != null)

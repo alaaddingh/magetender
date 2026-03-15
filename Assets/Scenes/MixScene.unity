@@ -8876,7 +8876,7 @@ MonoBehaviour:
   uiSource: {fileID: 1266327013}
   sfxSource: {fileID: 1266327016}
   loopSource: {fileID: 1266327015}
-  startOfDayBellClip: {fileID: 0}
+  startOfDayBellClip: {fileID: 8300000, guid: 121724dd8a8355840a339bd9e2abaf53, type: 3}
   buttonClickClip: {fileID: 8300000, guid: bac5771af1d0db6458aebf037cc0a2d8, type: 3}
   glassSelectClip: {fileID: 8300000, guid: d335fd584da6ccc47818a30f9a74d062, type: 3}
   ingredientClickClip: {fileID: 8300000, guid: 331a1f3e0d3cac846903c0eaaba994d1, type: 3}
