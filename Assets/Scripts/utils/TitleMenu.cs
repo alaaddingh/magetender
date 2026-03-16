@@ -4,6 +4,9 @@ using Magetender.Data;
 
 public class TitleMenu : MonoBehaviour
 {
+    [Header("Panels")]
+    [SerializeField] private GameObject creditsPanel;
+
     public void StartGame()
     {
         SceneManager.LoadScene("MixScene");
@@ -21,5 +24,23 @@ public class TitleMenu : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.ResetForNewGame();
         SceneManager.LoadScene("MixScene");
+    }
+
+    public void ShowCredits()
+    {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+
+        if (creditsPanel != null)
+            creditsPanel.SetActive(true);
+    }
+
+    public void HideCredits()
+    {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+
+        if (creditsPanel != null)
+            creditsPanel.SetActive(false);
     }
 }
