@@ -60,6 +60,7 @@
     {"key": "controls_shift", "value": "Shift"},
     {"key": "controls_arrows", "value": "مفاتيح "},
     {"key": "controls_wasd", "value": "WASD"},
-    {"key": "controls_text", "value": "التحكم"}
+    {"key": "controls_text", "value": "التحكم"},
+    {"key": "volume_text", "value": "الصوت"}
   ]
 }

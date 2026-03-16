@@ -61,6 +61,7 @@
     { "key": "controls_shift", "value": "Shift" },
     { "key": "controls_arrows", "value": "Arrow Keys" },
     { "key": "controls_wasd", "value": "WASD" },
-    { "key": "controls_text", "value": "Controls" }
+    { "key": "controls_text", "value": "Controls" },
+    { "key": "volume_text", "value": "Volume" }
   ]
 }

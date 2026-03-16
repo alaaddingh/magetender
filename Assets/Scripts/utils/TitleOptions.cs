@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TitleOptions : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class TitleOptions : MonoBehaviour
     [Header("Controls")]
     [SerializeField] private TMP_Text controlSchemeLabel;
     [SerializeField] private TMP_Text switchKeyLabel;
+
+    [Header("Audio")]
+    [SerializeField] private Slider masterVolumeSlider;
 
     private void Start()
     {
@@ -37,6 +41,11 @@ public class TitleOptions : MonoBehaviour
 
         UpdateSequenceLabel();
         UpdateBankLabel();
+
+        if (masterVolumeSlider != null && AudioManager.Instance != null)
+        {
+            masterVolumeSlider.SetValueWithoutNotify(AudioManager.Instance.GetMasterVolume());
+        }
     }
 
     public void ShowOptions()
@@ -112,6 +121,14 @@ public class TitleOptions : MonoBehaviour
                 switchKeyLabel.text = "< " + L.Get("controls_space") + " >";
             else
                 switchKeyLabel.text = "< " + L.Get("controls_shift") + " >";
+        }
+    }
+
+    public void OnMasterVolumeChanged(float value)
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMasterVolume(value);
         }
     }
 }

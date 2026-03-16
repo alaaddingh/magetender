@@ -4,6 +4,8 @@ public class AudioManager : MonoBehaviour
 {
 	public static AudioManager Instance { get; private set; }
 
+	private const string VolumePrefKey = "MasterVolume";
+
 	[Header("Sources")]
 	[SerializeField] private AudioSource uiSource;
 	[SerializeField] private AudioSource sfxSource;
@@ -44,8 +46,24 @@ public class AudioManager : MonoBehaviour
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
 
+		float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 1f);
+		SetMasterVolume(savedVolume);
+
 		if (uiSource != null)
 			uiSource.ignoreListenerPause = true;
+	}
+
+	public float GetMasterVolume()
+	{
+		return AudioListener.volume;
+	}
+
+	public void SetMasterVolume(float volume)
+	{
+		volume = Mathf.Clamp01(volume);
+		AudioListener.volume = volume;
+		PlayerPrefs.SetFloat(VolumePrefKey, volume);
+		PlayerPrefs.Save();
 	}
 
 	public void PlayButtonClick()
