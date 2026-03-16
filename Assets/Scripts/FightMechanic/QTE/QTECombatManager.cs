@@ -34,6 +34,12 @@ public class QTECombatManager : MonoBehaviour
 	public float orbWobbleAmount = 15f;
 	public float orbSize = 250f;
 
+	[Header("Sound Effects")]
+	public AudioClip healSound;
+	public AudioClip attackSound;
+	public AudioClip correctKeySound;
+	public AudioClip incorrectKeySound;
+
 	[Header("Back to bar (show when fight ends)")]
 	public GameObject backToBarButton;
 	public string backToBarSceneName = "MixScene";
@@ -340,6 +346,11 @@ public class QTECombatManager : MonoBehaviour
 			// must press keys in order left to right
 			if (defendProgress < defendSequence.Count && pressedKey == defendSequence[defendProgress])
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatCorrectKey();
+				}
+
 				// Correct key
 				defendProgress++;
 				UpdateBankVisuals();
@@ -352,6 +363,11 @@ public class QTECombatManager : MonoBehaviour
 			}
 			else
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatIncorrectKey();
+				}
+
 				// Wrong key
 				HandleDefendFail();
 			}
@@ -360,6 +376,11 @@ public class QTECombatManager : MonoBehaviour
 		{
 			if (attackProgress < attackSequence.Count && pressedKey == attackSequence[attackProgress])
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatCorrectKey();
+				}
+
 				// Correct key
 				attackProgress++;
 				UpdateBankVisuals();
@@ -372,6 +393,11 @@ public class QTECombatManager : MonoBehaviour
 			}
 			else
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatIncorrectKey();
+				}
+				
 				// Wrong key
 				HandleAttackFail();
 			}
@@ -388,6 +414,11 @@ public class QTECombatManager : MonoBehaviour
 	{
 		Debug.Log("Defense successful!");
 		
+		if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayCombatHeal();
+        }
+
 		// Heal player instead of blocking damage
 		playerHealthFloat += defendHealAmount;
 		playerHealthFloat = Mathf.Min(playerHealthFloat, playerMaxHealth);
@@ -532,6 +563,11 @@ public class QTECombatManager : MonoBehaviour
 				StopCoroutine(currentCustomerFlash);
 			}
 			currentCustomerFlash = StartCoroutine(FlashCustomer());
+		}
+
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayCombatAttack();
 		}
 		
 		StartCoroutine(PunchAnimation());
