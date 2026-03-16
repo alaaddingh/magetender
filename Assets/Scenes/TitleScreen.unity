@@ -3732,10 +3732,10 @@ MonoBehaviour:
   assessAmbienceNeutralClip: {fileID: 8300000, guid: 6b3df00376168aa4a8f603107fad8cb2, type: 3}
   assessAmbienceAngryClip: {fileID: 8300000, guid: a116963ce10a0ec4e82c3a1122214963, type: 3}
   registerChaChingClip: {fileID: 8300000, guid: 3aaf4b5e8015a4e4da1a23258482b669, type: 3}
-  combatHealClip: {fileID: 0}
-  combatAttackClip: {fileID: 0}
-  combatCorrectKeyClip: {fileID: 0}
-  combatIncorrectKeyClip: {fileID: 0}
+  combatHealClip: {fileID: 8300000, guid: 1dc5b0188b6f14c64bf73926aabc2449, type: 3}
+  combatAttackClip: {fileID: 8300000, guid: c5f93058f04124650937ff1826bf7be6, type: 3}
+  combatCorrectKeyClip: {fileID: 8300000, guid: ba779bd51bb0f4138a757d2a8ab69bad, type: 3}
+  combatIncorrectKeyClip: {fileID: 8300000, guid: c59df29e6c9ba4b07818c028adeb75f7, type: 3}
 --- !u!4 &1878228773
 Transform:
   m_ObjectHideFlags: 0

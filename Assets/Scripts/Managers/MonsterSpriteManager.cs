@@ -86,7 +86,12 @@ public class MonsterSpriteManager : MonoBehaviour
     private void HandleMonsterChanged(string _)
     {
         if (DayScreenController.OrderScreenRevealedThisSession && AudioManager.Instance != null)
-            AudioManager.Instance.PlayMonsterWalkIn();
+        {
+            if (GameOverButton.CameFromRetry)
+                GameOverButton.ClearCameFromRetry();
+            else
+                AudioManager.Instance.PlayMonsterWalkIn();
+        }
         RefreshSprite();
     }
 

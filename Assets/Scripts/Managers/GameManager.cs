@@ -58,6 +58,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetForNewGame()
+    {
+        Coins = startingCoins;
+        Day = startingDay;
+        EncounterIndex = 0;
+        SavedEncounterIndex = false;
+    }
+
     public void AddCoins(int amount)
     {
         Coins += amount;

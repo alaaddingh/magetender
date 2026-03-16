@@ -7,6 +7,8 @@ using System.Collections.Generic;
 // Uses LanguageManager and UIStrings JSON for localization
 public class CombatTutorial : MonoBehaviour
 {
+	private const string CombatTutorialCompletedKey = "CombatTutorialCompleted";
+
 	[Header("Tutorial UI")]
 	public GameObject tutorialPanel;
 	public TextMeshProUGUI tutorialText;
@@ -29,17 +31,40 @@ public class CombatTutorial : MonoBehaviour
 	
 	void Start()
 	{
-		// Load UI strings
 		LoadUIStrings();
-		
-		// Subscribe to combat events
+
 		if (combatManager != null)
 		{
 			combatManager.OnDefendSequenceCompleted += OnDefendCompleted;
 			combatManager.OnAttackSequenceCompleted += OnAttackCompleted;
 		}
-		
+
+		if (PlayerPrefs.GetInt(CombatTutorialCompletedKey, 0) == 1)
+		{
+			SkipTutorial();
+			return;
+		}
+
 		StartPhase_LearnDefend();
+	}
+
+	void SkipTutorial()
+	{
+		currentPhase = TutorialPhase.FinalWarning;
+		currentStage = Stage.ShowingText;
+		if (spotlight != null)
+			spotlight.HideSpotlight();
+		if (attackBankContainer != null)
+			attackBankContainer.SetActive(true);
+		if (combatManager != null)
+		{
+			combatManager.SetTutorialMode(false);
+			combatManager.StartCombat();
+			combatManager.PauseCombat();
+		}
+		SetTutorialText("stage3");
+		if (tutorialPanel != null)
+			tutorialPanel.SetActive(true);
 	}
 	
 	void OnDestroy()
@@ -221,14 +246,11 @@ public class CombatTutorial : MonoBehaviour
 	void CompleteTutorial()
 	{
 		currentStage = Stage.Complete;
-		
-		// Hide tutorial
-		tutorialPanel.SetActive(false);
+		PlayerPrefs.SetInt(CombatTutorialCompletedKey, 1);
+		PlayerPrefs.Save();
 
-		// Reset health to full for real combat
+		tutorialPanel.SetActive(false);
 		combatManager.ResetHealthToFull();
-		
-		// Start real combat
 		combatManager.SetTutorialMode(false);
 		combatManager.ResumeCombat();
 	}

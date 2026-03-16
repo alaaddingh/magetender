@@ -115,7 +115,10 @@ public class DayScreenController : MonoBehaviour
 		if (!playedFirstWalkIn && AudioManager.Instance != null)
 		{
 			playedFirstWalkIn = true;
-			AudioManager.Instance.PlayMonsterWalkIn();
+			if (GameOverButton.CameFromRetry)
+				GameOverButton.ClearCameFromRetry();
+			else
+				AudioManager.Instance.PlayMonsterWalkIn();
 		}
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayAmbience();
