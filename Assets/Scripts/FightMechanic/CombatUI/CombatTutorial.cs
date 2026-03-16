@@ -261,30 +261,43 @@ public class CombatTutorial : MonoBehaviour
 		if (tutorialText == null) return;
 		
 		string monsterName = GetMonsterName();
+		bool usingWASD = combatManager.IsUsingWASD();
+		bool usingShift = combatManager.IsUsingShift();
 		string text = "";
 		
 		switch (stage)
 		{
 			case "stage1":
+				string stage1Key = usingWASD ? "tutorial_stage1_instructions_wasd" : "tutorial_stage1_instructions_arrows";
 				text = GetString("tutorial_stage1_title", monsterName) + "\n\n" +
-				       GetString("tutorial_stage1_instructions") + "\n\n" +
-				       GetString("tutorial_stage1_prompt");
+					GetString(stage1Key) + "\n\n" +
+					GetString("tutorial_stage1_prompt");
 				break;
 				
 			case "stage2":
-				text = GetString("tutorial_stage2_instructions") + "\n\n" +
-				       GetString("tutorial_stage2_prompt");
+				// Determine correct key based on both settings
+				string stage2Key;
+				if (usingWASD && usingShift)
+					stage2Key = "tutorial_stage2_instructions_wasd_shift";
+				else if (usingWASD && !usingShift)
+					stage2Key = "tutorial_stage2_instructions_wasd_space";
+				else if (!usingWASD && usingShift)
+					stage2Key = "tutorial_stage2_instructions_arrows_shift";
+				else
+					stage2Key = "tutorial_stage2_instructions_arrows_space";
+				
+				text = GetString(stage2Key) + "\n\n" +
+					GetString("tutorial_stage2_prompt");
 				break;
 				
 			case "stage3":
 				text = GetString("tutorial_stage3_warning") + "\n\n" +
-				       GetString("tutorial_stage3_prompt");
+					GetString("tutorial_stage3_prompt");
 				break;
 		}
 		
 		tutorialText.text = text;
 		
-		// Show panel
 		if (tutorialPanel != null)
 		{
 			tutorialPanel.SetActive(true);
