@@ -69,7 +69,7 @@ public class DayScreenController : MonoBehaviour
         }
 
         if (skipDayCounter)
-            OnNextPressed();
+            OnNextPressedInternal(false);
     }
 
     public void RefreshDisplay()
@@ -102,7 +102,13 @@ public class DayScreenController : MonoBehaviour
     /* Call from Next button OnClick */
     public void OnNextPressed()
     {
-		if (AudioManager.Instance != null)
+        OnNextPressedInternal(true);
+    }
+
+    // Shared implementation; Start() can call this with playButtonClick = false
+    private void OnNextPressedInternal(bool playButtonClick)
+    {
+		if (playButtonClick && AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
 		if (showedDayPanelThisLoad && AudioManager.Instance != null)
 			AudioManager.Instance.PlayStartOfDayBell();
@@ -164,4 +170,10 @@ public class DayScreenController : MonoBehaviour
         coinLossPopup.gameObject.SetActive(false);
         rect.anchoredPosition = startPos;
     }
+
+	void OnDisable()
+	{
+		if (coinLossPopup != null)
+			coinLossPopup.gameObject.SetActive(false);
+	}
 }

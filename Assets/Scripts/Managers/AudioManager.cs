@@ -226,5 +226,20 @@ public class AudioManager : MonoBehaviour
 			return;
 		sfxSource.PlayOneShot(combatIncorrectKeyClip);
 	}
+
+	public void StopAllSounds()
+	{
+		if (loopSource != null)
+		{
+			loopSource.Stop();
+			loopSource.clip = null;
+		}
+
+		if (sfxSource != null)
+			sfxSource.Stop();
+
+		if (uiSource != null)
+			uiSource.Stop();
+	}
 }
 

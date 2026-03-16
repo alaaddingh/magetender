@@ -50,6 +50,9 @@ public class PauseGame : MonoBehaviour
 		Time.timeScale = 1f;
 		AudioListener.pause = false;
 
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopAllSounds();
+
 		if (!string.IsNullOrEmpty(menuSceneName))
 			SceneManager.LoadScene(menuSceneName);
 	}

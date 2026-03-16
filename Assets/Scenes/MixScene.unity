@@ -6444,6 +6444,7 @@ GameObject:
   - component: {fileID: 879334104}
   - component: {fileID: 879334106}
   - component: {fileID: 879334105}
+  - component: {fileID: 879334107}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6555,7 +6556,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -12.696693, y: 7.95784, z: 40.202003, w: 7.9578147}
+  m_margin: {x: -15.127457, y: 7.95784, z: 26.22472, w: 7.9578147}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6569,6 +6570,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879334103}
   m_CullTransparentMesh: 1
+--- !u!114 &879334107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879334103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6569405e492e09448a61a58cc859c240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: next_day_button
+  style: 1
+  arabicFontOverride: {fileID: 0}
 --- !u!1 &880665491
 GameObject:
   m_ObjectHideFlags: 0
@@ -16792,7 +16808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2127072630
 RectTransform:
   m_ObjectHideFlags: 0

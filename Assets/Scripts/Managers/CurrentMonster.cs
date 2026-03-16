@@ -61,6 +61,14 @@ public class CurrentMonster : MonoBehaviour
 
         LoadData();
         lastMonsterName = name;
+
+        LanguageManager.OnLanguageChanged += ReloadDialogue;
+    }
+
+    private void OnDestroy()
+    {
+        if (LanguageManager.OnLanguageChanged != null)
+            LanguageManager.OnLanguageChanged -= ReloadDialogue;
     }
 
     private void Update()

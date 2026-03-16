@@ -79,6 +79,7 @@ public class AssessController : MonoBehaviour
     private void Update()
     {
         RefreshNextDayButton();
+		RefreshFightButton();
     }
 
     private void RefreshNextDayButton()
@@ -95,6 +96,16 @@ public class AssessController : MonoBehaviour
             nextDayButtonObject.SetActive(!angry && !hasNextMonster && dialogueFinished);
         }
     }
+
+	private void RefreshFightButton()
+	{
+		if (FightButton == null)
+			return;
+
+		bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
+		bool angry = MonsterStateManager.MonsterState == "angry";
+		FightButton.SetActive(angry && dialogueFinished);
+	}
 
     private int AwardCoinsForDrink()
     {
@@ -208,22 +219,16 @@ public class AssessController : MonoBehaviour
         if (error <= satisfiedTolerance)
         {
             /* inside satisfied circle */
-            if (FightButton != null)
-                FightButton.SetActive(false);
             MonsterStateManager.SetState("satisfied");
         }
         else if (sameQuadrantAsGoal)
         {
             /* in goal quadrant but outside satisfied circle */
-            if (FightButton != null)
-                FightButton.SetActive(false);
             MonsterStateManager.SetState("neutral");
         }
         else
         {
             /* outside goal quadrant */
-            if (FightButton != null)
-                FightButton.SetActive(true);
             MonsterStateManager.SetState("angry");
         }
     }
