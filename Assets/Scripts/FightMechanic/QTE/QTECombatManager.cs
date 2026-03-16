@@ -62,6 +62,12 @@ public class QTECombatManager : MonoBehaviour
 	public Sprite arrowDownSprite;
 	public Sprite arrowLeftSprite;
 	public Sprite arrowRightSprite;
+
+	[Header("WASD Key Sprites")]
+	public Sprite wasdWSprite;
+	public Sprite wasdASprite;
+	public Sprite wasdSSprite;
+	public Sprite wasdDSprite;
 	
 	[Header("Combat Settings")]
 	public int playerMaxHealth = 100;
@@ -255,6 +261,16 @@ public class QTECombatManager : MonoBehaviour
 	public void ResumeCombat()
 	{
 		combatPaused = false;
+	}
+
+	public bool IsUsingWASD()
+	{
+		return PlayerPrefs.GetInt(ControlsPrefKey, 0) == 1;
+	}
+
+	public bool IsUsingShift()
+	{
+		return PlayerPrefs.GetInt(SwitchKeyPrefKey, 0) == 1;
 	}
 	
 	void LoadMonsterData()
@@ -969,20 +985,27 @@ public class QTECombatManager : MonoBehaviour
 
 	Sprite GetKeySprite(KeyCode key)
 	{
+		// Check control scheme
+		bool usingWASD = PlayerPrefs.GetInt(ControlsPrefKey, 0) == 1;
+		
 		switch (key)
 		{
 			case KeyCode.UpArrow:
 			case KeyCode.W:
-				return arrowUpSprite;
+				return usingWASD ? wasdWSprite : arrowUpSprite;
+				
 			case KeyCode.DownArrow:
 			case KeyCode.S:
-				return arrowDownSprite;
+				return usingWASD ? wasdSSprite : arrowDownSprite;
+				
 			case KeyCode.LeftArrow:
 			case KeyCode.A:
-				return arrowLeftSprite;
+				return usingWASD ? wasdASprite : arrowLeftSprite;
+				
 			case KeyCode.RightArrow:
 			case KeyCode.D:
-				return arrowRightSprite;
+				return usingWASD ? wasdDSprite : arrowRightSprite;
+				
 			default:
 				return null;
 		}

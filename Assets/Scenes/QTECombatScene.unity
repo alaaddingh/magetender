@@ -5847,6 +5847,10 @@ MonoBehaviour:
   arrowDownSprite: {fileID: -7137179805908077444, guid: 5275e7040a8f6452fa23cb45b86d7347, type: 3}
   arrowLeftSprite: {fileID: 144775311990115912, guid: 8f2768768ce6c4218b3a300a3d06dfed, type: 3}
   arrowRightSprite: {fileID: 7635563162873571100, guid: 8c97fc0c37fd845e68b3f3f48ad56efd, type: 3}
+  wasdWSprite: {fileID: 627831798441548775, guid: 4e42287a4ca6c4f7b8e3d5be7cfd7b32, type: 3}
+  wasdASprite: {fileID: 9155692222510212900, guid: 24902006a7ce54da2a46c577a16b9fa5, type: 3}
+  wasdSSprite: {fileID: 1847731773659857457, guid: 2e6afd1dec0a74bc5ae2e4ced982aa19, type: 3}
+  wasdDSprite: {fileID: 890808076737008142, guid: f1360c00b69904afb81dabe52c6cc7c4, type: 3}
   playerMaxHealth: 100
   customerMaxHealth: 100
   damagePerHit: 15
