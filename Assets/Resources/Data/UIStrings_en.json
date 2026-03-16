@@ -50,9 +50,13 @@
     { "key": "lose_title", "value": "Game Over" },
     { "key": "lose_maintenance", "value": "You could not afford maintenance." },
     { "key": "newgame_button", "value": "New Game" },
+    { "key": "pause_button", "value": "Pause" },
     { "key": "resume_button", "value": "Resume" },
     { "key": "mainmenu_button", "value": "Main Menu" },
-    { "key": "pause_button", "value": "Pause" }
-
+    { "key": "controls_space", "value": "Spacebar" },
+    { "key": "controls_shift", "value": "Shift" },
+    { "key": "controls_arrows", "value": "Arrow Keys" },
+    { "key": "controls_wasd", "value": "WASD" },
+    { "key": "controls_text", "value": "Controls" }
   ]
 }

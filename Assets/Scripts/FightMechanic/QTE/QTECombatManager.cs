@@ -83,8 +83,13 @@ public class QTECombatManager : MonoBehaviour
 	public int healFlashCount = 2;
 	public float healFlashOpacity = 0.2f;
 	public float healFlashDuration = 0.1f;
-		
-	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };	private int playerHealth;
+
+	private const string ControlsPrefKey = "QTEControlScheme"; // 0 = Arrow keys, 1 = WASD
+	private const string SwitchKeyPrefKey = "QTESwitchKey"; // 0 = Space, 1 = Shift
+
+	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };
+	private KeyCode switchBankKey = KeyCode.Space;
+	private int playerHealth;
 	private int customerHealth;
 	private float playerHealthFloat; // for constant health drain
 	private Color originalCustomerColor;
@@ -123,6 +128,8 @@ public class QTECombatManager : MonoBehaviour
 	
 	void Start()
 	{
+		KeyBindPrefs();
+
 		// Load monster data from CurrentMonster
 		LoadMonsterData();
 
@@ -189,6 +196,29 @@ public class QTECombatManager : MonoBehaviour
 		
 		UpdateHealthDisplays();
         // Don't start sequences yet - wait for tutorial
+	}
+
+	void KeyBindPrefs()
+	{
+		int scheme = PlayerPrefs.GetInt(ControlsPrefKey, 0);
+		int switchKey = PlayerPrefs.GetInt(SwitchKeyPrefKey, 0);
+		switchBankKey = switchKey == 1 ? KeyCode.LeftShift : KeyCode.Space;
+		if (scheme == 1)
+		{
+			availableKeys = new KeyCode[4];
+			availableKeys[0] = KeyCode.W;
+			availableKeys[1] = KeyCode.A;
+			availableKeys[2] = KeyCode.D;
+			availableKeys[3] = KeyCode.S;
+			return;
+		}
+		else {
+		availableKeys = new KeyCode[4];
+		availableKeys[0] = KeyCode.UpArrow;
+		availableKeys[1] = KeyCode.LeftArrow;
+		availableKeys[2] = KeyCode.RightArrow;
+		availableKeys[3] = KeyCode.DownArrow;
+		}
 	}
 
     // Public method for tutorial to call
@@ -323,7 +353,7 @@ public class QTECombatManager : MonoBehaviour
 		}
 		
 		// Check for bank switch
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(switchBankKey))
 		{
 			SwitchActiveBank();
 		}
@@ -944,12 +974,16 @@ public class QTECombatManager : MonoBehaviour
 		switch (key)
 		{
 			case KeyCode.UpArrow:
+			case KeyCode.W:
 				return arrowUpSprite;
 			case KeyCode.DownArrow:
+			case KeyCode.S:
 				return arrowDownSprite;
 			case KeyCode.LeftArrow:
+			case KeyCode.A:
 				return arrowLeftSprite;
 			case KeyCode.RightArrow:
+			case KeyCode.D:
 				return arrowRightSprite;
 			default:
 				return null;

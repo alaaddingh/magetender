@@ -3,29 +3,40 @@ using TMPro;
 
 public class TitleOptions : MonoBehaviour
 {
+    private const string ControlsPrefKey = "QTEControlScheme"; // 0 = Arrow keys, 1 = WASD
+    private const string SwitchKeyPrefKey = "QTESwitchKey"; // 0 = Space, 1 = Shift
+
     [Header("Panels")]
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsPanel;
 
     [SerializeField] private TMP_Dropdown languageDropdown;
 
+    [Header("Controls")]
+    [SerializeField] private TMP_Text controlSchemeLabel;
+    [SerializeField] private TMP_Text switchKeyLabel;
+
     private void Start()
     {
-        if (languageDropdown == null)
-            return;
+        if (languageDropdown != null)
+        {
+            string lang = LanguageManager.Instance != null
+                ? LanguageManager.Instance.CurrentLanguage
+                : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
 
-        string lang = LanguageManager.Instance != null
-            ? LanguageManager.Instance.CurrentLanguage
-            : PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+            int index = 0;
 
-        int index = 0;
-        if (lang == LanguageManager.LangSpanish)
-            index = 1;
-        else if (lang == LanguageManager.LangArabic)
-            index = 2;
+            if (lang == LanguageManager.LangSpanish)
+                index = 1;
+            else if (lang == LanguageManager.LangArabic)
+                index = 2;
 
-        languageDropdown.SetValueWithoutNotify(index);
-        languageDropdown.RefreshShownValue();
+            languageDropdown.SetValueWithoutNotify(index);
+            languageDropdown.RefreshShownValue();
+        }
+
+        UpdateSequenceLabel();
+        UpdateBankLabel();
     }
 
     public void ShowOptions()
@@ -48,5 +59,59 @@ public class TitleOptions : MonoBehaviour
             LanguageManager.SetLanguage(LanguageManager.LangSpanish);
         else if (index == 2)
             LanguageManager.SetLanguage(LanguageManager.LangArabic);
+
+        UpdateSequenceLabel();
+        UpdateBankLabel();
+    }
+
+    // Movement keys (Arrow <-> WASD)
+    public void CycleSequenceScheme()
+    {
+        int scheme = PlayerPrefs.GetInt(ControlsPrefKey, 0);
+
+        scheme = (scheme + 1) % 2;
+
+        PlayerPrefs.SetInt(ControlsPrefKey, scheme);
+        PlayerPrefs.Save();
+
+        UpdateSequenceLabel();
+    }
+
+    void UpdateSequenceLabel()
+    {
+        int scheme = PlayerPrefs.GetInt(ControlsPrefKey, 0);
+
+        if (controlSchemeLabel != null)
+        {
+            if (scheme == 0)
+                controlSchemeLabel.text = "< " + L.Get("controls_arrows") + " >";
+            else
+                controlSchemeLabel.text = "< " + L.Get("controls_wasd") + " >";
+        }
+    }
+
+    public void CycleBankKey()
+    {
+        int key = PlayerPrefs.GetInt(SwitchKeyPrefKey, 0);
+
+        key = (key + 1) % 2;
+
+        PlayerPrefs.SetInt(SwitchKeyPrefKey, key);
+        PlayerPrefs.Save();
+
+        UpdateBankLabel();
+    }
+
+    void UpdateBankLabel()
+    {
+        int key = PlayerPrefs.GetInt(SwitchKeyPrefKey, 0);
+
+        if (switchKeyLabel != null)
+        {
+            if (key == 0)
+                switchKeyLabel.text = "< " + L.Get("controls_space") + " >";
+            else
+                switchKeyLabel.text = "< " + L.Get("controls_shift") + " >";
+        }
     }
 }
