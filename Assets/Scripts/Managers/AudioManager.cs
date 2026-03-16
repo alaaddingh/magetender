@@ -27,6 +27,12 @@ public class AudioManager : MonoBehaviour
 	[Header("Register")]
 	[SerializeField] private AudioClip registerChaChingClip;
 
+	[Header("Combat")]
+	[SerializeField] private AudioClip combatHealClip;
+	[SerializeField] private AudioClip combatAttackClip;
+	[SerializeField] private AudioClip combatCorrectKeyClip;
+	[SerializeField] private AudioClip combatIncorrectKeyClip;
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -188,6 +194,34 @@ public class AudioManager : MonoBehaviour
 		if (uiSource == null || registerChaChingClip == null)
 			return;
 		uiSource.PlayOneShot(registerChaChingClip);
+	}
+
+	public void PlayCombatHeal()
+	{
+		if (sfxSource == null || combatHealClip == null)
+			return;
+		sfxSource.PlayOneShot(combatHealClip);
+	}
+
+	public void PlayCombatAttack()
+	{
+		if (sfxSource == null || combatAttackClip == null)
+			return;
+		sfxSource.PlayOneShot(combatAttackClip);
+	}
+
+	public void PlayCombatCorrectKey()
+	{
+		if (sfxSource == null || combatCorrectKeyClip == null)
+			return;
+		sfxSource.PlayOneShot(combatCorrectKeyClip, 0.5f);
+	}
+
+	public void PlayCombatIncorrectKey()
+	{
+		if (sfxSource == null || combatIncorrectKeyClip == null)
+			return;
+		sfxSource.PlayOneShot(combatIncorrectKeyClip);
 	}
 }
 
