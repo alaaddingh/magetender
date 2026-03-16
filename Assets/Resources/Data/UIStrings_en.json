@@ -62,6 +62,7 @@
     { "key": "controls_arrows", "value": "Arrow Keys" },
     { "key": "controls_wasd", "value": "WASD" },
     { "key": "controls_text", "value": "Controls" },
-    { "key": "volume_text", "value": "Volume" }
+    { "key": "volume_text", "value": "Volume" },
+    { "key": "credits_text", "value": "Credits:\nDavid Guerrero-Pantoja - Production Lead\nAla'Addin Ghosheh - Engine Lead\nEder Yepez Cuevas - Tools Lead\nZosia Trela - Design Lead\nArchie Dickson - Art\nAdan O'Toole - Art\nTyana Tran - Art\n\nSFX:\nFreesound.com\nPixabay.com\n\nFonts:\nAlkhemical, NotoSansArabic and PixeloidMono" }
   ]
 }

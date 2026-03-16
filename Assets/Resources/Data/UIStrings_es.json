@@ -1,4 +1,4 @@
-﻿{
+{
   "entries": [
     { "key": "mood_tooltip_label", "value": "estado de ánimo actual" },
     { "key": "score_display_format", "value": "Ánimo: ({0:F2}, {1:F2})" },
@@ -58,6 +58,7 @@
     { "key": "controls_arrows", "value": "Flechas" },
     { "key": "controls_wasd", "value": "WASD" },
     { "key": "controls_text", "value": "Controles" },
-    { "key": "volume_text", "value": "Volumen" }
+    { "key": "volume_text", "value": "Volumen" },
+    { "key": "credits_text", "value": "Créditos:\nDavid Guerrero-Pantoja - Líder de producción\nAla'Addin Ghosheh - Líder de motor\nEder Yepez Cuevas - Líder de herramientas\nZosia Trela - Líder de diseño\nArchie Dickson - Arte\nAdan O'Toole - Arte\nTyana Tran - Arte\n\nEfectos de sonido:\nFreesound.com\nPixabay.com\n\nFuentes:\nAlkhemical, NotoSansArabic and PixeloidMono" }
   ]
 }

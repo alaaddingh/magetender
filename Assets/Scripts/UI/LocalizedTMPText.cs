@@ -112,6 +112,32 @@ public class LocalizedTMPText : MonoBehaviour
 
 		ApplyStyle();
 
+		// Special handling for long credits text: Arabic uses a fixed readable size,
+		// while English/Spanish keep their original size.
+		if (key == "credits_text")
+		{
+			if (isArabic)
+			{
+				tmpText.horizontalAlignment = originalHorizontalAlignment;
+				tmpText.verticalAlignment = originalVerticalAlignment;
+				tmpText.enableAutoSizing = false;
+				tmpText.fontSize = 30f;
+				tmpText.enableWordWrapping = true;
+				tmpText.overflowMode = TextOverflowModes.Overflow;
+			}
+			else
+			{
+				tmpText.horizontalAlignment = originalHorizontalAlignment;
+				tmpText.verticalAlignment = originalVerticalAlignment;
+				tmpText.enableAutoSizing = false;
+				tmpText.fontSize = originalFontSizeMax;
+				tmpText.enableWordWrapping = true;
+				tmpText.overflowMode = TextOverflowModes.Overflow;
+			}
+
+			return;
+		}
+
 		if (IsKegLabelKey(key))
 		{
 			tmpText.horizontalAlignment = originalHorizontalAlignment;
