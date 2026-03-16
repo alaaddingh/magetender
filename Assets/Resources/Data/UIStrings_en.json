@@ -49,6 +49,10 @@
     { "key": "ingredient_axis_y", "value": "calm ↕ elevated" },
     { "key": "lose_title", "value": "Game Over" },
     { "key": "lose_maintenance", "value": "You could not afford maintenance." },
-    { "key": "newgame_button", "value": "New Game" }
+    { "key": "newgame_button", "value": "New Game" },
+    { "key": "resume_button", "value": "Resume" },
+    { "key": "mainmenu_button", "value": "Main Menu" },
+    { "key": "pause_button", "value": "Pause" }
+
   ]
 }

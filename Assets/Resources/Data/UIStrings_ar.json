@@ -54,6 +54,9 @@
     { "key": "newgame_button", "value": "لعبة جديدة" },
     { "key": "pause_button", "value": "إيقاف مؤقت" },
     { "key": "resume_button", "value": "متابعة" },
+    { "key": "mainmenu_button", "value": "القائمة الرئيسية" },
+    { "key": "pause_button", "value": "إيقاف مؤقت" },
+    { "key": "resume_button", "value": "متابعة" },
     { "key": "mainmenu_button", "value": "القائمة الرئيسية" }
   ]
 }

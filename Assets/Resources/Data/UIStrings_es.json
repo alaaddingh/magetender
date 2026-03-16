@@ -49,6 +49,9 @@
     { "key": "ingredient_axis_y", "value": "calmado ↕ elevado" },
     { "key": "lose_title", "value": "Fin del juego" },
     { "key": "lose_maintenance", "value": "No pudiste pagar el mantenimiento." },
-    { "key": "newgame_button", "value": "Nueva partida" }
+    { "key": "newgame_button", "value": "Nueva partida" },
+    { "key": "resume_button", "value": "Continuar" },
+    { "key": "mainmenu_button", "value": "Menú principal" },
+    { "key": "pause_button", "value": "Pausar" }
   ]
 }
