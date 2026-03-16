@@ -257,8 +257,19 @@ public class IngredientHoverSnapUI : MonoBehaviour
         if (tooltipRoot == null) return;
 
         RectTransform rt = tooltipRoot.GetComponent<RectTransform>();
-        if (rt != null)
-            rt.position = (Vector2)Input.mousePosition + tooltipOffset;
+        if (rt == null) return;
+
+        Vector2 pos = (Vector2)Input.mousePosition + tooltipOffset;
+        float edge = 0.15f;
+        float innerLeft = Screen.width * edge;
+        float innerRight = Screen.width * (1f - edge);
+        float innerBottom = Screen.height * edge;
+        float innerTop = Screen.height * (1f - edge);
+        if (pos.x < innerLeft) pos.x = innerLeft;
+        if (pos.x > innerRight) pos.x = innerRight;
+        if (pos.y < innerBottom) pos.y = innerBottom;
+        if (pos.y > innerTop) pos.y = innerTop;
+        rt.position = pos;
     }
 
     Image GetHoveredIngredient()

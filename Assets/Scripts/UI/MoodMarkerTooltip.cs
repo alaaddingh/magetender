@@ -81,11 +81,13 @@ public class MoodMarkerTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
             out localPoint
         );
 
-        Vector2 target = localPoint + screenOffset;
-
-        //clamp inside tooltip parent so it doesn't go offscreen
         float w = tooltipRect.rect.width;
         float h = tooltipRect.rect.height;
+        bool leftSideOfScreen = eventData.position.x < Screen.width * 0.5f;
+        float offsetX = leftSideOfScreen ? screenOffset.x : -(w + Mathf.Abs(screenOffset.x));
+        Vector2 target = localPoint + new Vector2(offsetX, screenOffset.y);
+
+        //clamp inside tooltip parent so it doesn't go offscreen
 
         Rect pr = tooltipParentRect.rect;
 
