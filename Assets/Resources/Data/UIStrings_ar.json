@@ -20,6 +20,7 @@
     { "key": "begin_brew_button", "value": "ابدأ التحضير" },
     { "key": "options_button", "value": "الإعدادات" },
     { "key": "credits_button", "value": "الأسماء" },
+    { "key": "shop_button", "value": "المتجر" },
     { "key": "mood_profile_title", "value": "ملف المزاج" },
     { "key": "mood_graph_hint", "value": "مرّر على الأيقونات لتفاصيل المزاج" },
     { "key": "continue_button", "value": "متابعة" },

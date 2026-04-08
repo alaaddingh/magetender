@@ -20,6 +20,7 @@
     { "key": "begin_brew_button", "value": "A Mezclar" },
     { "key": "options_button", "value": "Opciones" },
     { "key": "credits_button", "value": "Créditos" },
+    { "key": "shop_button", "value": "Tienda" },
     { "key": "mood_profile_title", "value": "Perfil de ánimo" },
     { "key": "mood_graph_hint", "value": "Pasa el cursor sobre los iconos para ver detalles del ánimo" },
     { "key": "continue_button", "value": "Continuar" },

@@ -8,6 +8,7 @@ namespace Magetender.Data
         public int coins;
         public int day;
         public int currentEncounterIndex;
+		public string[] unlockedIngredientIds;
     }
 }
 

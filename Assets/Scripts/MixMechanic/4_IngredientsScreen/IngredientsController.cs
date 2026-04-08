@@ -38,6 +38,8 @@ public class IngredientController : MonoBehaviour
     {
         ApplyIngredientSelectionCap();
         ApplyFromBaseBottle();
+        if (IngredientsBottle != null)
+            IngredientsBottle.raycastTarget = false;
         InitializeFillRectangle();
     }
 

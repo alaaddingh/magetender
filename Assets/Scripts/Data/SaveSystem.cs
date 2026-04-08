@@ -20,6 +20,7 @@ namespace Magetender.Data
                 coins = gameManager.Coins,
                 day = gameManager.Day,
                 currentEncounterIndex = currentMonster.currentEncounterIndex,
+				unlockedIngredientIds = gameManager.GetUnlockedIngredientIds(),
             };
 
             SaveGame(data);

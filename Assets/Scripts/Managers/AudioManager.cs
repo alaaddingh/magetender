@@ -29,6 +29,9 @@ public class AudioManager : MonoBehaviour
 	[Header("Register")]
 	[SerializeField] private AudioClip registerChaChingClip;
 
+	[Header("Shop")]
+	[SerializeField] private AudioClip cantAffordClip;
+
 	[Header("Combat")]
 	[SerializeField] private AudioClip combatHealClip;
 	[SerializeField] private AudioClip combatAttackClip;
@@ -88,6 +91,13 @@ public class AudioManager : MonoBehaviour
 		if (sfxSource == null || ingredientClickClip == null)
 			return;
 		sfxSource.PlayOneShot(ingredientClickClip);
+	}
+
+	public void PlayCantAfford()
+	{
+		if (sfxSource == null || cantAffordClip == null)
+			return;
+		sfxSource.PlayOneShot(cantAffordClip);
 	}
 
 	public void PlayTrashLoop()

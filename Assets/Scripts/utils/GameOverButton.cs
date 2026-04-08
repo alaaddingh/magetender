@@ -21,16 +21,15 @@ public class GameOverButton : MonoBehaviour
             AudioManager.Instance.PlayButtonClick();
 
         CameFromRetry = true;
-        int tutorialCompleted = PlayerPrefs.GetInt(CombatTutorialCompletedKey, 0);
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt(CombatTutorialCompletedKey, tutorialCompleted);
-        PlayerPrefs.Save();
+
+		// Match TitleMenu.StartNewGame reset behavior; only difference is tutorialCompleted is preserved here.
+		SaveSystem.ClearSave();
+		PlayerPrefs.Save();
 
         if (GameManager.Instance != null)
-            GameManager.Instance.AddCoins(-GameManager.Instance.Coins);
+            GameManager.Instance.ResetForNewGame();
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ResetToFirstMonster();
-        SaveSystem.WriteData();
 
         SceneManager.LoadScene(MixScene);
     }

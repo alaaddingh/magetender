@@ -273,37 +273,60 @@ public class QTECombatManager : MonoBehaviour
 		return PlayerPrefs.GetInt(SwitchKeyPrefKey, 0) == 1;
 	}
 	
+	static Sprite LoadSpriteFromResources(string resourcePath)
+	{
+		if (string.IsNullOrEmpty(resourcePath))
+			return null;
+
+		Sprite s = Resources.Load<Sprite>(resourcePath);
+		if (s != null)
+			return s;
+
+		Sprite[] all = Resources.LoadAll<Sprite>(resourcePath);
+		if (all != null && all.Length > 0)
+			return all[0];
+
+		Debug.LogWarning($"[QTECombat] No sprite at Resources path '{resourcePath}'.");
+		return null;
+	}
+
 	void LoadMonsterData()
 	{
 		// Check if CurrentMonster exists
 		if (CurrentMonster.Instance == null)
 		{
-			Debug.LogWarning("CurrentMonster.Instance is null! Using default sprites.");
+			Debug.LogWarning("[QTECombat] CurrentMonster.Instance is null! Customer sprite will be empty unless a default is assigned.");
 			return;
 		}
 		
 		MonsterData monsterData = CurrentMonster.Instance.Data;
 		if (monsterData == null)
 		{
-			Debug.LogWarning("Monster data is null! Using default sprites.");
+			Debug.LogWarning("[QTECombat] Monster data is null! Customer sprite will be empty unless a default is assigned.");
+			return;
+		}
+
+		if (monsterData.sprites == null)
+		{
+			Debug.LogWarning($"[QTECombat] Monster '{monsterData.name}' has no sprites block.");
 			return;
 		}
 		
 		// Load sprites from Resources using the paths in the JSON
 		if (!string.IsNullOrEmpty(monsterData.sprites.angry))
 		{
-			customerAngrySprite = Resources.Load<Sprite>(monsterData.sprites.angry);
+			customerAngrySprite = LoadSpriteFromResources(monsterData.sprites.angry);
 		}
 		if (!string.IsNullOrEmpty(monsterData.sprites.neutral))
 		{
-			customerNeutralSprite = Resources.Load<Sprite>(monsterData.sprites.neutral);
+			customerNeutralSprite = LoadSpriteFromResources(monsterData.sprites.neutral);
 		}
 		if (!string.IsNullOrEmpty(monsterData.sprites.happy))
 		{
-			customerHappySprite = Resources.Load<Sprite>(monsterData.sprites.happy);
+			customerHappySprite = LoadSpriteFromResources(monsterData.sprites.happy);
 		}
 		
-		Debug.Log($"Loaded monster: {monsterData.name}");
+		Debug.Log($"[QTECombat] Loaded monster: {monsterData.name}");
 	}
 	
 	void Update()

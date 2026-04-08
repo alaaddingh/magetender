@@ -20,6 +20,7 @@
     { "key": "begin_brew_button", "value": "Begin Brew" },
     { "key": "options_button", "value": "Options" },
     { "key": "credits_button", "value": "Credits" },
+    { "key": "shop_button", "value": "Shop" },
     { "key": "mood_profile_title", "value": "Mood Profile" },
     { "key": "mood_graph_hint", "value": "Hover icons for mood details" },
     { "key": "continue_button", "value": "Continue" },

@@ -154,13 +154,19 @@ public class AssessController : MonoBehaviour
     /* call from Assess Next button OnClick: go to next day and show day screen again */
     public void OnNextCustomerPressed()
     {
-		bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
 
-        if (!hasNextMonster && loseManager.CheckLoseAndLoad()) {
-            return;
+        bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+
+        if (!hasNextMonster)
+        {
+            if (loseManager != null && loseManager.CheckLoseAndLoad())
+                return;
         }
 
-		currentMonsterManager.PlanNextVisit(hasNextMonster);
+        if (currentMonsterManager != null)
+            currentMonsterManager.PlanNextVisit(hasNextMonster);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.StopAmbience();
