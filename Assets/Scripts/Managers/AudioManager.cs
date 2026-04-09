@@ -38,6 +38,8 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioClip combatCorrectKeyClip;
 	[SerializeField] private AudioClip combatIncorrectKeyClip;
 
+	private AudioSource cantAffordVoice;
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -54,6 +56,26 @@ public class AudioManager : MonoBehaviour
 
 		if (uiSource != null)
 			uiSource.ignoreListenerPause = true;
+
+		CreateCantAffordVoice();
+	}
+
+	private void CreateCantAffordVoice()
+	{
+		var go = new GameObject("CantAffordVoice");
+		go.transform.SetParent(transform, false);
+		cantAffordVoice = go.AddComponent<AudioSource>();
+		cantAffordVoice.playOnAwake = false;
+		cantAffordVoice.loop = false;
+
+		AudioSource template = sfxSource != null ? sfxSource : uiSource;
+		if (template != null)
+		{
+			cantAffordVoice.outputAudioMixerGroup = template.outputAudioMixerGroup;
+			cantAffordVoice.volume = template.volume;
+			cantAffordVoice.spatialBlend = template.spatialBlend;
+			cantAffordVoice.priority = template.priority;
+		}
 	}
 
 	public float GetMasterVolume()
@@ -95,9 +117,12 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayCantAfford()
 	{
-		if (sfxSource == null || cantAffordClip == null)
+		if (cantAffordClip == null || cantAffordVoice == null)
 			return;
-		sfxSource.PlayOneShot(cantAffordClip);
+
+		cantAffordVoice.Stop();
+		cantAffordVoice.clip = cantAffordClip;
+		cantAffordVoice.Play();
 	}
 
 	public void PlayTrashLoop()
@@ -268,6 +293,9 @@ public class AudioManager : MonoBehaviour
 
 		if (uiSource != null)
 			uiSource.Stop();
+
+		if (cantAffordVoice != null)
+			cantAffordVoice.Stop();
 	}
 }
 

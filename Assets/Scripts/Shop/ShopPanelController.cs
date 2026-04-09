@@ -281,6 +281,7 @@ public class ShopPanelController : MonoBehaviour
 			Image coinImg = coinT != null ? coinT.GetComponent<Image>() : null;
 
 			ApplyCostLabelTmpStyle(amountTmp);
+			amountTmp.raycastTarget = false;
 
 			var rootRect = root.GetComponent<RectTransform>();
 			if (rootRect != null)
@@ -298,6 +299,7 @@ public class ShopPanelController : MonoBehaviour
 
 			if (coinImg != null)
 			{
+				coinImg.raycastTarget = false;
 				if (costLabelCoinSprite != null)
 				{
 					coinImg.sprite = costLabelCoinSprite;
@@ -490,16 +492,23 @@ public class ShopPanelController : MonoBehaviour
 
 		foreach (var r in results)
 		{
-			if (!r.gameObject.CompareTag("Ingredients"))
-				continue;
+			Transform t = r.gameObject.transform;
+			while (t != null)
+			{
+				if (!t.CompareTag("Ingredients"))
+				{
+					t = t.parent;
+					continue;
+				}
 
-			// Ensure this ingredient is part of THIS shop panel.
-			if (shopRoot != null && !r.gameObject.transform.IsChildOf(shopRoot))
-				continue;
+				if (shopRoot != null && !t.IsChildOf(shopRoot))
+					break;
 
-			var img = r.gameObject.GetComponent<Image>();
-			if (img != null)
-				return img;
+				var img = t.GetComponent<Image>();
+				if (img != null)
+					return img;
+				break;
+			}
 		}
 
 		return null;
