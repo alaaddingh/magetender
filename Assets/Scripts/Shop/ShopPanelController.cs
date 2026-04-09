@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ShopPanelController : MonoBehaviour
@@ -31,6 +32,29 @@ public class ShopPanelController : MonoBehaviour
 
 	[SerializeField] private List<IngredientCostOverride> costOverrides = new List<IngredientCostOverride>();
 
+	[Header("Cost labels (under each shop ingredient)")]
+	[Tooltip("Assign Assets/Fonts/Alkhemikal Bitmap. Uses its atlas material on the price text unless you override below.")]
+	[FormerlySerializedAs("costLabelFont")]
+	[SerializeField] private TMP_FontAsset costLabelTypeface;
+	[Tooltip("Optional. Drag the material sub-asset from Alkhemikal Bitmap if auto material is wrong.")]
+	[SerializeField] private Material costLabelFontMaterial;
+	[Tooltip("Text size in points for the digits (not the same as choosing the font asset above).")]
+	[FormerlySerializedAs("costLabelFontSize")]
+	[SerializeField] private int costLabelPointSize = 18;
+	[SerializeField] private Color costLabelColor = Color.white;
+	[SerializeField] private Vector2 costLabelSizeDelta = new Vector2(140f, 28f);
+	[Tooltip("Moves the whole price row up (negative) or down (positive) relative to the ingredient icon.")]
+	[SerializeField] private float costLabelOffsetY = -6f;
+	[Tooltip("Horizontal gap in pixels between the price digits and the coin image.")]
+	[SerializeField] private float costLabelLayoutSpacing = 4f;
+	[SerializeField] private Vector2 costLabelCoinIconSize = new Vector2(22f, 22f);
+	[Tooltip("UI Sprite (2D and UI) for the coin; shown in an Image to the right of the price.")]
+	[SerializeField] private Sprite costLabelCoinSprite;
+
+	private const string CostLabelRootName = "ShopCostLabel";
+	private const string CostAmountChildName = "ShopCostAmount";
+	private const string CostCoinChildName = "ShopCostCoin";
+
 	private readonly Dictionary<string, int> costById = new Dictionary<string, int>();
 	private Image hoveredIngredient;
 	private float nextCoinsRefresh;
@@ -46,6 +70,7 @@ public class ShopPanelController : MonoBehaviour
 			coinsText = GetComponentInChildren<TMP_Text>(includeInactive: true);
 
 		RebuildCosts();
+		EnsureCostLabels();
 
 		if (coinSpendPopup != null)
 		{
@@ -80,6 +105,8 @@ public class ShopPanelController : MonoBehaviour
 
 		RefreshVisibility();
 		RefreshCoins(force: true);
+		yield return null;
+		RebuildCostLabelLayouts();
 	}
 
 	private void OnDisable()
@@ -121,6 +148,13 @@ public class ShopPanelController : MonoBehaviour
 	{
 		RefreshVisibility();
 		RefreshCoins(force: true);
+		StartCoroutine(RebuildCostLabelLayoutsAfterFrame());
+	}
+
+	private IEnumerator RebuildCostLabelLayoutsAfterFrame()
+	{
+		yield return null;
+		RebuildCostLabelLayouts();
 	}
 
 	private void RebuildCosts()
@@ -142,6 +176,177 @@ public class ShopPanelController : MonoBehaviour
 		if (string.IsNullOrEmpty(ingredientId))
 			return defaultCost;
 		return costById.TryGetValue(ingredientId, out int c) ? c : defaultCost;
+	}
+
+	private void EnsureCostLabels()
+	{
+		foreach (GameObject go in GetIngredientObjectsUnderRoot())
+		{
+			if (go == null)
+				continue;
+
+			Transform existing = go.transform.Find(CostLabelRootName);
+			if (existing != null && existing.Find(CostAmountChildName) == null)
+				UnityEngine.Object.DestroyImmediate(existing.gameObject);
+			else if (existing != null)
+				continue;
+
+			CreateCostLabelRow(go.transform);
+		}
+	}
+
+	private void CreateCostLabelRow(Transform ingredientTransform)
+	{
+		var rootGo = new GameObject(CostLabelRootName);
+		rootGo.transform.SetParent(ingredientTransform, false);
+
+		var rootRect = rootGo.AddComponent<RectTransform>();
+		rootRect.anchorMin = new Vector2(0.5f, 0f);
+		rootRect.anchorMax = new Vector2(0.5f, 0f);
+		rootRect.pivot = new Vector2(0.5f, 1f);
+		rootRect.anchoredPosition = new Vector2(0f, costLabelOffsetY);
+		rootRect.sizeDelta = costLabelSizeDelta;
+
+		var layout = rootGo.AddComponent<HorizontalLayoutGroup>();
+		layout.childAlignment = TextAnchor.MiddleCenter;
+		layout.spacing = costLabelLayoutSpacing;
+		layout.childControlWidth = false;
+		layout.childControlHeight = false;
+		layout.childForceExpandWidth = false;
+		layout.childForceExpandHeight = false;
+
+		var amountGo = new GameObject(CostAmountChildName);
+		amountGo.transform.SetParent(rootGo.transform, false);
+		var amountTmp = amountGo.AddComponent<TextMeshProUGUI>();
+		amountTmp.raycastTarget = false;
+		amountTmp.horizontalAlignment = HorizontalAlignmentOptions.Left;
+		amountTmp.verticalAlignment = VerticalAlignmentOptions.Middle;
+		var amountFit = amountGo.AddComponent<ContentSizeFitter>();
+		amountFit.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+		amountFit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+		var amountLe = amountGo.AddComponent<LayoutElement>();
+		amountLe.minHeight = costLabelCoinIconSize.y;
+
+		var coinGo = new GameObject(CostCoinChildName);
+		coinGo.transform.SetParent(rootGo.transform, false);
+		var coinLe = coinGo.AddComponent<LayoutElement>();
+		coinLe.preferredWidth = costLabelCoinIconSize.x;
+		coinLe.preferredHeight = costLabelCoinIconSize.y;
+		var coinImg = coinGo.AddComponent<Image>();
+		coinImg.raycastTarget = false;
+		coinImg.preserveAspect = true;
+		coinImg.color = Color.white;
+
+		ApplyCostLabelTmpStyle(amountTmp);
+	}
+
+	private void ApplyCostLabelTmpStyle(TextMeshProUGUI tmp)
+	{
+		tmp.fontSize = costLabelPointSize;
+		tmp.color = costLabelColor;
+		tmp.spriteAsset = null;
+
+		if (costLabelTypeface != null)
+		{
+			tmp.font = costLabelTypeface;
+			if (costLabelFontMaterial != null)
+				tmp.fontSharedMaterial = costLabelFontMaterial;
+			else if (costLabelTypeface.material != null)
+				tmp.fontSharedMaterial = costLabelTypeface.material;
+		}
+		else if (TMP_Settings.defaultFontAsset != null)
+			tmp.font = TMP_Settings.defaultFontAsset;
+	}
+
+	private void RefreshCostLabels()
+	{
+		foreach (GameObject go in GetIngredientObjectsUnderRoot())
+		{
+			if (go == null || !go.activeInHierarchy)
+				continue;
+
+			Transform root = go.transform.Find(CostLabelRootName);
+			if (root == null)
+				continue;
+
+			Transform amountT = root.Find(CostAmountChildName);
+			if (amountT == null)
+				continue;
+
+			var amountTmp = amountT.GetComponent<TextMeshProUGUI>();
+			if (amountTmp == null)
+				continue;
+
+			Transform coinT = root.Find(CostCoinChildName);
+			Image coinImg = coinT != null ? coinT.GetComponent<Image>() : null;
+
+			ApplyCostLabelTmpStyle(amountTmp);
+
+			var rootRect = root.GetComponent<RectTransform>();
+			if (rootRect != null)
+			{
+				rootRect.anchorMin = new Vector2(0.5f, 0f);
+				rootRect.anchorMax = new Vector2(0.5f, 0f);
+				rootRect.pivot = new Vector2(0.5f, 1f);
+				rootRect.anchoredPosition = new Vector2(0f, costLabelOffsetY);
+				rootRect.sizeDelta = costLabelSizeDelta;
+			}
+
+			var layout = root.GetComponent<HorizontalLayoutGroup>();
+			if (layout != null)
+				layout.spacing = costLabelLayoutSpacing;
+
+			if (coinImg != null)
+			{
+				if (costLabelCoinSprite != null)
+				{
+					coinImg.sprite = costLabelCoinSprite;
+					coinImg.gameObject.SetActive(true);
+				}
+				else
+					coinImg.gameObject.SetActive(false);
+
+				var coinLe = coinImg.GetComponent<LayoutElement>();
+				if (coinLe != null)
+				{
+					coinLe.preferredWidth = costLabelCoinIconSize.x;
+					coinLe.preferredHeight = costLabelCoinIconSize.y;
+				}
+			}
+
+			var amountLe = amountTmp.GetComponent<LayoutElement>();
+			if (amountLe != null)
+				amountLe.minHeight = costLabelCoinIconSize.y;
+
+			int cost = GetCost(go.name);
+			amountTmp.isRightToLeftText = false;
+			amountTmp.text = cost.ToString();
+			amountTmp.ForceMeshUpdate(true);
+		}
+	}
+
+	private void RebuildCostLabelLayouts()
+	{
+		foreach (GameObject go in GetIngredientObjectsUnderRoot())
+		{
+			if (go == null || !go.activeInHierarchy)
+				continue;
+
+			Transform root = go.transform.Find(CostLabelRootName);
+			if (root == null)
+				continue;
+
+			Transform amountT = root.Find(CostAmountChildName);
+			var tmp = amountT != null ? amountT.GetComponent<TextMeshProUGUI>() : null;
+			if (tmp != null)
+				tmp.ForceMeshUpdate(true);
+
+			var rootRect = root as RectTransform;
+			if (rootRect != null)
+				LayoutRebuilder.ForceRebuildLayoutImmediate(rootRect);
+		}
+
+		Canvas.ForceUpdateCanvases();
 	}
 
 	private void TryBuy(GameObject ingredientObject)
@@ -250,6 +455,9 @@ public class ShopPanelController : MonoBehaviour
 			// Shop lists locked items; bought ones are removed from the layout.
 			go.SetActive(!unlocked);
 		}
+
+		RefreshCostLabels();
+		RebuildCostLabelLayouts();
 	}
 
 	private List<GameObject> GetIngredientObjectsUnderRoot()
