@@ -13,6 +13,9 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	public Vector2 snapTargetPosMedium;
 	public Vector2 snapTargetPosLarge;
 
+	[Header("Bottle UI (selected ingredients parent here)")]
+	[SerializeField] public Image IngredientsBottle;
+
 	[Header("Ingredient area (for unlock filter + shelf positions)")]
 	[SerializeField] private Transform ingredientRoot;
 
@@ -33,6 +36,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	private Image hoveredIngredient;
 	private MixManager mixManager;
 	private Dictionary<string, Vector2> shelfPositions = new Dictionary<string, Vector2>();
+	private Dictionary<string, Vector3> shelfScales = new Dictionary<string, Vector3>();
 
 	private Dictionary<string, IngredientData> byId = new Dictionary<string, IngredientData>();
 
@@ -105,11 +109,15 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	private void RecordShelfPositions()
 	{
 		shelfPositions.Clear();
+		shelfScales.Clear();
 		foreach (GameObject go in EnumerateIngredientObjects())
 		{
 			Image img = go.GetComponent<Image>();
 			if (img != null && !string.IsNullOrEmpty(go.name))
+			{
 				shelfPositions[go.name] = img.rectTransform.anchoredPosition;
+				shelfScales[go.name] = img.rectTransform.localScale;
+			}
 		}
 
 		ApplyUnlockVisibility();
@@ -184,7 +192,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 				mixManager = FindFirstObjectByType<MixManager>();
 			if (mixManager == null) return;
 
-			bool inDrink = IsInDrink(hoveredIngredient);
+			bool inDrink = mixManager.SelectedIngredients.Contains(hoveredIngredient.name);
 			if (inDrink)
 			{
 				bool removed = mixManager.RemoveIngredient(hoveredIngredient.name);
@@ -192,6 +200,8 @@ public class IngredientHoverSnapUI : MonoBehaviour
 				{
 					if (AudioManager.Instance != null)
 						AudioManager.Instance.PlayIngredientClick();
+					hoveredIngredient.rectTransform.SetParent(ingredientRoot, false);
+					hoveredIngredient.rectTransform.localScale = shelfScales[hoveredIngredient.name];
 					hoveredIngredient.rectTransform.anchoredPosition = GetShelfPosition(hoveredIngredient.name);
 				}
 			}
@@ -203,8 +213,13 @@ public class IngredientHoverSnapUI : MonoBehaviour
 					if (AudioManager.Instance != null)
 						AudioManager.Instance.PlayIngredientClick();
 					if (!shelfPositions.ContainsKey(hoveredIngredient.name))
+					{
 						shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
+						shelfScales[hoveredIngredient.name] = hoveredIngredient.rectTransform.localScale;
+					}
 					hoveredIngredient.rectTransform.anchoredPosition = GetSnapTarget();
+					hoveredIngredient.rectTransform.SetParent(IngredientsBottle.rectTransform, true);
+					hoveredIngredient.rectTransform.SetAsFirstSibling();
 				}
 			}
 			s_processedClickThisFrame = true;
@@ -213,19 +228,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
 	private Vector2 GetSnapTarget()
 	{
-		if (mixManager == null) return snapTargetPosMedium;
-		switch (mixManager.SelectedBottle)
-		{
-			case "small": return snapTargetPosSmall;
-			case "large": return snapTargetPosLarge;
-			default: return snapTargetPosMedium;
-		}
-	}
-
-	private bool IsInDrink(Image img)
-	{
-		Vector2 pos = img.rectTransform.anchoredPosition;
-		return (pos - GetSnapTarget()).sqrMagnitude <= inDrinkThreshold * inDrinkThreshold;
+		return snapTargetPosMedium;
 	}
 
 	private Vector2 GetShelfPosition(string ingredientName)

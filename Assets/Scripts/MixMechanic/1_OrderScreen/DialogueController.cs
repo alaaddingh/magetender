@@ -33,7 +33,7 @@ public class DialogueController : MonoBehaviour
 
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
-    public GameObject selectingGlassScreen;
+    public GameObject BaseScreen;
 
     [Header("Global coin canvas - hide when leaving order screen")]
     [SerializeField] private GameObject coinCanvas;
@@ -169,7 +169,7 @@ public class DialogueController : MonoBehaviour
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
-        selectingGlassScreen.SetActive(true);
+        BaseScreen.SetActive(true);
     }
 
     private void HandleMonsterChanged(string _)

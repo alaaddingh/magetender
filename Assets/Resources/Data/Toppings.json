@@ -1,0 +1,24 @@
+{
+  "toppings": [
+    {
+      "id": "Cherry",
+      "name": "Cherry",
+      "description": "Put a cherry on top!",
+      "select_sprite": "Cherry_Selected"
+    },
+    {
+      "id": "Umbrella",
+      "name": "Umbrella",
+      "description": "Just for aesthetics!",
+      "select_sprite": "Umbrella_Selected"
+      
+    },
+    {
+      "id": "Lime",
+      "name": "Lime Slice",
+      "description": "Add a citrus twist!",
+      "select_sprite": "Lime_Selected"
+
+    }
+  ]
+}

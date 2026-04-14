@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 /* Copies BaseBottle appearance and position to Ingredients screen; fill settings from BaseController. */
-public class IngredientController : MonoBehaviour
+public class IngredientsController : MonoBehaviour
 {
     [Header("Ingredients bottle to target")]
     public Image IngredientsBottle;
@@ -12,20 +12,35 @@ public class IngredientController : MonoBehaviour
     public Image BaseBottle;
     [SerializeField] private BaseController baseController;
 
+    private Image fillImage;
+
     [Header("Ingredients bottle position (per size, so it sits on counter)")]
     public Vector2 ingredientsBottlePosSmall = new Vector2(0f, -120f);
     public Vector2 ingredientsBottlePosMedium = new Vector2(0f, -160f);
     public Vector2 ingredientsBottlePosLarge = new Vector2(0f, -200f);
 
+
+
     [Header("UI Panels")]
     public GameObject CurrentScreen;
     public GameObject NextScreen;
+
+    [Header("Toppings Controller")]
+    public GameObject ToppingsController;
+
 
     [Header("Selection Rules")]
     [Min(1)] public int MaxIngredients = 3;
 
     private MixManager mixManager;
-    private Image fillImage;
+    /* hide the ingredients + shelves, then show the toppings after first "Next" click */
+    [SerializeField] private GameObject Ingredients;
+    [SerializeField] private GameObject Shelves;
+    [SerializeField] private GameObject HoverTooltip;
+
+
+    [SerializeField] private GameObject Toppings;
+    private bool ToppingsNext = true;
 
     private void Awake()
     {
@@ -52,10 +67,7 @@ public class IngredientController : MonoBehaviour
 
     private void ApplyIngredientSelectionCap()
     {
-        if (mixManager == null)
-            mixManager = FindFirstObjectByType<MixManager>();
-        if (mixManager == null) return;
-
+        mixManager = FindFirstObjectByType<MixManager>();
         mixManager.SetMaxIngredients(MaxIngredients);
     }
 
@@ -63,14 +75,7 @@ public class IngredientController : MonoBehaviour
     {
         UIImgUtil.CopyAppearance(BaseBottle, IngredientsBottle);
         if (IngredientsBottle == null || mixManager == null) return;
-        Vector2 pos;
-        switch (mixManager.SelectedBottle)
-        {
-            case "small": pos = ingredientsBottlePosSmall; break;
-            case "medium": pos = ingredientsBottlePosMedium; break;
-            case "large": pos = ingredientsBottlePosLarge; break;
-            default: pos = ingredientsBottlePosMedium; break;
-        }
+        Vector2 pos = ingredientsBottlePosMedium;
         IngredientsBottle.rectTransform.anchoredPosition = pos;
     }
 
@@ -121,7 +126,6 @@ public class IngredientController : MonoBehaviour
 
     private void UpdateFillVisual()
     {
-        if (fillImage == null || IngredientsBottle == null || mixManager == null || baseController == null) return;
 
         RectTransform fillRect = fillImage.rectTransform;
         RectTransform bottleRect = IngredientsBottle.rectTransform;
@@ -196,9 +200,21 @@ public class IngredientController : MonoBehaviour
 
     public void NextPressed()
     {
-		if (AudioManager.Instance != null)
-			AudioManager.Instance.PlayButtonClick();
+        if(ToppingsNext == true)
+        {
+            AudioManager.Instance.PlayButtonClick();
+            Ingredients.SetActive(false);
+            Shelves.SetActive(false);
+            Toppings.SetActive(true);
+            HoverTooltip.SetActive(false);
+            ToppingsController.SetActive(true);
+            ToppingsNext = false;
+            return;
+
+        }
         CurrentScreen.SetActive(false);
         NextScreen.SetActive(true);
+
+
     }
 }

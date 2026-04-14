@@ -4,18 +4,15 @@ using System.Collections.Generic;
 
 public class MixManager : MonoBehaviour
 {
-    [Header("Bottle selection")]
-    public string SelectedBottle = "";
     public string SelectedBase = "";
-
-    [Header("Selected bottle appearance (set when picking glass, used on Base screen)")]
-    public Sprite SelectedBottleSprite;
-    public Color SelectedBottleColor = Color.white;
-    public Vector3 SelectedBottleScale = Vector3.one;
 
     [Header("Ingredients")]
     public List<string> SelectedIngredients = new List<string>();
     [SerializeField, Min(1)] private int maxSelectedIngredients = 3;
+
+    [Header("Toppings")]
+    public List<string> SelectedToppings = new List<string>();
+    [SerializeField, Min(0)] private int maxSelectedToppings = 3;
 
     [Header("Fill Data")]
     public float FillLevel = 0f;
@@ -33,20 +30,6 @@ public class MixManager : MonoBehaviour
     public Color SpiritsColor = new Color(0.85f, 0.95f, 0.8f, 1f);
     public Color MoonShineColor = new Color(0.9f, 0.7f, 0.9f, 1f);
 
-    public void SetBottle(string bottleKey)
-    {
-        SelectedBottle = bottleKey;
-        OnStateChanged?.Invoke();
-        OnBottleChanged?.Invoke(bottleKey);
-    }
-
-    public void SetBottleAppearance(Sprite sprite, Color color, Vector3 scale)
-    {
-        SelectedBottleSprite = sprite;
-        SelectedBottleColor = color;
-        SelectedBottleScale = scale;
-    }
-
     public void SetBase(string baseKey)
     {
         SelectedBase = baseKey;
@@ -57,6 +40,7 @@ public class MixManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(ingredientKey)) return false;
         if (SelectedIngredients.Count >= maxSelectedIngredients) return false;
+        if (SelectedIngredients.Contains(ingredientKey)) return false;
 
         SelectedIngredients.Add(ingredientKey);
         OnIngredientAdded?.Invoke(ingredientKey);
@@ -66,10 +50,37 @@ public class MixManager : MonoBehaviour
 
     public bool RemoveIngredient(string ingredientKey)
     {
-        int count = SelectedIngredients.Count;
-        if (count == 0) return false;
-        SelectedIngredients.RemoveAt(count - 1);
-        OnIngredientRemoved?.Invoke(SelectedIngredients[count - 1]);
+        if (string.IsNullOrEmpty(ingredientKey)) return false;
+        if (SelectedIngredients.Count == 0) return false;
+
+        bool removed = SelectedIngredients.Remove(ingredientKey);
+        if (!removed) return false;
+
+        OnIngredientRemoved?.Invoke(ingredientKey);
+        OnStateChanged?.Invoke();
+        return true;
+    }
+
+    public bool AddTopping(string toppingKey)
+    {
+        if (string.IsNullOrEmpty(toppingKey)) return false;
+        if (maxSelectedToppings > 0 && SelectedToppings.Count >= maxSelectedToppings) return false;
+        if (SelectedToppings.Contains(toppingKey)) return false;
+
+        SelectedToppings.Add(toppingKey);
+        OnToppingAdded?.Invoke(toppingKey);
+        OnStateChanged?.Invoke();
+        return true;
+    }
+
+    public bool RemoveTopping(string toppingKey)
+    {
+        if (SelectedToppings.Count == 0) return false;
+
+        bool removed = SelectedToppings.Remove(toppingKey);
+        if (!removed) return false;
+
+        OnToppingRemoved?.Invoke(toppingKey);
         OnStateChanged?.Invoke();
         return true;
     }
@@ -106,9 +117,10 @@ public class MixManager : MonoBehaviour
 
     public Action<string, float> OnDripAdded;
     public Action OnStateChanged;
-    public Action<string> OnBottleChanged;
     public Action<string> OnIngredientAdded;
     public Action<string> OnIngredientRemoved;
+    public Action<string> OnToppingAdded;
+    public Action<string> OnToppingRemoved;
 
     private void UpdateBaseDisplay(string baseKey)
     {
@@ -151,12 +163,9 @@ public class MixManager : MonoBehaviour
 
     public void ResetForNewDay()
     {
-        SelectedBottle = "";
         SelectedBase = "";
         SelectedIngredients.Clear();
-        SelectedBottleSprite = null;
-        SelectedBottleColor = Color.white;
-        SelectedBottleScale = Vector3.one;
+        SelectedToppings.Clear();
         ResetFillData();
     }
 
@@ -185,5 +194,10 @@ public class MixManager : MonoBehaviour
     public void SetMaxIngredients(int max)
     {
         maxSelectedIngredients = Mathf.Max(1, max);
+    }
+
+    public void SetMaxToppings(int max)
+    {
+        maxSelectedToppings = Mathf.Max(0, max);
     }
 }
