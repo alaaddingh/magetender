@@ -12,7 +12,7 @@ public class MonsterData
 {
     public string id;
     public string name;
-    public string glassPreference;
+    public string toppingsPreference;
     public MonsterSprites sprites;
     public MonsterPosition position;
     public string dialogueId;

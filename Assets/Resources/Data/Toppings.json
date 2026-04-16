@@ -3,20 +3,20 @@
     {
       "id": "Cherry",
       "name": "Cherry",
-      "description": "Put a cherry on top!",
+      "description": "Perfect for Mammals!",
       "select_sprite": "Cherry_Selected"
     },
     {
       "id": "Umbrella",
       "name": "Umbrella",
-      "description": "Just for aesthetics!",
+      "description": "E.T Phone... Umbrella?",
       "select_sprite": "Umbrella_Selected"
       
     },
     {
       "id": "Lime",
       "name": "Lime Slice",
-      "description": "Add a citrus twist!",
+      "description": "Lil Lime for the Slimes!",
       "select_sprite": "Lime_Selected"
 
     }

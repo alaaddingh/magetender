@@ -35,6 +35,9 @@ public class DialogueController : MonoBehaviour
     public GameObject orderScreen;
     public GameObject BaseScreen;
 
+    public GameObject TimerCanvas;
+
+
     [Header("Global coin canvas - hide when leaving order screen")]
     [SerializeField] private GameObject coinCanvas;
 
@@ -169,6 +172,8 @@ public class DialogueController : MonoBehaviour
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
+        /* begin timer */
+        TimerCanvas.SetActive(true);
         BaseScreen.SetActive(true);
     }
 
