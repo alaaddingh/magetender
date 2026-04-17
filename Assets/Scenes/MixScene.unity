@@ -4195,6 +4195,41 @@ MonoBehaviour:
   key: next_button
   style: 1
   arabicFontOverride: {fileID: 0}
+--- !u!1 &511020176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 511020177}
+  m_Layer: 5
+  m_Name: Slot3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &511020177
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511020176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 906567382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 140, y: -394}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &517366401
 GameObject:
   m_ObjectHideFlags: 0
@@ -5260,6 +5295,8 @@ MonoBehaviour:
   NextScreen: {fileID: 1163726008}
   ToppingsController: {fileID: 65667177}
   MaxIngredients: 3
+  ingredientTintColor: {r: 0.9, g: 0.7, b: 1, a: 1}
+  ingredientTintPerIngredient: 0.15
   Ingredients: {fileID: 649498983}
   Shelves: {fileID: 1812866422}
   HoverTooltip: {fileID: 1267240447}
@@ -7570,7 +7607,7 @@ MonoBehaviour:
   mediumBottleUI: {fileID: 992086412}
   largeBottleUI: {fileID: 992086412}
   mixManager: {fileID: 9305688}
-  dropSpawnInterval: 0.04
+  dropSpawnInterval: 0.03
   dropSize: 50
   dropSpawnOffsetY: 50
   nextButton: {fileID: 1821739358}
@@ -8388,6 +8425,9 @@ RectTransform:
   - {fileID: 1267240448}
   - {fileID: 65667178}
   - {fileID: 1761528663}
+  - {fileID: 1486373564}
+  - {fileID: 1413702368}
+  - {fileID: 511020177}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12242,6 +12282,15 @@ MonoBehaviour:
   snapTargetPosLarge: {x: 0, y: -120}
   IngredientsBottle: {fileID: 1742341212}
   ingredientRoot: {fileID: 649498984}
+  slot1: {fileID: 1486373564}
+  slot2: {fileID: 1413702368}
+  slot3: {fileID: 511020177}
+  slotScale: {x: 0.3, y: 0.3, z: 1}
+  dissolveTarget: {fileID: 0}
+  moveToDrinkSeconds: 0.5
+  fadeOutSeconds: 0.5
+  fadeInSeconds: 0.1
+  allowBottleClickRemoveLast: 1
   tooltipRoot: {fileID: 1025927317}
   tooltipNameText: {fileID: 1899898777}
   tooltipDescText: {fileID: 342661633}
@@ -13197,6 +13246,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401054421}
   m_CullTransparentMesh: 1
+--- !u!1 &1413702367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1413702368}
+  m_Layer: 5
+  m_Name: Slot2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1413702368
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413702367}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 906567382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -8, y: -394}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1448871809
 GameObject:
   m_ObjectHideFlags: 0
@@ -13249,7 +13333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eef98cad6356fa44808b3ffb8f80299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 20
+  duration: 60
   timeUp: 0
   TimeUp: 0
   timerText: {fileID: 1401054423}
@@ -13565,6 +13649,41 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 38}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1486373563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1486373564}
+  m_Layer: 5
+  m_Name: Slot1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1486373564
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486373563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 906567382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -159, y: -394}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1517269362
@@ -16756,7 +16875,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 600, y: 198.3}
-  m_SizeDelta: {x: 300, y: 300}
+  m_SizeDelta: {x: 279, y: 112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1884725277
 MonoBehaviour:

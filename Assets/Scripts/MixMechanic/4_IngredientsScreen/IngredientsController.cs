@@ -33,6 +33,11 @@ public class IngredientsController : MonoBehaviour
     [Min(1)] public int MaxIngredients = 3;
 
     private MixManager mixManager;
+
+    [Header("Ingredient tint")]
+    public Color ingredientTintColor = new Color(0.9f, 0.7f, 1f, 1f);
+    [Range(0f, 1f)]
+    public float ingredientTintPerIngredient = 0.15f;
     /* hide the ingredients + shelves, then show the toppings after first "Next" click */
     [SerializeField] private GameObject Ingredients;
     [SerializeField] private GameObject Shelves;
@@ -56,6 +61,12 @@ public class IngredientsController : MonoBehaviour
         if (IngredientsBottle != null)
             IngredientsBottle.raycastTarget = false;
         InitializeFillRectangle();
+        HookIngredientEvents(true);
+    }
+
+    private void OnDisable()
+    {
+        HookIngredientEvents(false);
     }
 
     private void Start()
@@ -63,6 +74,31 @@ public class IngredientsController : MonoBehaviour
         ApplyIngredientSelectionCap();
         ApplyFromBaseBottle();
         InitializeFillRectangle();
+    }
+
+    private void HookIngredientEvents(bool on)
+    {
+        if (mixManager == null)
+            mixManager = FindFirstObjectByType<MixManager>();
+        if (mixManager == null) return;
+
+        if (on)
+        {
+            mixManager.OnIngredientAdded -= OnIngredientsChanged;
+            mixManager.OnIngredientRemoved -= OnIngredientsChanged;
+            mixManager.OnIngredientAdded += OnIngredientsChanged;
+            mixManager.OnIngredientRemoved += OnIngredientsChanged;
+        }
+        else
+        {
+            mixManager.OnIngredientAdded -= OnIngredientsChanged;
+            mixManager.OnIngredientRemoved -= OnIngredientsChanged;
+        }
+    }
+
+    private void OnIngredientsChanged(string _)
+    {
+        UpdateFillVisual();
     }
 
     private void ApplyIngredientSelectionCap()
@@ -126,6 +162,7 @@ public class IngredientsController : MonoBehaviour
 
     private void UpdateFillVisual()
     {
+        if (fillImage == null || IngredientsBottle == null || mixManager == null || baseController == null) return;
 
         RectTransform fillRect = fillImage.rectTransform;
         RectTransform bottleRect = IngredientsBottle.rectTransform;
@@ -137,6 +174,14 @@ public class IngredientsController : MonoBehaviour
         fillImage.fillAmount = mixManager.FillLevel;
 
         Color mixedColor = CalculateMixedColor();
+
+        if (mixManager.FillLevel > 0f && mixManager.SelectedIngredients != null)
+        {
+            float t = Mathf.Clamp01(mixManager.SelectedIngredients.Count * ingredientTintPerIngredient);
+            if (t > 0f)
+                mixedColor = Color.Lerp(mixedColor, ingredientTintColor, t);
+        }
+
         mixedColor.a = baseController.fillAlpha;
         fillImage.color = mixedColor;
     }
