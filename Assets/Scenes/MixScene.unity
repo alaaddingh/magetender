@@ -7570,14 +7570,14 @@ MonoBehaviour:
   mediumBottleUI: {fileID: 992086412}
   largeBottleUI: {fileID: 992086412}
   mixManager: {fileID: 9305688}
-  dropSpawnInterval: 0.08
-  dropSize: 40
+  dropSpawnInterval: 0.04
+  dropSize: 50
   dropSpawnOffsetY: 50
   nextButton: {fileID: 1821739358}
   CurrentScreen: {fileID: 1228855948}
   NextScreen: {fileID: 906567377}
   PreviousScreen: {fileID: 118565731}
-  fillAmountPerDrop: 0.02
+  fillAmountPerDrop: 0.01
   maxFillLevel: 1
   fillWidthMultiplier: 0.975
   fillCircleAspect: 0.7895

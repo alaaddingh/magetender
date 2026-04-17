@@ -395,8 +395,7 @@ public class BaseController : MonoBehaviour
         dropImage.color = dropColor;
         dropImage.raycastTarget = false; // Don't block clicks
 
-        // Use default white sprite (Unity creates a white square)
-        dropImage.sprite = null; // Will use default white sprite
+        dropImage.sprite = FillCircleSprite.GetFullCircleCentered();
 
         // Add Pour script
         Pour pourScript = dropObj.AddComponent<Pour>();
