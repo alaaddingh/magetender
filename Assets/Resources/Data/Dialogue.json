@@ -12,7 +12,7 @@
             "...to pursue his love for juggling.",
             "....",
             "Regardless... I'm feeling like a sloshy blob-potato after doomscrolling for a whole week nonstop.",
-            "I need a potion that makes me feel grounded and slightly elevated to fix my *GLAURGH* -ness",
+            "I need a potion that can fix my *GLAURGH* -ness",
             "And also a nice slice of lime to reclaim my globble youth."
           ],
           "neutral": [
@@ -21,14 +21,39 @@
             "Other than questioning your *GLOURGH* potion making skills."
           ],
           "satisfied": [
-          "*Happy GLORGH* WOW! My jiggleness feels INCREDIBLE like if I was a little globble.",
-          "My jelly feels so stable! I can finally shoot out coins right out of my snoot!",
-          "I'm inviting my sewer complex blobs to gobble here! Thank you MageTender!"
+            "*Happy GLORGH* WOW! My jiggleness feels INCREDIBLE like if I was a little globble.",
+            "My jelly feels so stable! I can finally shoot out coins right out of my snoot!",
+            "I'm inviting my sewer complex blobs to gobble here! Thank you MageTender!"
           ],
           "angry": [
-          "*Angry GLOARGH* WHAT THE SLIME IS THIS!?!",
-          "YOU THINK I'M SORT OF A RECYCLING SLOSH-BIN HUH!?!",
-          "I'LL *GLOARGH* YOUR BODY TO ASSIMILATION!!!"
+            "*Angry GLOARGH* WHAT THE SLIME IS THIS!?!",
+            "YOU THINK I'M SORT OF A RECYCLING SLOSH-BIN HUH!?!",
+            "I'LL *GLOARGH* YOUR BODY TO ASSIMILATION!!!"
+          ]
+        },
+        {
+          "level": "level_2",
+          "starting": [
+            "*GLAURGHH* *GLAURGHHHHHHHH*",
+            "....",
+            "Please, I need your help!!!" ,
+            "My *GLAURGHH* feels too high and must go down after going to a Blobs Night Out!",
+            "Also, my Kelp account got locked after guessing a blobzillion tries and I'm now a sad blobby."
+          ],
+          "neutral": [
+            "*GLOURGH* This drink doesn't make me go blobby and slushy...",
+            "I'm florping out of here! To gobble some trash behind this tavern",
+            "That will surely get my mood up."
+          ],
+          "satisfied": [
+            "*Happy GLORGH* WOW! My jiggleness is back to how I remembered.",
+            "My jelly belly feel so mello!",
+            "I thank you again MageTender! I'll get my sewer complex blobs here soon!"
+          ],
+          "angry": [
+            "*Angry GLOARGH* THIS POTION IS SOME STRAIGHT SLOGFLORP!!!",
+            "I AM NOT YOUR DECOMPOSING COMPOST BIN YOU GLOOPY ORGANISM!!!",
+            "I'LL PARALYZE YOUR ARMS TO STOP BEING MISTREATED HERE!!!"
           ]
         }
       ]
@@ -65,6 +90,34 @@
             "MY BLOOD PRESSURE IS EXPLODING WITH RAGE!!!",
             "BECAUSE THAT STUPID PATHETIC BRAIN OF YOURS CAN'T MAKE A PROPER DRINK!!!",
             "YOUR SLOG BRAIN WILL PAY FOR YOUR ATROCIOUS WAYS!!! "
+          ]
+        },
+        {
+          "level": "level_2",
+          "starting": [
+            "Hello my dearest MageTender! It is I, once again, the most prettiest Unicorn in town, Anita Caberneigh!",
+            "Was that a magnificent grand entrance? Hush now, you know it was OH SO WELL!",
+            "....",
+            "From Anita's marvelous list of orders, I demand a grounded and calm brew to my liking.",
+            "With the most finest ripped cherry for my glamorous potion.",
+            "And also, when you are done, you must slowly bow to me after handling my precious drink."
+          ],
+          "neutral": [
+            "Hmh! This drink only gave me a slight horse-kick to my mood.",
+            "Wait no, I need a more insulting phrase for you lots...",
+            "Yeah, like a weak donkey-kick. And you also look like one too.",
+            "Hush now! Take it in while you watch me scoff at you as Anita walks out of this taven!"
+          ],
+          "satisfied": [
+            "WOAH! The tranquility of this drink is suchhhh a fabbbulous unicorn-kick!",
+            "Like kicking a leprechaun out of its pot-of-gold, knowing that is all YOURSES TO KEEP!",
+            "Not... how I became richhh... from those naysayerrrrrs...",
+            "Whatever, my thoughts feel so freeeee. Work for me sooooon, MageTender!"
+          ],
+          "angry": [
+            "WH-WHA?!? WHAT IN THE UNICORN FART IS THIS DRINK!?!",
+            "MY SUNSHINE AND RAINBOWS ARE RUINED!!!",
+            "YOU SHALL PAY FOR YOUR DIMWITTY WAYS!!!"
           ]
         }
       ]
