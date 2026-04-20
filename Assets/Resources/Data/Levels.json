@@ -3,6 +3,7 @@
     {
       "id": "tutorial",
       "name": "Tutorial",
+      "maintenance_cost": 0,
       "encounters": [
         {
           "monster_id": "toad",
@@ -17,7 +18,8 @@
     },
     {
       "id": "level_1",
-      "name": "Opening Night",      
+      "name": "Opening Night",
+      "maintenance_cost": 80,
       "encounters": [
          {
           "monster_id": "unicorn",
@@ -51,6 +53,7 @@
     {
       "id": "level_2",
       "name": "Second Night",
+      "maintenance_cost": 80,
       "encounters": [
         {
           "monster_id": "alien",

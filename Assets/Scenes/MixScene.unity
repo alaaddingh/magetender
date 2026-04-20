@@ -915,6 +915,7 @@ MonoBehaviour:
   ShopButton: {fileID: 402397764}
   GreetingText: {fileID: 992969444}
   DayText: {fileID: 752509156}
+  tutorialTimerCanvas: {fileID: 914746572}
   NextButton: {fileID: 2011972317}
   tutorialBaseNextButton: {fileID: 1821739360}
   tutorialBaseNextButtonCanvasGroup: {fileID: 0}
@@ -5801,6 +5802,7 @@ MonoBehaviour:
   MaxIngredients: 3
   ingredientTintColor: {r: 0.9, g: 0.7, b: 1, a: 1}
   ingredientTintPerIngredient: 0.15
+  useIngredientColorsFromJson: 1
   Ingredients: {fileID: 649498983}
   Shelves: {fileID: 1812866422}
   HoverTooltip: {fileID: 1267240447}
@@ -6520,7 +6522,6 @@ MonoBehaviour:
   startingCoins: 0
   startingDay: 1
   LoseManager: {fileID: 1600586149}
-  maintenanceCost: 80
   unlockAllIngredientsForDebug: 0
   startingUnlockedIngredients:
   - unicorn_horn
@@ -11923,7 +11924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1187233427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14239,7 +14240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1401054422
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14445,7 +14446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eef98cad6356fa44808b3ffb8f80299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 99
+  duration: 45
   timeUp: 0
   TimeUp: 0
   timerText: {fileID: 1401054423}

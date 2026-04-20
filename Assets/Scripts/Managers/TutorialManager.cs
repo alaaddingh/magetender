@@ -38,6 +38,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject ShopButton;
     [SerializeField] private GameObject GreetingText;
     [SerializeField] private GameObject DayText;
+    [SerializeField] private GameObject tutorialTimerCanvas;
     [SerializeField] private TextMeshProUGUI NextButton;
     [SerializeField] private Button tutorialBaseNextButton;
     [SerializeField] private CanvasGroup tutorialBaseNextButtonCanvasGroup;
@@ -83,7 +84,7 @@ public class TutorialManager : MonoBehaviour
 
     void Awake()
     {
-        if (IsTutorialCompleted())
+        if (ShouldDisableImmediately())
             gameObject.SetActive(false);
     }
 
@@ -98,6 +99,7 @@ public class TutorialManager : MonoBehaviour
         if (mixManager == null)
             mixManager = FindFirstObjectByType<MixManager>();
 
+        DisableTutorialTimer();
         groupTriggered = new bool[groups.Length];
         DeactivateItems(false);
         ApplyTutorialMonsterSpritesOnce();
@@ -106,7 +108,7 @@ public class TutorialManager : MonoBehaviour
 
     bool ShouldDisableTutorialManager()
     {
-        if (IsTutorialCompleted())
+        if (ShouldDisableImmediately())
         {
             gameObject.SetActive(false);
             return true;
@@ -342,6 +344,8 @@ public class TutorialManager : MonoBehaviour
         if (TryCompleteAndDisableTutorial())
             return;
 
+        DisableTutorialTimer();
+
         if (activePointer != null && Input.GetMouseButtonDown(0))
         {
             Destroy(activePointer.gameObject);
@@ -375,7 +379,7 @@ public class TutorialManager : MonoBehaviour
 
     bool TryCompleteAndDisableTutorial()
     {
-        if (IsTutorialCompleted())
+        if (ShouldDisableImmediately())
         {
             gameObject.SetActive(false);
             return true;
@@ -400,6 +404,18 @@ public class TutorialManager : MonoBehaviour
         return (gameManager != null && gameManager.TutorialCompleted) || (saveData != null && saveData.tutorialCompleted);
     }
 
+    bool ShouldDisableImmediately()
+    {
+        if (IsTutorialCompleted())
+            return true;
+
+        CurrentMonster currentMonster = CurrentMonster.Instance;
+        if (currentMonster == null)
+            return false;
+
+        return currentMonster.IsPlannedVisitNextDay();
+    }
+
     void UpdateTutorialBaseNextButton()
     {
         if (tutorialBaseNextButton == null)
@@ -418,6 +434,12 @@ public class TutorialManager : MonoBehaviour
 
         if (tutorialBaseNextButtonCanvasGroup != null)
             tutorialBaseNextButtonCanvasGroup.alpha = bottleIsFull ? 1f : 0.5f;
+    }
+
+    void DisableTutorialTimer()
+    {
+        if (tutorialTimerCanvas != null && tutorialTimerCanvas.activeSelf)
+            tutorialTimerCanvas.SetActive(false);
     }
 
     void ApplyTutorialMonsterLayoutOnce()

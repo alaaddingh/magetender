@@ -42,6 +42,20 @@ public class CurrentMonster : MonoBehaviour
         return level != null ? level.id : "";
     }
 
+    public int GetCurrentMaintenanceCost()
+    {
+        return GetMaintenanceCostForDay(GetCurrentDay());
+    }
+
+    public int GetMaintenanceCostForDay(int day)
+    {
+        var level = GetLevelForDay(day);
+        if (level == null)
+            return 0;
+
+        return Mathf.Max(0, level.maintenance_cost);
+    }
+
     public void ApplySaveProgress(int encounterIndex)
     {
         EnsureDataLoaded();
@@ -203,6 +217,11 @@ public class CurrentMonster : MonoBehaviour
         return nextVisitPlan == NextVisitPlan.NextMonsterSameDay;
     }
 
+    public bool IsPlannedVisitNextDay()
+    {
+        return nextVisitPlan == NextVisitPlan.NextDayFirstMonster;
+    }
+
 	public void ApplyPlannedVisit()
 	{
 		if (nextVisitPlan == NextVisitPlan.None)
@@ -222,7 +241,8 @@ public class CurrentMonster : MonoBehaviour
 			}
 			else if (GameManager.Instance != null)
 			{
-				GameManager.Instance.IncrementDay();
+				int nextDayMaintenanceCost = GetMaintenanceCostForDay(GetCurrentDay() + 1);
+				GameManager.Instance.IncrementDay(nextDayMaintenanceCost);
 			}
 
 			ResetToFirstMonster();

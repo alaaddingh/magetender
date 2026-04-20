@@ -58,7 +58,6 @@ namespace Magetender.Data
             string json = File.ReadAllText(path);
             if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogWarning("[SaveSystem] Save file was empty. Ignoring save data.");
                 return null;
             }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Magetender.Data;
 
 /* Shows day and coins; Next button hides day panel and shows order screen. */
 public class DayScreenController : MonoBehaviour
@@ -45,6 +46,7 @@ public class DayScreenController : MonoBehaviour
         showedDayPanelThisLoad = !skipDayCounter;
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ApplyPlannedVisit();
+        DisableTutorialManagerIfNotNeeded();
 
         if (dayPanel != null)
             dayPanel.SetActive(true);
@@ -61,10 +63,10 @@ public class DayScreenController : MonoBehaviour
 
         if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1)
         {
-            int maintenance = GameManager.Instance.MaintenanceCost;
+            int maintenance = CurrentMonster.Instance != null ? CurrentMonster.Instance.GetCurrentMaintenanceCost() : 0;
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayRegisterChaChing();
-            if (coinLossPopup != null)
+            if (coinLossPopup != null && maintenance > 0)
                 ShowCoinLossPopup(maintenance);
         }
 
@@ -97,6 +99,23 @@ public class DayScreenController : MonoBehaviour
         }
         if (coinsText != null)
             coinsText.text = coins.ToString();
+    }
+
+    private void DisableTutorialManagerIfNotNeeded()
+    {
+        var tutorialManager = FindFirstObjectByType<TutorialManager>();
+        if (tutorialManager == null)
+            return;
+
+        SaveData saveData = SaveSystem.LoadGame();
+        bool tutorialCompleted = (GameManager.Instance != null && GameManager.Instance.TutorialCompleted) ||
+                                 (saveData != null && saveData.tutorialCompleted);
+        bool isTutorialLevel = CurrentMonster.Instance != null && CurrentMonster.Instance.GetCurrentLevelId() == "tutorial";
+
+        if (!tutorialCompleted && isTutorialLevel)
+            return;
+
+        tutorialManager.gameObject.SetActive(false);
     }
 
     /* Call from Next button OnClick */

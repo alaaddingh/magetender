@@ -13,13 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int startingDay = 1;
 
     [SerializeField] private GameObject LoseManager;
-
-
-
-    [Header("Economy")]
-    [SerializeField] private int maintenanceCost = 80;
-    public int MaintenanceCost => maintenanceCost;
-
 	[Header("Shop (run-only unlocks)")]
 	[SerializeField] private bool unlockAllIngredientsForDebug = false;
 	[SerializeField] private List<string> startingUnlockedIngredients = new List<string>
@@ -109,11 +102,11 @@ public class GameManager : MonoBehaviour
         SaveSystem.WriteData();
     }
 
-    public void IncrementDay()
+    public void IncrementDay(int maintenanceCost)
     {
         Day++;
 
-        if (Day > 1)
+        if (Day > 1 && maintenanceCost > 0)
         {
             Coins -= maintenanceCost;
         }

@@ -749,7 +749,8 @@ public class QTECombatManager : MonoBehaviour
 				}
 
 				var gm = GameManager.Instance;
-				if (gm != null && gm.Coins < gm.MaintenanceCost)
+				int maintenanceCost = cm != null ? cm.GetCurrentMaintenanceCost() : 0;
+				if (gm != null && gm.Coins < maintenanceCost)
 				{
 					SaveSystem.WriteLoseState();
 					SceneManager.LoadScene(loseSceneName);
