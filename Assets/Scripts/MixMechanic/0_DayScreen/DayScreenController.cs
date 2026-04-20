@@ -52,7 +52,7 @@ public class DayScreenController : MonoBehaviour
             orderScreen.SetActive(false);
 
         if (coinCanvas != null)
-            coinCanvas.SetActive(true);
+            coinCanvas.SetActive(false);
 
         if (scoreDisplayCanvas != null)
             scoreDisplayCanvas.SetActive(false);
@@ -116,6 +116,8 @@ public class DayScreenController : MonoBehaviour
             dayPanel.SetActive(false);
         if (orderScreen != null)
             orderScreen.SetActive(true);
+        if (coinCanvas != null)
+            coinCanvas.SetActive(true);
         OrderScreenRevealedThisSession = true;
 
 		if (!playedFirstWalkIn && AudioManager.Instance != null)
