@@ -38,6 +38,10 @@ public class IngredientsController : MonoBehaviour
     public Color ingredientTintColor = new Color(0.9f, 0.7f, 1f, 1f);
     [Range(0f, 1f)]
     public float ingredientTintPerIngredient = 0.15f;
+    [Tooltip("If present in Ingredients.json, blend toward per-ingredient colors instead of a single global tint.")]
+    public bool useIngredientColorsFromJson = true;
+
+    private readonly Dictionary<string, IngredientData> ingredientById = new Dictionary<string, IngredientData>();
     /* hide the ingredients + shelves, then show the toppings after first "Next" click */
     [SerializeField] private GameObject Ingredients;
     [SerializeField] private GameObject Shelves;
@@ -58,6 +62,7 @@ public class IngredientsController : MonoBehaviour
     {
         ApplyIngredientSelectionCap();
         ApplyFromBaseBottle();
+        LoadIngredientData();
         if (IngredientsBottle != null)
             IngredientsBottle.raycastTarget = false;
         InitializeFillRectangle();
@@ -73,6 +78,7 @@ public class IngredientsController : MonoBehaviour
     {
         ApplyIngredientSelectionCap();
         ApplyFromBaseBottle();
+        LoadIngredientData();
         InitializeFillRectangle();
     }
 
@@ -177,9 +183,19 @@ public class IngredientsController : MonoBehaviour
 
         if (mixManager.FillLevel > 0f && mixManager.SelectedIngredients != null)
         {
-            float t = Mathf.Clamp01(mixManager.SelectedIngredients.Count * ingredientTintPerIngredient);
+            int count = mixManager.SelectedIngredients.Count;
+            float t = Mathf.Clamp01(count * ingredientTintPerIngredient);
             if (t > 0f)
-                mixedColor = Color.Lerp(mixedColor, ingredientTintColor, t);
+            {
+                Color tint = ingredientTintColor;
+                if (useIngredientColorsFromJson)
+                {
+                    bool hasTint = TryGetIngredientBlendColor(out Color blend);
+                    if (hasTint)
+                        tint = blend;
+                }
+                mixedColor = Color.Lerp(mixedColor, tint, t);
+            }
         }
 
         mixedColor.a = baseController.fillAlpha;
@@ -241,6 +257,65 @@ public class IngredientsController : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    private void LoadIngredientData()
+    {
+        ingredientById.Clear();
+
+        string path = "Data/Ingredients";
+        if (LanguageManager.Instance != null)
+            path = LanguageManager.Instance.GetIngredientsResourcePath();
+        else
+        {
+            string lang = PlayerPrefs.GetString("GameLanguage", LanguageManager.LangEnglish);
+            if (lang == LanguageManager.LangSpanish)
+                path = "Data/Ingredients_es";
+            else if (lang == LanguageManager.LangArabic)
+                path = "Data/Ingredients_ar";
+        }
+
+        TextAsset json = Resources.Load<TextAsset>(path);
+        if (json == null) return;
+
+        IngredientsFile file = JsonUtility.FromJson<IngredientsFile>(json.text);
+        if (file == null || file.ingredients == null) return;
+
+        foreach (var ing in file.ingredients)
+        {
+            if (!string.IsNullOrEmpty(ing.id))
+                ingredientById[ing.id] = ing;
+        }
+    }
+
+    private bool TryGetIngredientBlendColor(out Color color)
+    {
+        color = Color.clear;
+        if (mixManager == null || mixManager.SelectedIngredients == null || mixManager.SelectedIngredients.Count == 0)
+            return false;
+
+        int count = 0;
+        float r = 0f;
+        float g = 0f;
+        float b = 0f;
+
+        foreach (string id in mixManager.SelectedIngredients)
+        {
+            if (string.IsNullOrEmpty(id)) continue;
+            if (!ingredientById.TryGetValue(id, out IngredientData data) || data == null) continue;
+            if (data.color == null) continue;
+
+            Color c = data.color.ToUnityColor();
+            r += c.r;
+            g += c.g;
+            b += c.b;
+            count++;
+        }
+
+        if (count <= 0) return false;
+
+        color = new Color(r / count, g / count, b / count, 1f);
+        return true;
     }
 
     public void NextPressed()
