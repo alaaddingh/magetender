@@ -36,6 +36,12 @@ public class CurrentMonster : MonoBehaviour
     public MonsterData Data => GetCurrentMonsterData();
     public LevelEncounterData CurrentEncounter => GetCurrentEncounter();
 
+    public string GetCurrentLevelId()
+    {
+        var level = GetLevelForDay(GetCurrentDay());
+        return level != null ? level.id : "";
+    }
+
     public void ApplySaveProgress(int encounterIndex)
     {
         EnsureDataLoaded();
@@ -208,8 +214,17 @@ public class CurrentMonster : MonoBehaviour
 		}
 		else if (nextVisitPlan == NextVisitPlan.NextDayFirstMonster)
 		{
-			if (GameManager.Instance != null)
+			bool leavingTutorial = GetCurrentLevelId() == "tutorial";
+			if (leavingTutorial)
+			{
+				if (GameManager.Instance != null)
+					GameManager.Instance.MarkTutorialCompleted();
+			}
+			else if (GameManager.Instance != null)
+			{
 				GameManager.Instance.IncrementDay();
+			}
+
 			ResetToFirstMonster();
 		}
 
@@ -341,7 +356,9 @@ public class CurrentMonster : MonoBehaviour
         if (levelsFile == null || levelsFile.levels == null || levelsFile.levels.Count == 0)
             return null;
 
-        int levelIndex = Mathf.Clamp(day - 1, 0, levelsFile.levels.Count - 1);
+        bool tutorialCompleted = GameManager.Instance != null && GameManager.Instance.TutorialCompleted;
+        int levelIndex = tutorialCompleted ? day : day - 1;
+        levelIndex = Mathf.Clamp(levelIndex, 0, levelsFile.levels.Count - 1);
         return levelsFile.levels[levelIndex];
     }
 

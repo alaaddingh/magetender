@@ -74,7 +74,7 @@ public class DayScreenController : MonoBehaviour
 
     public void RefreshDisplay()
     {
-        int day = 1;
+        int day = 0;
         int coins = 0;
         if (GameManager.Instance != null)
         {

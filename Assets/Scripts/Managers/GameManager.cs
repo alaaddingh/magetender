@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     public int Coins { get; private set; }
     public int Day { get; private set; }
+    public bool TutorialCompleted { get; private set; }
 
     private int EncounterIndex;
     private bool SavedEncounterIndex;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         {
             Coins = data.coins;
             Day = Mathf.Max(1, data.day);
+            TutorialCompleted = data.tutorialCompleted;
             EncounterIndex = data.currentEncounterIndex;
             SavedEncounterIndex = true;
 
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         }
 		else
 		{
+            TutorialCompleted = false;
 			ResetIngredientUnlocksToDefaults();
 		}
     }
@@ -81,13 +84,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetForNewGame()
+    public void ResetForNewGame(bool preserveTutorialCompleted = true)
     {
+        TutorialCompleted = preserveTutorialCompleted && TutorialCompleted;
         Coins = startingCoins;
         Day = startingDay;
         EncounterIndex = 0;
         SavedEncounterIndex = false;
 		ResetIngredientUnlocksToDefaults();
+    }
+
+    public void MarkTutorialCompleted()
+    {
+        if (TutorialCompleted)
+            return;
+
+        TutorialCompleted = true;
+        SaveSystem.WriteData();
     }
 
     public void AddCoins(int amount)

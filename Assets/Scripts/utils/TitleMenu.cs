@@ -27,13 +27,16 @@ public class TitleMenu : MonoBehaviour
 
     public void StartNewGame()
     {
+        var saveData = SaveSystem.LoadGame();
+        bool tutorialCompleted = (GameManager.Instance != null && GameManager.Instance.TutorialCompleted) ||
+                                 (saveData != null && saveData.tutorialCompleted);
         SaveSystem.ClearSave();
         PlayerPrefs.DeleteKey(CombatTutorialCompletedKey);
         PlayerPrefs.Save();
+        if (GameManager.Instance != null)
+            GameManager.Instance.ResetForNewGame(tutorialCompleted);
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ResetToFirstMonster();
-        if (GameManager.Instance != null)
-            GameManager.Instance.ResetForNewGame();
         SceneManager.LoadScene("MixScene");
     }
 

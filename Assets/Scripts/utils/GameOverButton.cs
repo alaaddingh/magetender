@@ -21,13 +21,16 @@ public class GameOverButton : MonoBehaviour
             AudioManager.Instance.PlayButtonClick();
 
         CameFromRetry = true;
+        var saveData = SaveSystem.LoadGame();
+        bool tutorialCompleted = (GameManager.Instance != null && GameManager.Instance.TutorialCompleted) ||
+                                 (saveData != null && saveData.tutorialCompleted);
 
 		// Match TitleMenu.StartNewGame reset behavior; only difference is tutorialCompleted is preserved here.
 		SaveSystem.ClearSave();
 		PlayerPrefs.Save();
 
         if (GameManager.Instance != null)
-            GameManager.Instance.ResetForNewGame();
+            GameManager.Instance.ResetForNewGame(tutorialCompleted);
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ResetToFirstMonster();
 

@@ -42,6 +42,20 @@
     
       "dialogueId": "dlg_alien",
       "position": {"pos_x": -169, "pos_y": -37}
+    },
+        {
+      "id": "toad",
+      "name": "Gurt",
+      "toppingsPreference": "Umbrella",
+
+
+      "sprites": {
+        "neutral": "Art/Monsters/Toad/toad_neutral",
+        "angry": "Art/Monsters/Toad/toad_angry"
+      },
+    
+      "dialogueId": "dlg_toad",
+      "position": {"pos_x": 30, "pos_y": 70}
     }
   ]
 }

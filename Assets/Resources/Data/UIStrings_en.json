@@ -44,6 +44,13 @@
     {"key": "combat_victory", "value": "VICTORY!"},
     {"key": "combat_defeat", "value": "DEFEATED."},
     {"key": "tutorial_stage3_prompt", "value": "Press SPACE to begin..."},
+    {"key": "mix_tutorial_screen_1", "value": "This is your first day at the magical tavern.\\n\\nYou'll be mixing drinks for fantastical customers.\\n\\nPress SPACE to continue through the day."},
+    {"key": "mix_tutorial_screen_2", "value": "This Mood Graph helps you understand your customer's needs!"},
+    {"key": "mix_tutorial_screen_3", "value": "Use the bases to guide drink to the correct mood. For this frog, looks like he wants to be calmed. Let's try moonshine!"},
+    {"key": "mix_tutorial_screen_4", "value": "Now that we have the right liquid, let's try to put in some ingredients that'll evoke the right emotions.\\n\\n Let's give this frog a wishbone!"},
+    {"key": "mix_tutorial_screen_5","value": "For the final touch, lets throw in a topping!\\n\\n This will usually match the characters themselves rather than their mood.\\n\\n Slimey frog gets the lime!"},
+    {"key": "mix_tutorial_screen_6","value": "Congratulations! you have made the perfect brew for Frog!"},
+     {"key": "mix_tutorial_screen_7","value": "Slow down though! It won't always be so easy to please your customers.."},
     {"key": "cap_message", "value": "Select up to 3  Ingredients"},
     {"key": "holywater_label", "value": "Holy Water"},
     {"key": "blood_label", "value": "Blood"},
@@ -64,6 +71,8 @@
     { "key": "controls_wasd", "value": "WASD" },
     { "key": "controls_text", "value": "Controls" },
     { "key": "volume_text", "value": "Volume" },
-    { "key": "credits_text", "value": "Credits:\nDavid Guerrero-Pantoja - Production Lead\nAla'Addin Ghosheh - Engine Lead\nEder Yepez Cuevas - Tools Lead\nZosia Trela - Design Lead\nArchie Dickson - Art\nAdan O'Toole - Art\nTyana Tran - Art\n\nSFX:\nFreesound.com\nPixabay.com\n\nFonts:\nAlkhemical, NotoSansArabic and PixeloidMono" }
+    { "key": "credits_text", "value": "Credits:\nDavid Guerrero-Pantoja - Production Lead\nAla'Addin Ghosheh - Engine Lead\nEder Yepez Cuevas - Tools Lead\nZosia Trela - Design Lead\nArchie Dickson - Art\nAdan O'Toole - Art\nTyana Tran - Art\n\nSFX:\nFreesound.com\nPixabay.com\n\nFonts:\nAlkhemical, NotoSansArabic and PixeloidMono" },
+    {"key": "begin_button", "value": "Begin"},
+    {"key": "greeting_text", "value": "Welcome to Magetender"}
   ]
 }

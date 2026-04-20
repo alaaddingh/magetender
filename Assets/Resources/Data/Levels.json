@@ -1,10 +1,23 @@
 {
   "levels": [
     {
+      "id": "tutorial",
+      "name": "Tutorial",
+      "encounters": [
+        {
+          "monster_id": "toad",
+          "tolerances": {
+              "satisfied_tolerance": 10
+          },
+          "starting_score": {"x": 0.5, "y": 0.5},
+          "goal_score": { "x": 0.5, "y": -0.5 },
+          "dialogue_key": "tutorial"
+        }
+      ]
+    },
+    {
       "id": "level_1",
-      "name": "Opening Night",
-
-      
+      "name": "Opening Night",      
       "encounters": [
          {
           "monster_id": "unicorn",

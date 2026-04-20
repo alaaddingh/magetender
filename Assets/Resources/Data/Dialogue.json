@@ -116,6 +116,33 @@
           ]
         }
       ]
+    },
+    {
+      "id": "dlg_toad",
+      "levels": [
+        {
+          "level": "tutorial",
+          "starting": [
+            "Wha- a new employee? *ribbit* interesting...",
+            "*ribbit* Salutations! you must be the new Magetender! the latest additon to the...fantasy tavern team..",
+            "Guessing the ol' wizard-to-college pipedream didn't pan out, huh? *ribbit*",
+            "Tough luck..",
+            "..."
+          ],
+          "satisfied": [
+            "Excellent work! This drink is not bad!",
+            "FOR A ROOKIE!!!"
+          ],
+            "neutral": [
+              "Excellent work! This drink is not bad!",
+              "FOR A ROOKIE!!!"
+
+          ],
+             "angry": [
+              "FIGHT ME"
+          ]
+        }
+      ]
     }
   ]
 }
