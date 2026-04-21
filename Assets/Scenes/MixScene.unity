@@ -865,22 +865,31 @@ MonoBehaviour:
   steps:
   - key: mix_tutorial_screen_1
     panel: {fileID: 152233965}
+    pauseGame: 1
   - key: mix_tutorial_screen_2
     panel: {fileID: 761032177}
+    pauseGame: 1
   - key: mix_tutorial_screen_3
     panel: {fileID: 1991548452}
+    pauseGame: 1
   - key: mix_tutorial_screen_4
     panel: {fileID: 337069303}
+    pauseGame: 1
   - key: mix_tutorial_screen_5
     panel: {fileID: 998205701}
+    pauseGame: 1
   - key: mix_tutorial_screen_6
     panel: {fileID: 998205701}
+    pauseGame: 1
   - key: mix_tutorial_screen_7
     panel: {fileID: 761032177}
+    pauseGame: 1
   - key: mix_tutorial_screen_8
     panel: {fileID: 701325510}
+    pauseGame: 1
   - key: mix_tutorial_screen_9
     panel: {fileID: 701325510}
+    pauseGame: 1
   groups:
   - trigger: {fileID: 118565731}
     steps: 00000000
@@ -6319,6 +6328,7 @@ MonoBehaviour:
   NextScreen: {fileID: 1163726008}
   ToppingsController: {fileID: 65667177}
   MaxIngredients: 3
+  ingredientHoverUi: {fileID: 0}
   ingredientTintColor: {r: 0.9, g: 0.7, b: 1, a: 1}
   ingredientTintPerIngredient: 0.15
   useIngredientColorsFromJson: 1
@@ -14259,6 +14269,8 @@ MonoBehaviour:
   slot2: {fileID: 1413702368}
   slot3: {fileID: 511020177}
   slotScale: {x: 0.3, y: 0.3, z: 1}
+  tintIngredientWhenInSlot: 1
+  slotTint: {r: 0.9, g: 0.7, b: 1, a: 1}
   dissolveTarget: {fileID: 0}
   moveToDrinkSeconds: 0.5
   fadeOutSeconds: 0.5
@@ -15592,7 +15604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eef98cad6356fa44808b3ffb8f80299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 5
+  duration: 40
   timeUp: 0
   TimeUp: 0
   timerText: {fileID: 1401054423}

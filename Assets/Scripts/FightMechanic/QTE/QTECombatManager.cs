@@ -230,6 +230,9 @@ public class QTECombatManager : MonoBehaviour
     // Public method for tutorial to call
     public void StartCombat()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopAmbience();
+
         combatStarted = true;
         GenerateNewSequence(true);
         GenerateNewSequence(false);

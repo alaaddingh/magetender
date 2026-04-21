@@ -24,6 +24,10 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	[SerializeField] private RectTransform slot2;
 	[SerializeField] private RectTransform slot3;
 	[SerializeField] private Vector3 slotScale = new Vector3(0.7f, 0.7f, 1f);
+	
+	[Header("Slot appearance")]
+	[SerializeField] private bool tintIngredientWhenInSlot = true;
+	[SerializeField] private Color slotTint = new Color(0.9f, 0.7f, 1f, 1f);
 
 	[Header("Dissolve animation")]
 	[SerializeField] private RectTransform dissolveTarget;
@@ -50,6 +54,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	private MixManager mixManager;
 	private Dictionary<string, Vector2> shelfPositions = new Dictionary<string, Vector2>();
 	private Dictionary<string, Vector3> shelfScales = new Dictionary<string, Vector3>();
+	private Dictionary<string, Color> shelfColors = new Dictionary<string, Color>();
 	private Dictionary<string, int> ingredientToSlotIndex = new Dictionary<string, int>();
 	private Dictionary<string, Coroutine> ingredientToAnim = new Dictionary<string, Coroutine>();
 	private Dictionary<string, Image> ingredientImages = new Dictionary<string, Image>();
@@ -103,6 +108,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
 	private void OnDisable()
 	{
+		ForceCompleteActiveIngredientAnimations();
 		LanguageManager.OnLanguageChanged -= LoadIngredientData;
 		if (GameManager.Instance != null)
 			GameManager.Instance.OnIngredientUnlocksChanged -= ApplyUnlockVisibility;
@@ -130,6 +136,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	{
 		shelfPositions.Clear();
 		shelfScales.Clear();
+		shelfColors.Clear();
 		foreach (GameObject go in EnumerateIngredientObjects())
 		{
 			Image img = go.GetComponent<Image>();
@@ -137,6 +144,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 			{
 				shelfPositions[go.name] = img.rectTransform.anchoredPosition;
 				shelfScales[go.name] = img.rectTransform.localScale;
+				shelfColors[go.name] = img.color;
 			}
 		}
 
@@ -257,6 +265,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		{
 			shelfPositions[id] = img.rectTransform.anchoredPosition;
 			shelfScales[id] = img.rectTransform.localScale;
+			shelfColors[id] = img.color;
 		}
 
 		int slotIndex = ReserveSlotFor(id);
@@ -286,6 +295,8 @@ public class IngredientHoverSnapUI : MonoBehaviour
 			if (shelfScales.TryGetValue(id, out Vector3 s))
 				img.rectTransform.localScale = s;
 			img.rectTransform.anchoredPosition = GetShelfPosition(id);
+			if (shelfColors.TryGetValue(id, out Color c))
+				img.color = c;
 
 			CanvasGroup cg = img.GetComponent<CanvasGroup>();
 			if (cg != null) cg.alpha = 1f;
@@ -352,6 +363,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		img.rectTransform.pivot = new Vector2(0.5f, 0.5f);
 		img.rectTransform.anchoredPosition = Vector2.zero;
 		img.rectTransform.localScale = slotScale;
+		ApplySlotTint(img);
 
 		t = 0f;
 		while (t < 1f)
@@ -363,6 +375,63 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		}
 
 		ingredientToAnim.Remove(id);
+	}
+
+	public void ForceCompleteActiveIngredientAnimations()
+	{
+		if (ingredientToAnim.Count == 0)
+			return;
+
+		var ids = new List<string>(ingredientToAnim.Keys);
+		foreach (string id in ids)
+		{
+			ForceCompleteIngredientAnimation(id);
+		}
+	}
+
+	private void ForceCompleteIngredientAnimation(string id)
+	{
+		if (string.IsNullOrEmpty(id))
+			return;
+
+		StopIngredientAnimation(id);
+
+		if (!ingredientImages.TryGetValue(id, out Image img) || img == null)
+			return;
+
+		if (mixManager == null)
+			mixManager = FindFirstObjectByType<MixManager>();
+		if (mixManager == null || mixManager.SelectedIngredients == null || !mixManager.SelectedIngredients.Contains(id))
+			return;
+
+		int slotIndex = ReserveSlotFor(id);
+		RectTransform slot = GetSlot(slotIndex);
+		if (slot == null)
+			return;
+
+		img.rectTransform.SetParent(slot, false);
+		img.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+		img.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+		img.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+		img.rectTransform.anchoredPosition = Vector2.zero;
+		img.rectTransform.localScale = slotScale;
+
+		CanvasGroup cg = img.GetComponent<CanvasGroup>();
+		if (cg != null) cg.alpha = 1f;
+
+		ApplySlotTint(img);
+	}
+
+	private void ApplySlotTint(Image img)
+	{
+		if (!tintIngredientWhenInSlot || img == null)
+			return;
+
+		Color baseColor = shelfColors.TryGetValue(img.gameObject.name, out Color original) ? original : img.color;
+		baseColor.r *= slotTint.r;
+		baseColor.g *= slotTint.g;
+		baseColor.b *= slotTint.b;
+		img.color = baseColor;
 	}
 
 	private Vector3 GetDissolveWorldPos()
