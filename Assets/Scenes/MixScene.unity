@@ -865,31 +865,22 @@ MonoBehaviour:
   steps:
   - key: mix_tutorial_screen_1
     panel: {fileID: 152233965}
-    pauseGame: 1
   - key: mix_tutorial_screen_2
     panel: {fileID: 761032177}
-    pauseGame: 1
   - key: mix_tutorial_screen_3
     panel: {fileID: 1991548452}
-    pauseGame: 1
   - key: mix_tutorial_screen_4
     panel: {fileID: 337069303}
-    pauseGame: 1
   - key: mix_tutorial_screen_5
     panel: {fileID: 998205701}
-    pauseGame: 1
   - key: mix_tutorial_screen_6
     panel: {fileID: 998205701}
-    pauseGame: 1
   - key: mix_tutorial_screen_7
     panel: {fileID: 761032177}
-    pauseGame: 1
   - key: mix_tutorial_screen_8
     panel: {fileID: 701325510}
-    pauseGame: 0
   - key: mix_tutorial_screen_9
     panel: {fileID: 701325510}
-    pauseGame: 0
   groups:
   - trigger: {fileID: 118565731}
     steps: 00000000
@@ -1596,7 +1587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &155716012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13245,7 +13236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1228855949
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21508,7 +21499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2000000102
 RectTransform:
   m_ObjectHideFlags: 0

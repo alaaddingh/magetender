@@ -265,7 +265,8 @@ public class AssessController : MonoBehaviour
                     return;
                 }
             else if (MonsterStateManager.MonsterState == "neutral") {
-                MonsterStateManager.SetState("happy");
+                // Keep state vocabulary consistent with the rest of the game.
+                MonsterStateManager.SetState("satisfied");
                 return;
             }
 

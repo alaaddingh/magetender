@@ -54,7 +54,7 @@ public class DayScreenController : MonoBehaviour
             orderScreen.SetActive(false);
 
         if (coinCanvas != null)
-            coinCanvas.SetActive(false);
+            coinCanvas.SetActive(true);
 
         if (scoreDisplayCanvas != null)
             scoreDisplayCanvas.SetActive(false);
