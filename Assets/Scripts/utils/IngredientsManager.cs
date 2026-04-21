@@ -13,8 +13,24 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	public Vector2 snapTargetPosMedium;
 	public Vector2 snapTargetPosLarge;
 
+	[Header("Bottle UI (selected ingredients parent here)")]
+	[SerializeField] public Image IngredientsBottle;
+
 	[Header("Ingredient area (for unlock filter + shelf positions)")]
 	[SerializeField] private Transform ingredientRoot;
+
+	[Header("Selected slots (assign 3 RectTransforms)")]
+	[SerializeField] private RectTransform slot1;
+	[SerializeField] private RectTransform slot2;
+	[SerializeField] private RectTransform slot3;
+	[SerializeField] private Vector3 slotScale = new Vector3(0.7f, 0.7f, 1f);
+
+	[Header("Dissolve animation")]
+	[SerializeField] private RectTransform dissolveTarget;
+	[SerializeField] private float moveToDrinkSeconds = 0.12f;
+	[SerializeField] private float fadeOutSeconds = 0.08f;
+	[SerializeField] private float fadeInSeconds = 0.08f;
+	[SerializeField] private bool allowBottleClickRemoveLast = true;
 
 	[Header("tooltip ui")]
 	public GameObject tooltipRoot;
@@ -33,6 +49,11 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	private Image hoveredIngredient;
 	private MixManager mixManager;
 	private Dictionary<string, Vector2> shelfPositions = new Dictionary<string, Vector2>();
+	private Dictionary<string, Vector3> shelfScales = new Dictionary<string, Vector3>();
+	private Dictionary<string, int> ingredientToSlotIndex = new Dictionary<string, int>();
+	private Dictionary<string, Coroutine> ingredientToAnim = new Dictionary<string, Coroutine>();
+	private Dictionary<string, Image> ingredientImages = new Dictionary<string, Image>();
+	private string[] slotOccupiedById = new string[3];
 
 	private Dictionary<string, IngredientData> byId = new Dictionary<string, IngredientData>();
 
@@ -68,6 +89,8 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		tooltipNameOriginalFont = tooltipNameText != null ? tooltipNameText.font : null;
 		tooltipDescOriginalFont = tooltipDescText != null ? tooltipDescText.font : null;
 		tooltipEffectOriginalFont = tooltipEffectText != null ? tooltipEffectText.font : null;
+
+		RebuildSlotStateFromMix();
 	}
 
 	private void OnEnable()
@@ -75,6 +98,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		LanguageManager.OnLanguageChanged += LoadIngredientData;
 		RecordShelfPositions();
 		StartCoroutine(WaitForGameManagerUnlockHook());
+		RebuildSlotStateFromMix();
 	}
 
 	private void OnDisable()
@@ -105,11 +129,15 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	private void RecordShelfPositions()
 	{
 		shelfPositions.Clear();
+		shelfScales.Clear();
 		foreach (GameObject go in EnumerateIngredientObjects())
 		{
 			Image img = go.GetComponent<Image>();
 			if (img != null && !string.IsNullOrEmpty(go.name))
+			{
 				shelfPositions[go.name] = img.rectTransform.anchoredPosition;
+				shelfScales[go.name] = img.rectTransform.localScale;
+			}
 		}
 
 		ApplyUnlockVisibility();
@@ -178,54 +206,265 @@ public class IngredientHoverSnapUI : MonoBehaviour
 			DebugTick("hovered ingredient: (none)");
 		}
 
-		if (Input.GetMouseButtonDown(0) && hoveredIngredient != null && !s_processedClickThisFrame)
+		if (Input.GetMouseButtonDown(0) && !s_processedClickThisFrame)
 		{
 			if (mixManager == null)
 				mixManager = FindFirstObjectByType<MixManager>();
 			if (mixManager == null) return;
 
-			bool inDrink = IsInDrink(hoveredIngredient);
-			if (inDrink)
+			if (hoveredIngredient != null)
 			{
-				bool removed = mixManager.RemoveIngredient(hoveredIngredient.name);
-				if (removed)
+				string id = hoveredIngredient.name;
+				bool inDrink = mixManager.SelectedIngredients.Contains(id);
+				if (inDrink)
 				{
-					if (AudioManager.Instance != null)
-						AudioManager.Instance.PlayIngredientClick();
-					hoveredIngredient.rectTransform.anchoredPosition = GetShelfPosition(hoveredIngredient.name);
+					RemoveIngredientUi(id);
+				}
+				else
+				{
+					AddIngredientUi(id, hoveredIngredient);
 				}
 			}
-			else
+			else if (allowBottleClickRemoveLast && IsMouseOverBottle() && mixManager.SelectedIngredients.Count > 0)
 			{
-				bool added = mixManager.AddIngredient(hoveredIngredient.name);
-				if (added)
-				{
-					if (AudioManager.Instance != null)
-						AudioManager.Instance.PlayIngredientClick();
-					if (!shelfPositions.ContainsKey(hoveredIngredient.name))
-						shelfPositions[hoveredIngredient.name] = hoveredIngredient.rectTransform.anchoredPosition;
-					hoveredIngredient.rectTransform.anchoredPosition = GetSnapTarget();
-				}
+				string last = mixManager.SelectedIngredients[mixManager.SelectedIngredients.Count - 1];
+				RemoveIngredientUi(last);
 			}
+
 			s_processedClickThisFrame = true;
+		}
+	}
+
+	private bool IsMouseOverBottle()
+	{
+		if (IngredientsBottle == null) return false;
+		Canvas c = IngredientsBottle.canvas;
+		Camera cam = c != null && c.renderMode != RenderMode.ScreenSpaceOverlay ? c.worldCamera : null;
+		return RectTransformUtility.RectangleContainsScreenPoint(IngredientsBottle.rectTransform, Input.mousePosition, cam);
+	}
+
+	private void AddIngredientUi(string id, Image img)
+	{
+		bool added = mixManager.AddIngredient(id);
+		if (!added) return;
+
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayIngredientClick();
+
+		ingredientImages[id] = img;
+
+		if (!shelfPositions.ContainsKey(id))
+		{
+			shelfPositions[id] = img.rectTransform.anchoredPosition;
+			shelfScales[id] = img.rectTransform.localScale;
+		}
+
+		int slotIndex = ReserveSlotFor(id);
+		if (slotIndex < 0)
+		{
+			mixManager.RemoveIngredient(id);
+			return;
+		}
+
+		StartIngredientAnimationToSlot(id, img, slotIndex);
+	}
+
+	private void RemoveIngredientUi(string id)
+	{
+		bool removed = mixManager.RemoveIngredient(id);
+		if (!removed) return;
+
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayIngredientClick();
+
+		StopIngredientAnimation(id);
+		ReleaseSlotFor(id);
+
+		if (ingredientImages.TryGetValue(id, out Image img) && img != null)
+		{
+			img.rectTransform.SetParent(ingredientRoot, false);
+			if (shelfScales.TryGetValue(id, out Vector3 s))
+				img.rectTransform.localScale = s;
+			img.rectTransform.anchoredPosition = GetShelfPosition(id);
+
+			CanvasGroup cg = img.GetComponent<CanvasGroup>();
+			if (cg != null) cg.alpha = 1f;
+		}
+
+		ReflowSlots();
+	}
+
+	private void StopIngredientAnimation(string id)
+	{
+		if (!ingredientToAnim.TryGetValue(id, out Coroutine c) || c == null)
+			return;
+
+		StopCoroutine(c);
+		ingredientToAnim.Remove(id);
+	}
+
+	private void StartIngredientAnimationToSlot(string id, Image img, int slotIndex)
+	{
+		StopIngredientAnimation(id);
+		Coroutine c = StartCoroutine(AnimateIngredientToSlot(id, img, slotIndex));
+		ingredientToAnim[id] = c;
+	}
+
+	private IEnumerator AnimateIngredientToSlot(string id, Image img, int slotIndex)
+	{
+		if (img == null) yield break;
+
+		RectTransform slot = GetSlot(slotIndex);
+		if (slot == null) yield break;
+
+		Canvas c = img.canvas != null ? img.canvas : (IngredientsBottle != null ? IngredientsBottle.canvas : null);
+		if (c != null)
+			img.rectTransform.SetParent(c.transform, true);
+
+		CanvasGroup cg = img.GetComponent<CanvasGroup>();
+		if (cg == null) cg = img.gameObject.AddComponent<CanvasGroup>();
+		cg.alpha = 1f;
+
+		Vector3 startPos = img.rectTransform.position;
+		Vector3 drinkPos = GetDissolveWorldPos();
+
+		float t = 0f;
+		while (t < 1f)
+		{
+			t += Time.unscaledDeltaTime / Mathf.Max(0.001f, moveToDrinkSeconds);
+			float u = Mathf.Clamp01(t);
+			img.rectTransform.position = Vector3.Lerp(startPos, drinkPos, u);
+			yield return null;
+		}
+
+		t = 0f;
+		while (t < 1f)
+		{
+			t += Time.unscaledDeltaTime / Mathf.Max(0.001f, fadeOutSeconds);
+			float u = Mathf.Clamp01(t);
+			cg.alpha = 1f - u;
+			yield return null;
+		}
+
+		img.rectTransform.SetParent(slot, false);
+		img.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+		img.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+		img.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+		img.rectTransform.anchoredPosition = Vector2.zero;
+		img.rectTransform.localScale = slotScale;
+
+		t = 0f;
+		while (t < 1f)
+		{
+			t += Time.unscaledDeltaTime / Mathf.Max(0.001f, fadeInSeconds);
+			float u = Mathf.Clamp01(t);
+			cg.alpha = u;
+			yield return null;
+		}
+
+		ingredientToAnim.Remove(id);
+	}
+
+	private Vector3 GetDissolveWorldPos()
+	{
+		if (dissolveTarget != null) return dissolveTarget.position;
+		if (IngredientsBottle != null) return IngredientsBottle.rectTransform.position;
+		return Vector3.zero;
+	}
+
+	private int ReserveSlotFor(string id)
+	{
+		if (ingredientToSlotIndex.TryGetValue(id, out int existing))
+			return existing;
+
+		for (int i = 0; i < slotOccupiedById.Length; i++)
+		{
+			if (string.IsNullOrEmpty(slotOccupiedById[i]))
+			{
+				slotOccupiedById[i] = id;
+				ingredientToSlotIndex[id] = i;
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	private void ReleaseSlotFor(string id)
+	{
+		if (!ingredientToSlotIndex.TryGetValue(id, out int index))
+			return;
+
+		ingredientToSlotIndex.Remove(id);
+		if (index >= 0 && index < slotOccupiedById.Length && slotOccupiedById[index] == id)
+			slotOccupiedById[index] = null;
+	}
+
+	private void ReflowSlots()
+	{
+		if (mixManager == null) return;
+
+		ingredientToSlotIndex.Clear();
+		for (int i = 0; i < slotOccupiedById.Length; i++)
+			slotOccupiedById[i] = null;
+
+		int slotIndex = 0;
+		foreach (string id in mixManager.SelectedIngredients)
+		{
+			if (slotIndex >= 3) break;
+			slotOccupiedById[slotIndex] = id;
+			ingredientToSlotIndex[id] = slotIndex;
+
+			if (ingredientImages.TryGetValue(id, out Image img) && img != null)
+			{
+				RectTransform slot = GetSlot(slotIndex);
+				if (slot != null)
+				{
+					img.rectTransform.SetParent(slot, false);
+					img.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+					img.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+					img.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+					img.rectTransform.anchoredPosition = Vector2.zero;
+					img.rectTransform.localScale = slotScale;
+					CanvasGroup cg = img.GetComponent<CanvasGroup>();
+					if (cg != null) cg.alpha = 1f;
+				}
+			}
+
+			slotIndex++;
+		}
+	}
+
+	private void RebuildSlotStateFromMix()
+	{
+		if (mixManager == null)
+			mixManager = FindFirstObjectByType<MixManager>();
+
+		ingredientImages.Clear();
+		foreach (GameObject go in EnumerateIngredientObjects())
+		{
+			Image img = go.GetComponent<Image>();
+			if (img != null && !string.IsNullOrEmpty(go.name))
+				ingredientImages[go.name] = img;
+		}
+
+		ReflowSlots();
+	}
+
+	private RectTransform GetSlot(int index)
+	{
+		switch (index)
+		{
+			case 0: return slot1;
+			case 1: return slot2;
+			case 2: return slot3;
+			default: return null;
 		}
 	}
 
 	private Vector2 GetSnapTarget()
 	{
-		if (mixManager == null) return snapTargetPosMedium;
-		switch (mixManager.SelectedBottle)
-		{
-			case "small": return snapTargetPosSmall;
-			case "large": return snapTargetPosLarge;
-			default: return snapTargetPosMedium;
-		}
-	}
-
-	private bool IsInDrink(Image img)
-	{
-		Vector2 pos = img.rectTransform.anchoredPosition;
-		return (pos - GetSnapTarget()).sqrMagnitude <= inDrinkThreshold * inDrinkThreshold;
+		return snapTargetPosMedium;
 	}
 
 	private Vector2 GetShelfPosition(string ingredientName)

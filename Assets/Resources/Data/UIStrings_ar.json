@@ -67,6 +67,8 @@
     {"key": "controls_wasd", "value": "WASD"},
     {"key": "controls_text", "value": "التحكم"},
     {"key": "volume_text", "value": "الصوت"},
-    {"key": "credits_text", "value": "الأسماء:\nDavid Guerrero-Pantoja - قائد الإنتاج\nAla'Addin Ghosheh - قائد المحرّك\nEder Yepez Cuevas - قائد الأدوات\nZosia Trela - قائد التصميم\nArchie Dickson - فن\nAdan O'Toole - فن\nTyana Tran - فن\n\nالمؤثرات الصوتية:\nFreesound.com\nPixabay.com\n\nالخطوط:\nAlkhemical, NotoSansArabic and PixeloidMono"}
+    {"key": "credits_text", "value": "الأسماء:\nDavid Guerrero-Pantoja - قائد الإنتاج\nAla'Addin Ghosheh - قائد المحرّك\nEder Yepez Cuevas - قائد الأدوات\nZosia Trela - قائد التصميم\nArchie Dickson - فن\nAdan O'Toole - فن\nTyana Tran - فن\n\nالمؤثرات الصوتية:\nFreesound.com\nPixabay.com\n\nالخطوط:\nAlkhemical, NotoSansArabic and PixeloidMono"},
+    {"key": "DayText", "value": "اليوم 1"},
+    {"key": "shopbutton", "value": "المتجر"}
   ]
 }

@@ -3,8 +3,7 @@
     {
       "id": "unicorn",
       "name": "Anita Carberneigh",
-      "glassPreference": "medium",
-
+      "toppingsPreference": "Cherry",
       "sprites": {
         "neutral": "Art/Monsters/Unicorn/unicorn_neutral",
         "happy": "Art/Monsters/Unicorn/unicorn_happy",
@@ -14,11 +13,12 @@
   
       "dialogueId": "dlg_unicorn",
       "position": {"pos_x": -100, "pos_y": 170}
+
     },
      {
       "id": "slime",
       "name": "Sloshberg Florpton",
-      "glassPreference": "large",
+      "toppingsPreference": "Lime",
 
       "sprites": {
         "neutral": "Art/Monsters/Slime/slime_neutral",
@@ -32,7 +32,8 @@
      {
       "id": "alien",
       "name": "Zip Zorp the Glorp",
-      "glassPreference": "large",
+      "toppingsPreference": "Umbrella",
+
 
       "sprites": {
         "neutral": "Art/Monsters/Alien/alien_neutral",
@@ -43,6 +44,20 @@
     
       "dialogueId": "dlg_alien",
       "position": {"pos_x": -169, "pos_y": -37}
+    },
+        {
+      "id": "toad",
+      "name": "Gurt",
+      "toppingsPreference": "Umbrella",
+
+
+      "sprites": {
+        "neutral": "Art/Monsters/Toad/toad_neutral",
+        "angry": "Art/Monsters/Toad/toad_angry"
+      },
+    
+      "dialogueId": "dlg_toad",
+      "position": {"pos_x": 30, "pos_y": 70}
     }
   ]
 }

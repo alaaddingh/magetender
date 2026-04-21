@@ -1,0 +1,2210 @@
+fileFormatVersion: 2
+guid: 322c1db237ebb5d4f81c9ceaec2bd6ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -888767297500816328
+    second: cherry_jar_0
+  - first:
+      213: -1571671469899401010
+    second: cherry_jar_1
+  - first:
+      213: -6420012236916938750
+    second: cherry_jar_2
+  - first:
+      213: 5282707538225142270
+    second: cherry_jar_3
+  - first:
+      213: 4911542328702900753
+    second: cherry_jar_4
+  - first:
+      213: 7340933862250437605
+    second: cherry_jar_5
+  - first:
+      213: 1454691482374719499
+    second: cherry_jar_6
+  - first:
+      213: 8718674047864927675
+    second: cherry_jar_7
+  - first:
+      213: 7668145361450543734
+    second: cherry_jar_8
+  - first:
+      213: 337209992511485399
+    second: cherry_jar_9
+  - first:
+      213: -1755681245850462242
+    second: cherry_jar_10
+  - first:
+      213: 8324407883441867633
+    second: cherry_jar_11
+  - first:
+      213: -5385440390404761188
+    second: cherry_jar_12
+  - first:
+      213: -4790301382235207252
+    second: cherry_jar_13
+  - first:
+      213: -5338494203201568103
+    second: cherry_jar_14
+  - first:
+      213: 4821029228922672586
+    second: cherry_jar_15
+  - first:
+      213: -6042328630627106190
+    second: cherry_jar_16
+  - first:
+      213: -3546221282881570763
+    second: cherry_jar_17
+  - first:
+      213: -5614619876255566388
+    second: cherry_jar_18
+  - first:
+      213: 4972030748110827105
+    second: cherry_jar_19
+  - first:
+      213: -7994504483928663078
+    second: cherry_jar_20
+  - first:
+      213: 7735811850188950329
+    second: cherry_jar_21
+  - first:
+      213: 605977239681406697
+    second: cherry_jar_22
+  - first:
+      213: -8287710789810251688
+    second: cherry_jar_23
+  - first:
+      213: -6432446103290590494
+    second: cherry_jar_24
+  - first:
+      213: 100405215598661392
+    second: cherry_jar_25
+  - first:
+      213: -6311525861131699543
+    second: cherry_jar_26
+  - first:
+      213: 4346591333001936450
+    second: cherry_jar_27
+  - first:
+      213: -8045798132082812687
+    second: cherry_jar_28
+  - first:
+      213: 8704535509179942022
+    second: cherry_jar_29
+  - first:
+      213: -6662630194257238023
+    second: cherry_jar_30
+  - first:
+      213: 2006993992353886677
+    second: cherry_jar_31
+  - first:
+      213: -1458091199090129888
+    second: cherry_jar_32
+  - first:
+      213: -1948459528744920969
+    second: cherry_jar_33
+  - first:
+      213: 3763986202131194485
+    second: cherry_jar_34
+  - first:
+      213: -5205692577209454469
+    second: cherry_jar_35
+  - first:
+      213: -5150174184833583932
+    second: cherry_jar_36
+  - first:
+      213: -6559357792177534710
+    second: cherry_jar_37
+  - first:
+      213: -6853713252314660
+    second: cherry_jar_38
+  - first:
+      213: -8128192964723969988
+    second: cherry_jar_39
+  - first:
+      213: -4477937378999402080
+    second: cherry_jar_40
+  - first:
+      213: 4672167039574261956
+    second: cherry_jar_41
+  - first:
+      213: 5768018454709889705
+    second: cherry_jar_42
+  - first:
+      213: -3070613715198167629
+    second: cherry_jar_43
+  - first:
+      213: -7918754039216689816
+    second: cherry_jar_44
+  - first:
+      213: -7500097085710086618
+    second: cherry_jar_45
+  - first:
+      213: -708574662069654289
+    second: cherry_jar_46
+  - first:
+      213: 4283592778790257578
+    second: cherry_jar_47
+  - first:
+      213: 7558169964874088189
+    second: cherry_jar_48
+  - first:
+      213: -3034695870627837305
+    second: cherry_jar_49
+  - first:
+      213: 8331483681169203285
+    second: cherry_jar_50
+  - first:
+      213: -2182352923441452283
+    second: cherry_jar_51
+  - first:
+      213: 5830257900107655036
+    second: cherry_jar_52
+  - first:
+      213: -4763939530449400883
+    second: cherry_jar_53
+  - first:
+      213: 7202824137888925961
+    second: cherry_jar_54
+  - first:
+      213: -367063325768371398
+    second: cherry_jar_55
+  - first:
+      213: 144019309903593655
+    second: cherry_jar_56
+  - first:
+      213: 5269847607322605049
+    second: cherry_jar_57
+  - first:
+      213: 1307365838912916936
+    second: cherry_jar_58
+  - first:
+      213: -992703770339527790
+    second: cherry_jar_59
+  - first:
+      213: 8939879085435547243
+    second: cherry_jar_60
+  - first:
+      213: 182923763790235952
+    second: cherry_jar_61
+  - first:
+      213: -9033485916472379729
+    second: cherry_jar_62
+  - first:
+      213: 4163566545552114193
+    second: cherry_jar_63
+  - first:
+      213: -688933228878889679
+    second: cherry_jar_64
+  - first:
+      213: 2730091619797892821
+    second: cherry_jar_65
+  - first:
+      213: 429999825476257724
+    second: cherry_jar_66
+  - first:
+      213: -7708645103992239466
+    second: cherry_jar_67
+  - first:
+      213: 8090645203955141069
+    second: cherry_jar_68
+  - first:
+      213: 184173129029175943
+    second: cherry_jar_69
+  - first:
+      213: 5725427642405115926
+    second: cherry_jar_70
+  - first:
+      213: 6908650072825672674
+    second: cherry_jar_71
+  - first:
+      213: -8847599941036722412
+    second: cherry_jar_72
+  - first:
+      213: -6729788448739471972
+    second: cherry_jar_73
+  - first:
+      213: -8229431993392989209
+    second: cherry_jar_74
+  - first:
+      213: -5290554219903139604
+    second: cherry_jar_75
+  - first:
+      213: -3384614942570754925
+    second: cherry_jar_76
+  - first:
+      213: 7178429243901951804
+    second: cherry_jar_77
+  - first:
+      213: -4737667102815575452
+    second: cherry_jar_78
+  - first:
+      213: -7467832655077830253
+    second: cherry_jar_79
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cherry_jar_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 2246
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83cda701ad67aa3f0800000000000000
+      internalID: -888767297500816328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_1
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 91
+        width: 1725
+        height: 2402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec8b70d002d403ae0800000000000000
+      internalID: -1571671469899401010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_2
+      rect:
+        serializedVersion: 2
+        x: 2263
+        y: 2366
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 208a7ec92e887e6a0800000000000000
+      internalID: -6420012236916938750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_3
+      rect:
+        serializedVersion: 2
+        x: 2288
+        y: 2390
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef9103c5482ff4940800000000000000
+      internalID: 5282707538225142270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_4
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 2397
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11a91a9b9bd492440800000000000000
+      internalID: 4911542328702900753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_5
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 2308
+        width: 52
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ebd21b247c30e560800000000000000
+      internalID: 7340933862250437605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_6
+      rect:
+        serializedVersion: 2
+        x: 2249
+        y: 2346
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b084bb8223a103410800000000000000
+      internalID: 1454691482374719499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_7
+      rect:
+        serializedVersion: 2
+        x: 2151
+        y: 2247
+        width: 42
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb5f76f5ad3fef870800000000000000
+      internalID: 8718674047864927675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_8
+      rect:
+        serializedVersion: 2
+        x: 2182
+        y: 2278
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67aa1532499ba6a60800000000000000
+      internalID: 7668145361450543734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_9
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 2162
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d5fb5a93b20ea400800000000000000
+      internalID: 337209992511485399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_10
+      rect:
+        serializedVersion: 2
+        x: 2066
+        y: 2162
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed7944a753192a7e0800000000000000
+      internalID: -1755681245850462242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_11
+      rect:
+        serializedVersion: 2
+        x: 2135
+        y: 1914
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b830a8ddc368370800000000000000
+      internalID: 8324407883441867633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_12
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 2086
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9912ea8f721345b0800000000000000
+      internalID: -5385440390404761188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_13
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 2110
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9cec0e54e658db0800000000000000
+      internalID: -4790301382235207252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_14
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 2028
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99240b68ecbd9e5b0800000000000000
+      internalID: -5338494203201568103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_15
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 2066
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac516b17a8cb7e240800000000000000
+      internalID: 4821029228922672586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_16
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 1968
+        width: 42
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2728c43cf16552ca0800000000000000
+      internalID: -6042328630627106190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_17
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1999
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538f9ea288a49cec0800000000000000
+      internalID: -3546221282881570763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_18
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 1969
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc570f658fcd412b0800000000000000
+      internalID: -5614619876255566388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_19
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1645
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16e27795f93300540800000000000000
+      internalID: 4972030748110827105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_20
+      rect:
+        serializedVersion: 2
+        x: 2263
+        y: 1764
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb1a205780dd0190800000000000000
+      internalID: -7994504483928663078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_21
+      rect:
+        serializedVersion: 2
+        x: 2288
+        y: 1789
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93b05c344ef1b5b60800000000000000
+      internalID: 7735811850188950329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_22
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 1796
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e69e21c61dd86800800000000000000
+      internalID: 605977239681406697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_23
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 1707
+        width: 52
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 858103462f22cfc80800000000000000
+      internalID: -8287710789810251688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_24
+      rect:
+        serializedVersion: 2
+        x: 2249
+        y: 1745
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2eac480895c5bb6a0800000000000000
+      internalID: -6432446103290590494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_25
+      rect:
+        serializedVersion: 2
+        x: 2151
+        y: 1646
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01fca59f206b46100800000000000000
+      internalID: 100405215598661392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_26
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 1561
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aabd805ba4f868a0800000000000000
+      internalID: -6311525861131699543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_27
+      rect:
+        serializedVersion: 2
+        x: 2066
+        y: 1561
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24e3f53c9c1325c30800000000000000
+      internalID: 4346591333001936450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_28
+      rect:
+        serializedVersion: 2
+        x: 2135
+        y: 1313
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f8d3b23a35975090800000000000000
+      internalID: -8045798132082812687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_29
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 1485
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 684c17f4de8bcc870800000000000000
+      internalID: 8704535509179942022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_30
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 1509
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f7618173259983a0800000000000000
+      internalID: -6662630194257238023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_31
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 1427
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d1b89c07664adb10800000000000000
+      internalID: 2006993992353886677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_32
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 1465
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0240c1c97c1d3cbe0800000000000000
+      internalID: -1458091199090129888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_33
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 1367
+        width: 42
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7781fe9c16ea5f4e0800000000000000
+      internalID: -1948459528744920969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_34
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1398
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5726085228d5c3430800000000000000
+      internalID: 3763986202131194485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_35
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 1368
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70fa859e2aa1c7b0800000000000000
+      internalID: -5205692577209454469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_36
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1044
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c47b9d9dd7e688b0800000000000000
+      internalID: -5150174184833583932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_37
+      rect:
+        serializedVersion: 2
+        x: 2263
+        y: 1164
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a09419a47da78f4a0800000000000000
+      internalID: -6559357792177534710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_38
+      rect:
+        serializedVersion: 2
+        x: 2288
+        y: 1188
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd114388596a7eff0800000000000000
+      internalID: -6853713252314660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_39
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 1195
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c307cc7409bd23f80800000000000000
+      internalID: -8128192964723969988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_40
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 1106
+        width: 52
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a10c4ecdab2bd1c0800000000000000
+      internalID: -4477937378999402080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_41
+      rect:
+        serializedVersion: 2
+        x: 2249
+        y: 1144
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c0cc151b2fd6d040800000000000000
+      internalID: 4672167039574261956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_42
+      rect:
+        serializedVersion: 2
+        x: 2151
+        y: 1045
+        width: 42
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aa61ea693e1c0050800000000000000
+      internalID: 5768018454709889705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_43
+      rect:
+        serializedVersion: 2
+        x: 2182
+        y: 1076
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b5bb27481df265d0800000000000000
+      internalID: -3070613715198167629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_44
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 960
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86daccc182fea1290800000000000000
+      internalID: -7918754039216689816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_45
+      rect:
+        serializedVersion: 2
+        x: 2066
+        y: 960
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62ece41107d4ae790800000000000000
+      internalID: -7500097085710086618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_46
+      rect:
+        serializedVersion: 2
+        x: 2135
+        y: 712
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fecee7a5913aa26f0800000000000000
+      internalID: -708574662069654289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_47
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 884
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa3c836dfe0627b30800000000000000
+      internalID: 4283592778790257578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_48
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 908
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfeb854c98304e860800000000000000
+      internalID: 7558169964874088189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_49
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 826
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78a02e52f2892e5d0800000000000000
+      internalID: -3034695870627837305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_50
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 864
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 550ed0414406f9370800000000000000
+      internalID: 8331483681169203285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_51
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 766
+        width: 42
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50bacb72499b6b1e0800000000000000
+      internalID: -2182352923441452283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_52
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 797
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c77e4dc8bac39e050800000000000000
+      internalID: 5830257900107655036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_53
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 767
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcb4f1ccc3613edb0800000000000000
+      internalID: -4763939530449400883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_54
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 443
+        width: 248
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9098a76246295f360800000000000000
+      internalID: 7202824137888925961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_55
+      rect:
+        serializedVersion: 2
+        x: 2263
+        y: 562
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a33b08999dde7eaf0800000000000000
+      internalID: -367063325768371398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_56
+      rect:
+        serializedVersion: 2
+        x: 2288
+        y: 587
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b0c99f9cc8aff100800000000000000
+      internalID: 144019309903593655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_57
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 594
+        width: 90
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f5f7ee5a72422940800000000000000
+      internalID: 5269847607322605049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_58
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 505
+        width: 52
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cd82e3cd42b42210800000000000000
+      internalID: 1307365838912916936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_59
+      rect:
+        serializedVersion: 2
+        x: 2249
+        y: 543
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 293b8b13e253932f0800000000000000
+      internalID: -992703770339527790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_60
+      rect:
+        serializedVersion: 2
+        x: 2151
+        y: 444
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6e6456a9a4d01c70800000000000000
+      internalID: 8939879085435547243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_61
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 359
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 039c1b9a130e98200800000000000000
+      internalID: 182923763790235952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_62
+      rect:
+        serializedVersion: 2
+        x: 2066
+        y: 359
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa67b21ab6c92a280800000000000000
+      internalID: -9033485916472379729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_63
+      rect:
+        serializedVersion: 2
+        x: 2135
+        y: 111
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1128552b6b5f7c930800000000000000
+      internalID: 4163566545552114193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_64
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 283
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13df5b2e0ea6076f0800000000000000
+      internalID: -688933228878889679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_65
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 307
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5def2521ddb33e520800000000000000
+      internalID: 2730091619797892821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_66
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 225
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb70ef2209aa7f500800000000000000
+      internalID: 429999825476257724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_67
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 263
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69a0dfcbe14650590800000000000000
+      internalID: -7708645103992239466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_68
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 165
+        width: 42
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc9c67962feb74070800000000000000
+      internalID: 8090645203955141069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_69
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 196
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78ac4fc2c705e8200800000000000000
+      internalID: 184173129029175943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_70
+      rect:
+        serializedVersion: 2
+        x: 2473
+        y: 166
+        width: 27
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61852cc2b1ec47f40800000000000000
+      internalID: 5725427642405115926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_71
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3304c33a470ef50800000000000000
+      internalID: 6908650072825672674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_72
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 0
+        width: 35
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4173dbfeab2073580800000000000000
+      internalID: -8847599941036722412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_73
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9d4b53df0dfa92a0800000000000000
+      internalID: -6729788448739471972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_74
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 0
+        width: 35
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eb7392143f2bcd80800000000000000
+      internalID: -8229431993392989209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_75
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce0cab1b7fc2496b0800000000000000
+      internalID: -5290554219903139604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_76
+      rect:
+        serializedVersion: 2
+        x: 1687
+        y: 0
+        width: 35
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39c479664ae6701d0800000000000000
+      internalID: -3384614942570754925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_77
+      rect:
+        serializedVersion: 2
+        x: 1809
+        y: 0
+        width: 96
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3f3d084d57ee9360800000000000000
+      internalID: 7178429243901951804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_78
+      rect:
+        serializedVersion: 2
+        x: 2288
+        y: 0
+        width: 35
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 462af980fdc604eb0800000000000000
+      internalID: -4737667102815575452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cherry_jar_79
+      rect:
+        serializedVersion: 2
+        x: 2410
+        y: 0
+        width: 90
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 391160834cdec5890800000000000000
+      internalID: -7467832655077830253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      cherry_jar_0: -888767297500816328
+      cherry_jar_1: -1571671469899401010
+      cherry_jar_10: -1755681245850462242
+      cherry_jar_11: 8324407883441867633
+      cherry_jar_12: -5385440390404761188
+      cherry_jar_13: -4790301382235207252
+      cherry_jar_14: -5338494203201568103
+      cherry_jar_15: 4821029228922672586
+      cherry_jar_16: -6042328630627106190
+      cherry_jar_17: -3546221282881570763
+      cherry_jar_18: -5614619876255566388
+      cherry_jar_19: 4972030748110827105
+      cherry_jar_2: -6420012236916938750
+      cherry_jar_20: -7994504483928663078
+      cherry_jar_21: 7735811850188950329
+      cherry_jar_22: 605977239681406697
+      cherry_jar_23: -8287710789810251688
+      cherry_jar_24: -6432446103290590494
+      cherry_jar_25: 100405215598661392
+      cherry_jar_26: -6311525861131699543
+      cherry_jar_27: 4346591333001936450
+      cherry_jar_28: -8045798132082812687
+      cherry_jar_29: 8704535509179942022
+      cherry_jar_3: 5282707538225142270
+      cherry_jar_30: -6662630194257238023
+      cherry_jar_31: 2006993992353886677
+      cherry_jar_32: -1458091199090129888
+      cherry_jar_33: -1948459528744920969
+      cherry_jar_34: 3763986202131194485
+      cherry_jar_35: -5205692577209454469
+      cherry_jar_36: -5150174184833583932
+      cherry_jar_37: -6559357792177534710
+      cherry_jar_38: -6853713252314660
+      cherry_jar_39: -8128192964723969988
+      cherry_jar_4: 4911542328702900753
+      cherry_jar_40: -4477937378999402080
+      cherry_jar_41: 4672167039574261956
+      cherry_jar_42: 5768018454709889705
+      cherry_jar_43: -3070613715198167629
+      cherry_jar_44: -7918754039216689816
+      cherry_jar_45: -7500097085710086618
+      cherry_jar_46: -708574662069654289
+      cherry_jar_47: 4283592778790257578
+      cherry_jar_48: 7558169964874088189
+      cherry_jar_49: -3034695870627837305
+      cherry_jar_5: 7340933862250437605
+      cherry_jar_50: 8331483681169203285
+      cherry_jar_51: -2182352923441452283
+      cherry_jar_52: 5830257900107655036
+      cherry_jar_53: -4763939530449400883
+      cherry_jar_54: 7202824137888925961
+      cherry_jar_55: -367063325768371398
+      cherry_jar_56: 144019309903593655
+      cherry_jar_57: 5269847607322605049
+      cherry_jar_58: 1307365838912916936
+      cherry_jar_59: -992703770339527790
+      cherry_jar_6: 1454691482374719499
+      cherry_jar_60: 8939879085435547243
+      cherry_jar_61: 182923763790235952
+      cherry_jar_62: -9033485916472379729
+      cherry_jar_63: 4163566545552114193
+      cherry_jar_64: -688933228878889679
+      cherry_jar_65: 2730091619797892821
+      cherry_jar_66: 429999825476257724
+      cherry_jar_67: -7708645103992239466
+      cherry_jar_68: 8090645203955141069
+      cherry_jar_69: 184173129029175943
+      cherry_jar_7: 8718674047864927675
+      cherry_jar_70: 5725427642405115926
+      cherry_jar_71: 6908650072825672674
+      cherry_jar_72: -8847599941036722412
+      cherry_jar_73: -6729788448739471972
+      cherry_jar_74: -8229431993392989209
+      cherry_jar_75: -5290554219903139604
+      cherry_jar_76: -3384614942570754925
+      cherry_jar_77: 7178429243901951804
+      cherry_jar_78: -4737667102815575452
+      cherry_jar_79: -7467832655077830253
+      cherry_jar_8: 7668145361450543734
+      cherry_jar_9: 337209992511485399
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -9,6 +9,7 @@ namespace Magetender.Data
         public int day;
         public int currentEncounterIndex;
 		public string[] unlockedIngredientIds;
+        public bool tutorialCompleted;
     }
 }
 

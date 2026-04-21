@@ -16,6 +16,14 @@ public class AssessController : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private MonsterStateManager MonsterStateManager;
     [SerializeField] private CurrentMonster currentMonsterManager;
+
+
+    [SerializeField] private TimerUI timerUI;
+
+    [SerializeField] private MixManager mixManager;
+
+    [SerializeField] private GameObject moodgraph;
+
     public LoseManager loseManager;
 
     [Header("UI")]
@@ -212,12 +220,14 @@ public class AssessController : MonoBehaviour
 
     private void AssessState(float accuracy)
     {
-        if (currentMonsterManager == null)
+       
+       if (timerUI.TimeUp == true)
         {
-            MonsterStateManager.SetState("neutral");
+            MonsterStateManager.SetState("angry");
+            moodgraph.SetActive(false);
+            
             return;
         }
-
         float satisfiedTolerance = currentMonsterManager.GetSatisfiedTolerance();
         float error = 100f - accuracy;
         bool sameQuadrantAsGoal = IsFinalScoreInGoalQuadrant();
@@ -236,6 +246,41 @@ public class AssessController : MonoBehaviour
         {
             /* outside goal quadrant */
             MonsterStateManager.SetState("angry");
+        }
+
+        /* now assess TOPPINGS */
+        AssessToppings();
+    }
+
+    private void AssessToppings()
+    {
+        string toppingPreference = currentMonsterManager.Data.toppingsPreference;
+        bool CorrectTopping = mixManager.SelectedToppings.Contains(toppingPreference);
+
+        /* promote one mood up */
+        if(CorrectTopping){
+            print("CORRECT TOPPING!");
+            if(MonsterStateManager.MonsterState == "angry") {
+                    MonsterStateManager.SetState("neutral");
+                    return;
+                }
+            else if (MonsterStateManager.MonsterState == "neutral") {
+                MonsterStateManager.SetState("happy");
+                return;
+            }
+
+        }
+        /* demote one mood down */
+        else {
+            print("INCORRECT TOPPING!");
+            if(MonsterStateManager.MonsterState == "satisfied") {
+                    MonsterStateManager.SetState("neutral");
+                    return;
+                }
+            else if (MonsterStateManager.MonsterState == "neutral") {
+                MonsterStateManager.SetState("angry");
+                return;
+            }
         }
     }
 

@@ -33,7 +33,10 @@ public class DialogueController : MonoBehaviour
 
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
-    public GameObject selectingGlassScreen;
+    public GameObject BaseScreen;
+
+    public GameObject TimerCanvas;
+
 
     [Header("Global coin canvas - hide when leaving order screen")]
     [SerializeField] private GameObject coinCanvas;
@@ -169,7 +172,9 @@ public class DialogueController : MonoBehaviour
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
-        selectingGlassScreen.SetActive(true);
+        /* begin timer */
+        TimerCanvas.SetActive(true);
+        BaseScreen.SetActive(true);
     }
 
     private void HandleMonsterChanged(string _)
@@ -229,6 +234,7 @@ public class DialogueController : MonoBehaviour
         brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1);
         UpdateNextButtonState(lines);
         UpdateContinueButtonState(lines);
+        TryMakeTutorialToadAngry(lines);
     }
 
     private void UpdateNextButtonState(List<string> activeDialogue)
@@ -289,5 +295,34 @@ public class DialogueController : MonoBehaviour
         var localizedText = continueButtonObject.GetComponentInChildren<LocalizedTMPText>(true);
         if (localizedText != null)
             localizedText.SetKey(key);
+    }
+
+    private void TryMakeTutorialToadAngry(List<string> activeDialogue)
+    {
+        if (!IsTutorialToadNeutralServeDialogue())
+            return;
+
+        if (activeDialogue == null || activeDialogue.Count == 0 || dialogueIndex < activeDialogue.Count - 1)
+            return;
+
+        monsterStateManager.SetState("angry");
+    }
+
+    private bool IsTutorialToadNeutralServeDialogue()
+    {
+        if (gameObject.name != "AssessDialogueController")
+            return false;
+
+        if (monsterStateManager == null || currentMonsterManager == null || currentMonsterManager.Data == null || currentMonsterManager.CurrentEncounter == null)
+            return false;
+
+        if (monsterStateManager.MonsterState != "neutral")
+            return false;
+
+        if (currentMonsterManager.Data.id != "toad")
+            return false;
+
+        string dialogueKey = currentMonsterManager.CurrentEncounter.dialogue_key;
+        return dialogueKey == "tutorial" || dialogueKey == "tutorial_1";
     }
 }

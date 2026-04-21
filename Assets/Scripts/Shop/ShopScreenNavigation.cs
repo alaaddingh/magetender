@@ -31,9 +31,7 @@ public class ShopScreenNavigation : MonoBehaviour
 
 		if (shopScreen != null)
 		{
-			var shopController = shopScreen.GetComponentInChildren<ShopPanelController>(includeInactive: true);
-			if (shopController != null)
-				shopController.ForceRefreshUI();
+			var shopController = shopScreen.GetComponentInChildren<ShopPanelController>(includeInactive: true);	
 		}
 	}
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 12e9ea73cbb8a4c4f8fefe97d91bd372
+guid: d75ebf9beb8e88c49a901054682732c1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7019406135357746363
-    second: OrderScreenBG_0
+      213: -1968757664341249771
+    second: NewMixingGlass_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OrderScreenBG_0
+      name: NewMixingGlass_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1728
-        height: 972
+        x: 76
+        y: 2
+        width: 205
+        height: 344
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bbc223090b0f96160800000000000000
-      internalID: 7019406135357746363
+      spriteID: 511bc10d5519da4e0800000000000000
+      internalID: -1968757664341249771
       vertices: []
       indices: 
       edges: []
@@ -125,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      OrderScreenBG_0: 7019406135357746363
+      NewMixingGlass_0: -1968757664341249771
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
