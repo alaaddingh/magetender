@@ -25,6 +25,7 @@ public class MonsterSprites
     public string happy;
     public string angry;
     public string fight;
+    public string hit;
 }
 
 [Serializable]

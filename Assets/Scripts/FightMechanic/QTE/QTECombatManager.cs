@@ -115,6 +115,7 @@ public class QTECombatManager : MonoBehaviour
 	private Sprite customerNeutralSprite;
 	private Sprite customerHappySprite;
 	private Sprite customerFightSprite;
+	private Sprite customerHitSprite;
 	
 	// Bank system variables
 	private List<KeyCode> defendSequence = new List<KeyCode>();
@@ -177,6 +178,7 @@ public class QTECombatManager : MonoBehaviour
 				customerSprite.sprite = customerFightSprite;
 			else if (customerAngrySprite != null)
 				customerSprite.sprite = customerAngrySprite;
+
 		}
 		
 		originalCanvasPosition = mainCanvas.transform.localPosition;
@@ -330,8 +332,17 @@ public class QTECombatManager : MonoBehaviour
 		{
 			customerFightSprite = LoadSpriteFromResources(monsterData.sprites.fight);
 		}
+		if (!string.IsNullOrEmpty(monsterData.sprites.hit))
+		{
+			customerHitSprite = LoadSpriteFromResources(monsterData.sprites.hit);
+		}
 		
 		Debug.Log($"[QTECombat] Loaded monster: {monsterData.name}");
+		
+		if (customerHealthLabel != null)
+		{
+			customerHealthLabel.text = monsterData.name;
+		}
 	}
 	
 	void Update()
@@ -783,12 +794,12 @@ public class QTECombatManager : MonoBehaviour
 	
 	IEnumerator FlashCustomer()
 	{
-		// Swap to hurt/neutral sprite
-		if (customerNeutralSprite != null && customerSprite != null)
+		// Swap to hurt 
+		if (customerFightSprite != null && customerSprite != null)
 		{
-			customerSprite.sprite = customerNeutralSprite;
+			customerSprite.sprite = customerFightSprite;
 		}
-		
+
 		Image[] allImages = customerSprite.GetComponentsInChildren<Image>();
 		Color[] originalColors = new Color[allImages.Length];
 		
@@ -894,6 +905,7 @@ public class QTECombatManager : MonoBehaviour
 		// CREATE ORB
 		GameObject orb = new GameObject("MagicOrb");
 		orb.transform.SetParent(mainCanvas.transform, false);
+		orb.transform.SetAsLastSibling(); // Spawn in orb on top of other UI to deal with particle problem
 		
 		Image orbImage = orb.AddComponent<Image>();
 		orbImage.sprite = orbSprite;

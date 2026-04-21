@@ -38,6 +38,7 @@ public class HealthBarUI : MonoBehaviour
 		}
 		
 		UpdateHealth(max);
+		
 	}
 	
 	public void UpdateHealth(int current)

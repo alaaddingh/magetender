@@ -39,7 +39,8 @@
         "neutral": "Art/Monsters/Alien/alien_neutral",
         "happy": "Art/Monsters/Alien/alien_happy",
         "angry": "Art/Monsters/Alien/alien_angry",
-        "fight": "Art/Monsters/Alien/alien_fight"
+        "fight": "Art/Monsters/Alien/alien_fight",
+        "hit": "Art/Monsters/Alien/alien_hit"
       },
     
       "dialogueId": "dlg_alien",
