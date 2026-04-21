@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 // Idle floating animation for player hands
 // Creates smooth circular/elliptical motion

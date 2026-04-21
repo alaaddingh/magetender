@@ -1,10 +1,25 @@
 {
   "levels": [
     {
+      "id": "tutorial",
+      "name": "Tutorial",
+      "maintenance_cost": 0,
+      "encounters": [
+        {
+          "monster_id": "toad",
+          "tolerances": {
+              "satisfied_tolerance": 10
+          },
+          "starting_score": {"x": 0.5, "y": 0.5},
+          "goal_score": { "x": 0.5, "y": -0.5 },
+          "dialogue_key": "tutorial"
+        }
+      ]
+    },
+    {
       "id": "level_1",
       "name": "Opening Night",
-
-      
+      "maintenance_cost": 80,
       "encounters": [
          {
           "monster_id": "unicorn",
@@ -27,10 +42,10 @@
           {
           "monster_id": "slime",
           "tolerances": {
-            "satisfied_tolerance": 8
+            "satisfied_tolerance": 10
           },
-          "starting_score": {"x": 0.7, "y": 0.3},
-          "goal_score": {"x":-0.37,"y": 0.31}, 
+          "starting_score": {"x": -0.5, "y": -0.5},
+          "goal_score": {"x": 0.33,"y": 0.33}, 
           "dialogue_key": "level_1" 
         }
       ]
@@ -38,14 +53,33 @@
     {
       "id": "level_2",
       "name": "Second Night",
+      "maintenance_cost": 80,
       "encounters": [
         {
           "monster_id": "alien",
           "tolerances": {
             "satisfied_tolerance": 1.2
           },
-          "starting_score": { "x": 0.5, "y": 0.5 },
+          "starting_score": { "x": 0.7, "y": 0.1 },
           "goal_score": { "x": -0.4, "y": 0.35 }, 
+          "dialogue_key": "level_2"
+        },
+        {
+          "monster_id": "slime",
+          "tolerances": {
+            "satisfied_tolerance": 10
+          },
+          "starting_score": {"x": -0.4, "y": 0.5},
+          "goal_score": {"x": 0.4,"y": -0.67}, 
+          "dialogue_key": "level_2" 
+        },
+        {
+          "monster_id": "unicorn",
+          "tolerances": {
+            "satisfied_tolerance": 8
+          },
+          "starting_score": { "x": 0.6, "y": -0.2 },
+          "goal_score": { "x": -0.42, "y": -0.41 },
           "dialogue_key": "level_2"
         }
       ]

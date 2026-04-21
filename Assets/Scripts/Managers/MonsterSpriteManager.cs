@@ -85,8 +85,13 @@ public class MonsterSpriteManager : MonoBehaviour
 
     private void HandleMonsterChanged(string _)
     {
-		if (AudioManager.Instance != null)
-			AudioManager.Instance.PlayMonsterWalkIn();
+        if (DayScreenController.OrderScreenRevealedThisSession && AudioManager.Instance != null)
+        {
+            if (GameOverButton.CameFromRetry)
+                GameOverButton.ClearCameFromRetry();
+            else
+                AudioManager.Instance.PlayMonsterWalkIn();
+        }
         RefreshSprite();
     }
 
@@ -149,7 +154,7 @@ public class MonsterSpriteManager : MonoBehaviour
     {
         if (state == "angry")
             return sprites.angry;
-        if (state == "satisfied" || state == "happy")
+        if (state == "satisfied")
             return sprites.happy;
 
         return sprites.neutral; // start + neutral both map here

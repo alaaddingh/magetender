@@ -294,21 +294,8 @@ public class BaseController : MonoBehaviour
     {
         Vector2 pos = BaseBottle.rectTransform.anchoredPosition;
         Vector3 scale = BaseBottle.rectTransform.localScale;
-        switch (mixManager.SelectedBottle)
-        {
-            case "small":
-                pos = baseBottlePosSmall;
-                scale = smallBottleUI.rectTransform.localScale;
-                break;
-            case "medium":
-                pos = baseBottlePosMedium;
-                scale = mediumBottleUI.rectTransform.localScale;
-                break;
-            case "large":
-                pos = baseBottlePosLarge;
-                scale = largeBottleUI.rectTransform.localScale;
-                break;
-        }
+        pos = baseBottlePosMedium;
+        scale = mediumBottleUI.rectTransform.localScale;
         BaseBottle.rectTransform.anchoredPosition = pos;
         BaseBottle.rectTransform.localScale = scale;
     }
@@ -408,8 +395,7 @@ public class BaseController : MonoBehaviour
         dropImage.color = dropColor;
         dropImage.raycastTarget = false; // Don't block clicks
 
-        // Use default white sprite (Unity creates a white square)
-        dropImage.sprite = null; // Will use default white sprite
+        dropImage.sprite = FillCircleSprite.GetFullCircleCentered();
 
         // Add Pour script
         Pour pourScript = dropObj.AddComponent<Pour>();

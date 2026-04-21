@@ -16,6 +16,14 @@ public class AssessController : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private MonsterStateManager MonsterStateManager;
     [SerializeField] private CurrentMonster currentMonsterManager;
+
+
+    [SerializeField] private TimerUI timerUI;
+
+    [SerializeField] private MixManager mixManager;
+
+    [SerializeField] private GameObject moodgraph;
+
     public LoseManager loseManager;
 
     [Header("UI")]
@@ -56,7 +64,12 @@ public class AssessController : MonoBehaviour
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
         if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayAssessAmbience(MonsterStateManager.MonsterState);
+        {
+            if (MonsterStateManager.MonsterState == "neutral")
+                AudioManager.Instance.PlayAmbience();
+            else
+                AudioManager.Instance.PlayAssessAmbience(MonsterStateManager.MonsterState);
+        }
         int amount = AwardCoinsForDrink();
         if (amount > 0)
         {
@@ -74,6 +87,7 @@ public class AssessController : MonoBehaviour
     private void Update()
     {
         RefreshNextDayButton();
+		RefreshFightButton();
     }
 
     private void RefreshNextDayButton()
@@ -86,9 +100,20 @@ public class AssessController : MonoBehaviour
         if (nextDayButtonObject != null)
         {
             bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
-            nextDayButtonObject.SetActive(!hasNextMonster && dialogueFinished);
+            bool angry = MonsterStateManager.MonsterState == "angry";
+            nextDayButtonObject.SetActive(!angry && !hasNextMonster && dialogueFinished);
         }
     }
+
+	private void RefreshFightButton()
+	{
+		if (FightButton == null)
+			return;
+
+		bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
+		bool angry = MonsterStateManager.MonsterState == "angry";
+		FightButton.SetActive(angry && dialogueFinished);
+	}
 
     private int AwardCoinsForDrink()
     {
@@ -137,13 +162,22 @@ public class AssessController : MonoBehaviour
     /* call from Assess Next button OnClick: go to next day and show day screen again */
     public void OnNextCustomerPressed()
     {
-		bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+        if (currentMonsterManager == null)
+            currentMonsterManager = CurrentMonster.Instance;
 
-        if (!hasNextMonster && loseManager.CheckLoseAndLoad()) {
-            return;
+        bool hasNextMonster = currentMonsterManager != null && currentMonsterManager.HasNextMonsterInCurrentLevel();
+
+        if (!hasNextMonster)
+        {
+            if (loseManager != null && loseManager.CheckLoseAndLoad())
+                return;
         }
 
-		currentMonsterManager.PlanNextVisit(hasNextMonster);
+        if (currentMonsterManager != null)
+            currentMonsterManager.PlanNextVisit(hasNextMonster);
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.StopAmbience();
 
         if (!string.IsNullOrEmpty(nextDaySceneName))
             SceneManager.LoadScene(nextDaySceneName);
@@ -186,12 +220,14 @@ public class AssessController : MonoBehaviour
 
     private void AssessState(float accuracy)
     {
-        if (currentMonsterManager == null)
+       
+       if (timerUI.TimeUp == true)
         {
-            MonsterStateManager.SetState("neutral");
+            MonsterStateManager.SetState("angry");
+            moodgraph.SetActive(false);
+            
             return;
         }
-
         float satisfiedTolerance = currentMonsterManager.GetSatisfiedTolerance();
         float error = 100f - accuracy;
         bool sameQuadrantAsGoal = IsFinalScoreInGoalQuadrant();
@@ -199,23 +235,53 @@ public class AssessController : MonoBehaviour
         if (error <= satisfiedTolerance)
         {
             /* inside satisfied circle */
-            if (FightButton != null)
-                FightButton.SetActive(false);
             MonsterStateManager.SetState("satisfied");
         }
         else if (sameQuadrantAsGoal)
         {
             /* in goal quadrant but outside satisfied circle */
-            if (FightButton != null)
-                FightButton.SetActive(false);
             MonsterStateManager.SetState("neutral");
         }
         else
         {
             /* outside goal quadrant */
-            if (FightButton != null)
-                FightButton.SetActive(true);
             MonsterStateManager.SetState("angry");
+        }
+
+        /* now assess TOPPINGS */
+        AssessToppings();
+    }
+
+    private void AssessToppings()
+    {
+        string toppingPreference = currentMonsterManager.Data.toppingsPreference;
+        bool CorrectTopping = mixManager.SelectedToppings.Contains(toppingPreference);
+
+        /* promote one mood up */
+        if(CorrectTopping){
+            print("CORRECT TOPPING!");
+            if(MonsterStateManager.MonsterState == "angry") {
+                    MonsterStateManager.SetState("neutral");
+                    return;
+                }
+            else if (MonsterStateManager.MonsterState == "neutral") {
+                // Keep state vocabulary consistent with the rest of the game.
+                MonsterStateManager.SetState("satisfied");
+                return;
+            }
+
+        }
+        /* demote one mood down */
+        else {
+            print("INCORRECT TOPPING!");
+            if(MonsterStateManager.MonsterState == "satisfied") {
+                    MonsterStateManager.SetState("neutral");
+                    return;
+                }
+            else if (MonsterStateManager.MonsterState == "neutral") {
+                MonsterStateManager.SetState("angry");
+                return;
+            }
         }
     }
 

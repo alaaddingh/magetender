@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR;
+using Magetender.Data;
 
 // QTE Bank Combat System
 // Two banks (defend/attack) with key sequences
@@ -33,6 +34,12 @@ public class QTECombatManager : MonoBehaviour
 	public float orbWobbleAmount = 15f;
 	public float orbSize = 250f;
 
+	[Header("Sound Effects")]
+	public AudioClip healSound;
+	public AudioClip attackSound;
+	public AudioClip correctKeySound;
+	public AudioClip incorrectKeySound;
+
 	[Header("Back to bar (show when fight ends)")]
 	public GameObject backToBarButton;
 	public string backToBarSceneName = "MixScene";
@@ -55,6 +62,12 @@ public class QTECombatManager : MonoBehaviour
 	public Sprite arrowDownSprite;
 	public Sprite arrowLeftSprite;
 	public Sprite arrowRightSprite;
+
+	[Header("WASD Key Sprites")]
+	public Sprite wasdWSprite;
+	public Sprite wasdASprite;
+	public Sprite wasdSSprite;
+	public Sprite wasdDSprite;
 	
 	[Header("Combat Settings")]
 	public int playerMaxHealth = 100;
@@ -72,8 +85,17 @@ public class QTECombatManager : MonoBehaviour
 	public Color activeGlowColor = new Color(1f, 1f, 0.5f, 0.6f);
 	public Color inactiveGlowColor = new Color(0.3f, 0.3f, 0.3f, 0.2f);
 	
-	
-	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };	private int playerHealth;
+	[Header("Heal Flash Settings")]
+	public int healFlashCount = 2;
+	public float healFlashOpacity = 0.2f;
+	public float healFlashDuration = 0.1f;
+
+	private const string ControlsPrefKey = "QTEControlScheme"; // 0 = Arrow keys, 1 = WASD
+	private const string SwitchKeyPrefKey = "QTESwitchKey"; // 0 = Space, 1 = Shift
+
+	private KeyCode[] availableKeys = { KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.DownArrow };
+	private KeyCode switchBankKey = KeyCode.Space;
+	private int playerHealth;
 	private int customerHealth;
 	private float playerHealthFloat; // for constant health drain
 	private Color originalCustomerColor;
@@ -112,6 +134,8 @@ public class QTECombatManager : MonoBehaviour
 	
 	void Start()
 	{
+		KeyBindPrefs();
+
 		// Load monster data from CurrentMonster
 		LoadMonsterData();
 
@@ -180,9 +204,35 @@ public class QTECombatManager : MonoBehaviour
         // Don't start sequences yet - wait for tutorial
 	}
 
+	void KeyBindPrefs()
+	{
+		int scheme = PlayerPrefs.GetInt(ControlsPrefKey, 0);
+		int switchKey = PlayerPrefs.GetInt(SwitchKeyPrefKey, 0);
+		switchBankKey = switchKey == 1 ? KeyCode.LeftShift : KeyCode.Space;
+		if (scheme == 1)
+		{
+			availableKeys = new KeyCode[4];
+			availableKeys[0] = KeyCode.W;
+			availableKeys[1] = KeyCode.A;
+			availableKeys[2] = KeyCode.D;
+			availableKeys[3] = KeyCode.S;
+			return;
+		}
+		else {
+		availableKeys = new KeyCode[4];
+		availableKeys[0] = KeyCode.UpArrow;
+		availableKeys[1] = KeyCode.LeftArrow;
+		availableKeys[2] = KeyCode.RightArrow;
+		availableKeys[3] = KeyCode.DownArrow;
+		}
+	}
+
     // Public method for tutorial to call
     public void StartCombat()
     {
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.StopAmbience();
+
         combatStarted = true;
         GenerateNewSequence(true);
         GenerateNewSequence(false);
@@ -215,38 +265,71 @@ public class QTECombatManager : MonoBehaviour
 	{
 		combatPaused = false;
 	}
+
+	public bool IsUsingWASD()
+	{
+		return PlayerPrefs.GetInt(ControlsPrefKey, 0) == 1;
+	}
+
+	public bool IsUsingShift()
+	{
+		return PlayerPrefs.GetInt(SwitchKeyPrefKey, 0) == 1;
+	}
 	
+	static Sprite LoadSpriteFromResources(string resourcePath)
+	{
+		if (string.IsNullOrEmpty(resourcePath))
+			return null;
+
+		Sprite s = Resources.Load<Sprite>(resourcePath);
+		if (s != null)
+			return s;
+
+		Sprite[] all = Resources.LoadAll<Sprite>(resourcePath);
+		if (all != null && all.Length > 0)
+			return all[0];
+
+		Debug.LogWarning($"[QTECombat] No sprite at Resources path '{resourcePath}'.");
+		return null;
+	}
+
 	void LoadMonsterData()
 	{
 		// Check if CurrentMonster exists
 		if (CurrentMonster.Instance == null)
 		{
-			Debug.LogWarning("CurrentMonster.Instance is null! Using default sprites.");
+			Debug.LogWarning("[QTECombat] CurrentMonster.Instance is null! Customer sprite will be empty unless a default is assigned.");
 			return;
 		}
 		
 		MonsterData monsterData = CurrentMonster.Instance.Data;
 		if (monsterData == null)
 		{
-			Debug.LogWarning("Monster data is null! Using default sprites.");
+			Debug.LogWarning("[QTECombat] Monster data is null! Customer sprite will be empty unless a default is assigned.");
+			return;
+		}
+
+		if (monsterData.sprites == null)
+		{
+			Debug.LogWarning($"[QTECombat] Monster '{monsterData.name}' has no sprites block.");
 			return;
 		}
 		
 		// Load sprites from Resources using the paths in the JSON
 		if (!string.IsNullOrEmpty(monsterData.sprites.angry))
 		{
-			customerAngrySprite = Resources.Load<Sprite>(monsterData.sprites.angry);
+			customerAngrySprite = LoadSpriteFromResources(monsterData.sprites.angry);
 		}
 		if (!string.IsNullOrEmpty(monsterData.sprites.neutral))
 		{
-			customerNeutralSprite = Resources.Load<Sprite>(monsterData.sprites.neutral);
+			customerNeutralSprite = LoadSpriteFromResources(monsterData.sprites.neutral);
 		}
 		if (!string.IsNullOrEmpty(monsterData.sprites.happy))
 		{
-			customerHappySprite = Resources.Load<Sprite>(monsterData.sprites.happy);
+			customerHappySprite = LoadSpriteFromResources(monsterData.sprites.happy);
 		}
 		
-		Debug.Log($"Loaded monster: {monsterData.name}");
+		Debug.Log($"[QTECombat] Loaded monster: {monsterData.name}");
 	}
 	
 	void Update()
@@ -268,23 +351,28 @@ public class QTECombatManager : MonoBehaviour
         }
 		
 		// Tutorial mode: NO timers run at all
-		// Real combat: both timers run simultaneously
+		// Tutorial level final fight: no passive health drain
+		// Real combat: both timers and health drain run simultaneously
+		bool isTutorialLevel = CurrentMonster.Instance != null && CurrentMonster.Instance.GetCurrentLevelId() == "tutorial";
 		if (!tutorialMode)
 		{
 			// both timers always run outside of tutorial
 			defendTimer -= Time.deltaTime;
 			attackTimer -= Time.deltaTime;
 
-			// Constant health drain
-			playerHealthFloat -= healthDrainPerSecond * Time.deltaTime;
-			playerHealthFloat = Mathf.Max(0, playerHealthFloat);
-			playerHealth = Mathf.RoundToInt(playerHealthFloat);
-			UpdateHealthDisplays();
-
-			if (playerHealth <= 0)
+			if (!isTutorialLevel)
 			{
-				EndFight(false);
-				return;
+				// Constant health drain
+				playerHealthFloat -= healthDrainPerSecond * Time.deltaTime;
+				playerHealthFloat = Mathf.Max(0, playerHealthFloat);
+				playerHealth = Mathf.RoundToInt(playerHealthFloat);
+				UpdateHealthDisplays();
+
+				if (playerHealth <= 0)
+				{
+					EndFight(false);
+					return;
+				}
 			}
 		}
 		
@@ -312,7 +400,7 @@ public class QTECombatManager : MonoBehaviour
 		}
 		
 		// Check for bank switch
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(switchBankKey))
 		{
 			SwitchActiveBank();
 		}
@@ -335,6 +423,11 @@ public class QTECombatManager : MonoBehaviour
 			// must press keys in order left to right
 			if (defendProgress < defendSequence.Count && pressedKey == defendSequence[defendProgress])
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatCorrectKey();
+				}
+
 				// Correct key
 				defendProgress++;
 				UpdateBankVisuals();
@@ -347,6 +440,11 @@ public class QTECombatManager : MonoBehaviour
 			}
 			else
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatIncorrectKey();
+				}
+
 				// Wrong key
 				HandleDefendFail();
 			}
@@ -355,6 +453,11 @@ public class QTECombatManager : MonoBehaviour
 		{
 			if (attackProgress < attackSequence.Count && pressedKey == attackSequence[attackProgress])
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatCorrectKey();
+				}
+
 				// Correct key
 				attackProgress++;
 				UpdateBankVisuals();
@@ -367,6 +470,11 @@ public class QTECombatManager : MonoBehaviour
 			}
 			else
 			{
+				if (AudioManager.Instance != null)
+				{
+					AudioManager.Instance.PlayCombatIncorrectKey();
+				}
+				
 				// Wrong key
 				HandleAttackFail();
 			}
@@ -383,16 +491,28 @@ public class QTECombatManager : MonoBehaviour
 	{
 		Debug.Log("Defense successful!");
 		
+		if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayCombatHeal();
+        }
+
 		// Heal player instead of blocking damage
 		playerHealthFloat += defendHealAmount;
 		playerHealthFloat = Mathf.Min(playerHealthFloat, playerMaxHealth);
 		playerHealth = Mathf.RoundToInt(playerHealthFloat);
 		UpdateHealthDisplays();
 
+		if (leftHandFloat != null)
+        {
+            StartCoroutine(SpinHealingHand());
+        }
+
 		if (visualEffects != null)
 		{
 			visualEffects.PlayHealEffect();
 		}
+
+		StartCoroutine(FlashHeal());
 		
 		OnDefendSequenceCompleted?.Invoke();
 		
@@ -521,6 +641,11 @@ public class QTECombatManager : MonoBehaviour
 			}
 			currentCustomerFlash = StartCoroutine(FlashCustomer());
 		}
+
+		if (AudioManager.Instance != null)
+		{
+			AudioManager.Instance.PlayCombatAttack();
+		}
 		
 		StartCoroutine(PunchAnimation());
 		
@@ -562,12 +687,6 @@ public class QTECombatManager : MonoBehaviour
 			EndFight(false);
 			return;
 		}
-		
-		if (currentScreenFlash != null)
-		{
-			StopCoroutine(currentScreenFlash);
-		}
-		currentScreenFlash = StartCoroutine(FlashScreen());
 	}
 	
 	void EndFight(bool playerWon)
@@ -626,8 +745,6 @@ public class QTECombatManager : MonoBehaviour
 	/* call from Back to bar button OnClick */
 	public void OnBackToBarPressed()
 	{
-		if (AudioManager.Instance != null)
-			AudioManager.Instance.PlayButtonClick();
 		if (fightEnded)
 		{
 			var cm = CurrentMonster.Instance;
@@ -640,8 +757,10 @@ public class QTECombatManager : MonoBehaviour
 				}
 
 				var gm = GameManager.Instance;
-				if (gm != null && gm.Coins < gm.MaintenanceCost)
+				int maintenanceCost = cm != null ? cm.GetCurrentMaintenanceCost() : 0;
+				if (gm != null && gm.Coins < maintenanceCost)
 				{
+					SaveSystem.WriteLoseState();
 					SceneManager.LoadScene(loseSceneName);
 					return;
 				}
@@ -700,34 +819,34 @@ public class QTECombatManager : MonoBehaviour
 			customerSprite.sprite = customerAngrySprite;
 		}
 	}
-	
-	IEnumerator FlashScreen()
+
+	IEnumerator FlashHeal()
 	{
-		if (screenFlashOverlay != null)
+		for (int i = 0; i < healFlashCount; i++)
 		{
-			Color overlayColor = screenFlashOverlay.color;
-			overlayColor.a = 0.4f;
-			screenFlashOverlay.color = overlayColor;
-		}
-		
-		float elapsed = 0f;
-		while (elapsed < shakeDuration)
-		{
-			float xOffset = Random.Range(-shakeIntensity, shakeIntensity);
-			float yOffset = Random.Range(-shakeIntensity, shakeIntensity);
-			mainCanvas.transform.localPosition = originalCanvasPosition + new Vector3(xOffset, yOffset, 0);
+			// Flash on
+			if (screenFlashOverlay != null)
+			{
+				Color overlayColor = Color.green;
+				overlayColor.a = healFlashOpacity;
+				screenFlashOverlay.color = overlayColor;
+			}
 			
-			elapsed += Time.deltaTime;
-			yield return null;
-		}
-		
-		mainCanvas.transform.localPosition = originalCanvasPosition;
-		
-		if (screenFlashOverlay != null)
-		{
-			Color overlayColor = screenFlashOverlay.color;
-			overlayColor.a = 0f;
-			screenFlashOverlay.color = overlayColor;
+			yield return new WaitForSeconds(healFlashDuration);
+			
+			// Flash off
+			if (screenFlashOverlay != null)
+			{
+				Color overlayColor = screenFlashOverlay.color;
+				overlayColor.a = 0f;
+				screenFlashOverlay.color = overlayColor;
+			}
+			
+			// Small pause between flashes
+			if (i < healFlashCount - 1)
+			{
+				yield return new WaitForSeconds(healFlashDuration * 0.5f);
+			}
 		}
 	}
 	
@@ -840,6 +959,48 @@ public class QTECombatManager : MonoBehaviour
 			rightHandFloat.SetEnabled(true); // Resume floating animation
 		}
 	}
+
+	IEnumerator SpinHealingHand()
+	{
+		// Pause floating animation
+		if (leftHandFloat != null)
+		{
+			leftHandFloat.SetEnabled(false);
+		}
+		
+		// Move in a clockwise circle
+		float duration = 0.3f;
+		float elapsed = 0f;
+		float radius = 100f; // Size of the circle (adjust to taste)
+		Vector2 startPos = leftHandOriginalPos;
+		float startAngle = 270f * Mathf.Deg2Rad; // Start at bottom
+		
+		while (elapsed < duration)
+		{
+			float t = elapsed / duration;
+			
+			// Move clockwise (positive angle increment)
+			float currentAngle = startAngle + (t * 360f * Mathf.Deg2Rad);
+			
+			// Calculate position on circle
+			float offsetX = Mathf.Cos(currentAngle) * radius;
+			float offsetY = Mathf.Sin(currentAngle) * radius;
+			
+			leftHand.anchoredPosition = startPos + new Vector2(offsetX, offsetY);
+			
+			elapsed += Time.deltaTime;
+			yield return null;
+		}
+		
+		// Return to original position
+		leftHand.anchoredPosition = leftHandOriginalPos;
+		
+		// Resume floating animation
+		if (leftHandFloat != null)
+		{
+			leftHandFloat.SetEnabled(true);
+		}
+	}
 	
 	void UpdateHealthDisplays()
 	{
@@ -856,16 +1017,27 @@ public class QTECombatManager : MonoBehaviour
 
 	Sprite GetKeySprite(KeyCode key)
 	{
+		// Check control scheme
+		bool usingWASD = PlayerPrefs.GetInt(ControlsPrefKey, 0) == 1;
+		
 		switch (key)
 		{
 			case KeyCode.UpArrow:
-				return arrowUpSprite;
+			case KeyCode.W:
+				return usingWASD ? wasdWSprite : arrowUpSprite;
+				
 			case KeyCode.DownArrow:
-				return arrowDownSprite;
+			case KeyCode.S:
+				return usingWASD ? wasdSSprite : arrowDownSprite;
+				
 			case KeyCode.LeftArrow:
-				return arrowLeftSprite;
+			case KeyCode.A:
+				return usingWASD ? wasdASprite : arrowLeftSprite;
+				
 			case KeyCode.RightArrow:
-				return arrowRightSprite;
+			case KeyCode.D:
+				return usingWASD ? wasdDSprite : arrowRightSprite;
+				
 			default:
 				return null;
 		}

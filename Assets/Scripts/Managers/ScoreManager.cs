@@ -149,8 +149,6 @@ public class ScoreManager : MonoBehaviour
         float x = starting.x;
         float y = starting.y;
 
-        bool correctBottle = EvalGlassChoice(currentMonster, goal, ref x, ref y);
-
         Vector2 baseTarget;
         float baseStep;
         bool hasBase = TryGetBaseBlendTarget(out baseTarget, out baseStep);
@@ -172,14 +170,11 @@ public class ScoreManager : MonoBehaviour
                 hasBase ? (new Vector2(starting.x, starting.y) + baseTarget) : new Vector2(starting.x, starting.y));
 
             float baseGate = Mathf.Lerp(minToppingInfluenceWhenBaseMisaligned, 1f, baseAlignment);
-            float bottleGate = correctBottle ? 1f : wrongBottleToppingMultiplier;
-            float finalToppingStep = toppingsStep * baseGate * bottleGate;
+            float finalToppingStep = toppingsStep * baseGate;
 
             x += finalToppingStep * (toppingsTarget.x - x);
             y += finalToppingStep * (toppingsTarget.y - y);
         }
-
-        ApplyFinalGlassInfluence(goal, correctBottle, ref x, ref y);
 
         CurrMoodBoardX = x;
         CurrMoodBoardY = y;
@@ -188,44 +183,6 @@ public class ScoreManager : MonoBehaviour
         {
             CurrMoodBoardX = Mathf.Clamp(CurrMoodBoardX, clampMin, clampMax);
             CurrMoodBoardY = Mathf.Clamp(CurrMoodBoardY, clampMin, clampMax);
-        }
-    }
-
-    private bool EvalGlassChoice(MonsterData currentMonster, ScorePair goal, ref float x, ref float y)
-    {
-        if (mixManager == null || currentMonster == null || goal == null || string.IsNullOrEmpty(mixManager.SelectedBottle))
-            return false;
-
-        string selectedBottle = mixManager.SelectedBottle.Trim().ToLowerInvariant();
-        string preferredBottle = currentMonster.glassPreference != null
-            ? currentMonster.glassPreference.Trim().ToLowerInvariant()
-            : string.Empty;
-
-        if (selectedBottle == preferredBottle)
-        {
-            x += glassScorePercent * (goal.x - x);
-            y += glassScorePercent * (goal.y - y);
-            return true;
-        }
-
-        x -= wrongBottlePenaltyPercent * (goal.x - x);
-        y -= wrongBottlePenaltyPercent * (goal.y - y);
-        return false;
-    }
-
-    private void ApplyFinalGlassInfluence(ScorePair goal, bool correctBottle, ref float x, ref float y)
-    {
-        if (goal == null) return;
-
-        if (correctBottle)
-        {
-            x += glassFinalInfluencePercent * (goal.x - x);
-            y += glassFinalInfluencePercent * (goal.y - y);
-        }
-        else
-        {
-            x -= wrongBottleFinalPenaltyPercent * (goal.x - x);
-            y -= wrongBottleFinalPenaltyPercent * (goal.y - y);
         }
     }
 

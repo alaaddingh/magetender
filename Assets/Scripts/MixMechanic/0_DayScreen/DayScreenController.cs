@@ -1,5 +1,7 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using Magetender.Data;
 
 /* Shows day and coins; Next button hides day panel and shows order screen. */
 public class DayScreenController : MonoBehaviour
@@ -15,6 +17,11 @@ public class DayScreenController : MonoBehaviour
     [Header("Global coin canvas - show only on Day / Order / Assess")]
     [SerializeField] private GameObject coinCanvas;
 
+    [Header("Maintenance cost loss popup (when surviving to next day)")]
+    [SerializeField] private TMP_Text coinLossPopup;
+    [SerializeField] private float coinLossFadeDuration = 1.5f;
+    [SerializeField] private float coinLossMoveUp = 30f;
+
     [Header("Score Display Canvas - hide on Day, show on Order")]
     [SerializeField] private GameObject scoreDisplayCanvas;
     [SerializeField] private ScoreManager scoreManager;
@@ -22,9 +29,12 @@ public class DayScreenController : MonoBehaviour
 	private bool playedFirstWalkIn;
 	private bool showedDayPanelThisLoad;
 
+	public static bool OrderScreenRevealedThisSession { get; private set; }
+
     private void Start()
     {
 		playedFirstWalkIn = false;
+		OrderScreenRevealedThisSession = false;
 
         if (orderScreen == null)
         {
@@ -36,6 +46,7 @@ public class DayScreenController : MonoBehaviour
         showedDayPanelThisLoad = !skipDayCounter;
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ApplyPlannedVisit();
+        DisableTutorialManagerIfNotNeeded();
 
         if (dayPanel != null)
             dayPanel.SetActive(true);
@@ -50,13 +61,22 @@ public class DayScreenController : MonoBehaviour
 
         RefreshDisplay();
 
+        if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1)
+        {
+            int maintenance = CurrentMonster.Instance != null ? CurrentMonster.Instance.GetCurrentMaintenanceCost() : 0;
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayRegisterChaChing();
+            if (coinLossPopup != null && maintenance > 0)
+                ShowCoinLossPopup(maintenance);
+        }
+
         if (skipDayCounter)
-            OnNextPressed();
+            OnNextPressedInternal(false);
     }
 
     public void RefreshDisplay()
     {
-        int day = 1;
+        int day = 0;
         int coins = 0;
         if (GameManager.Instance != null)
         {
@@ -81,10 +101,33 @@ public class DayScreenController : MonoBehaviour
             coinsText.text = coins.ToString();
     }
 
+    private void DisableTutorialManagerIfNotNeeded()
+    {
+        var tutorialManager = FindFirstObjectByType<TutorialManager>();
+        if (tutorialManager == null)
+            return;
+
+        SaveData saveData = SaveSystem.LoadGame();
+        bool tutorialCompleted = (GameManager.Instance != null && GameManager.Instance.TutorialCompleted) ||
+                                 (saveData != null && saveData.tutorialCompleted);
+        bool isTutorialLevel = CurrentMonster.Instance != null && CurrentMonster.Instance.GetCurrentLevelId() == "tutorial";
+
+        if (!tutorialCompleted && isTutorialLevel)
+            return;
+
+        tutorialManager.gameObject.SetActive(false);
+    }
+
     /* Call from Next button OnClick */
     public void OnNextPressed()
     {
-		if (AudioManager.Instance != null)
+        OnNextPressedInternal(true);
+    }
+
+    // Shared implementation; Start() can call this with playButtonClick = false
+    private void OnNextPressedInternal(bool playButtonClick)
+    {
+		if (playButtonClick && AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
 		if (showedDayPanelThisLoad && AudioManager.Instance != null)
 			AudioManager.Instance.PlayStartOfDayBell();
@@ -92,11 +135,17 @@ public class DayScreenController : MonoBehaviour
             dayPanel.SetActive(false);
         if (orderScreen != null)
             orderScreen.SetActive(true);
+        if (coinCanvas != null)
+            coinCanvas.SetActive(true);
+        OrderScreenRevealedThisSession = true;
 
 		if (!playedFirstWalkIn && AudioManager.Instance != null)
 		{
 			playedFirstWalkIn = true;
-			AudioManager.Instance.PlayMonsterWalkIn();
+			if (GameOverButton.CameFromRetry)
+				GameOverButton.ClearCameFromRetry();
+			else
+				AudioManager.Instance.PlayMonsterWalkIn();
 		}
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayAmbience();
@@ -109,4 +158,43 @@ public class DayScreenController : MonoBehaviour
         if (graph != null)
             graph.ForceRefresh();
     }
+
+    private void ShowCoinLossPopup(int amount)
+    {
+        if (coinLossPopup == null) return;
+        coinLossPopup.text = "-" + amount;
+        coinLossPopup.gameObject.SetActive(true);
+        CanvasGroup cg = coinLossPopup.GetComponent<CanvasGroup>();
+        if (cg == null)
+            cg = coinLossPopup.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 1f;
+        var rect = coinLossPopup.rectTransform;
+        Vector2 startPos = rect.anchoredPosition;
+        StartCoroutine(FadeOutCoinLossPopup(rect, startPos));
+    }
+
+    private IEnumerator FadeOutCoinLossPopup(RectTransform rect, Vector2 startPos)
+    {
+        float elapsed = 0f;
+        CanvasGroup cg = coinLossPopup.GetComponent<CanvasGroup>();
+        while (elapsed < coinLossFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / coinLossFadeDuration;
+            if (cg != null)
+                cg.alpha = 1f - t;
+            rect.anchoredPosition = startPos + new Vector2(0f, coinLossMoveUp * t);
+            yield return null;
+        }
+        if (cg != null)
+            cg.alpha = 0f;
+        coinLossPopup.gameObject.SetActive(false);
+        rect.anchoredPosition = startPos;
+    }
+
+	void OnDisable()
+	{
+		if (coinLossPopup != null)
+			coinLossPopup.gameObject.SetActive(false);
+	}
 }

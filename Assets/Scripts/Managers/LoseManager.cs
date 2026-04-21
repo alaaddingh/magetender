@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Magetender.Data;
 
 public class LoseManager : MonoBehaviour
 {
@@ -7,8 +8,8 @@ public class LoseManager : MonoBehaviour
 
     public bool CheckLoseAndLoad()
     {
-        int maintenanceCost = GameManager.Instance.MaintenanceCost;
-        int earnedCoins = GameManager.Instance.Coins;
+        int maintenanceCost = CurrentMonster.Instance != null ? CurrentMonster.Instance.GetCurrentMaintenanceCost() : 0;
+        int earnedCoins = GameManager.Instance != null ? GameManager.Instance.Coins : 0;
 
         if (earnedCoins < maintenanceCost)
         {
@@ -21,6 +22,9 @@ public class LoseManager : MonoBehaviour
 
     public void LoadLoseScene()
     {
+        // save lose-state to avoid loophole */
+        SaveSystem.WriteLoseState();
+
         SceneManager.LoadScene(loseSceneName);
     }
 }

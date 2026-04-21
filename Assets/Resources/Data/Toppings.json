@@ -1,0 +1,24 @@
+{
+  "toppings": [
+    {
+      "id": "Cherry",
+      "name": "Cherry",
+      "description": "Perfect for Mammals!",
+      "select_sprite": "Cherry_Selected"
+    },
+    {
+      "id": "Umbrella",
+      "name": "Umbrella",
+      "description": "E.T Phone... Umbrella?",
+      "select_sprite": "Umbrella_Selected"
+      
+    },
+    {
+      "id": "Lime",
+      "name": "Lime Slice",
+      "description": "Lil Lime for the Slimes!",
+      "select_sprite": "Lime_Selected"
+
+    }
+  ]
+}

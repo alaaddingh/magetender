@@ -193,6 +193,16 @@ public class AudioManager : MonoBehaviour
 		sfxSource.PlayOneShot(ingredientClickClip);
 	}
 
+	public void PlayCantAfford()
+	{
+		if (cantAffordClip == null || cantAffordVoice == null)
+			return;
+
+		cantAffordVoice.Stop();
+		cantAffordVoice.clip = cantAffordClip;
+		cantAffordVoice.Play();
+	}
+
 	public void PlayTrashLoop()
 	{
 		if (loopSource == null || trashClip == null)

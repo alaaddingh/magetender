@@ -19,7 +19,8 @@ public class DialogueController : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] private GameObject brewButtonObject;
-    public GameObject continueButtonObject;
+    [SerializeField] private GameObject nextButtonObject; // optional (dialogue next)
+    public GameObject continueButtonObject; // optional
 
     [Header("Data source")]
     [SerializeField] private CurrentMonster currentMonsterManager;
@@ -32,7 +33,10 @@ public class DialogueController : MonoBehaviour
 
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
-    public GameObject selectingGlassScreen;
+    public GameObject BaseScreen;
+
+    public GameObject TimerCanvas;
+
 
     [Header("Global coin canvas - hide when leaving order screen")]
     [SerializeField] private GameObject coinCanvas;
@@ -40,20 +44,19 @@ public class DialogueController : MonoBehaviour
     private int dialogueIndex = 0;
     private TMP_FontAsset monsterSpeechOriginalFont;
     private TMP_FontAsset monsterNameOriginalFont;
+    private bool wasTyping;
 
     public bool IsDialogueFinished
     {
         get
         {
-            List<string> activeDialogue = GetActiveDialogue();
-            if (activeDialogue == null || activeDialogue.Count == 0)
+            var lines = GetActiveDialogue();
+            if (lines.Count == 0)
                 return true;
 
-            bool atLast = dialogueIndex >= activeDialogue.Count - 1;
-            if (!atLast)
+            if (dialogueIndex < lines.Count - 1)
                 return false;
 
-            // If typewriter is running, the last line isn't fully displayed yet.
             if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
                 return false;
 
@@ -64,102 +67,81 @@ public class DialogueController : MonoBehaviour
     private void Awake()
     {
         currentMonsterManager = CurrentMonster.Instance;
-        if (monsterSpeech != null)
-            monsterSpeechOriginalFont = monsterSpeech.font;
+        if (monsterSpeech == null)
+        {
+            Debug.LogError("[DialogueController] Missing monsterSpeech reference.", this);
+            enabled = false;
+            return;
+        }
+
+        monsterSpeechOriginalFont = monsterSpeech.font;
         if (monsterName != null)
             monsterNameOriginalFont = monsterName.font;
+
+        if (typewriter == null)
+            typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
+        if (typewriter != null)
+            typewriter.SetTargetText(monsterSpeech);
     }
 
     private void OnEnable()
     {
-        if (currentMonsterManager != null)
-            currentMonsterManager.OnMonsterChanged += HandleMonsterChanged;
-
+        if (!enabled) return;
+        currentMonsterManager.OnMonsterChanged += HandleMonsterChanged;
         LanguageManager.OnLanguageChanged += HandleLanguageChanged;
     }
 
     private void OnDisable()
     {
-        if (currentMonsterManager != null)
-            currentMonsterManager.OnMonsterChanged -= HandleMonsterChanged;
-
+        if (!enabled) return;
+        currentMonsterManager.OnMonsterChanged -= HandleMonsterChanged;
         LanguageManager.OnLanguageChanged -= HandleLanguageChanged;
     }
 
     private void Start()
     {
         brewButtonObject.SetActive(false);
-        ResolveContinueButtonIfNeeded();
-        if (continueButtonObject != null)
-            continueButtonObject.SetActive(false);
+        if (continueButtonObject != null) continueButtonObject.SetActive(false);
 
-        if (typewriter == null && monsterSpeech != null)
-            typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
-        if (typewriter != null && monsterSpeech != null)
-            typewriter.SetTargetText(monsterSpeech);
+        RefreshAll();
+    }
 
-        UpdateTypewriterEnabledState();
-        ApplyDialogueFontsForLanguage();
-        UpdateMonsterName();
-        Dialogue();
+    private void Update()
+    {
+        if (typewriter == null || !typewriter.enabled)
+            return;
+
+        if (wasTyping && !typewriter.IsTyping)
+            UpdateContinueButtonState(GetActiveDialogue());
+
+        wasTyping = typewriter.IsTyping;
     }
 
     private void HandleLanguageChanged()
     {
-        ApplyDialogueFontsForLanguage();
-        UpdateMonsterName();
-        Dialogue();
+        RefreshAll();
     }
 
-    /* returns whichever dialogue list should be used based on monster state */
     private List<string> GetActiveDialogue()
     {
-        if (currentMonsterManager == null) return new List<string>();
-
         string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
-        return currentMonsterManager.GetDialogue(state);
+        return currentMonsterManager.GetDialogue(state) ?? new List<string>();
     }
 
-    /* sets monster name, displays current dialogue index */
-    private void Dialogue()
+    private void RefreshAll()
     {
-        List<string> activeDialogue = GetActiveDialogue();
-        if (activeDialogue == null || activeDialogue.Count == 0)
-        {
-            if (typewriter != null)
-                typewriter.SetInstant(string.Empty);
-            else
-                SetText(monsterSpeech, string.Empty, preserveNumbers: true);
-
-            brewButtonObject.SetActive(true);
-            UpdateContinueButtonState(activeDialogue);
-            return;
-        }
-
-        dialogueIndex = Mathf.Clamp(dialogueIndex, 0, activeDialogue.Count - 1);
-        string rawLine = activeDialogue[dialogueIndex] ?? string.Empty;
-
         UpdateTypewriterEnabledState();
         bool isArabic = RtlText.IsArabic();
-        bool useTypewriter = typewriter != null && typewriter.enabled && !isArabic;
-        if (useTypewriter)
-        {
-            typewriter.TypeLine(rawLine);
-        }
-        else
-        {
-            // For Arabic, set full string at once to preserve glyph shaping.
-            SetText(monsterSpeech, rawLine, preserveNumbers: true);
-        }
-
-        UpdateContinueButtonState(activeDialogue);
+        ApplyDialogueFontsForLanguage(isArabic);
+        UpdateMonsterName();
+        ShowCurrentLine();
     }
 
-    /* handles Next UI Button clicks (iteration + brew button visibility) */
     public void OnNextPressed()
     {
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
+
         UpdateTypewriterEnabledState();
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
@@ -167,32 +149,18 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        List<string> activeDialogue = GetActiveDialogue();
-        if (activeDialogue == null || activeDialogue.Count == 0)
+        var lines = GetActiveDialogue();
+        if (lines.Count == 0)
         {
             brewButtonObject.SetActive(true);
-            UpdateContinueButtonState(activeDialogue);
+            UpdateContinueButtonState(lines);
             return;
         }
 
-        /* if at the last line, show brew button. */
-        bool last = dialogueIndex >= activeDialogue.Count - 1;
-        if (last)
-        {
-            brewButtonObject.SetActive(true);
-            UpdateContinueButtonState(activeDialogue);
-            return;
-        }
+        if (dialogueIndex < lines.Count - 1)
+            dialogueIndex++;
 
-        dialogueIndex++;
-        Dialogue();
-
-        if (dialogueIndex == activeDialogue.Count - 1)
-        {
-            brewButtonObject.SetActive(true);
-        }
-
-        UpdateContinueButtonState(activeDialogue);
+        ShowCurrentLine(lines);
     }
 
     public void BrewingPressed()
@@ -204,69 +172,82 @@ public class DialogueController : MonoBehaviour
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
-        selectingGlassScreen.SetActive(true);
+        /* begin timer */
+        TimerCanvas.SetActive(true);
+        BaseScreen.SetActive(true);
     }
 
     private void HandleMonsterChanged(string _)
     {
         dialogueIndex = 0;
-        UpdateTypewriterEnabledState();
-        ApplyDialogueFontsForLanguage();
-        UpdateMonsterName();
-        Dialogue();
+        RefreshAll();
     }
 
     private void UpdateMonsterName()
     {
         if (monsterName == null) return;
-        if (currentMonsterManager == null || currentMonsterManager.Data == null)
-        {
-            SetText(monsterName, string.Empty, preserveNumbers: true);
-            return;
-        }
-
-        SetText(monsterName, currentMonsterManager.Data.name, preserveNumbers: true);
+        SetText(monsterName, currentMonsterManager.Data != null ? currentMonsterManager.Data.name : string.Empty, preserveNumbers: true);
     }
 
     private void UpdateTypewriterEnabledState()
     {
-        if (typewriter == null && monsterSpeech != null)
-            typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
         if (typewriter == null)
             return;
-
-        if (monsterSpeech != null)
-            typewriter.SetTargetText(monsterSpeech);
 
         typewriter.enabled = !RtlText.IsArabic();
     }
 
-    private void ApplyDialogueFontsForLanguage()
+    private void ApplyDialogueFontsForLanguage(bool isArabic)
     {
-        bool isArabic = RtlText.IsArabic();
-
-        ApplyFont(monsterSpeech, monsterSpeechOriginalFont, isArabic);
-        ApplyFont(monsterName, monsterNameOriginalFont, isArabic);
+        if (monsterSpeech != null)
+            monsterSpeech.font = isArabic && arabicFontOverride != null ? arabicFontOverride : monsterSpeechOriginalFont;
+        if (monsterName != null)
+            monsterName.font = isArabic && arabicFontOverride != null ? arabicFontOverride : monsterNameOriginalFont;
     }
 
-    private void ApplyFont(TMP_Text t, TMP_FontAsset originalFont, bool isArabic)
+    private void ShowCurrentLine()
     {
-        if (t == null)
+        ShowCurrentLine(GetActiveDialogue());
+    }
+
+    private void ShowCurrentLine(List<string> lines)
+    {
+        if (lines.Count == 0)
+        {
+            if (typewriter != null) typewriter.SetInstant(string.Empty);
+            else SetText(monsterSpeech, string.Empty, preserveNumbers: true);
+
+            brewButtonObject.SetActive(true);
+            UpdateNextButtonState(lines);
+            UpdateContinueButtonState(lines);
             return;
-        if (isArabic && arabicFontOverride != null)
-            t.font = arabicFontOverride;
-        else if (originalFont != null)
-            t.font = originalFont;
+        }
+
+        dialogueIndex = Mathf.Clamp(dialogueIndex, 0, lines.Count - 1);
+        string rawLine = lines[dialogueIndex] ?? string.Empty;
+
+        bool isArabic = RtlText.IsArabic();
+        bool useTypewriter = typewriter != null && typewriter.enabled && !isArabic;
+        if (useTypewriter) typewriter.TypeLine(rawLine);
+        else SetText(monsterSpeech, rawLine, preserveNumbers: true);
+
+        brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1);
+        UpdateNextButtonState(lines);
+        UpdateContinueButtonState(lines);
+        TryMakeTutorialToadAngry(lines);
+    }
+
+    private void UpdateNextButtonState(List<string> activeDialogue)
+    {
+        bool hasNextLine = activeDialogue.Count > 0 && dialogueIndex < activeDialogue.Count - 1;
+        nextButtonObject.SetActive(hasNextLine);
     }
 
     private void SetText(TMP_Text t, string raw, bool preserveNumbers)
     {
-        if (t == null)
-            return;
-
+        if (t == null) return;
         bool isArabic = RtlText.IsArabic();
 
-        // If the scene is already using RTLTextMeshPro, let the plugin do the shaping.
         if (t is RTLTextMeshPro rtl)
         {
             rtl.Farsi = false;
@@ -291,11 +272,16 @@ public class DialogueController : MonoBehaviour
 
     private void UpdateContinueButtonState(List<string> activeDialogue)
     {
-        ResolveContinueButtonIfNeeded();
         if (continueButtonObject == null)
             return;
 
-        bool showContinue = activeDialogue != null && activeDialogue.Count > 0 && dialogueIndex >= activeDialogue.Count - 1;
+        if (monsterStateManager != null && monsterStateManager.MonsterState == "angry")
+        {
+            continueButtonObject.SetActive(false);
+            return;
+        }
+
+        bool showContinue = activeDialogue.Count > 0 && dialogueIndex >= activeDialogue.Count - 1;
         if (showContinue && typewriter != null && typewriter.enabled && typewriter.IsTyping)
             showContinue = false;
         continueButtonObject.SetActive(showContinue);
@@ -303,7 +289,7 @@ public class DialogueController : MonoBehaviour
         if (!showContinue)
             return;
 
-        bool isLastMonsterOfDay = currentMonsterManager == null || !currentMonsterManager.HasNextMonsterInCurrentLevel();
+        bool isLastMonsterOfDay = !currentMonsterManager.HasNextMonsterInCurrentLevel();
         string key = isLastMonsterOfDay ? "next_day_button" : "continue_button";
 
         var localizedText = continueButtonObject.GetComponentInChildren<LocalizedTMPText>(true);
@@ -311,25 +297,32 @@ public class DialogueController : MonoBehaviour
             localizedText.SetKey(key);
     }
 
-    private void ResolveContinueButtonIfNeeded()
+    private void TryMakeTutorialToadAngry(List<string> activeDialogue)
     {
-        if (continueButtonObject != null)
+        if (!IsTutorialToadNeutralServeDialogue())
             return;
 
-        // OrderDialogueController in MixScene doesn't have this wired; try to find it under the order screen first.
-        if (orderScreen != null)
-        {
-            var t = orderScreen.transform.Find("ContinueButton") ?? orderScreen.transform.Find("ContinueButtonController");
-            if (t != null)
-            {
-                continueButtonObject = t.gameObject;
-                return;
-            }
-        }
+        if (activeDialogue == null || activeDialogue.Count == 0 || dialogueIndex < activeDialogue.Count - 1)
+            return;
 
-        // Fallback: scene-wide lookup (last resort).
-        var go = GameObject.Find("ContinueButton") ?? GameObject.Find("ContinueButtonController");
-        if (go != null)
-            continueButtonObject = go;
+        monsterStateManager.SetState("angry");
+    }
+
+    private bool IsTutorialToadNeutralServeDialogue()
+    {
+        if (gameObject.name != "AssessDialogueController")
+            return false;
+
+        if (monsterStateManager == null || currentMonsterManager == null || currentMonsterManager.Data == null || currentMonsterManager.CurrentEncounter == null)
+            return false;
+
+        if (monsterStateManager.MonsterState != "neutral")
+            return false;
+
+        if (currentMonsterManager.Data.id != "toad")
+            return false;
+
+        string dialogueKey = currentMonsterManager.CurrentEncounter.dialogue_key;
+        return dialogueKey == "tutorial" || dialogueKey == "tutorial_1";
     }
 }

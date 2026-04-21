@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Magetender.Data;
 
 public class CurrentMonster : MonoBehaviour
 {
@@ -29,11 +30,43 @@ public class CurrentMonster : MonoBehaviour
     private DialogueFile dialogueFile;
     private string lastMonsterName;
     private bool dataLoaded;
-    private int currentEncounterIndex;
+    public int currentEncounterIndex;
     private int lastSeenDay;
 
     public MonsterData Data => GetCurrentMonsterData();
     public LevelEncounterData CurrentEncounter => GetCurrentEncounter();
+
+    public string GetCurrentLevelId()
+    {
+        var level = GetLevelForDay(GetCurrentDay());
+        return level != null ? level.id : "";
+    }
+
+    public int GetCurrentMaintenanceCost()
+    {
+        return GetMaintenanceCostForDay(GetCurrentDay());
+    }
+
+    public int GetMaintenanceCostForDay(int day)
+    {
+        var level = GetLevelForDay(day);
+        if (level == null)
+            return 0;
+
+        return Mathf.Max(0, level.maintenance_cost);
+    }
+
+    public void ApplySaveProgress(int encounterIndex)
+    {
+        EnsureDataLoaded();
+
+        lastSeenDay = GetCurrentDay();
+        currentEncounterIndex = encounterIndex;
+
+        var encounter = GetCurrentEncounter();
+        if (encounter != null)
+            SetCurrentMonsterNameById(encounter.monster_id);
+    }
 
     private void Awake()
     {
@@ -48,6 +81,14 @@ public class CurrentMonster : MonoBehaviour
 
         LoadData();
         lastMonsterName = name;
+
+        LanguageManager.OnLanguageChanged += ReloadDialogue;
+    }
+
+    private void OnDestroy()
+    {
+        if (LanguageManager.OnLanguageChanged != null)
+            LanguageManager.OnLanguageChanged -= ReloadDialogue;
     }
 
     private void Update()
@@ -176,6 +217,11 @@ public class CurrentMonster : MonoBehaviour
         return nextVisitPlan == NextVisitPlan.NextMonsterSameDay;
     }
 
+    public bool IsPlannedVisitNextDay()
+    {
+        return nextVisitPlan == NextVisitPlan.NextDayFirstMonster;
+    }
+
 	public void ApplyPlannedVisit()
 	{
 		if (nextVisitPlan == NextVisitPlan.None)
@@ -187,11 +233,22 @@ public class CurrentMonster : MonoBehaviour
 		}
 		else if (nextVisitPlan == NextVisitPlan.NextDayFirstMonster)
 		{
-			if (GameManager.Instance != null)
-				GameManager.Instance.IncrementDay();
+			bool leavingTutorial = GetCurrentLevelId() == "tutorial";
+			if (leavingTutorial)
+			{
+				if (GameManager.Instance != null)
+					GameManager.Instance.MarkTutorialCompleted();
+			}
+			else if (GameManager.Instance != null)
+			{
+				int nextDayMaintenanceCost = GetMaintenanceCostForDay(GetCurrentDay() + 1);
+				GameManager.Instance.IncrementDay(nextDayMaintenanceCost);
+			}
+
 			ResetToFirstMonster();
 		}
 
+        SaveSystem.WriteData();
 		nextVisitPlan = NextVisitPlan.None;
 	}
 
@@ -319,7 +376,9 @@ public class CurrentMonster : MonoBehaviour
         if (levelsFile == null || levelsFile.levels == null || levelsFile.levels.Count == 0)
             return null;
 
-        int levelIndex = Mathf.Clamp(day - 1, 0, levelsFile.levels.Count - 1);
+        bool tutorialCompleted = GameManager.Instance != null && GameManager.Instance.TutorialCompleted;
+        int levelIndex = tutorialCompleted ? day : day - 1;
+        levelIndex = Mathf.Clamp(levelIndex, 0, levelsFile.levels.Count - 1);
         return levelsFile.levels[levelIndex];
     }
 
