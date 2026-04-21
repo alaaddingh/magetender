@@ -8,7 +8,8 @@
       "sprites": {
         "neutral": "Art/Monsters/Unicorn/unicorn_neutral",
         "happy": "Art/Monsters/Unicorn/unicorn_happy",
-        "angry": "Art/Monsters/Unicorn/unicorn_angry"
+        "angry": "Art/Monsters/Unicorn/unicorn_angry",
+        "fight": "Art/Monsters/Unicorn/unicorn_fight"
       },
   
       "dialogueId": "dlg_unicorn",
@@ -36,7 +37,8 @@
       "sprites": {
         "neutral": "Art/Monsters/Alien/alien_neutral",
         "happy": "Art/Monsters/Alien/alien_happy",
-        "angry": "Art/Monsters/Alien/alien_angry"
+        "angry": "Art/Monsters/Alien/alien_angry",
+        "fight": "Art/Monsters/Alien/alien_fight"
       },
     
       "dialogueId": "dlg_alien",

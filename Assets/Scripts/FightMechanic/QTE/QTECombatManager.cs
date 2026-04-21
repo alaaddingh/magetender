@@ -114,6 +114,7 @@ public class QTECombatManager : MonoBehaviour
 	private Sprite customerAngrySprite;
 	private Sprite customerNeutralSprite;
 	private Sprite customerHappySprite;
+	private Sprite customerFightSprite;
 	
 	// Bank system variables
 	private List<KeyCode> defendSequence = new List<KeyCode>();
@@ -144,10 +145,10 @@ public class QTECombatManager : MonoBehaviour
 			originalCustomerColor = customerSprite.color;
 			originalCustomerPosition = customerSprite.transform.localPosition;
 			
-			if (customerAngrySprite != null)
-			{
+			if (customerFightSprite != null)
+    			customerSprite.sprite = customerFightSprite;
+			else if (customerAngrySprite != null)
 				customerSprite.sprite = customerAngrySprite;
-			}
 			
 			// Get component
 			customerShake = customerSprite.GetComponent<CustomerMovement>();
@@ -171,11 +172,11 @@ public class QTECombatManager : MonoBehaviour
 			originalCustomerColor = customerSprite.color;
 			originalCustomerPosition = customerSprite.transform.localPosition;
 			
-			// Set angry sprite at fight start
-			if (customerAngrySprite != null)
-			{
+			// Set fight sprite at fight start
+			if (customerFightSprite != null)
+				customerSprite.sprite = customerFightSprite;
+			else if (customerAngrySprite != null)
 				customerSprite.sprite = customerAngrySprite;
-			}
 		}
 		
 		originalCanvasPosition = mainCanvas.transform.localPosition;
@@ -324,6 +325,10 @@ public class QTECombatManager : MonoBehaviour
 		if (!string.IsNullOrEmpty(monsterData.sprites.happy))
 		{
 			customerHappySprite = LoadSpriteFromResources(monsterData.sprites.happy);
+		}
+		if (!string.IsNullOrEmpty(monsterData.sprites.fight))
+		{
+			customerFightSprite = LoadSpriteFromResources(monsterData.sprites.fight);
 		}
 		
 		Debug.Log($"[QTECombat] Loaded monster: {monsterData.name}");
@@ -804,12 +809,12 @@ public class QTECombatManager : MonoBehaviour
 			allImages[i].color = originalColors[i];
 		}
 		
-		// Swap back to angry sprite
-		if (customerAngrySprite != null && customerSprite != null)
-		{
+		// Swap back to fight sprite
+		if (customerFightSprite != null && customerSprite != null)
+			customerSprite.sprite = customerFightSprite;
+		else if (customerAngrySprite != null && customerSprite != null)
 			customerSprite.sprite = customerAngrySprite;
-		}
-	}
+			}
 
 	IEnumerator FlashHeal()
 	{
