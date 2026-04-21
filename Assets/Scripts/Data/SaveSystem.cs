@@ -21,6 +21,7 @@ namespace Magetender.Data
                 day = gameManager.Day,
                 currentEncounterIndex = currentMonster.currentEncounterIndex,
 				unlockedIngredientIds = gameManager.GetUnlockedIngredientIds(),
+                tutorialCompleted = gameManager.TutorialCompleted
             };
 
             SaveGame(data);
@@ -29,7 +30,13 @@ namespace Magetender.Data
         public static void WriteLoseState()
         {
             int day = GameManager.Instance != null ? GameManager.Instance.Day : 1;
-            SaveGame(new SaveData { coins = 0, day = day, currentEncounterIndex = 0 });
+            SaveGame(new SaveData
+            {
+                coins = 0,
+                day = day,
+                currentEncounterIndex = 0,
+                tutorialCompleted = GameManager.Instance != null && GameManager.Instance.TutorialCompleted
+            });
         }
 
         public static void SaveGame(SaveData data)
@@ -49,6 +56,11 @@ namespace Magetender.Data
             }
 
             string json = File.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
             return JsonUtility.FromJson<SaveData>(json);
         }
 

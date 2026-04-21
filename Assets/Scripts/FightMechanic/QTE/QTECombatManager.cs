@@ -348,23 +348,28 @@ public class QTECombatManager : MonoBehaviour
         }
 		
 		// Tutorial mode: NO timers run at all
-		// Real combat: both timers run simultaneously
+		// Tutorial level final fight: no passive health drain
+		// Real combat: both timers and health drain run simultaneously
+		bool isTutorialLevel = CurrentMonster.Instance != null && CurrentMonster.Instance.GetCurrentLevelId() == "tutorial";
 		if (!tutorialMode)
 		{
 			// both timers always run outside of tutorial
 			defendTimer -= Time.deltaTime;
 			attackTimer -= Time.deltaTime;
 
-			// Constant health drain
-			playerHealthFloat -= healthDrainPerSecond * Time.deltaTime;
-			playerHealthFloat = Mathf.Max(0, playerHealthFloat);
-			playerHealth = Mathf.RoundToInt(playerHealthFloat);
-			UpdateHealthDisplays();
-
-			if (playerHealth <= 0)
+			if (!isTutorialLevel)
 			{
-				EndFight(false);
-				return;
+				// Constant health drain
+				playerHealthFloat -= healthDrainPerSecond * Time.deltaTime;
+				playerHealthFloat = Mathf.Max(0, playerHealthFloat);
+				playerHealth = Mathf.RoundToInt(playerHealthFloat);
+				UpdateHealthDisplays();
+
+				if (playerHealth <= 0)
+				{
+					EndFight(false);
+					return;
+				}
 			}
 		}
 		
@@ -749,7 +754,8 @@ public class QTECombatManager : MonoBehaviour
 				}
 
 				var gm = GameManager.Instance;
-				if (gm != null && gm.Coins < gm.MaintenanceCost)
+				int maintenanceCost = cm != null ? cm.GetCurrentMaintenanceCost() : 0;
+				if (gm != null && gm.Coins < maintenanceCost)
 				{
 					SaveSystem.WriteLoseState();
 					SceneManager.LoadScene(loseSceneName);

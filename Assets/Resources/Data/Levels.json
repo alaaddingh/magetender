@@ -1,10 +1,25 @@
 {
   "levels": [
     {
+      "id": "tutorial",
+      "name": "Tutorial",
+      "maintenance_cost": 0,
+      "encounters": [
+        {
+          "monster_id": "toad",
+          "tolerances": {
+              "satisfied_tolerance": 10
+          },
+          "starting_score": {"x": 0.5, "y": 0.5},
+          "goal_score": { "x": 0.5, "y": -0.5 },
+          "dialogue_key": "tutorial"
+        }
+      ]
+    },
+    {
       "id": "level_1",
       "name": "Opening Night",
-
-      
+      "maintenance_cost": 80,
       "encounters": [
          {
           "monster_id": "unicorn",
@@ -38,7 +53,7 @@
     {
       "id": "level_2",
       "name": "Second Night",
-  
+      "maintenance_cost": 80,
       "encounters": [
         {
           "monster_id": "alien",

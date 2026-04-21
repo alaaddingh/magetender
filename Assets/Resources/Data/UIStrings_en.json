@@ -44,6 +44,15 @@
     {"key": "combat_victory", "value": "VICTORY!"},
     {"key": "combat_defeat", "value": "DEFEATED."},
     {"key": "tutorial_stage3_prompt", "value": "Press SPACE to begin..."},
+    {"key": "mix_tutorial_screen_1", "value": "Welcome! Today is your first day as a Magetender.\n\nA Magetender specializes in crafting perfect brews to enhance their customers' moods. Follow along with your very first patron and you'll do great!\n\n< Press SPACE to continue >"},
+    {"key": "mix_tutorial_screen_2", "value": "Let's head over to your brewing station.."},
+    {"key": "mix_tutorial_screen_3", "value": "This Mood Graph helps you understand your customer's needs! The target shows where they want their mood to be."}, 
+    {"key": "mix_tutorial_screen_4", "value": "Let's start by choosing a base to guide our brew to the right mood. As we can see, Gurt wants to feel calmer. Let's go with Moonshine!"},
+    {"key": "mix_tutorial_screen_5", "value": "Next up, ingredients! You can see which moods an ingredient influences by hovering over it. Let's give this frog a wishbone!"},
+    {"key": "mix_tutorial_screen_6","value": "For the final touch, let's add a topping! Topping preferences depend on the type of creature you're serving. This slimy toad gets a lime!"},
+    {"key": "mix_tutorial_screen_7", "value": "Excellent! Now it's time to serve..."},
+    {"key": "mix_tutorial_screen_8","value": "Congratulations! You've made the perfect brew for Gurt!"},
+    {"key": "mix_tutorial_screen_9","value": "Not so fast! It won't always be this easy to please your customers.."},
     {"key": "cap_message", "value": "Select up to 3  Ingredients"},
     {"key": "holywater_label", "value": "Holy Water"},
     {"key": "blood_label", "value": "Blood"},
@@ -64,6 +73,8 @@
     { "key": "controls_wasd", "value": "WASD" },
     { "key": "controls_text", "value": "Controls" },
     { "key": "volume_text", "value": "Volume" },
-    { "key": "credits_text", "value": "Credits:\nDavid Guerrero-Pantoja - Production Lead\nAla'Addin Ghosheh - Engine Lead\nEder Yepez Cuevas - Tools Lead\nZosia Trela - Design Lead\nArchie Dickson - Art\nAdan O'Toole - Art\nTyana Tran - Art\n\nSFX:\nFreesound.com\nPixabay.com\n\nFonts:\nAlkhemical, NotoSansArabic and PixeloidMono" }
+    { "key": "credits_text", "value": "Credits:\nDavid Guerrero-Pantoja - Production Lead\nAla'Addin Ghosheh - Engine Lead\nEder Yepez Cuevas - Tools Lead\nZosia Trela - Design Lead\nArchie Dickson - Art\nAdan O'Toole - Art\nTyana Tran - Art\n\nSFX:\nFreesound.com\nPixabay.com\n\nFonts:\nAlkhemical, NotoSansArabic and PixeloidMono" },
+    {"key": "begin_button", "value": "Begin"},
+    {"key": "greeting_text", "value": "Welcome to Magetender"}
   ]
 }

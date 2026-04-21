@@ -17,7 +17,7 @@ public class LoseScreenController : MonoBehaviour
             coinCanvas.SetActive(true);
 
         if (GameManager.Instance == null) return;
-        int maintenance = GameManager.Instance.MaintenanceCost;
+        int maintenance = CurrentMonster.Instance != null ? CurrentMonster.Instance.GetCurrentMaintenanceCost() : 0;
         RefreshCoinsDisplay(maintenance);
 
         if (AudioManager.Instance != null)

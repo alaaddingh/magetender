@@ -12,6 +12,7 @@ public class LevelData
 {
     public string id;
     public string name;
+    public int maintenance_cost;
     public List<LevelEncounterData> encounters;
 }
 
