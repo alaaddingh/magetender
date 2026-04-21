@@ -10,6 +10,7 @@ public class TutorialStep
 {
     public string key;
     public GameObject panel;
+    public bool pauseGame = true;
 }
 
 [System.Serializable]
@@ -73,6 +74,7 @@ public class TutorialManager : MonoBehaviour
 
     private bool panelActive = false;
     private bool tutorialMonsterLayoutApplied;
+    private bool activeStepPausesGame = true;
 
     private bool ShouldRestrictBaseNextButton
     {
@@ -244,7 +246,8 @@ public class TutorialManager : MonoBehaviour
         }
 
         panelActive = true;
-        Time.timeScale = 0f;
+        activeStepPausesGame = step.pauseGame;
+        Time.timeScale = activeStepPausesGame ? 0f : 1f;
     }
 
     void AdvanceStep()
@@ -261,6 +264,7 @@ public class TutorialManager : MonoBehaviour
 
         HideAllPanels();
         panelActive = false;
+        activeStepPausesGame = true;
         Time.timeScale = 1f;
 
         if (g.showPointer)
@@ -367,10 +371,12 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (panelActive && Input.GetKeyDown(KeyCode.Space) && activeGroupIndex >= 0)
+        bool advancePressed = Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        if (panelActive && advancePressed && activeGroupIndex >= 0)
         {
             HideAllPanels();
             panelActive = false;
+            activeStepPausesGame = true;
             Time.timeScale = 1f;
 
             AdvanceStep();
