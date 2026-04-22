@@ -154,7 +154,7 @@ public class MonsterSpriteManager : MonoBehaviour
     {
         if (state == "angry")
             return sprites.angry;
-        if (state == "satisfied" || state == "happy")
+        if (state == "satisfied")
             return sprites.happy;
 
         return sprites.neutral; // start + neutral both map here

@@ -33,6 +33,7 @@ public class IngredientsController : MonoBehaviour
     [Min(1)] public int MaxIngredients = 3;
 
     private MixManager mixManager;
+	[SerializeField] private IngredientHoverSnapUI ingredientHoverUi;
 
     [Header("Ingredient tint")]
     public Color ingredientTintColor = new Color(0.9f, 0.7f, 1f, 1f);
@@ -56,6 +57,8 @@ public class IngredientsController : MonoBehaviour
         mixManager = FindFirstObjectByType<MixManager>();
         if (baseController == null)
             baseController = FindFirstObjectByType<BaseController>();
+		if (ingredientHoverUi == null)
+			ingredientHoverUi = FindFirstObjectByType<IngredientHoverSnapUI>();
     }
 
     private void OnEnable()
@@ -71,6 +74,8 @@ public class IngredientsController : MonoBehaviour
 
     private void OnDisable()
     {
+		if (ingredientHoverUi != null)
+			ingredientHoverUi.ForceCompleteActiveIngredientAnimations();
         HookIngredientEvents(false);
     }
 
@@ -323,6 +328,8 @@ public class IngredientsController : MonoBehaviour
         if(ToppingsNext == true)
         {
             AudioManager.Instance.PlayButtonClick();
+			if (ingredientHoverUi != null)
+				ingredientHoverUi.ForceCompleteActiveIngredientAnimations();
             Ingredients.SetActive(false);
             Shelves.SetActive(false);
             Toppings.SetActive(true);

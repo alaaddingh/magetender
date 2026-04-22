@@ -30,12 +30,28 @@ namespace Magetender.Data
         public static void WriteLoseState()
         {
             int day = GameManager.Instance != null ? GameManager.Instance.Day : 1;
+
+			// Preserve tutorial completion even if GameManager isn't available for some reason.
+			bool tutorialCompleted = false;
+			if (GameManager.Instance != null)
+			{
+				tutorialCompleted = GameManager.Instance.TutorialCompleted;
+			}
+			else
+			{
+				SaveData existing = LoadGame();
+				if (existing != null)
+				{
+					tutorialCompleted = existing.tutorialCompleted;
+				}
+			}
+
             SaveGame(new SaveData
             {
                 coins = 0,
                 day = day,
                 currentEncounterIndex = 0,
-                tutorialCompleted = GameManager.Instance != null && GameManager.Instance.TutorialCompleted
+                tutorialCompleted = tutorialCompleted
             });
         }
 

@@ -60,8 +60,26 @@
           "tolerances": {
             "satisfied_tolerance": 1.2
           },
-          "starting_score": { "x": 0.5, "y": 0.5 },
+          "starting_score": { "x": 0.7, "y": 0.1 },
           "goal_score": { "x": -0.4, "y": 0.35 }, 
+          "dialogue_key": "level_2"
+        },
+        {
+          "monster_id": "slime",
+          "tolerances": {
+            "satisfied_tolerance": 10
+          },
+          "starting_score": {"x": -0.4, "y": 0.5},
+          "goal_score": {"x": 0.4,"y": -0.67}, 
+          "dialogue_key": "level_2" 
+        },
+        {
+          "monster_id": "unicorn",
+          "tolerances": {
+            "satisfied_tolerance": 8
+          },
+          "starting_score": { "x": 0.6, "y": -0.2 },
+          "goal_score": { "x": -0.42, "y": -0.41 },
           "dialogue_key": "level_2"
         }
       ]
