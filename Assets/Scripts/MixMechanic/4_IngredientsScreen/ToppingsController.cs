@@ -144,6 +144,9 @@ public class ToppingsController : MonoBehaviour
         if (!added)
             return;
 
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayIngredientClick();
+
         SetSelectSpriteActive(data, true);
     }
 
@@ -161,6 +164,9 @@ public class ToppingsController : MonoBehaviour
         string removedKey = mixManager.SelectedToppings[mixManager.SelectedToppings.Count - 1];
         mixManager.RemoveTopping(removedKey);
         SetSelectSpriteActive(byId[removedKey], false);
+
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.PlayIngredientClick();
     }
 
     private void SetSelectSpriteActive(ToppingData data, bool active)

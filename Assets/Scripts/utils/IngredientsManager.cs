@@ -24,10 +24,6 @@ public class IngredientHoverSnapUI : MonoBehaviour
 	[SerializeField] private RectTransform slot2;
 	[SerializeField] private RectTransform slot3;
 	[SerializeField] private Vector3 slotScale = new Vector3(0.7f, 0.7f, 1f);
-	
-	[Header("Slot appearance")]
-	[SerializeField] private bool tintIngredientWhenInSlot = true;
-	[SerializeField] private Color slotTint = new Color(0.9f, 0.7f, 1f, 1f);
 
 	[Header("Dissolve animation")]
 	[SerializeField] private RectTransform dissolveTarget;
@@ -363,7 +359,6 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		img.rectTransform.pivot = new Vector2(0.5f, 0.5f);
 		img.rectTransform.anchoredPosition = Vector2.zero;
 		img.rectTransform.localScale = slotScale;
-		ApplySlotTint(img);
 
 		t = 0f;
 		while (t < 1f)
@@ -418,20 +413,6 @@ public class IngredientHoverSnapUI : MonoBehaviour
 
 		CanvasGroup cg = img.GetComponent<CanvasGroup>();
 		if (cg != null) cg.alpha = 1f;
-
-		ApplySlotTint(img);
-	}
-
-	private void ApplySlotTint(Image img)
-	{
-		if (!tintIngredientWhenInSlot || img == null)
-			return;
-
-		Color baseColor = shelfColors.TryGetValue(img.gameObject.name, out Color original) ? original : img.color;
-		baseColor.r *= slotTint.r;
-		baseColor.g *= slotTint.g;
-		baseColor.b *= slotTint.b;
-		img.color = baseColor;
 	}
 
 	private Vector3 GetDissolveWorldPos()
