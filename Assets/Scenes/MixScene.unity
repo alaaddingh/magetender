@@ -8926,11 +8926,11 @@ MonoBehaviour:
   NextScreen: {fileID: 906567377}
   PreviousScreen: {fileID: 118565731}
   fillAmountPerDrop: 0.01
-  maxFillLevel: 0.875
+  maxFillLevel: 1
   fillWidthMultiplier: 0.975
   fillCircleAspect: 0.7895
   fillBottomOffsetY: 30
-  fillYCutoff: 1
+  fillYCutoff: 0.92
   fillAlpha: 0.7
   baseBottlePosSmall: {x: 0, y: -260}
   baseBottlePosMedium: {x: 45, y: -240}
