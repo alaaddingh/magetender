@@ -76,6 +76,15 @@ public class BaseController : MonoBehaviour
     private Image fillImage;
     private bool wasOverTrash;
 
+    public float EffectiveMaxFillLevel
+    {
+        get
+        {
+            float raw = Mathf.Min(maxFillLevel, fillYCutoff, MixManager.MaxFillCapacity);
+            return Mathf.Clamp01(raw);
+        }
+    }
+
     private void Awake()
     {
         if (mixManager == null)
@@ -310,7 +319,7 @@ public class BaseController : MonoBehaviour
     private void RefreshNextButtonVisibility()
     {
         if (nextButton == null || mixManager == null) return;
-        nextButton.SetActive(mixManager.FillLevel >= maxFillLevel);
+        nextButton.SetActive(mixManager.FillLevel >= EffectiveMaxFillLevel);
     }
 
     private void StartPouring(Image baseJar)
@@ -374,6 +383,11 @@ public class BaseController : MonoBehaviour
         // Spawn drops continuously
         while (currentPouringBase == baseJar)
         {
+            if (mixManager != null && mixManager.FillLevel >= EffectiveMaxFillLevel)
+            {
+                yield return null;
+                continue;
+            }
             SpawnDrop(baseJar, baseColor, baseKey);
             yield return new WaitForSeconds(dropSpawnInterval);
         }
@@ -434,9 +448,12 @@ public class BaseController : MonoBehaviour
     public void CatchDrop(string baseKey, Color dropColor)
     {
         if (mixManager == null) return;
-        if (mixManager.FillLevel >= maxFillLevel) return;
+        if (mixManager.FillLevel >= EffectiveMaxFillLevel) return;
 
-        mixManager.AddDrip(baseKey, fillAmountPerDrop);
+        float allowed = Mathf.Min(fillAmountPerDrop, EffectiveMaxFillLevel - mixManager.FillLevel);
+        if (allowed <= 0f) return;
+
+        mixManager.AddDrip(baseKey, allowed);
         UpdateFillVisual();
 
         RefreshNextButtonVisibility();

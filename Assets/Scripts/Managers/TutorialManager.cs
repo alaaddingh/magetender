@@ -435,7 +435,12 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        bool bottleIsFull = mixManager != null && mixManager.FillLevel >= 1f;
+        float threshold = 1f;
+        BaseController baseController = FindFirstObjectByType<BaseController>();
+        if (baseController != null)
+            threshold = baseController.EffectiveMaxFillLevel;
+
+        bool bottleIsFull = mixManager != null && mixManager.FillLevel >= threshold;
         tutorialBaseNextButton.interactable = bottleIsFull;
 
         if (tutorialBaseNextButtonCanvasGroup != null)
