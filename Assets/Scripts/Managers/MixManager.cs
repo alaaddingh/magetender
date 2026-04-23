@@ -18,6 +18,9 @@ public class MixManager : MonoBehaviour
     public float FillLevel = 0f;
     public Dictionary<string, float> BaseAmounts = new Dictionary<string, float>();
 
+    /// <summary>Bottle fill is 0–1; fill and base amounts never exceed this.</summary>
+    public const float MaxFillCapacity = 1f;
+
     [Header("Base Quantities")]
     public float BloodAmount = 0f;
     public float HolyWaterAmount = 0f;

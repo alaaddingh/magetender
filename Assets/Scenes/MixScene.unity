@@ -8926,16 +8926,16 @@ MonoBehaviour:
   NextScreen: {fileID: 906567377}
   PreviousScreen: {fileID: 118565731}
   fillAmountPerDrop: 0.01
-  maxFillLevel: 1
+  maxFillLevel: 0.875
   fillWidthMultiplier: 0.975
   fillCircleAspect: 0.7895
-  fillBottomOffsetY: 35
-  fillYCutoff: 0.95
-  fillAlpha: 0.6
+  fillBottomOffsetY: 30
+  fillYCutoff: 1
+  fillAlpha: 0.7
   baseBottlePosSmall: {x: 0, y: -260}
   baseBottlePosMedium: {x: 45, y: -240}
   baseBottlePosLarge: {x: 45, y: -220}
-  drainRatePerSecond: 0.1
+  drainRatePerSecond: 0.3
   trashRect: {fileID: 1822492698}
 --- !u!1 &871512341
 GameObject:
@@ -10272,12 +10272,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -13826,6 +13826,7 @@ GameObject:
   - component: {fileID: 1266327013}
   - component: {fileID: 1266327016}
   - component: {fileID: 1266327015}
+  - component: {fileID: 1266327017}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -13977,6 +13978,8 @@ MonoBehaviour:
   combatAttackClip: {fileID: 8300000, guid: c5f93058f04124650937ff1826bf7be6, type: 3}
   combatCorrectKeyClip: {fileID: 8300000, guid: ba779bd51bb0f4138a757d2a8ab69bad, type: 3}
   combatIncorrectKeyClip: {fileID: 8300000, guid: c59df29e6c9ba4b07818c028adeb75f7, type: 3}
+  backgroundMusicClip: {fileID: 8300000, guid: b2f23dd2d2d32eb40b35b314023d5a50, type: 3}
+  musicSource: {fileID: 1266327017}
 --- !u!82 &1266327015
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14171,6 +14174,103 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &1266327017
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266327011}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1267240447
 GameObject:
   m_ObjectHideFlags: 0
@@ -14269,8 +14369,6 @@ MonoBehaviour:
   slot2: {fileID: 1413702368}
   slot3: {fileID: 511020177}
   slotScale: {x: 0.3, y: 0.3, z: 1}
-  tintIngredientWhenInSlot: 1
-  slotTint: {r: 0.9, g: 0.7, b: 1, a: 1}
   dissolveTarget: {fileID: 0}
   moveToDrinkSeconds: 0.5
   fadeOutSeconds: 0.5
@@ -15604,7 +15702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eef98cad6356fa44808b3ffb8f80299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 40
+  duration: 30
   timeUp: 0
   TimeUp: 0
   timerText: {fileID: 1401054423}
@@ -23567,12 +23665,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

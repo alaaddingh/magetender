@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
 	public static AudioManager Instance { get; private set; }
 
 	private const string VolumePrefKey = "MasterVolume";
+	private const string CombatSceneName = "QTECombatScene";
 
 	[Header("Sources")]
 	[SerializeField] private AudioSource uiSource;
@@ -38,6 +40,10 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioClip combatCorrectKeyClip;
 	[SerializeField] private AudioClip combatIncorrectKeyClip;
 
+	[Header("Background Music")]
+	[SerializeField] private AudioClip backgroundMusicClip;
+	[SerializeField] private AudioSource musicSource;
+	
 	private AudioSource cantAffordVoice;
 
 	private void Awake()
@@ -58,6 +64,78 @@ public class AudioManager : MonoBehaviour
 			uiSource.ignoreListenerPause = true;
 
 		CreateCantAffordVoice();
+		SceneManager.sceneLoaded += HandleSceneLoaded;
+		UpdateMusicForScene(SceneManager.GetActiveScene().name);
+	}
+
+	private void OnDestroy()
+	{
+		if (Instance == this)
+		{
+			SceneManager.sceneLoaded -= HandleSceneLoaded;
+		}
+	}
+
+	private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		UpdateMusicForScene(scene.name);
+	}
+
+	private void UpdateMusicForScene(string sceneName)
+	{
+		if (backgroundMusicClip == null || musicSource == null)
+			return;
+
+		musicSource.loop = true;
+
+		// Never play music in the combat scene.
+		if (sceneName == CombatSceneName)
+		{
+			PauseBackgroundMusic();
+			return;
+		}
+
+		PlayBackgroundMusic();
+	}
+
+	public void PlayBackgroundMusic()
+	{
+		if (backgroundMusicClip == null || musicSource == null)
+			return;
+
+		if (musicSource.clip != backgroundMusicClip)
+			musicSource.clip = backgroundMusicClip;
+
+		musicSource.loop = true;
+		if (!musicSource.isPlaying)
+			musicSource.Play();
+	}
+
+	public void PauseBackgroundMusic()
+	{
+		if (musicSource == null)
+			return;
+		if (musicSource.isPlaying)
+			musicSource.Pause();
+	}
+
+	public void StopBackgroundMusic()
+	{
+		if (musicSource == null)
+			return;
+		musicSource.Stop();
+	}
+
+	public void ResumeBackgroundMusic()
+	{
+		if (musicSource == null || backgroundMusicClip == null)
+			return;
+
+		if (musicSource.clip != backgroundMusicClip)
+			musicSource.clip = backgroundMusicClip;
+
+		if (!musicSource.isPlaying)
+			musicSource.UnPause();
 	}
 
 	private void CreateCantAffordVoice()
@@ -282,6 +360,9 @@ public class AudioManager : MonoBehaviour
 
 	public void StopAllSounds()
 	{
+		if (musicSource != null)
+			musicSource.Stop();
+
 		if (loopSource != null)
 		{
 			loopSource.Stop();
