@@ -9,7 +9,7 @@ using System.Collections.Generic;
     1) gets chosen glass from mixmanager then displays
     2) when user clicks on base, applies a tint to the glass
     3) write selected base to mixmanager
-    4) sets "next" button to visible when neccesary
+    4) sets "next" button visible only when the glass fill reaches maxFillLevel
     */
 public class BaseController : MonoBehaviour
 {
@@ -256,10 +256,9 @@ public class BaseController : MonoBehaviour
             wasOverTrash = true;
             mixManager.DrainFill(drainRatePerSecond * Time.deltaTime);
             UpdateFillVisual();
+            RefreshNextButtonVisibility();
             if (mixManager.FillLevel <= 0f)
             {
-                if (nextButton != null)
-                    nextButton.SetActive(false);
                 if (AudioManager.Instance != null)
                     AudioManager.Instance.StopTrashLoop();
                 wasOverTrash = false;
@@ -305,7 +304,13 @@ public class BaseController : MonoBehaviour
         mixManager.SetBase(baseKey);
         BaseBottle.color = tint;
 
-        nextButton.SetActive(true);
+        RefreshNextButtonVisibility();
+    }
+
+    private void RefreshNextButtonVisibility()
+    {
+        if (nextButton == null || mixManager == null) return;
+        nextButton.SetActive(mixManager.FillLevel >= maxFillLevel);
     }
 
     private void StartPouring(Image baseJar)
@@ -434,11 +439,7 @@ public class BaseController : MonoBehaviour
         mixManager.AddDrip(baseKey, fillAmountPerDrop);
         UpdateFillVisual();
 
-        // Show next button when bottle has some liquid
-        if (mixManager.FillLevel > 0 && nextButton != null)
-        {
-            nextButton.SetActive(true);
-        }
+        RefreshNextButtonVisibility();
     }
 
     private Color CalculateMixedColor()
