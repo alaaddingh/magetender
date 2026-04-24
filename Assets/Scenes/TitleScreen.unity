@@ -859,6 +859,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditsPanel: {fileID: 1639530288}
+  startButtonRoot: {fileID: 0}
+  newGameButtonRoot: {fileID: 0}
+  startButtonLabel: {fileID: 0}
 --- !u!1 &303113069
 GameObject:
   m_ObjectHideFlags: 0
@@ -4789,10 +4792,23 @@ MonoBehaviour:
   assessAmbienceNeutralClip: {fileID: 8300000, guid: 6b3df00376168aa4a8f603107fad8cb2, type: 3}
   assessAmbienceAngryClip: {fileID: 8300000, guid: a116963ce10a0ec4e82c3a1122214963, type: 3}
   registerChaChingClip: {fileID: 8300000, guid: 3aaf4b5e8015a4e4da1a23258482b669, type: 3}
+  cantAffordClip: {fileID: 0}
   combatHealClip: {fileID: 8300000, guid: 1dc5b0188b6f14c64bf73926aabc2449, type: 3}
   combatAttackClip: {fileID: 8300000, guid: c5f93058f04124650937ff1826bf7be6, type: 3}
   combatCorrectKeyClip: {fileID: 8300000, guid: ba779bd51bb0f4138a757d2a8ab69bad, type: 3}
   combatIncorrectKeyClip: {fileID: 8300000, guid: c59df29e6c9ba4b07818c028adeb75f7, type: 3}
+  alienVoiceClipGeneric:
+  - {fileID: 8300000, guid: 5a89e9487313efe47bda3b3fb7b89be3, type: 3}
+  - {fileID: 8300000, guid: 47952dddac159fe46a649c048538b32f, type: 3}
+  - {fileID: 8300000, guid: 57ec1905cdcac31499b664a1309f99a8, type: 3}
+  - {fileID: 8300000, guid: 01903880fc3bc5e4597544ee769fc1a6, type: 3}
+  - {fileID: 8300000, guid: d8c24911a0463a346857150e20f66b44, type: 3}
+  alienVoiceClipAngry:
+  - {fileID: 8300000, guid: dece8c4b141601d41b92302ae4192712, type: 3}
+  - {fileID: 8300000, guid: d57e30f5765e6594d99da31e4f97abf6, type: 3}
+  - {fileID: 8300000, guid: 940e511d515585e49bd19d42cd4b325e, type: 3}
+  alienVoiceClipSatisfied:
+  - {fileID: 8300000, guid: dcaf630a0ff123544b7bcb0ac67e318b, type: 3}
 --- !u!4 &1878228773
 Transform:
   m_ObjectHideFlags: 0

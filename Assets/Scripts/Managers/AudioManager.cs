@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -38,6 +39,13 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioClip combatCorrectKeyClip;
 	[SerializeField] private AudioClip combatIncorrectKeyClip;
 
+
+	//Tyvin: Feel free to remove or replace it, since this was to visually test it out
+	[Header("Alien VO")]
+	[SerializeField] private List<AudioClip> alienVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> alienVoiceClipAngry;
+	[SerializeField] private List<AudioClip> alienVoiceClipSatisfied;
+
 	private AudioSource cantAffordVoice;
 
 	private void Awake()
@@ -58,6 +66,56 @@ public class AudioManager : MonoBehaviour
 			uiSource.ignoreListenerPause = true;
 
 		CreateCantAffordVoice();
+	}
+
+	//Tyvin: Feel free to remove or replace it, since this was to visually test it out
+	public void PlayAlienVoiceGeneric()
+	{
+		if (alienVoiceClipGeneric == null || alienVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No alien voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, alienVoiceClipGeneric.Count);	
+		sfxSource.clip = alienVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing alien voice clip: {sfxSource.clip.name}");
+		sfxSource.Play();
+	}
+
+	public void PlayAlienVoiceAngry()
+	{
+		if (alienVoiceClipAngry == null || alienVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry alien voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, alienVoiceClipAngry.Count);	
+		sfxSource.clip = alienVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry alien voice clip: {sfxSource.clip.name}");
+		sfxSource.Play();
+	}
+
+	public void PlayAlienVoiceSatisfied()
+	{
+		
+		if (alienVoiceClipSatisfied == null || alienVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied alien voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, alienVoiceClipSatisfied.Count);	
+		sfxSource.clip = alienVoiceClipSatisfied[randomIndex];
+
+		Debug.Log($"Playing satisfied alien voice clip: {sfxSource.clip.name}");
+		sfxSource.Play();
+	}
+
+	public void StopAlienVoice()
+	{
+		if (sfxSource != null && sfxSource.isPlaying)
+		{
+			sfxSource.Stop();
+		}
 	}
 
 	private void CreateCantAffordVoice()
@@ -97,7 +155,7 @@ public class AudioManager : MonoBehaviour
 		{
 			return;
 		}
-
+	
 		uiSource.PlayOneShot(buttonClickClip);
 	}
 

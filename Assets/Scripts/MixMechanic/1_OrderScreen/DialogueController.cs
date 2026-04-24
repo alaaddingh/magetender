@@ -103,6 +103,13 @@ public class DialogueController : MonoBehaviour
         brewButtonObject.SetActive(false);
         if (continueButtonObject != null) continueButtonObject.SetActive(false);
 
+        //Tyvin: Feel free to remove or replace it, since this was to visually test it out
+        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "start"))
+        {
+            Debug.Log("Playing generic alien voice"); 
+            AudioManager.Instance.PlayAlienVoiceGeneric();
+        }
+
         RefreshAll();
     }
 
@@ -139,6 +146,25 @@ public class DialogueController : MonoBehaviour
 
     public void OnNextPressed()
     {
+        //Tyvin: Feel free to remove or replace it, since this was to visually test it out
+        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        {
+            Debug.Log("Playing generic alien voice"); 
+            AudioManager.Instance.PlayAlienVoiceGeneric();
+        }
+        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "angry"))
+        {
+            Debug.Log("Playing angry alien voice"); 
+            AudioManager.Instance.PlayAlienVoiceAngry();
+        }
+        if (IsDialogueFinished == true)
+        {
+            Debug.Log("Dialogue finished, stopping alien voice if playing");
+            AudioManager.Instance.StopAlienVoice();
+        }
+
+
+
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
 
@@ -146,6 +172,7 @@ public class DialogueController : MonoBehaviour
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
             typewriter.SkipTyping();
+            AudioManager.Instance.StopAlienVoice();
             return;
         }
 
@@ -169,6 +196,7 @@ public class DialogueController : MonoBehaviour
 			AudioManager.Instance.PlayButtonClick();
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.StopAmbience();
+            AudioManager.Instance.StopAlienVoice(); //To stop alien voice when brewing starts
         if (coinCanvas != null)
             coinCanvas.SetActive(false);
         orderScreen.SetActive(false);
