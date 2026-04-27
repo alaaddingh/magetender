@@ -24,7 +24,11 @@ public class DayScreenController : MonoBehaviour
 
     [Header("Score Display Canvas - hide on Day, show on Order")]
     [SerializeField] private GameObject scoreDisplayCanvas;
+
     [SerializeField] private ScoreManager scoreManager;
+
+
+
 
 	private bool playedFirstWalkIn;
 	private bool showedDayPanelThisLoad;
@@ -54,7 +58,8 @@ public class DayScreenController : MonoBehaviour
             orderScreen.SetActive(false);
 
         if (coinCanvas != null)
-            coinCanvas.SetActive(true);
+            coinCanvas.SetActive(false);
+            
 
         if (scoreDisplayCanvas != null)
             scoreDisplayCanvas.SetActive(false);

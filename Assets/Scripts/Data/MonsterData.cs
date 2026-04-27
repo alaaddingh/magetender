@@ -15,6 +15,7 @@ public class MonsterData
     public string toppingsPreference;
     public MonsterSprites sprites;
     public MonsterPosition position;
+    public float scale = 1f;
     public string dialogueId;
 }
 
