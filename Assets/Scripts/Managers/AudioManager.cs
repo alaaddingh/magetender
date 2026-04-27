@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
@@ -43,7 +44,16 @@ public class AudioManager : MonoBehaviour
 	[Header("Background Music")]
 	[SerializeField] private AudioClip backgroundMusicClip;
 	[SerializeField] private AudioSource musicSource;
-	
+
+	[Header("Character VO's")]
+	[SerializeField] private List<AudioClip> toadVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> toadVoiceClipAngry;
+
+	// Alien customer VO's
+	[SerializeField] private List<AudioClip> alienVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> alienVoiceClipAngry;
+	[SerializeField] private List<AudioClip> alienVoiceClipSatisfied;
+
 	private AudioSource cantAffordVoice;
 
 	private void Awake()
@@ -377,6 +387,84 @@ public class AudioManager : MonoBehaviour
 
 		if (cantAffordVoice != null)
 			cantAffordVoice.Stop();
+	}
+
+	//Tyvin: Feel free to remove or replace it, since this was to visually test it out
+	public void PlayToadVoiceGeneric()
+	{
+		if (toadVoiceClipGeneric == null || toadVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic toad voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, toadVoiceClipGeneric.Count);	
+		sfxSource.clip = toadVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic toad voice clip: {sfxSource.clip.name}");
+		sfxSource.Play();
+	}
+
+	public void PlayToadVoiceAngry()
+	{
+		if (toadVoiceClipAngry == null || toadVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry toad voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, toadVoiceClipAngry.Count);	
+		sfxSource.clip = toadVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry toad voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayAlienVoiceGeneric()
+	{
+		if (alienVoiceClipGeneric == null || alienVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic alien voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, alienVoiceClipGeneric.Count);	
+		sfxSource.clip = alienVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic alien voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+
+	public void PlayAlienVoiceAngry()
+	{
+		if (alienVoiceClipAngry == null || alienVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry alien voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, alienVoiceClipAngry.Count);	
+		sfxSource.clip = alienVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry alien voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+
+	public void PlayAlienVoiceSatisfied()
+	{
+		
+		if (alienVoiceClipSatisfied == null || alienVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied alien voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, alienVoiceClipSatisfied.Count);	
+		sfxSource.clip = alienVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied alien voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+
+	public void StopVoice()
+	{
+		if (sfxSource != null && sfxSource.isPlaying)
+		{
+			sfxSource.Stop();
+		}
 	}
 }
 

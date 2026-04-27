@@ -4800,6 +4800,25 @@ MonoBehaviour:
   combatIncorrectKeyClip: {fileID: 8300000, guid: c59df29e6c9ba4b07818c028adeb75f7, type: 3}
   backgroundMusicClip: {fileID: 8300000, guid: b2f23dd2d2d32eb40b35b314023d5a50, type: 3}
   musicSource: {fileID: 1878228776}
+  toadVoiceClipGeneric:
+  - {fileID: 8300000, guid: 3909163380661b84cb84527bc620fb53, type: 3}
+  - {fileID: 8300000, guid: 9a6283edb8f0b9048aeed6bb182775e6, type: 3}
+  - {fileID: 8300000, guid: f1f5e5c2f77c9ee4e83ce7298db52b67, type: 3}
+  - {fileID: 8300000, guid: 0747055d303073646a465d6d09b3bf78, type: 3}
+  toadVoiceClipAngry:
+  - {fileID: 8300000, guid: c19f9cbf9f1719c43b5030915a9493ac, type: 3}
+  alienVoiceClipGeneric:
+  - {fileID: 8300000, guid: fe69dc035905a0f41881560bb3a71962, type: 3}
+  - {fileID: 8300000, guid: 1792684ca6d1a37428e145b1de503884, type: 3}
+  - {fileID: 8300000, guid: 750b03081e6fc4a478e54960012341d6, type: 3}
+  - {fileID: 8300000, guid: 5235b31978bdbea4cac9e5a54590798c, type: 3}
+  - {fileID: 8300000, guid: ebe648b13ce00564e8062b22ca620763, type: 3}
+  alienVoiceClipAngry:
+  - {fileID: 8300000, guid: c04c3f5b5a8db5d46ab83b5900d500e7, type: 3}
+  - {fileID: 8300000, guid: ce07a35f5ffe9d548ab2b8c056e081ec, type: 3}
+  - {fileID: 8300000, guid: 3581a4f7f66331c4291640be39281dd3, type: 3}
+  alienVoiceClipSatisfied:
+  - {fileID: 8300000, guid: d4423f8f6aae0634291a7cc269ab351f, type: 3}
 --- !u!4 &1878228773
 Transform:
   m_ObjectHideFlags: 0

@@ -100,6 +100,8 @@ public class DialogueController : MonoBehaviour
 
     private void Start()
     {
+        CharacterVoiceover();
+        Debug.Log($"[DialogueController] Starting with monster='{currentMonsterManager.Data?.id}' state='{monsterStateManager?.MonsterState}'");
         brewButtonObject.SetActive(false);
         if (continueButtonObject != null) continueButtonObject.SetActive(false);
 
@@ -139,6 +141,8 @@ public class DialogueController : MonoBehaviour
 
     public void OnNextPressed()
     {
+        CharacterVoiceover();
+
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
 
@@ -161,6 +165,42 @@ public class DialogueController : MonoBehaviour
             dialogueIndex++;
 
         ShowCurrentLine(lines);
+
+        StopCharacterVoiceoverAfterDialogue();
+    }
+
+    public void CharacterVoiceover()
+    {
+        //Tyvin: Feel free to remove or replace it, since this was to visually test it out
+        if (currentMonsterManager.Data.id == "toad" && (monsterStateManager.MonsterState == "start"))
+        {
+            Debug.Log("Playing generic toad voice"); 
+            AudioManager.Instance.PlayToadVoiceGeneric();
+        }
+        // This might need to be changed since I thought the toad was angry on that dialogue "FOR A ROOKIE!!!"
+        if (currentMonsterManager.Data.id == "toad" && (monsterStateManager.MonsterState == "neutral"))
+        {
+            Debug.Log("Playing neutral toad voice"); 
+            AudioManager.Instance.PlayToadVoiceAngry();
+        }
+        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        {
+            Debug.Log("Playing generic alien voice"); 
+            AudioManager.Instance.PlayAlienVoiceGeneric();
+        }
+        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "angry"))
+        {
+            Debug.Log("Playing angry alien voice"); 
+            AudioManager.Instance.PlayAlienVoiceAngry();
+        }
+    }
+
+    public void StopCharacterVoiceoverAfterDialogue()
+    {
+        if (IsDialogueFinished == true)
+        {
+            AudioManager.Instance.StopVoice();
+        }
     }
 
     public void BrewingPressed()
@@ -298,7 +338,7 @@ public class DialogueController : MonoBehaviour
     }
 
     private void TryMakeTutorialToadAngry(List<string> activeDialogue)
-    {
+    { 
         if (!IsTutorialToadNeutralServeDialogue())
             return;
 
@@ -321,7 +361,7 @@ public class DialogueController : MonoBehaviour
 
         if (currentMonsterManager.Data.id != "toad")
             return false;
-
+        CharacterVoiceover();
         string dialogueKey = currentMonsterManager.CurrentEncounter.dialogue_key;
         return dialogueKey == "tutorial" || dialogueKey == "tutorial_1";
     }
