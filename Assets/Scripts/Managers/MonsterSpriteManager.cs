@@ -27,6 +27,7 @@ public class MonsterSpriteManager : MonoBehaviour
     private Sprite lastServeSpriteValue;
     private Vector2 baseOrderPosition;
     private Vector2 baseServePosition;
+    private Vector3 baseSpriteScale = Vector3.one;
 
     private void RebindStateManager()
     {
@@ -140,12 +141,14 @@ public class MonsterSpriteManager : MonoBehaviour
 
         baseOrderPosition = currentMonsterManager.GetOrderSpritePosition();
         baseServePosition = currentMonsterManager.GetServeSpritePosition();
+        baseSpriteScale = currentMonsterManager.GetSpriteScale();
 
         string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
         string path = ResolveSpritePathForState(monster.sprites, state);
         if (string.IsNullOrEmpty(path)) return;
 
         ApplySprite(path);
+        ApplyScale();
 
         ApplyStateAnimation();
     }
@@ -207,5 +210,13 @@ public class MonsterSpriteManager : MonoBehaviour
             orderSprite.sprite = sprite;
         if (serveSprite != null)
             serveSprite.sprite = sprite;
+    }
+
+    private void ApplyScale()
+    {
+        if (orderSprite != null)
+            orderSprite.rectTransform.localScale = baseSpriteScale;
+        if (serveSprite != null)
+            serveSprite.rectTransform.localScale = baseSpriteScale;
     }
 }

@@ -12,7 +12,8 @@
       },
   
       "dialogueId": "dlg_unicorn",
-      "position": {"pos_x": -100, "pos_y": 170}
+      "position": {"pos_x": 0, "pos_y": 234},
+      "scale": 0.75
 
     },
      {
@@ -27,7 +28,8 @@
       },
     
       "dialogueId": "dlg_slime",
-      "position": {"pos_x": -169, "pos_y": -37}
+      "position": {"pos_x": -169, "pos_y": -37},
+      "scale": 1.0
     },
      {
       "id": "alien",
@@ -44,7 +46,8 @@
       },
     
       "dialogueId": "dlg_alien",
-      "position": {"pos_x": -169, "pos_y": -37}
+      "position": {"pos_x": -169, "pos_y": -37},
+      "scale": 1.0
     },
         {
       "id": "toad",
@@ -58,7 +61,8 @@
       },
     
       "dialogueId": "dlg_toad",
-      "position": {"pos_x": 30, "pos_y": 70}
+      "position": {"pos_x": 30, "pos_y": 70},
+      "scale": 1.0
     }
   ]
 }
