@@ -6703,6 +6703,11 @@ MonoBehaviour:
   ToppingsController: {fileID: 65667177}
   MaxIngredients: 3
   ingredientHoverUi: {fileID: 0}
+  SelectedIngredientSlotsRoot: {fileID: 0}
+  SelectedIngredientSlots:
+  - {fileID: 1486373563}
+  - {fileID: 1413702367}
+  - {fileID: 511020176}
   ingredientTintColor: {r: 0.9, g: 0.7, b: 1, a: 1}
   ingredientTintPerIngredient: 0.15
   useIngredientColorsFromJson: 1
@@ -11536,7 +11541,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -426, y: -120}
+  m_AnchoredPosition: {x: -309, y: -120}
   m_SizeDelta: {x: 2500, y: 2500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &998083933
@@ -20841,7 +20846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -601, y: -120}
+  m_AnchoredPosition: {x: -542, y: -120}
   m_SizeDelta: {x: 2500, y: 2500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1885053218

@@ -35,6 +35,10 @@ public class IngredientsController : MonoBehaviour
     private MixManager mixManager;
 	[SerializeField] private IngredientHoverSnapUI ingredientHoverUi;
 
+	[Header("UI (hide during toppings)")]
+	[SerializeField] private GameObject SelectedIngredientSlotsRoot;
+	[SerializeField] private List<GameObject> SelectedIngredientSlots = new List<GameObject>();
+
     [Header("Ingredient tint")]
     public Color ingredientTintColor = new Color(0.9f, 0.7f, 1f, 1f);
     [Range(0f, 1f)]
@@ -70,6 +74,7 @@ public class IngredientsController : MonoBehaviour
             IngredientsBottle.raycastTarget = false;
         InitializeFillRectangle();
         HookIngredientEvents(true);
+		SetSelectedIngredientSlotsVisible(true);
     }
 
     private void OnDisable()
@@ -335,6 +340,7 @@ public class IngredientsController : MonoBehaviour
             Toppings.SetActive(true);
             HoverTooltip.SetActive(false);
             ToppingsController.SetActive(true);
+			SetSelectedIngredientSlotsVisible(false);
             ToppingsNext = false;
             return;
 
@@ -344,4 +350,32 @@ public class IngredientsController : MonoBehaviour
 
 
     }
+
+	private void SetSelectedIngredientSlotsVisible(bool visible)
+	{
+		if (SelectedIngredientSlotsRoot != null)
+			SelectedIngredientSlotsRoot.SetActive(visible);
+
+		if (SelectedIngredientSlots != null && SelectedIngredientSlots.Count > 0)
+		{
+			for (int i = 0; i < SelectedIngredientSlots.Count; i++)
+			{
+				if (SelectedIngredientSlots[i] != null)
+					SelectedIngredientSlots[i].SetActive(visible);
+			}
+			return;
+		}
+
+		Transform root = CurrentScreen != null ? CurrentScreen.transform : transform.root;
+		if (root == null) return;
+
+		Transform slot1 = root.Find("Slot1");
+		if (slot1 != null) slot1.gameObject.SetActive(visible);
+
+		Transform slot2 = root.Find("Slot2");
+		if (slot2 != null) slot2.gameObject.SetActive(visible);
+
+		Transform slot3 = root.Find("Slot3");
+		if (slot3 != null) slot3.gameObject.SetActive(visible);
+	}
 }
