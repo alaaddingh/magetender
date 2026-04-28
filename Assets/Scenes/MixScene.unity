@@ -919,7 +919,7 @@ MonoBehaviour:
   - trigger: {fileID: 709223221}
     steps: 08000000
     showPointer: 1
-    pointerPosition: {x: -295, y: -125}
+    pointerPosition: {x: -220, y: -125}
   - trigger: {fileID: 253859366}
     steps: 09000000
     showPointer: 1
@@ -1667,7 +1667,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 102
+  m_SortingOrder: 103
   m_TargetDisplay: 0
 --- !u!224 &155716015
 RectTransform:
@@ -9701,7 +9701,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 101
+  m_SortingOrder: 102
   m_TargetDisplay: 0
 --- !u!224 &875492488
 RectTransform:
@@ -13321,7 +13321,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 101
   m_TargetDisplay: 0
 --- !u!224 &1163726012
 RectTransform:
@@ -19830,7 +19830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1224, y: -931}
+  m_AnchoredPosition: {x: -1257, y: -902}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1801666424
@@ -25052,7 +25052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2128562754
 MonoBehaviour:
   m_ObjectHideFlags: 0

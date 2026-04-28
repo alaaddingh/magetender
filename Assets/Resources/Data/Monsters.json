@@ -52,7 +52,7 @@
         {
       "id": "toad",
       "name": "Gurt",
-      "toppingsPreference": "Umbrella",
+      "toppingsPreference": "Lime",
 
 
       "sprites": {
@@ -62,7 +62,7 @@
     
       "dialogueId": "dlg_toad",
       "position": {"pos_x": 30, "pos_y": 70},
-      "scale": 1.0
+      "scale": 0.5
     }
   ]
 }

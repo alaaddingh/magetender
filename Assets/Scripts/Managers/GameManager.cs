@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+	private const string TutorialExitMaintenancePendingKey = "TutorialExitMaintenancePending";
+	private const string TutorialExitMaintenanceAmountKey = "TutorialExitMaintenanceAmount";
+
     [Header("Starting values")]
     [SerializeField] private int startingCoins = 0;
     [SerializeField] private int startingDay = 1;
@@ -91,6 +94,14 @@ public class GameManager : MonoBehaviour
     {
         if (TutorialCompleted)
             return;
+
+		// Fair start: when leaving tutorial, wipe coins to 0 and remember the amount
+		// so the Day screen can show it as a "maintenance cost" popup (no lose condition).
+		int wiped = Coins;
+		PlayerPrefs.SetInt(TutorialExitMaintenanceAmountKey, Mathf.Max(0, wiped));
+		PlayerPrefs.SetInt(TutorialExitMaintenancePendingKey, 1);
+		PlayerPrefs.Save();
+		Coins = 0;
 
         TutorialCompleted = true;
         SaveSystem.WriteData();
