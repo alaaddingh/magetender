@@ -55,6 +55,8 @@ public class IngredientsController : MonoBehaviour
 
     [SerializeField] private GameObject Toppings;
     private bool ToppingsNext = true;
+    [SerializeField] private Button nextButton;
+    private ToppingsController toppingsControllerComponent;
 
     private void Awake()
     {
@@ -63,6 +65,8 @@ public class IngredientsController : MonoBehaviour
             baseController = FindFirstObjectByType<BaseController>();
 		if (ingredientHoverUi == null)
 			ingredientHoverUi = FindFirstObjectByType<IngredientHoverSnapUI>();
+        if (ToppingsController != null)
+            toppingsControllerComponent = ToppingsController.GetComponent<ToppingsController>();
     }
 
     private void OnEnable()
@@ -75,6 +79,7 @@ public class IngredientsController : MonoBehaviour
         InitializeFillRectangle();
         HookIngredientEvents(true);
 		SetSelectedIngredientSlotsVisible(true);
+        RefreshNextButtonState();
     }
 
     private void OnDisable()
@@ -90,6 +95,7 @@ public class IngredientsController : MonoBehaviour
         ApplyFromBaseBottle();
         LoadIngredientData();
         InitializeFillRectangle();
+        RefreshNextButtonState();
     }
 
     private void HookIngredientEvents(bool on)
@@ -115,6 +121,22 @@ public class IngredientsController : MonoBehaviour
     private void OnIngredientsChanged(string _)
     {
         UpdateFillVisual();
+        RefreshNextButtonState();
+    }
+
+    private void RefreshNextButtonState()
+    {
+        if (!ToppingsNext)
+            return;
+
+        if (nextButton == null)
+            nextButton = GetComponentInChildren<Button>(includeInactive: true);
+
+        if (nextButton == null || mixManager == null)
+            return;
+
+        bool hasSelectedIngredient = mixManager.SelectedIngredients != null && mixManager.SelectedIngredients.Count > 0;
+        nextButton.gameObject.SetActive(hasSelectedIngredient);
     }
 
     private void ApplyIngredientSelectionCap()
@@ -330,7 +352,7 @@ public class IngredientsController : MonoBehaviour
 
     public void NextPressed()
     {
-        if(ToppingsNext == true)
+        if (ToppingsNext == true)
         {
             AudioManager.Instance.PlayButtonClick();
 			if (ingredientHoverUi != null)
@@ -342,13 +364,23 @@ public class IngredientsController : MonoBehaviour
             ToppingsController.SetActive(true);
 			SetSelectedIngredientSlotsVisible(false);
             ToppingsNext = false;
+
+            if (nextButton != null)
+            {
+                nextButton.onClick.RemoveListener(NextPressed);
+
+                if (toppingsControllerComponent != null)
+                {
+                    toppingsControllerComponent.ConfigureNavigation(CurrentScreen, NextScreen, nextButton);
+                    nextButton.onClick.AddListener(toppingsControllerComponent.NextPressed);
+                }
+
+                nextButton.gameObject.SetActive(false);
+            }
+
             return;
 
         }
-        CurrentScreen.SetActive(false);
-        NextScreen.SetActive(true);
-
-
     }
 
 	private void SetSelectedIngredientSlotsVisible(bool visible)

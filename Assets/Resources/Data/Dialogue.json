@@ -6,190 +6,197 @@
         {
           "level": "level_1",
           "starting": [
-            "*GLAURGHH* *GLAURGHHHHHHHH*",
-            "How was my greeting? I'll be blob-hurt if you told me its--- *GLAURGH* ---bage.",
-            "I saw these reviews by NobleChadwick33 on Kelp. That you made him a drink so fantastic he quit his desk job...",
-            "...to pursue his love for juggling.",
-            "....",
-            "Regardless... I'm feeling like a sloshy blob-potato after doomscrolling for a whole week nonstop.",
-            "I need a potion that can fix my *GLAURGH* -ness",
-            "And also a nice slice of lime to reclaim my globble youth."
+            "<b>*GLAURGHH* *GLAURGHHHHHHHH*</b>",
+            "That's my greeting—ya like it? Or was it <b>*GLAURGH*</b>-bage?",
+            "Heheh... anyways...",
+            "I saw a review by NobleChadwick33 on Kelp. Said you made him a drink so good he quit his desk job...",
+            "...to pursue juggling. Respect. I could use that sort of uplift.",
+            "I've been doomscrolling for like a whole week nonstop...",
+            "Feelin' pretty sluggish... pretty sloshy...",
+            "Could ya make me a brew that fixes my lethargy... <b>*GLAURGH*</b>... whatever this is?",
+            "And maybe toss in a <b>slice of lime...</b>"
           ],
+
           "neutral": [
-            "*GLOURGH* This drink doesn't slush me well...",
-            "The brew didn't cure much of my sluggishness...",
-            "Other than questioning your *GLOURGH* potion making skills."
+            "<b>*GLOURGH*</b> This drink is alright... it hasn't really lifted my lethargy...",
+            "I... sorta question your <b>*GLOURGH*</b> potion-making skills, my guy..."
           ],
+
           "satisfied": [
-            "*Happy GLORGH* WOW! My jiggleness feels INCREDIBLE like if I was a little globble.",
-            "My jelly feels so stable! I can finally shoot out coins right out of my snoot!",
-            "I'm inviting my sewer complex blobs to gobble here! Thank you MageTender!"
+            "<b>*Happy GLORGH*</b> WOW! I feel INCREDIBLE... don't think I've felt this since I was a little globule...",
+            "My jelly body feels revitalized... I have just enough energy to hand ya a big ol' tip!",
+            "I'm inviting all my blobs to come gobble here! Thank you, Magetender!"
           ],
+
           "angry": [
-            "*Angry GLOARGH* WHAT THE SLIME IS THIS!?!",
-            "YOU THINK I'M SORT OF A RECYCLING SLOSH-BIN HUH!?!",
-            "I'LL *GLOARGH* YOUR BODY TO ASSIMILATION!!!"
+            "<b>*Angry GLOARGH*</b> WHAT THE SLIME IS THIS!?!",
+            "YOU THINK I'M SOME SORT OF SLOSH-BIN, HUH!?!",
+            "I'LL GIVE YOU A ROUGH <b>*GLOARGH*</b> YOU'LL REMEMBER!!!"
           ]
         },
         {
           "level": "level_2",
           "starting": [
-            "*GLAURGHH* *GLAURGHHHHHHHH*",
-            "....",
-            "Please, I need your help!!!" ,
-            "My *GLAURGHH* feels too high and must go down after going to a Blobs Night Out!",
-            "Also, my Kelp account got locked after guessing a blobzillion tries and I'm now a sad blobby."
+            "<b>*GLAURGHH* *GLAURGHHHHHHHH*</b>",
+            "...",
+            "I need your help...",
+            "My <b>*GLAURGHH*</b> is way too high after a Blob's Night Out...",
+            "Everything feels off... too sloshy...",
+            "Could you make me something to bring me back down?",
+            "Hopefully you still make good brews?"
           ],
           "neutral": [
-            "*GLOURGH* This drink doesn't make me go blobby and slushy...",
-            "I'm florping out of here! To gobble some trash behind this tavern",
-            "That will surely get my mood up."
+            "<b>*GLOURGH*</b> This drink doesn't make me feel any less sluggish..",
+            "I think I saw some tasty trash behind the tavern...",
+            "Yeah... that'll bring my mood up."
           ],
           "satisfied": [
-            "*Happy GLORGH* WOW! My jiggleness is back to how I remembered.",
-            "My jelly belly feel so mello!",
-            "I thank you again MageTender! I'll get my sewer complex blobs here soon!"
+            "<b>*Happy GLORGH*</b> WOW! My wiggly nature is back!",
+            "Thank you again, Magetender! I'll get my blobs out here soon!"
           ],
           "angry": [
-            "*Angry GLOARGH* THIS POTION IS SOME STRAIGHT SLOGFLORP!!!",
-            "I AM NOT YOUR DECOMPOSING COMPOST BIN YOU GLOOPY ORGANISM!!!",
-            "I'LL PARALYZE YOUR ARMS TO STOP BEING MISTREATED HERE!!!"
+            "<b>*Angry GLOARGH*</b> THIS POTION IS SOME STRAIGHT SLOGFLORP!!!",
+            "I AM NOT SOME COMPOST BIN FOR YOU TO MAKE USE OF!!!"
           ]
         }
+      ]
+    },
+      {
+        "id": "dlg_unicorn",
+        "levels": [
+        {
+    "level": "level_1",
+    "starting": [
+      "Hello, Magetender! It is I—the most exquisite unicorn in town, Anita Caberneigh.",
+      "What's that? You haven't heard of me?",
+      "Dear me, it appears I’ve encountered a mage who lives under a rock.",
+      "You really ought to get out more.",
+      "...",
+      "Anyhow, I'd like to request a potion that will make me feel grounded and calm.",
+      "The pressures of remaining the fairest creature this town has ever seen do tend to weigh on me...",
+      "Oh, and do not forget a <b>cherry on top</b>, if you would."
+    ],
+    "neutral": [
+      "Hmm. Not horrible... though you do seem to lack any exceptional knowledge of magetending.",
+      "I can only assume you were given this position through nepotism... or an internal reference. Am I getting warmer?",
+      "Farewell until next time."
+    ],
+    "satisfied": [
+      "Ah, yes... this drink makes me feel so... tranquil.",
+      "As if I'm dancing on rainbows while fairies lift my fabulous mane.",
+      "Wh-why was I even worked up to begin with... please accept my generous tip as a symbol of my gratitude.",
+      "Farewell until next time, Magetender."
+    ],
+    "angry": [
+      "WH-WHAT IN THE WORLD IS THIS!?!",
+      "MY BLOOD PRESSURE HAS ONLY RISEN!!!",
+      "MAGETENDER, YOUR INCOMPETENCE SHALL NOT GO UNPUNISHED!!!"
+    ]
+  },
+  
+    {
+  "level": "level_2",
+  "starting": [
+    "Hello, Magetender. It is I—once again—the most exquisite unicorn in town, Anita Caberneigh.",
+    "But really, I need no introduction at this point.. hush now... you know it's true.",
+    "...",
+    "I want a brew that brings me calm and composure.",
+    "Do ensure it is finished with a cherry on top .",
+    "And when you are done... maybe a bow would be appropriate."
+  ],
+
+  "neutral": [
+    "Hmm. This has done little to improve my mood.",
+    "There is a certain... lack of refinement here.",
+    "Do try to elevate your craft before our next encounter.",
+    "Farewell."
+  ],
+
+  "satisfied": [
+    "Ah... yes. This is quite lovely.",
+    "I feel positively serene... as though the world itself has softened.",
+    "Perhaps I misjudged you... just slightly.",
+    "Do not grow complacent. But... well done, Magetender."
+  ],
+
+  "angry": [
+    "WHAT is this??!",
+    "This is an utter disgrace!",
+    "You have ruined my entire mood!",
+    "You will answer for this incompetence!"
+      ]
+    }
       ]
     },
     {
-      "id": "dlg_unicorn",
-      "levels": [
-        {
-          "level": "level_1",
-          "starting": [
-            "Hello my dearest MageTender! It is I, the most prettiest Unicorn in town, Anita Caberneigh.",
-            "What's that? You haven't heard of me?",
-            "Dearest me, it seems like I have encountered a slog brain individual here.",
-            "That is also NOT your invitation to talk back at me.",
-            "....",
-            "Anyway, from my marvelous list of orders, I demand a potion that makes me grounded and calm.",
-            "Especially after YOUR pitiful insult and questioning MY recognition!",
-            "Oh, and also, with a cherry on top of my beautiful potion."
-          ],
-          "neutral": [
-            "Hmph. It seems like the vibes lacks any form of knowledge and craftmanship.",
-            "Clearly you must be hired by someones favorite for your sorrow pitiness.",
-            "Something that I would understand and OBVIOUSLY not you.",
-            "Farewell, until next time you improve that slog brain of yours."
-          ],
-          "satisfied": [
-            "WOAH! This drink... I feel so... tranquil.",
-            "Like if I'm dancing on rainbows while my fairies liftsss my fabulous maneeee.",
-            "Wh-whyyyy... was I mad... and surely I didn't tip... you to secure my wealth?",
-            "Whatever, I'm too prosperous! Farewell until next time MageTender!"
-          ],
-          "angry": [
-            "WH-WHA?!? WHAT THE IMP IS THIS!?!",
-            "MY BLOOD PRESSURE IS EXPLODING WITH RAGE!!!",
-            "BECAUSE THAT STUPID PATHETIC BRAIN OF YOURS CAN'T MAKE A PROPER DRINK!!!",
-            "YOUR SLOG BRAIN WILL PAY FOR YOUR ATROCIOUS WAYS!!! "
-          ]
-        },
-        {
-          "level": "level_2",
-          "starting": [
-            "Hello my dearest MageTender! It is I, once again, the most prettiest Unicorn in town, Anita Caberneigh!",
-            "Was that a magnificent grand entrance? Hush now, you know it was OH SO WELL!",
-            "....",
-            "From Anita's marvelous list of orders, I demand a grounded and calm brew to my liking.",
-            "With the most finest ripped cherry for my glamorous potion.",
-            "And also, when you are done, you must slowly bow to me after handling my precious drink."
-          ],
-          "neutral": [
-            "Hmh! This drink only gave me a slight horse-kick to my mood.",
-            "Wait no, I need a more insulting phrase for you lots...",
-            "Yeah, like a weak donkey-kick. And you also look like one too.",
-            "Hush now! Take it in while you watch me scoff at you as Anita walks out of this taven!"
-          ],
-          "satisfied": [
-            "WOAH! The tranquility of this drink is suchhhh a fabbbulous unicorn-kick!",
-            "Like kicking a leprechaun out of its pot-of-gold, knowing that is all YOURSES TO KEEP!",
-            "Not... how I became richhh... from those naysayerrrrrs...",
-            "Whatever, my thoughts feel so freeeee. Work for me sooooon, MageTender!"
-          ],
-          "angry": [
-            "WH-WHA?!? WHAT IN THE UNICORN FART IS THIS DRINK!?!",
-            "MY SUNSHINE AND RAINBOWS ARE RUINED!!!",
-            "YOU SHALL PAY FOR YOUR DIMWITTY WAYS!!!"
-          ]
-        }
+  "id": "dlg_alien",
+  "levels": [
+    {
+      "level": "level_1",
+      "starting": [
+        "Hey there, fellow adult! I'll just get the usu—ZOINKIES!!!",
+        "An Earthling?! I thought your species was extinct.",
+        "Not ever since we, the Martian Martial Arts, vaporized your home planet into oblivion.",
+        "BZZZZOHH!!! You don't seem thrilled!",
+        "...",
+        "Regardless, I need a nice, grounded yet elevated brew.",
+        "I'm wanting to feel a little 'down to Earth' between the two of us. Hehe—see what I did there?",
+        "Don't <b>forget a mini umbrella</b> on top of my potion!"
+      ],
+      "neutral": [
+        "Huh... this drink doesn't fully capture my senses.. it's okay.",
+        "Don't worry, even capturing Earthlings is easier than capturing the right balance of taste.",
+        "Here is your potion back. Don't think I'm done annihilating you Earthlings."
+      ],
+      "satisfied": [
+        "ZOINKS! This is amazing—this is the good stuff!",
+        "I'll have to let all the Glorplings know about this tavern, Magetender!"
+      ],
+      "angry": [
+        "WHAT IN THE MILKY WAY DID YOU BREW ME?!",
+        "THIS TASTES LIKE THE CARBON POLLUTANTS YOU EARTHLINGS DISPEL ON MY HOME PLANET!!!",
+        "DUEL ME RIGHT NOW!!! YOU'LL LEARN WHY I HOLD THE TITLE OF ARES AFTER I ZOINK YOU!!!"
       ]
     },
     {
-      "id": "dlg_alien",
-      "levels": [
-        {
-          "level": "level_1",
-          "starting": [
-            "Hey, fellow MageTender! I'll just get the usua---ZOINKIES!!!",
-            "An Earthling!?! I thought you species are extinct now.",
-            "Not ever since we, the Martian Martial Arts vaporized your home planet into oblivion.",
-            "BZZZZOHH!!! You don't seem thrilled!",
-            "....",
-            "Regardless, I need a nice grounded and elevated brew.", 
-            "With a mini umbrella on top of my potion.",
-            "To get us a little bit more 'down to Earth' between the two of us. Hehe, see what I did there?"
-          ],
-          "neutral": [
-            "Huh, this drink doesn't fully capture my senses.",
-            "I know capturing Earthlings is not as hard as capturing the right balance of taste.",
-            "Here is you potion back. Don't think I'm done annihilating you Earthlings."
-          ],
-          "satisfied": [
-            "ZOINKYS! This is just amazing! This is the good stuff!",
-            "It feels like I am gracefully letting these Earthlings capture me back to my home planet!",
-            "I'll have to let all the Glorplings know of this tavern, MageTender!"
-          ],
-          "angry": [
-            "WHAT IN THE E.T. DID YOU BZZZZOHH ME!?!",
-            "THIS TASTE LIKE CARBON POLLUTANTS YOU EARTHLINGS DISPEL ON MY HOME PLANET!!!",
-            "DUEL ME RIGHT NOW!!! YOU'LL LEARN WHY I HOLD THE TITLE OF ARES AFTER I ZOINK YOU!!!"
-          ]
-        },
-        {
-          "level": "level_2",
-          "starting": [
-            "WAZZZZ good my Earthling! Hopefully your day is as zorp-ing as mine!",
-            "....",
-            "Anyway, can you make a grounded and elevated brew?",
-            "With an umbrella on top of my potion?",
-            "Something to blast my zorp-mind into full levitation!"
-          ],
-          "neutral": [
-            "Huh, this drink doesn't capture what I am hoping for.",
-            "Knawing Unicorn Horns provides stronger zoomies than this... brew...",
-            "I better see an improvement when I come back, little Earthling."
-          ],
-          "satisfied": [
-            "ZOINKS! The taste gives me the zoomies I need!", 
-            "It feels like I am levitating into a dreamlike planet! Where life on Mars was fully healed!",
-            "You have served me well MageTender! Until next time."
-          ],
-          "angry": [
-            "WHAT IN THE C.O.2 IS THIS!?! THIS EVEN TASTE LIKE C.O.2!!!",
-            "NO WONDER I BZZZZOHH YOU EARTHLING ON WHAT YOU DONE!!!",
-            "PREPARE TO BE ZOINK AGAINST THE ARES!!!"
-          ]
-        }
+      "level": "level_2",
+      "starting": [
+        "WAZZZZ good, my Earthling! Hopefully your day is as zorp-tastic as mine!",
+        "...",
+        "Anyway, can you make me a grounded yet elevated brew?",
+        "With an umbrella on top of my potion?",
+        "Something to blast my zorp-mind into full levitation!"
+      ],
+      "neutral": [
+        "Huh... this drink doesn't quite capture what I'm looking for.",
+        "Gnawing on unicorn horns gives me stronger zoomies than this... brew...",
+        "I expect an improvement when I return, little Earthling."
+      ],
+      "satisfied": [
+        "ZOINKS! This gives me the zoomies I needed!",
+        "I feel like I'm levitating on a dreamlike planet, one where life on Mars is fully healed!",
+        "You have served me well, Magetender. Until next time."
+      ],
+      "angry": [
+        "WHAT IN THE MILKY WAY IS THIS?! THIS TASTES LIKE SPACE JUNK!!!",
+        "NO WONDER I BZZZZOHH YOU, EARTHLING, FOR WHAT YOU'VE DONE!!!",
+        "PREPARE TO BE ZOINKED BY ARES!!!"
       ]
-    },
+    }
+  ]
+},
     {
       "id": "dlg_toad",
       "levels": [
         {
           "level": "tutorial",
           "starting": [
-            "Wha- a new employee? *ribbit* interesting...",
-            "*ribbit* Salutations! you must be the new Magetender! the latest additon to the...fantasy tavern team..",
-            "Guessing the ol' college-to-wizard pipe dream didn't pan out, huh? *ribbit*",
+            "Wha- a new employee? <b>*ribbit*</b> interesting...",
+            "<b>*ribbit*</b> Salutations! you must be the new Magetender! the latest additon to the Fantasy Tavern team..",
+            "Guessing the ol' college-to-wizard pipe dream didn't pan out, huh? <b>*ribbit*</b>",
             "Tough luck..",
+            "Well I'll go easy on you, seeing as it's your first day and all..",
+            "I'd like a brew that will calm me please! Let's see what you've got..",
             "..."
           ],
           "satisfied": [

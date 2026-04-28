@@ -30,15 +30,7 @@
           "goal_score": { "x": -0.42, "y": -0.41 },
           "dialogue_key": "level_1"
         },  
-          {
-          "monster_id": "alien",
-          "tolerances": {
-            "satisfied_tolerance": 8
-          },
-          "starting_score": { "x": 0.5, "y": 0.1 },
-          "goal_score": { "x": -0.35, "y": 0.20}, 
-          "dialogue_key": "level_1"
-        },
+        
           {
           "monster_id": "slime",
           "tolerances": {
@@ -47,6 +39,15 @@
           "starting_score": {"x": -0.5, "y": -0.5},
           "goal_score": {"x": 0.33,"y": 0.33}, 
           "dialogue_key": "level_1" 
+        },
+          {
+          "monster_id": "alien",
+          "tolerances": {
+            "satisfied_tolerance": 8
+          },
+          "starting_score": { "x": 0.5, "y": 0.1 },
+          "goal_score": { "x": -0.35, "y": 0.20}, 
+          "dialogue_key": "level_1"
         }
       ]
     },

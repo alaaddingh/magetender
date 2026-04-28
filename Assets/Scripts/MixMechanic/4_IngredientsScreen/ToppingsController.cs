@@ -27,6 +27,9 @@ public class ToppingsController : MonoBehaviour
     private int toppingsLayer = -1;
     private GameObject lastHovered;
     private MixManager mixManager;
+    private GameObject currentScreen;
+    private GameObject nextScreen;
+    private Button nextButton;
 
     private void Awake()
     {
@@ -34,6 +37,17 @@ public class ToppingsController : MonoBehaviour
         mixManager = FindFirstObjectByType<MixManager>();
         LoadToppingsData();
         HideTooltip();
+    }
+
+    private void OnEnable()
+    {
+        HookToppingEvents(true);
+        RefreshNextButtonState();
+    }
+
+    private void OnDisable()
+    {
+        HookToppingEvents(false);
     }
 
     private void Update()
@@ -75,6 +89,60 @@ public class ToppingsController : MonoBehaviour
         {
             byId[NormalizeId(t.id)] = t;
         }
+    }
+
+    public void ConfigureNavigation(GameObject currentScreenObject, GameObject nextScreenObject, Button sharedNextButton)
+    {
+        currentScreen = currentScreenObject;
+        nextScreen = nextScreenObject;
+        nextButton = sharedNextButton;
+        RefreshNextButtonState();
+    }
+
+    public void NextPressed()
+    {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayButtonClick();
+
+        if (currentScreen != null)
+            currentScreen.SetActive(false);
+        if (nextScreen != null)
+            nextScreen.SetActive(true);
+    }
+
+    private void HookToppingEvents(bool on)
+    {
+        if (mixManager == null)
+            mixManager = FindFirstObjectByType<MixManager>();
+        if (mixManager == null)
+            return;
+
+        if (on)
+        {
+            mixManager.OnToppingAdded -= OnToppingsChanged;
+            mixManager.OnToppingRemoved -= OnToppingsChanged;
+            mixManager.OnToppingAdded += OnToppingsChanged;
+            mixManager.OnToppingRemoved += OnToppingsChanged;
+        }
+        else
+        {
+            mixManager.OnToppingAdded -= OnToppingsChanged;
+            mixManager.OnToppingRemoved -= OnToppingsChanged;
+        }
+    }
+
+    private void OnToppingsChanged(string _)
+    {
+        RefreshNextButtonState();
+    }
+
+    private void RefreshNextButtonState()
+    {
+        if (nextButton == null || mixManager == null)
+            return;
+
+        bool hasSelectedTopping = mixManager.SelectedToppings != null && mixManager.SelectedToppings.Count > 0;
+        nextButton.gameObject.SetActive(hasSelectedTopping);
     }
 
     private static string NormalizeId(string raw)
@@ -140,7 +208,6 @@ public class ToppingsController : MonoBehaviour
         if (mixManager.SelectedToppings.Contains(key))
             return;
 
-		// Single-select behavior: deselect any existing topping visually + in MixManager.
 		if (mixManager.SelectedToppings.Count > 0)
 		{
 			string[] previouslySelected = mixManager.SelectedToppings.ToArray();
