@@ -13321,7 +13321,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 101
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &1163726012
 RectTransform:
@@ -16868,7 +16868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eef98cad6356fa44808b3ffb8f80299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 30
+  duration: 50
   timeUp: 0
   TimeUp: 0
   timerText: {fileID: 1401054423}
@@ -19021,6 +19021,7 @@ MonoBehaviour:
   loseManager: {fileID: 1600586151}
   coinsDisplay: {fileID: 2092445570}
   coinGainPopup: {fileID: 1801666424}
+  drinkMoodValueText: {fileID: 0}
   coinGainFadeDuration: 3.5
   coinGainMoveUp: 30
   coinCanvas: {fileID: 2128562753}
@@ -19028,8 +19029,9 @@ MonoBehaviour:
   nextDayButtonObject: {fileID: 2127072629}
   serveDialogueController: {fileID: 0}
   coinsSatisfied: 50
-  coinsNeutral: 35
+  coinsNeutral: 30
   coinsAngry: 0
+  correctToppingTipBonusPercent: 0.1
   MixAccuracy: 0
   FightButton: {fileID: 383739225}
 --- !u!1 &1709831914
@@ -19283,7 +19285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1739821512
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19302,7 +19304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -190, y: -410}
+  m_AnchoredPosition: {x: -8, y: -450}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1739821513

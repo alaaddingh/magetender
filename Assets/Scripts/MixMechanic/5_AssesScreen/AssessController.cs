@@ -29,6 +29,7 @@ public class AssessController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text coinsDisplay;
     [SerializeField] private TMP_Text coinGainPopup;
+	[SerializeField] private TMP_Text drinkMoodValueText;
     [SerializeField] private float coinGainFadeDuration = 1.5f;
     [SerializeField] private float coinGainMoveUp = 30f;
     [SerializeField] private GameObject coinCanvas;
@@ -40,6 +41,9 @@ public class AssessController : MonoBehaviour
     [SerializeField] private int coinsSatisfied = 30;
     [SerializeField] private int coinsNeutral = 15;
     [SerializeField] private int coinsAngry = 0;
+
+	[Header("Toppings (tip bonus only)")]
+	[SerializeField, Range(0f, 1f)] private float correctToppingTipBonusPercent = 0.10f;
 
     public float MixAccuracy; /* just so we can see the accuracy as a perctenage */
 
@@ -63,6 +67,7 @@ public class AssessController : MonoBehaviour
 
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
+		ShowDrinkMoodValue();
         if (AudioManager.Instance != null)
         {
             if (MonsterStateManager.MonsterState == "neutral")
@@ -83,6 +88,16 @@ public class AssessController : MonoBehaviour
 
         RefreshCoinsDisplay();
     }
+
+	private void ShowDrinkMoodValue()
+	{
+		if (drinkMoodValueText == null || scoreManager == null)
+			return;
+
+		float x = scoreManager.CurrMoodBoardX;
+		float y = scoreManager.CurrMoodBoardY;
+		drinkMoodValueText.text = $"Drink mood: ({x:0.00}, {y:0.00})";
+	}
 
     private void Update()
     {
@@ -119,11 +134,16 @@ public class AssessController : MonoBehaviour
     {
         if (GameManager.Instance == null) return 0;
         string state = MonsterStateManager.MonsterState;
-        int amount = 0;
-        if (state == "satisfied") { amount = coinsSatisfied; GameManager.Instance.AddCoins(amount); }
-        else if (state == "neutral") { amount = coinsNeutral; GameManager.Instance.AddCoins(amount); }
-        else if (state == "angry") { amount = coinsAngry; GameManager.Instance.AddCoins(amount); }
-        return amount;
+        int baseAmount = 0;
+        if (state == "satisfied") baseAmount = coinsSatisfied;
+        else if (state == "neutral") baseAmount = coinsNeutral;
+        else if (state == "angry") baseAmount = coinsAngry;
+
+		float multiplier = GetToppingTipMultiplier();
+		int finalAmount = Mathf.RoundToInt(baseAmount * multiplier);
+
+		GameManager.Instance.AddCoins(finalAmount);
+        return finalAmount;
     }
 
     private void ShowCoinGainPopup(int amount)
@@ -224,7 +244,8 @@ public class AssessController : MonoBehaviour
        if (timerUI.TimeUp == true)
         {
             MonsterStateManager.SetState("angry");
-            moodgraph.SetActive(false);
+			if (moodgraph != null)
+				moodgraph.SetActive(true);
             
             return;
         }
@@ -247,43 +268,22 @@ public class AssessController : MonoBehaviour
             /* outside goal quadrant */
             MonsterStateManager.SetState("angry");
         }
-
-        /* now assess TOPPINGS */
-        AssessToppings();
     }
 
-    private void AssessToppings()
-    {
-        string toppingPreference = currentMonsterManager.Data.toppingsPreference;
-        bool CorrectTopping = mixManager.SelectedToppings.Contains(toppingPreference);
+	private float GetToppingTipMultiplier()
+	{
+		if (currentMonsterManager == null || currentMonsterManager.Data == null)
+			return 1f;
+		if (mixManager == null || mixManager.SelectedToppings == null || mixManager.SelectedToppings.Count == 0)
+			return 1f;
 
-        /* promote one mood up */
-        if(CorrectTopping){
-            print("CORRECT TOPPING!");
-            if(MonsterStateManager.MonsterState == "angry") {
-                    MonsterStateManager.SetState("neutral");
-                    return;
-                }
-            else if (MonsterStateManager.MonsterState == "neutral") {
-                // Keep state vocabulary consistent with the rest of the game.
-                MonsterStateManager.SetState("satisfied");
-                return;
-            }
+		string pref = currentMonsterManager.Data.toppingsPreference;
+		if (string.IsNullOrEmpty(pref))
+			return 1f;
 
-        }
-        /* demote one mood down */
-        else {
-            print("INCORRECT TOPPING!");
-            if(MonsterStateManager.MonsterState == "satisfied") {
-                    MonsterStateManager.SetState("neutral");
-                    return;
-                }
-            else if (MonsterStateManager.MonsterState == "neutral") {
-                MonsterStateManager.SetState("angry");
-                return;
-            }
-        }
-    }
+		bool correct = mixManager.SelectedToppings.Contains(pref);
+		return correct ? (1f + correctToppingTipBonusPercent) : 1f;
+	}
 
     private bool IsFinalScoreInGoalQuadrant()
     {

@@ -140,6 +140,19 @@ public class ToppingsController : MonoBehaviour
         if (mixManager.SelectedToppings.Contains(key))
             return;
 
+		// Single-select behavior: deselect any existing topping visually + in MixManager.
+		if (mixManager.SelectedToppings.Count > 0)
+		{
+			string[] previouslySelected = mixManager.SelectedToppings.ToArray();
+			for (int i = 0; i < previouslySelected.Length; i++)
+			{
+				string oldKey = NormalizeId(previouslySelected[i]);
+				mixManager.RemoveTopping(oldKey);
+				if (byId.TryGetValue(oldKey, out ToppingData oldData))
+					SetSelectSpriteActive(oldData, false);
+			}
+		}
+
         bool added = mixManager.AddTopping(key);
         if (!added)
             return;
