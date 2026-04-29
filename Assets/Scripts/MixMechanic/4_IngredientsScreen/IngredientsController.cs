@@ -35,6 +35,10 @@ public class IngredientsController : MonoBehaviour
     private MixManager mixManager;
 	[SerializeField] private IngredientHoverSnapUI ingredientHoverUi;
 
+	[Header("UI (hide during toppings)")]
+	[SerializeField] private GameObject SelectedIngredientSlotsRoot;
+	[SerializeField] private List<GameObject> SelectedIngredientSlots = new List<GameObject>();
+
     [Header("Ingredient tint")]
     public Color ingredientTintColor = new Color(0.9f, 0.7f, 1f, 1f);
     [Range(0f, 1f)]
@@ -51,6 +55,8 @@ public class IngredientsController : MonoBehaviour
 
     [SerializeField] private GameObject Toppings;
     private bool ToppingsNext = true;
+    [SerializeField] private Button nextButton;
+    private ToppingsController toppingsControllerComponent;
 
     private void Awake()
     {
@@ -59,6 +65,8 @@ public class IngredientsController : MonoBehaviour
             baseController = FindFirstObjectByType<BaseController>();
 		if (ingredientHoverUi == null)
 			ingredientHoverUi = FindFirstObjectByType<IngredientHoverSnapUI>();
+        if (ToppingsController != null)
+            toppingsControllerComponent = ToppingsController.GetComponent<ToppingsController>();
     }
 
     private void OnEnable()
@@ -70,6 +78,8 @@ public class IngredientsController : MonoBehaviour
             IngredientsBottle.raycastTarget = false;
         InitializeFillRectangle();
         HookIngredientEvents(true);
+		SetSelectedIngredientSlotsVisible(true);
+        RefreshNextButtonState();
     }
 
     private void OnDisable()
@@ -85,6 +95,7 @@ public class IngredientsController : MonoBehaviour
         ApplyFromBaseBottle();
         LoadIngredientData();
         InitializeFillRectangle();
+        RefreshNextButtonState();
     }
 
     private void HookIngredientEvents(bool on)
@@ -110,6 +121,22 @@ public class IngredientsController : MonoBehaviour
     private void OnIngredientsChanged(string _)
     {
         UpdateFillVisual();
+        RefreshNextButtonState();
+    }
+
+    private void RefreshNextButtonState()
+    {
+        if (!ToppingsNext)
+            return;
+
+        if (nextButton == null)
+            nextButton = GetComponentInChildren<Button>(includeInactive: true);
+
+        if (nextButton == null || mixManager == null)
+            return;
+
+        bool hasSelectedIngredient = mixManager.SelectedIngredients != null && mixManager.SelectedIngredients.Count > 0;
+        nextButton.gameObject.SetActive(hasSelectedIngredient);
     }
 
     private void ApplyIngredientSelectionCap()
@@ -325,7 +352,7 @@ public class IngredientsController : MonoBehaviour
 
     public void NextPressed()
     {
-        if(ToppingsNext == true)
+        if (ToppingsNext == true)
         {
             AudioManager.Instance.PlayButtonClick();
 			if (ingredientHoverUi != null)
@@ -335,13 +362,52 @@ public class IngredientsController : MonoBehaviour
             Toppings.SetActive(true);
             HoverTooltip.SetActive(false);
             ToppingsController.SetActive(true);
+			SetSelectedIngredientSlotsVisible(false);
             ToppingsNext = false;
+
+            if (nextButton != null)
+            {
+                nextButton.onClick.RemoveListener(NextPressed);
+
+                if (toppingsControllerComponent != null)
+                {
+                    toppingsControllerComponent.ConfigureNavigation(CurrentScreen, NextScreen, nextButton);
+                    nextButton.onClick.AddListener(toppingsControllerComponent.NextPressed);
+                }
+
+                nextButton.gameObject.SetActive(false);
+            }
+
             return;
 
         }
-        CurrentScreen.SetActive(false);
-        NextScreen.SetActive(true);
-
-
     }
+
+	private void SetSelectedIngredientSlotsVisible(bool visible)
+	{
+		if (SelectedIngredientSlotsRoot != null)
+			SelectedIngredientSlotsRoot.SetActive(visible);
+
+		if (SelectedIngredientSlots != null && SelectedIngredientSlots.Count > 0)
+		{
+			for (int i = 0; i < SelectedIngredientSlots.Count; i++)
+			{
+				if (SelectedIngredientSlots[i] != null)
+					SelectedIngredientSlots[i].SetActive(visible);
+			}
+			return;
+		}
+
+		Transform root = CurrentScreen != null ? CurrentScreen.transform : transform.root;
+		if (root == null) return;
+
+		Transform slot1 = root.Find("Slot1");
+		if (slot1 != null) slot1.gameObject.SetActive(visible);
+
+		Transform slot2 = root.Find("Slot2");
+		if (slot2 != null) slot2.gameObject.SetActive(visible);
+
+		Transform slot3 = root.Find("Slot3");
+		if (slot3 != null) slot3.gameObject.SetActive(visible);
+	}
 }

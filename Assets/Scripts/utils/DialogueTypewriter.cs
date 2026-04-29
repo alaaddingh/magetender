@@ -54,6 +54,8 @@ public class DialogueTypewriter : MonoBehaviour
             StopCoroutine(typingRoutine);
 
         targetText.text = currentLine;
+        targetText.ForceMeshUpdate();
+        targetText.maxVisibleCharacters = int.MaxValue;
         IsTyping = false;
     }
 
@@ -69,6 +71,8 @@ public class DialogueTypewriter : MonoBehaviour
 
         currentLine = text ?? string.Empty;
         targetText.text = currentLine;
+        targetText.ForceMeshUpdate();
+        targetText.maxVisibleCharacters = int.MaxValue;
         IsTyping = false;
     }
 
@@ -81,18 +85,28 @@ public class DialogueTypewriter : MonoBehaviour
         if (IsArabicLanguage())
         {
             targetText.text = line ?? string.Empty;
+            targetText.ForceMeshUpdate();
+            targetText.maxVisibleCharacters = int.MaxValue;
             IsTyping = false;
             yield break;
         }
 
-        float delay = charsPerSecond > 0f ? (1f / charsPerSecond) : 0f;
+        targetText.text = line ?? string.Empty;
+        targetText.ForceMeshUpdate();
+        targetText.maxVisibleCharacters = 0;
 
-        foreach (char c in line)
+        float delay = charsPerSecond > 0f ? (1f / charsPerSecond) : 0f;
+        int visibleCharacters = targetText.textInfo.characterCount;
+
+        for (int i = 0; i < visibleCharacters; i++)
         {
-            targetText.text += c;
+            targetText.maxVisibleCharacters = i + 1;
 
             if (delay <= 0f)
                 continue;
+
+            TMP_CharacterInfo characterInfo = targetText.textInfo.characterInfo[i];
+            char c = characterInfo.character;
 
             if (c == '.' || c == ',' || c == '!' || c == '?')
                 yield return new WaitForSeconds(delay * punctuationPauseMultiplier);

@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 924c8a1817748674caee4dea6dc5708c
+guid: bb715c19781db73439d8c0b4d27a17d4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 932682692782018778
-    second: IMG_1430 (1)_0
-  - first:
-      213: -8582051123894083714
-    second: IMG_1430 (1)_1
-  - first:
-      213: -837055455334969716
-    second: IMG_1430 (1)_2
+      213: -1312828491573569212
+    second: Rocky_green_openMouth_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_1430 (1)_0
+      name: Rocky_green_openMouth_0
       rect:
         serializedVersion: 2
-        x: 428
-        y: 825
-        width: 7
-        height: 6
+        x: 3
+        y: 24
+        width: 525
+        height: 405
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad05d6fa7fd81fc00800000000000000
-      internalID: 932682692782018778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IMG_1430 (1)_1
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 347
-        height: 824
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e7f1d04f8fd66e880800000000000000
-      internalID: -8582051123894083714
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IMG_1430 (1)_2
-      rect:
-        serializedVersion: 2
-        x: 651
-        y: 310
-        width: 7
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c8ec47f8f7e2264f0800000000000000
-      internalID: -837055455334969716
+      spriteID: 449debc4175e7cde0800000000000000
+      internalID: -1312828491573569212
       vertices: []
       indices: 
       edges: []
@@ -198,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_1430 (1)_0: 932682692782018778
-      IMG_1430 (1)_1: -8582051123894083714
-      IMG_1430 (1)_2: -837055455334969716
+      Rocky_green_openMouth_0: -1312828491573569212
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

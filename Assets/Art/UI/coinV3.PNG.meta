@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 924c8a1817748674caee4dea6dc5708c
+guid: 3fc78c8d5e4ea4b21a6ef8f2d68f6114
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 932682692782018778
-    second: IMG_1430 (1)_0
-  - first:
-      213: -8582051123894083714
-    second: IMG_1430 (1)_1
-  - first:
-      213: -837055455334969716
-    second: IMG_1430 (1)_2
+      213: 2527273852791065443
+    second: coinV3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_1430 (1)_0
+      name: coinV3_0
       rect:
         serializedVersion: 2
-        x: 428
-        y: 825
-        width: 7
-        height: 6
+        x: 39
+        y: 48
+        width: 214
+        height: 198
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad05d6fa7fd81fc00800000000000000
-      internalID: 932682692782018778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IMG_1430 (1)_1
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 347
-        height: 824
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e7f1d04f8fd66e880800000000000000
-      internalID: -8582051123894083714
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IMG_1430 (1)_2
-      rect:
-        serializedVersion: 2
-        x: 651
-        y: 310
-        width: 7
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c8ec47f8f7e2264f0800000000000000
-      internalID: -837055455334969716
+      spriteID: 36b8eb5dd2ea21320800000000000000
+      internalID: 2527273852791065443
       vertices: []
       indices: 
       edges: []
@@ -198,9 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_1430 (1)_0: 932682692782018778
-      IMG_1430 (1)_1: -8582051123894083714
-      IMG_1430 (1)_2: -837055455334969716
+      coinV3_0: 2527273852791065443
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

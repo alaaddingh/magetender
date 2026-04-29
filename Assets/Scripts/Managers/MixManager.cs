@@ -67,8 +67,15 @@ public class MixManager : MonoBehaviour
     public bool AddTopping(string toppingKey)
     {
         if (string.IsNullOrEmpty(toppingKey)) return false;
-        if (maxSelectedToppings > 0 && SelectedToppings.Count >= maxSelectedToppings) return false;
         if (SelectedToppings.Contains(toppingKey)) return false;
+
+        // Single-select toppings: picking a new topping replaces the previous selection.
+        if (SelectedToppings.Count > 0)
+        {
+            string removed = SelectedToppings[0];
+            SelectedToppings.Clear();
+            OnToppingRemoved?.Invoke(removed);
+        }
 
         SelectedToppings.Add(toppingKey);
         OnToppingAdded?.Invoke(toppingKey);

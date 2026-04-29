@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2fbebe00f810b63489c850c7c2513b63
+guid: 2bca8f2bd35e2614c8e29d1fe8d47973
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7675826601332790545
-    second: coin_0
+      213: 1567283717833660144
+    second: Rocky_red_closedMouth_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: coin_0
+      name: Rocky_red_closedMouth_0
       rect:
         serializedVersion: 2
-        x: 42
-        y: 34
-        width: 222
-        height: 229
+        x: 3
+        y: 24
+        width: 525
+        height: 405
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1155fe920a3068a60800000000000000
-      internalID: 7675826601332790545
+      spriteID: 0f69abfcc3c10c510800000000000000
+      internalID: 1567283717833660144
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      coin_0: 7675826601332790545
+      Rocky_red_closedMouth_0: 1567283717833660144
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

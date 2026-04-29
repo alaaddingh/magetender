@@ -6,6 +6,8 @@ using Magetender.Data;
 /* Shows day and coins; Next button hides day panel and shows order screen. */
 public class DayScreenController : MonoBehaviour
 {
+	private const string TutorialExitMaintenancePendingKey = "TutorialExitMaintenancePending";
+	private const string TutorialExitMaintenanceAmountKey = "TutorialExitMaintenanceAmount";
     [Header("Panels")]
     [SerializeField] private GameObject dayPanel;
     [SerializeField] private GameObject orderScreen;
@@ -24,7 +26,11 @@ public class DayScreenController : MonoBehaviour
 
     [Header("Score Display Canvas - hide on Day, show on Order")]
     [SerializeField] private GameObject scoreDisplayCanvas;
+
     [SerializeField] private ScoreManager scoreManager;
+
+
+
 
 	private bool playedFirstWalkIn;
 	private bool showedDayPanelThisLoad;
@@ -55,13 +61,26 @@ public class DayScreenController : MonoBehaviour
 
         if (coinCanvas != null)
             coinCanvas.SetActive(true);
+            
 
         if (scoreDisplayCanvas != null)
             scoreDisplayCanvas.SetActive(false);
 
         RefreshDisplay();
 
-        if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1)
+		// One-time "maintenance" when transitioning out of tutorial: wipe to zero, but never lose.
+		bool tutorialMaintenancePending = PlayerPrefs.GetInt(TutorialExitMaintenancePendingKey, 0) == 1;
+		if (!skipDayCounter && tutorialMaintenancePending)
+		{
+			int wiped = PlayerPrefs.GetInt(TutorialExitMaintenanceAmountKey, 0);
+			if (AudioManager.Instance != null && wiped > 0)
+				AudioManager.Instance.PlayRegisterChaChing();
+			if (coinLossPopup != null && wiped > 0)
+				ShowCoinLossPopup(wiped);
+			PlayerPrefs.SetInt(TutorialExitMaintenancePendingKey, 0);
+			PlayerPrefs.Save();
+		}
+        else if (!skipDayCounter && GameManager.Instance != null && GameManager.Instance.Day > 1)
         {
             int maintenance = CurrentMonster.Instance != null ? CurrentMonster.Instance.GetCurrentMaintenanceCost() : 0;
             if (AudioManager.Instance != null)
