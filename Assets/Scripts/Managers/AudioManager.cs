@@ -48,11 +48,14 @@ public class AudioManager : MonoBehaviour
 	[Header("Character VO's")]
 	[SerializeField] private List<AudioClip> toadVoiceClipGeneric;
 	[SerializeField] private List<AudioClip> toadVoiceClipAngry;
+	[SerializeField] private List<AudioClip> toadVoiceClipBattle;
 
 	// Alien customer VO's
 	[SerializeField] private List<AudioClip> alienVoiceClipGeneric;
 	[SerializeField] private List<AudioClip> alienVoiceClipAngry;
 	[SerializeField] private List<AudioClip> alienVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> alienVoiceClipBattle;
+
 
 	private AudioSource cantAffordVoice;
 
@@ -390,6 +393,39 @@ public class AudioManager : MonoBehaviour
 	}
 
 	//Tyvin: Feel free to remove or replace it, since this was to visually test it out
+	// Uses customerSprite.sprite.name from QTECombatManager to determine the character type and play the right clips.
+	public void PlayCharacterHit(string characterType)
+	{
+		Debug.Log("Detected character type: " + characterType);
+		if (sfxSource == null)
+		{
+			Debug.Log("No sfx source assigned for character type: " + characterType);
+		}
+		if (characterType == "toad_angry")
+		{
+			int randomIndex = Random.Range(0, toadVoiceClipBattle.Count);	
+			sfxSource.clip = toadVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle toad voice clip: {sfxSource.clip.name}");
+			sfxSource.pitch = UnityEngine.Random.Range(1.4f, 1.8f); 
+			sfxSource.Play();
+		}
+		else if (characterType == "alien_fight_0")
+		{
+			int randomIndex = Random.Range(0, alienVoiceClipBattle.Count);	
+			sfxSource.clip = alienVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle alien voice clip: {sfxSource.clip.name}");
+			sfxSource.volume = UnityEngine.Random.Range(1.5f, 2f); 
+			sfxSource.Play();
+		}
+		else
+		{
+			Debug.Log("Unknown character type: " + characterType);
+		}
+	}
+
+
+
+
 	public void PlayToadVoiceGeneric()
 	{
 		if (toadVoiceClipGeneric == null || toadVoiceClipGeneric.Count == 0 || sfxSource == null)
@@ -416,6 +452,7 @@ public class AudioManager : MonoBehaviour
 		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
 		sfxSource.Play();
 	}
+
 	public void PlayAlienVoiceGeneric()
 	{
 		if (alienVoiceClipGeneric == null || alienVoiceClipGeneric.Count == 0 || sfxSource == null)
