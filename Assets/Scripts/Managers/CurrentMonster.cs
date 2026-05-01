@@ -22,7 +22,7 @@ public class CurrentMonster : MonoBehaviour
 
     [Header("Data sources")]
     [SerializeField] private string monstersJsonResourcePath = "Data/Monsters";
-    [SerializeField] private string levelsJsonResourcePath = "Data/Levels";
+    [SerializeField] private string levelsJsonResourcePath = "Data/inkylevels";
     [SerializeField] private string dialogueJsonResourcePath = "Data/Dialogue";
 
     private MonstersFile monstersFile;

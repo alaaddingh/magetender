@@ -16,6 +16,8 @@ public class MonsterData
     public MonsterSprites sprites;
     public MonsterPosition position;
     public string dialogueId;
+    public string assessDialogueId;
+    public bool branching;
 }
 
 [Serializable]

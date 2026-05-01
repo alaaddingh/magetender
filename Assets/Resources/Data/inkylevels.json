@@ -1,0 +1,26 @@
+{
+  "levels": [
+    {
+      "id": "test",
+      "name": "Test",
+      "maintenance_cost": 0,
+      "encounters": [
+        {
+          "monster_id": "rocky",
+          "tolerances": {
+            "satisfied_tolerance": 10
+          },
+          "starting_score": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "goal_score": {
+            "x": 0.5,
+            "y": -0.5
+          },
+          "dialogue_key": "test"
+        }
+      ]
+    }
+  ]
+}

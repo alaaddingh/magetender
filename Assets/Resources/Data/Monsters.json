@@ -59,6 +59,21 @@
     
       "dialogueId": "dlg_toad",
       "position": {"pos_x": 30, "pos_y": 70}
+    },
+    {
+      "id": "rocky",
+      "name": "Bouldar Grimweld",
+      "toppingsPreference": "Umbrella",
+
+      "sprites": {
+        "neutral": "Art/Monsters/rocky/rocky_neutral",
+        "angry": "Art/Monsters/rocky/rocky_angry",
+        "happy": "Art/Monsters/Alien/rocky_neutral"
+      },
+    
+      "dialogueId": "InkyDialogue/bouldar_grimweld",
+      "branching": true,
+      "position": {"pos_x": 10, "pos_y": 280}
     }
   ]
 }
