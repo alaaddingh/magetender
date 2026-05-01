@@ -138,6 +138,12 @@ public class CurrentMonster : MonoBehaviour
             : Vector2.zero;
     }
 
+    public Vector3 GetSpriteScale()
+    {
+        float scale = Data != null ? Data.scale : 1f;
+        return Vector3.one * scale;
+    }
+
     public List<string> GetDialogue(string state)
     {
         MonsterData monster = Data;

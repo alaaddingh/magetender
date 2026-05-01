@@ -10,31 +10,33 @@
         "angry": "Art/Monsters/Unicorn/unicorn_angry",
         "fight": "Art/Monsters/Unicorn/unicorn_fight2"
       },
-  
       "dialogueId": "dlg_unicorn",
-      "position": {"pos_x": -100, "pos_y": 170}
-
+      "position": {
+        "pos_x": 0,
+        "pos_y": 234
+      },
+      "scale": 0.75
     },
-     {
+    {
       "id": "slime",
       "name": "Sloshberg Florpton",
       "toppingsPreference": "Lime",
-
       "sprites": {
         "neutral": "Art/Monsters/Slime/slime_neutral",
         "happy": "Art/Monsters/Slime/slime_happy",
         "angry": "Art/Monsters/Slime/slime_angry"
       },
-    
       "dialogueId": "dlg_slime",
-      "position": {"pos_x": -169, "pos_y": -37}
+      "position": {
+        "pos_x": -169,
+        "pos_y": -37
+      },
+      "scale": 1.0
     },
-     {
+    {
       "id": "alien",
       "name": "Zip Zorp the Glorp",
       "toppingsPreference": "Umbrella",
-
-
       "sprites": {
         "neutral": "Art/Monsters/Alien/alien_neutral",
         "happy": "Art/Monsters/Alien/alien_happy",
@@ -42,38 +44,43 @@
         "fight": "Art/Monsters/Alien/alien_fight",
         "hit": "Art/Monsters/Alien/alien_hit"
       },
-    
       "dialogueId": "dlg_alien",
-      "position": {"pos_x": -169, "pos_y": -37}
+      "position": {
+        "pos_x": -169,
+        "pos_y": -37
+      },
+      "scale": 1.0
     },
-        {
+    {
       "id": "toad",
-      "name": "Gurt",
-      "toppingsPreference": "Umbrella",
-
-
+      "name": "Gurt Lagunitoad",
+      "toppingsPreference": "Lime",
       "sprites": {
         "neutral": "Art/Monsters/Toad/toad_neutral",
         "angry": "Art/Monsters/Toad/toad_angry"
       },
-    
       "dialogueId": "dlg_toad",
-      "position": {"pos_x": 30, "pos_y": 70}
+      "position": {
+        "pos_x": 30,
+        "pos_y": 70
+      },
+      "scale": 0.5
     },
     {
       "id": "rocky",
       "name": "Bouldar Grimweld",
       "toppingsPreference": "Umbrella",
-
       "sprites": {
         "neutral": "Art/Monsters/rocky/rocky_neutral",
         "angry": "Art/Monsters/rocky/rocky_angry",
         "happy": "Art/Monsters/Alien/rocky_neutral"
       },
-    
       "dialogueId": "InkyDialogue/bouldar_grimweld",
       "branching": true,
-      "position": {"pos_x": 10, "pos_y": 280}
+      "position": {
+        "pos_x": 10,
+        "pos_y": 280
+      }
     }
   ]
 }
