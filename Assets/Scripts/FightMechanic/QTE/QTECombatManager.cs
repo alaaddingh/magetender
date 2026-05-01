@@ -90,6 +90,9 @@ public class QTECombatManager : MonoBehaviour
 	public float healFlashOpacity = 0.2f;
 	public float healFlashDuration = 0.1f;
 
+	[Header("Data source")]
+    [SerializeField] private CurrentMonster currentMonsterManager;
+
 	private const string ControlsPrefKey = "QTEControlScheme"; // 0 = Arrow keys, 1 = WASD
 	private const string SwitchKeyPrefKey = "QTESwitchKey"; // 0 = Space, 1 = Shift
 
@@ -651,6 +654,7 @@ public class QTECombatManager : MonoBehaviour
 		// Always play animations
 		if (customerSprite != null)
 		{
+			Debug.Log("This is "  + customerSprite.name + " taking damage with sprite " + customerSprite.sprite.name);
 			if (currentCustomerFlash != null)
 			{
 				StopCoroutine(currentCustomerFlash);
@@ -661,6 +665,15 @@ public class QTECombatManager : MonoBehaviour
 		if (AudioManager.Instance != null)
 		{
 			AudioManager.Instance.PlayCombatAttack();
+
+			if (!string.IsNullOrEmpty(customerSprite.sprite.name))
+			{
+				AudioManager.Instance.PlayCharacterHit(customerSprite.sprite.name);
+			}
+			else
+			{
+				Debug.LogWarning("[QTECombatManager] Monster data missing for character hit sound.");
+			}
 		}
 		
 		StartCoroutine(PunchAnimation());
