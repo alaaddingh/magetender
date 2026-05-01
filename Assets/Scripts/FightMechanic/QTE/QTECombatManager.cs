@@ -654,7 +654,10 @@ public class QTECombatManager : MonoBehaviour
 		// Always play animations
 		if (customerSprite != null)
 		{
-			Debug.Log("This is "  + customerSprite.name + " taking damage with sprite " + customerSprite.sprite.name);
+			if (customerSprite.sprite != null)
+			{
+				Debug.Log("This is "  + customerSprite.name + " taking damage with sprite " + customerSprite.sprite.name);
+			}
 			if (currentCustomerFlash != null)
 			{
 				StopCoroutine(currentCustomerFlash);
@@ -666,7 +669,7 @@ public class QTECombatManager : MonoBehaviour
 		{
 			AudioManager.Instance.PlayCombatAttack();
 
-			if (!string.IsNullOrEmpty(customerSprite.sprite.name))
+			if (customerSprite.sprite != null && !string.IsNullOrEmpty(customerSprite.sprite.name))
 			{
 				AudioManager.Instance.PlayCharacterHit(customerSprite.sprite.name);
 			}
