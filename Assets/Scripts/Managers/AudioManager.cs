@@ -414,7 +414,7 @@ public class AudioManager : MonoBehaviour
 			int randomIndex = Random.Range(0, alienVoiceClipBattle.Count);	
 			sfxSource.clip = alienVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle alien voice clip: {sfxSource.clip.name}");
-			sfxSource.volume = UnityEngine.Random.Range(1.5f, 2f); 
+			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
 			sfxSource.Play();
 		}
 		else
