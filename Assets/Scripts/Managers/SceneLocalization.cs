@@ -66,7 +66,7 @@ public class SceneLocalization : MonoBehaviour
 
 	private static void CapMoodGraphLabelFontSizes()
 	{
-		string[] moodLabels = { "calm", "Calm", "calmo", "elevated", "Elevated", "Elevado", "grounded", "Grounded", "Aterrizado", "aterrizado", "dissociative", "Disociativo", "disociativo" };
+		string[] moodLabels = { "elevated", "Elevated", "Elevado", "grounded", "Grounded", "Aterrizado", "aterrizado", "dissociative", "Disociativo", "disociativo", "focused", "Focused", "Focalizante", "focalizante", "Enfocado", "enfocado", "Arraigado", "arraigado", "راسخ", "مركّز" };
 		TMP_Text[] allTexts = UnityEngine.Object.FindObjectsOfType<TMP_Text>(true);
 		const float maxSize = 22f;
 		for (int i = 0; i < allTexts.Length; i++)

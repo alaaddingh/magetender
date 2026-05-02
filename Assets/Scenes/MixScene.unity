@@ -738,7 +738,7 @@ GameObject:
   - component: {fileID: 86435766}
   - component: {fileID: 86435765}
   m_Layer: 5
-  m_Name: Calm
+  m_Name: Focused
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -760,7 +760,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: -144, y: -0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &86435765
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipRoot: {fileID: 977789163}
   tooltipText: {fileID: 1946471858}
-  labelOverride: calm
+  labelOverride: focused
   screenOffset: {x: 8, y: -8}
   screenPadding: 6
 --- !u!114 &86435766
@@ -911,7 +911,7 @@ MonoBehaviour:
   - trigger: {fileID: 1228855948}
     steps: 02000000030000000400000005000000
     showPointer: 1
-    pointerPosition: {x: 40, y: 120}
+    pointerPosition: {x: -240, y: 120}
   - trigger: {fileID: 906567377}
     steps: 0600000007000000
     showPointer: 1
@@ -933,7 +933,6 @@ MonoBehaviour:
     showPointer: 1
     pointerPosition: {x: 130, y: 0}
   InactiveItems:
-  - {fileID: 1002581816}
   - {fileID: 277284762}
   - {fileID: 2000000004}
   - {fileID: 1141538428}
@@ -942,6 +941,7 @@ MonoBehaviour:
   - {fileID: 1885053216}
   - {fileID: 992086411}
   - {fileID: 451219756}
+  - {fileID: 2000000000}
   ShopButton: {fileID: 402397764}
   GreetingText: {fileID: 992969444}
   DayText: {fileID: 752509156}
@@ -1942,7 +1942,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: These base liquids guide the brew to the correct mood. As seen in the mood
-    board, Gurt wishes to be more calm. Let's go with Moonshine!
+    board, Gurt wishes to be more grounded. Let's go with Moonshine!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
   m_sharedMaterial: {fileID: 5913279729684426973, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
@@ -2438,7 +2438,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: 0}
+  m_AnchoredPosition: {x: -2, y: -146}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &202160558
@@ -4384,7 +4384,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: These base liquids guide the brew to the correct mood. As seen in the mood
-    board, Gurt wishes to be more calm. Let's go with Moonshine!
+    board, Gurt wishes to be more grounded. Let's go with Moonshine!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
   m_sharedMaterial: {fileID: 5913279729684426973, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
@@ -6078,16 +6078,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555309212}
-  m_LocalRotation: {x: -0, y: -0, z: -0.86604667, w: -0.49996328}
+  m_LocalRotation: {x: -0, y: -0, z: -0.95265883, w: -0.30404142}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.56, y: 0.56, z: 0.56}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 337069304}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 480.005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 504.599}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -803, y: 694}
+  m_AnchoredPosition: {x: -962, y: 664}
   m_SizeDelta: {x: 900, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &555309214
@@ -9466,9 +9466,9 @@ MonoBehaviour:
   fillBottomOffsetY: 30
   fillYCutoff: 0.92
   fillAlpha: 0.7
-  baseBottlePosSmall: {x: 0, y: -260}
-  baseBottlePosMedium: {x: 45, y: -240}
-  baseBottlePosLarge: {x: 45, y: -220}
+  baseBottlePosSmall: {x: -280, y: -260}
+  baseBottlePosMedium: {x: -350, y: -240}
+  baseBottlePosLarge: {x: -280, y: -220}
   drainRatePerSecond: 0.3
   trashRect: {fileID: 1822492698}
 --- !u!1 &871512341
@@ -11128,7 +11128,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: These base liquids guide the brew to the correct mood. As seen in the mood
-    board, Gurt wishes to be more calm. Let's go with Moonshine!
+    board, Gurt wishes to be more grounded. Let's go with Moonshine!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
   m_sharedMaterial: {fileID: 5913279729684426973, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
@@ -11354,7 +11354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45, y: -200}
+  m_AnchoredPosition: {x: -349, y: -200}
   m_SizeDelta: {x: 391, y: 371}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &992969444
@@ -14998,6 +14998,13 @@ MonoBehaviour:
   combatIncorrectKeyClip: {fileID: 8300000, guid: c59df29e6c9ba4b07818c028adeb75f7, type: 3}
   backgroundMusicClip: {fileID: 8300000, guid: b2f23dd2d2d32eb40b35b314023d5a50, type: 3}
   musicSource: {fileID: 1266327017}
+  toadVoiceClipGeneric: []
+  toadVoiceClipAngry: []
+  toadVoiceClipBattle: []
+  alienVoiceClipGeneric: []
+  alienVoiceClipAngry: []
+  alienVoiceClipSatisfied: []
+  alienVoiceClipBattle: []
 --- !u!82 &1266327015
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16479,7 +16486,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '\n : Elevated \n\n : Dissociative \n\n : Calm \n\n : Grounded'
+  m_text: '\n : Elevated \n\n : Dissociative \n\n : Focused \n\n : Grounded'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
   m_sharedMaterial: {fileID: 5913279729684426973, guid: b425dc90c354cc14eb30ed0c33f1e656, type: 2}
@@ -16891,7 +16898,7 @@ GameObject:
   - component: {fileID: 1446374139}
   - component: {fileID: 1446374138}
   m_Layer: 5
-  m_Name: calm_icon
+  m_Name: focused_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

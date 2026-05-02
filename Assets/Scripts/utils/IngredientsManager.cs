@@ -173,7 +173,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 				if (img == null || !img.gameObject.CompareTag("Ingredients"))
 					continue;
 
-				bool on = gm != null && gm.IsIngredientUnlocked(img.gameObject.name);
+				bool on = gm == null || gm.IsIngredientUnlocked(img.gameObject.name);
 				img.gameObject.SetActive(on);
 			}
 		}
@@ -181,7 +181,7 @@ public class IngredientHoverSnapUI : MonoBehaviour
 		{
 			foreach (GameObject go in GameObject.FindGameObjectsWithTag("Ingredients"))
 			{
-				bool on = gm != null && gm.IsIngredientUnlocked(go.name);
+				bool on = gm == null || gm.IsIngredientUnlocked(go.name);
 				go.SetActive(on);
 			}
 		}
