@@ -73,14 +73,17 @@
       "sprites": {
         "neutral": "Art/Monsters/rocky/rocky_neutral",
         "angry": "Art/Monsters/rocky/rocky_angry",
-        "happy": "Art/Monsters/Alien/rocky_neutral"
+        "happy": "Art/Monsters/rocky/rocky_neutral",
+        "fight": "Art/Monsters/rocky/rocky_fight"
+
       },
       "dialogueId": "InkyDialogue/bouldar_grimweld",
       "branching": true,
       "position": {
-        "pos_x": 10,
+        "pos_x": 205,
         "pos_y": 280
-      }
+      },
+      "scale": 1.0
     }
   ]
 }

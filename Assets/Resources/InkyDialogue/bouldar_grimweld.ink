@@ -1,4 +1,5 @@
 VAR bouldar_mood = 0
+VAR bouldar_angry = false
 
 
 -> Day_One
@@ -22,6 +23,7 @@ VAR bouldar_mood = 0
     
         *** "That's overly aggressive."
         ~bouldar_mood--
+        ~ bouldar_angry = true
         "Aggressive? YOU AGGRESSIVE! You make fun of Bouldar!"
         "You are mean, I don't want any drink from mean magetender! *KRRR GRRAAA*"
         // fight starts
@@ -92,6 +94,7 @@ VAR bouldar_mood = 0
             
             **** "I really wasn't, but okay."
             ~bouldar_mood--
+            ~ bouldar_angry = true
             "*KRRR GRAAA* WHY MEAN? WHY MEAN MAGETENDER? YOU LIKE ALL OTHER WHO JUDEGE BOULDAR!"
             "I DON'T WANT DRINK FROM YOU!"
             // goes to drink making

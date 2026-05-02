@@ -171,6 +171,22 @@ public class InkyDialogueController : MonoBehaviour
 		return snapshot;
 	}
 
+	public bool TryGetBoolVariable(string variableName, out bool value)
+	{
+		value = false;
+		if (story == null || string.IsNullOrWhiteSpace(variableName))
+			return false;
+
+		object rawValue = story.variablesState[variableName];
+		if (rawValue is bool boolValue)
+		{
+			value = boolValue;
+			return true;
+		}
+
+		return false;
+	}
+
 	private string ReadNextNonEmptyLine()
 	{
 		while (story != null && story.canContinue)

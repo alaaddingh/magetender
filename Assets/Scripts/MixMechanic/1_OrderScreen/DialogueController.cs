@@ -21,6 +21,7 @@ public class DialogueController : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private GameObject brewButtonObject;
     [SerializeField] private GameObject nextButtonObject; // optional (dialogue next)
+    [SerializeField] private GameObject fightButtonObject;
     public GameObject continueButtonObject; // optional
 
     [Header("Data source")]
@@ -119,6 +120,7 @@ public class DialogueController : MonoBehaviour
     private void Start()
     {
         brewButtonObject.SetActive(false);
+        if (fightButtonObject != null) fightButtonObject.SetActive(false);
         if (continueButtonObject != null) continueButtonObject.SetActive(false);
 
         RefreshAll();
@@ -144,7 +146,10 @@ public class DialogueController : MonoBehaviour
             return;
 
         if (wasTyping && !typewriter.IsTyping)
+        {
+            RefreshFightButton();
             UpdateContinueButtonState(GetActiveDialogue());
+        }
 
         wasTyping = typewriter.IsTyping;
     }
@@ -164,6 +169,7 @@ public class DialogueController : MonoBehaviour
     {
         if (UsesInkDialogue() && TryStartInkDialogueForCurrentState())
         {
+            SyncMonsterStateFromInkVariables();
             UpdateMonsterName();
             return;
         }
@@ -185,6 +191,7 @@ public class DialogueController : MonoBehaviour
             if (inkDialoguePresenter != null)
                 inkDialoguePresenter.AdvanceAndPresent();
 
+            SyncMonsterStateFromInkVariables();
             RefreshInkButtonState();
             TryMakeTutorialToadAngryInk();
             return;
@@ -200,7 +207,7 @@ public class DialogueController : MonoBehaviour
         var lines = GetActiveDialogue();
         if (lines.Count == 0)
         {
-            brewButtonObject.SetActive(true);
+            brewButtonObject.SetActive(CanShowBrewButton());
             UpdateContinueButtonState(lines);
             return;
         }
@@ -229,6 +236,21 @@ public class DialogueController : MonoBehaviour
     {
         dialogueIndex = 0;
         RefreshAll();
+    }
+
+    private bool CanShowBrewButton()
+    {
+        return monsterStateManager == null || monsterStateManager.MonsterState != "angry";
+    }
+
+    private void RefreshFightButton()
+    {
+        if (fightButtonObject == null)
+            return;
+
+        bool dialogueFinished = IsDialogueFinished;
+        bool angry = monsterStateManager != null && monsterStateManager.MonsterState == "angry";
+        fightButtonObject.SetActive(angry && dialogueFinished);
     }
 
     private void UpdateMonsterName()
@@ -277,7 +299,7 @@ public class DialogueController : MonoBehaviour
             if (typewriter != null) typewriter.SetInstant(string.Empty);
             else SetText(activeSpeech, string.Empty, preserveNumbers: true);
 
-            brewButtonObject.SetActive(true);
+            brewButtonObject.SetActive(CanShowBrewButton());
             UpdateNextButtonState(lines);
             UpdateContinueButtonState(lines);
             return;
@@ -291,7 +313,7 @@ public class DialogueController : MonoBehaviour
         if (useTypewriter) typewriter.TypeLine(rawLine);
         else SetText(activeSpeech, rawLine, preserveNumbers: true);
 
-        brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1);
+        brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1 && CanShowBrewButton());
         UpdateNextButtonState(lines);
         UpdateContinueButtonState(lines);
         TryMakeTutorialToadAngry(lines);
@@ -467,11 +489,15 @@ public class DialogueController : MonoBehaviour
 
     private void RefreshInkButtonState()
     {
+        SyncMonsterStateFromInkVariables();
+        RefreshFightButton();
         UpdateNextButtonStateInk();
         UpdateContinueButtonStateInk();
 
         if (brewButtonObject != null)
-            brewButtonObject.SetActive(inkyDialogueController != null && inkyDialogueController.IsFinished);
+            brewButtonObject.SetActive(inkyDialogueController != null &&
+                                       inkyDialogueController.IsFinished &&
+                                       CanShowBrewButton());
     }
 
     private void UpdateNextButtonStateInk()
@@ -525,5 +551,16 @@ public class DialogueController : MonoBehaviour
             return;
 
         monsterStateManager.SetState("angry");
+    }
+
+    private void SyncMonsterStateFromInkVariables()
+    {
+        if (monsterStateManager == null || inkyDialogueController == null)
+            return;
+
+        if (inkyDialogueController.TryGetBoolVariable("bouldar_angry", out bool isAngry) && isAngry)
+            monsterStateManager.SetState("angry");
+
+        RefreshFightButton();
     }
 }
