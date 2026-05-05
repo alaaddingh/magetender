@@ -175,8 +175,8 @@ MonoBehaviour:
   MoonShineAmount: 0
   BloodColor: {r: 0.7, g: 0.1, b: 0.1, a: 1}
   HolyWaterColor: {r: 0.7, g: 0.9, b: 1, a: 1}
-  SpiritsColor: {r: 0.85, g: 0.95, b: 0.8, a: 1}
-  MoonShineColor: {r: 0.9, g: 0.7, b: 0.9, a: 1}
+  SpiritsColor: {r: 0.8864339, g: 0.90188676, b: 0.51560694, a: 1}
+  MoonShineColor: {r: 0.29896042, g: 0.79622644, b: 0.47405413, a: 1}
 --- !u!1 &18434206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,7 +1605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &155716012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9138,7 +9138,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -50, y: 50}
-  m_SizeDelta: {x: 35, y: 35}
+  m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &797067395
 MonoBehaviour:
@@ -12167,6 +12167,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphRect: {fileID: 1460992678}
   markerRect: {fileID: 797067394}
+  moodMarkerIcon: {fileID: 0}
+  monsterMarkerIcons:
+  - monsterId: unicorn
+    icon: {fileID: -2846309587358148861, guid: c295ed9ae5913194995c62dcb90c621f, type: 3}
+  - monsterId: alien
+    icon: {fileID: 1333401826788945531, guid: 00798ec629539b0479e53460b97a5c4b, type: 3}
+  - monsterId: slime
+    icon: {fileID: 368543389579951487, guid: 0af38176f069050408c075b2f21c6692, type: 3}
+  - monsterId: toad
+    icon: {fileID: 6658670927973994472, guid: 3676b52fff59edf4c8a3125150e8b17f, type: 3}
+  fallbackMoodMarkerSprite: {fileID: 24433315276218064, guid: 20a546dae8718cf4c88b692a9a3bc7ab, type: 3}
   goalMarkerRect: {fileID: 1177180210}
   nameText: {fileID: 1908581327}
   currentMonster: {fileID: 1245897901}
@@ -14361,7 +14372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1228855949
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,11 +1,16 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoodGraphUI : MonoBehaviour
 {
     [Header("ui refs")]
     [SerializeField] private RectTransform graphRect;
     [SerializeField] private RectTransform markerRect;
+    [SerializeField] private Image moodMarkerIcon;
+    [SerializeField] private MoodGraphMonsterIconEntry[] monsterMarkerIcons;
+    [SerializeField] private Sprite fallbackMoodMarkerSprite;
     [SerializeField] private RectTransform goalMarkerRect;
     [SerializeField] private TMP_Text nameText;
 
@@ -34,6 +39,8 @@ public class MoodGraphUI : MonoBehaviour
     private void Awake()
     {
         currentMonster = CurrentMonster.Instance;
+        if (moodMarkerIcon == null && markerRect != null)
+            moodMarkerIcon = markerRect.GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -96,6 +103,8 @@ public class MoodGraphUI : MonoBehaviour
 
             if (nameText != null)
                 nameText.text = monster.name;
+
+            ApplyMoodMarkerIcon(monster.id);
 
             lastGoalX = float.NaN;
             lastGoalY = float.NaN;
@@ -226,4 +235,40 @@ public class MoodGraphUI : MonoBehaviour
         if (rect != null)
             rect.gameObject.SetActive(visible);
     }
+
+    private void ApplyMoodMarkerIcon(string monsterId)
+    {
+        if (moodMarkerIcon == null)
+            return;
+
+        Sprite icon = ResolveMarkerIcon(monsterId);
+        if (icon != null)
+            moodMarkerIcon.sprite = icon;
+        else if (fallbackMoodMarkerSprite != null)
+            moodMarkerIcon.sprite = fallbackMoodMarkerSprite;
+    }
+
+    private Sprite ResolveMarkerIcon(string monsterId)
+    {
+        if (string.IsNullOrEmpty(monsterId) || monsterMarkerIcons == null)
+            return null;
+
+        for (int i = 0; i < monsterMarkerIcons.Length; i++)
+        {
+            MoodGraphMonsterIconEntry e = monsterMarkerIcons[i];
+            if (e == null || string.IsNullOrEmpty(e.monsterId))
+                continue;
+            if (string.Equals(e.monsterId, monsterId, StringComparison.OrdinalIgnoreCase))
+                return e.icon;
+        }
+
+        return null;
+    }
+}
+
+[Serializable]
+public class MoodGraphMonsterIconEntry
+{
+    public string monsterId;
+    public Sprite icon;
 }
