@@ -9,6 +9,7 @@ public class DeactivateGameObjectOnStateEnter : StateMachineBehaviour
 
 		// Disable the animated object when we return to Idle.
 		animator.gameObject.SetActive(false);
+		CoinFlyAnimator.RestoreCoinStaticImageAfterFly();
 	}
 }
 

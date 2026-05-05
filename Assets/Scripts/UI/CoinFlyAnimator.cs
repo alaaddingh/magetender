@@ -6,9 +6,9 @@ public class CoinFlyAnimator : MonoBehaviour
 
 	[Header("Target (can be inactive at start)")]
 	[SerializeField] private GameObject coinFlyRoot;
+	[SerializeField] private GameObject coinStaticImage;
 	[SerializeField] private Animator animator;
 	[SerializeField] private string coinAnimStateName = "CoinAnim_UI";
-	[SerializeField] private string idleStateName = "Idle";
 
 	private void Awake()
 	{
@@ -40,10 +40,19 @@ public class CoinFlyAnimator : MonoBehaviour
 		Instance.Play();
 	}
 
+	internal static void RestoreCoinStaticImageAfterFly()
+	{
+		if (Instance != null && Instance.coinStaticImage != null)
+			Instance.coinStaticImage.SetActive(true);
+	}
+
 	private void Play()
 	{
 		if (coinFlyRoot == null)
 			coinFlyRoot = gameObject;
+
+		if (coinStaticImage != null)
+			coinStaticImage.SetActive(false);
 
 		if (!coinFlyRoot.activeInHierarchy)
 			coinFlyRoot.SetActive(true);
