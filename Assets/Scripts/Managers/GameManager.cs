@@ -110,6 +110,8 @@ public class GameManager : MonoBehaviour
     public void AddCoins(int amount)
     {
         Coins += amount;
+		if (amount > 0)
+			CoinFlyAnimator.NotifyCoinsAdded(amount);
         SaveSystem.WriteData();
     }
 
