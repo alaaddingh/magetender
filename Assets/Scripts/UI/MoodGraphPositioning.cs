@@ -5,7 +5,7 @@ public class MoodGraphPositioning : MonoBehaviour
     public MoodGraphUI MoodGraph;
 
     public GameObject OrderScreen;
-    public GameObject PickGlassScreen;
+    public GameObject ToppingsScreen;
     public GameObject BaseScreen;
     public GameObject IngredientsScreen;
     public GameObject AssessScreen;
@@ -15,10 +15,10 @@ public class MoodGraphPositioning : MonoBehaviour
     public float OrderY;
     public float OrderScale = 1f;
 
-    [Header("Pick Glass Screen pos.")]
-    public float PickGlassX;
-    public float PickGlassY;
-    public float PickGlassScale = 1f;
+    [Header("Toppings Screen pos.")]
+    public float ToppingsX;
+    public float ToppingsY;
+    public float ToppingsScale = 1f;
 
     [Header("Base Screen pos.")]
     public float BaseX;
@@ -38,7 +38,7 @@ public class MoodGraphPositioning : MonoBehaviour
     private void Start()
     {
         Hook(OrderScreen, "Order");
-        Hook(PickGlassScreen, "PickGlass");
+        Hook(ToppingsScreen, "Toppings");
         Hook(BaseScreen, "Base");
         Hook(IngredientsScreen, "Ingredients");
         Hook(AssessScreen, "Assess");
@@ -57,9 +57,9 @@ public class MoodGraphPositioning : MonoBehaviour
             return;
         }
 
-        if (id == "PickGlass")
+        if (id == "Toppings")
         {
-            Place(rt, PickGlassX, PickGlassY, PickGlassScale);
+            Place(rt, ToppingsX, ToppingsY, ToppingsScale);
             return;
         }
 
@@ -90,15 +90,15 @@ public class MoodGraphPositioning : MonoBehaviour
 
     private void PlaceActive()
     {
-        if (OrderScreen != null && OrderScreen.activeInHierarchy) 
+        if (OrderScreen != null && OrderScreen.activeInHierarchy)
             { PanelOn("Order"); return; }
-        if (PickGlassScreen != null && PickGlassScreen.activeInHierarchy) 
-            { PanelOn("PickGlass"); return; }
-        if (BaseScreen != null && BaseScreen.activeInHierarchy) 
+        if (ToppingsScreen != null && ToppingsScreen.activeInHierarchy)
+            { PanelOn("Toppings"); return; }
+        if (BaseScreen != null && BaseScreen.activeInHierarchy)
             { PanelOn("Base"); return; }
-        if (IngredientsScreen != null && IngredientsScreen.activeInHierarchy) 
+        if (IngredientsScreen != null && IngredientsScreen.activeInHierarchy)
             { PanelOn("Ingredients"); return; }
-        if (AssessScreen != null && AssessScreen.activeInHierarchy) 
+        if (AssessScreen != null && AssessScreen.activeInHierarchy)
            { PanelOn("Assess"); }
     }
 
