@@ -104,7 +104,7 @@
       "Dear me, it appears I’ve encountered a mage who lives under a rock.",
       "You really ought to get out more.",
       "...",
-      "Anyhow, I'd like to request a potion that will make me feel grounded and calm.",
+      "Anyhow, I'd like to request a potion that will make me feel focused and grounded.",
       "The pressures of remaining the fairest creature this town has ever seen do tend to weigh on me...",
       "Oh, and do not forget a <b>cherry on top</b>, if you would."
     ],
@@ -133,7 +133,7 @@
     "Hello, Magetender. It is I—once again—the most exquisite unicorn in town, Anita Caberneigh.",
     "But really, I need no introduction at this point.. hush now... you know it's true.",
     "...",
-    "I want a brew that brings me calm and composure.",
+    "I want a brew that helps me feel grounded and composed.",
     "Do ensure it is finished with a cherry on top .",
     "And when you are done... maybe a bow would be appropriate."
   ],
@@ -177,7 +177,7 @@
         "Not ever since we, the Martian Martial Arts, vaporized your home planet into oblivion.",
         "BZZZZOHH!!! You don't seem thrilled!",
         "...",
-        "Regardless, I need a nice, grounded yet elevated brew.",
+        "Regardless, I need a nice, focused yet elevated brew.",
         "I'm wanting to feel a little 'down to Earth' between the two of us. Hehe—see what I did there?",
         "Don't <b>forget a mini umbrella</b> on top of my potion!"
       ],
@@ -202,7 +202,7 @@
       "starting": [
         "WAZZZZ good, my Earthling! Hopefully your day is as zorp-tastic as mine!",
         "...",
-        "Anyway, can you make me a grounded yet elevated brew?",
+        "Anyway, can you make me a focused yet elevated brew?",
         "With an umbrella on top of my potion?",
         "Something to blast my zorp-mind into full levitation!"
       ],
@@ -235,7 +235,7 @@
             "Guessing the ol' college-to-wizard pipe dream didn't pan out, huh? <b>*ribbit*</b>",
             "Tough luck..",
             "Well I'll go easy on you, seeing as it's your first day and all..",
-            "I'd like a brew that will calm me please! Let's see what you've got..",
+            "I'd like a brew that will help me feel grounded, please! Let's see what you've got..",
             "..."
           ],
           "satisfied": [

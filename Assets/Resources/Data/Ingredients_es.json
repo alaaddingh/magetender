@@ -19,7 +19,7 @@
     {
       "id": "eyeball",
       "name": "Globo ocular",
-      "description": "Muy calmante, elevado",
+      "description": "Muy focalizante, elevado",
       "type": "topping",
       "effect": { "x": -0.70, "y": 0.1 },
       "color": { "r": 0.9, "g": 0.9, "b": 0.9, "a": 1.0 }
@@ -35,7 +35,7 @@
     {
       "id": "cupid_arrow",
       "name": "Flecha de Cupido",
-      "description": "Disociativo, calmante",
+      "description": "Disociativo, arraigante",
       "type": "topping",
       "effect": { "x": 0.53, "y": -0.14 },
       "color": { "r": 0.9, "g": 0.25, "b": 0.35, "a": 1.0 }
@@ -43,7 +43,7 @@
     {
       "id": "eden_apple",
       "name": "Fruta prohibida",
-      "description": "Calmante, disociativa",
+      "description": "Arraigante, disociativa",
       "type": "topping",
       "effect": { "x": 0.48, "y": -0.27 },
       "color": { "r": 0.65, "g": 0.15, "b": 0.2, "a": 1.0 }
@@ -51,7 +51,7 @@
     {
       "id": "broken_sword",
       "name": "Fragmento de espada",
-      "description": "Disociativo, calmante",
+      "description": "Disociativo, arraigante",
       "type": "topping",
       "effect": { "x": 0.39, "y": -0.39 },
       "color": { "r": 0.7, "g": 0.72, "b": 0.78, "a": 1.0 }
@@ -59,16 +59,15 @@
     {
       "id": "wishbone",
       "name": "Hueso de los deseos",
-      "description": "Calmante, disociativo",
+      "description": "Arraigante, disociativo",
       "type": "topping",
       "effect": { "x": 0.28, "y": -0.48 },
       "color": { "r": 0.92, "g": 0.85, "b": 0.7, "a": 1.0 }
     },
-
     {
       "id": "lotus_flower",
       "name": "Flor de loto",
-      "description": "Muy calmante, arraigante",
+      "description": "Muy arraigante, focalizante",
       "type": "topping",
       "effect": { "x": -0.28, "y": -0.48 },
       "color": { "r": 0.55, "g": 0.8, "b": 0.65, "a": 1.0 }
@@ -76,7 +75,7 @@
     {
       "id": "unicorn_horn",
       "name": "Cuerno de unicornio",
-      "description": "Calmante, arraigante",
+      "description": "Arraigante, focalizante",
       "type": "topping",
       "effect": { "x": -0.39, "y": -0.39 },
       "color": { "r": 0.95, "g": 0.85, "b": 0.55, "a": 1.0 }
@@ -84,7 +83,7 @@
     {
       "id": "crow_feather",
       "name": "Pluma de cuervo",
-      "description": "Calmante, muy arraigante",
+      "description": "Arraigante, muy focalizante",
       "type": "topping",
       "effect": { "x": -0.53, "y": -0.14 },
       "color": { "r": 0.25, "g": 0.3, "b": 0.45, "a": 1.0 }
@@ -92,16 +91,15 @@
     {
       "id": "pomegranate",
       "name": "Granada de Perséfone",
-      "description": "Calmante y arraigante",
+      "description": "Arraigante y focalizante",
       "type": "topping",
       "effect": { "x": -0.48, "y": -0.27 },
       "color": { "r": 0.55, "g": 0.05, "b": 0.15, "a": 1.0 }
     },
-
     {
       "id": "rose_thorn",
       "name": "Espina de rosa",
-      "description": "Arraigante, elevado",
+      "description": "Focalizante, elevado",
       "type": "topping",
       "effect": { "x": -0.48, "y": 0.27 },
       "color": { "r": 0.35, "g": 0.65, "b": 0.35, "a": 1.0 }
@@ -109,7 +107,7 @@
     {
       "id": "spiderweb",
       "name": "Tela de araña",
-      "description": "Muy arraigante, elevado",
+      "description": "Muy focalizante, elevado",
       "type": "topping",
       "effect": { "x": -0.53, "y": 0.14 },
       "color": { "r": 0.75, "g": 0.75, "b": 0.78, "a": 1.0 }
@@ -117,7 +115,7 @@
     {
       "id": "eternal_flame",
       "name": "Llama eterna",
-      "description": "Arraigante, elevado",
+      "description": "Focalizante, elevado",
       "type": "topping",
       "effect": { "x": -0.39, "y": 0.39 },
       "color": { "r": 0.95, "g": 0.45, "b": 0.15, "a": 1.0 }
@@ -125,7 +123,7 @@
     {
       "id": "phoenix_feather",
       "name": "Pluma de fénix",
-      "description": "Elevado, arraigante",
+      "description": "Elevado, focalizante",
       "type": "topping",
       "effect": { "x": -0.28, "y": 0.48 },
       "color": { "r": 0.95, "g": 0.65, "b": 0.2, "a": 1.0 }
@@ -135,7 +133,7 @@
       "name": "Sangre",
       "description": "Arraigante",
       "type": "base",
-      "effect": { "x": -0.85, "y": 0 },
+      "effect": { "x": -1, "y": 0 },
       "color": { "r": 0.7, "g": 0.1, "b": 0.1, "a": 1.0 }
     },
     {
@@ -143,7 +141,7 @@
       "name": "Agua bendita",
       "description": "Elevadora",
       "type": "base",
-      "effect": { "x": 0, "y": 0.85 },
+      "effect": { "x": 0, "y": 1 },
       "color": { "r": 0.7, "g": 0.9, "b": 1.0, "a": 1.0 }
     },
     {
@@ -151,17 +149,16 @@
       "name": "Espíritus",
       "description": "Disociativa",
       "type": "base",
-      "effect": { "x": 0.85, "y": 0 },
+      "effect": { "x": 1, "y": 0 },
       "color": { "r": 0.85, "g": 0.95, "b": 0.8, "a": 1.0 }
     },
     {
       "id": "moonshine",
       "name": "Luz de luna",
-      "description": "Calmante",
+      "description": "Concentrada",
       "type": "base",
-      "effect": { "x": 0, "y": -0.85 },
+      "effect": { "x": 0, "y": -1 },
       "color": { "r": 0.72, "g": 0.78, "b": 1.0, "a": 1.0 }
     }
   ]
 }
-

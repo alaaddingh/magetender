@@ -19,7 +19,7 @@
     {
       "id": "eyeball",
       "name": "Eyeball",
-      "description": "Strongly grounding, elevated",
+      "description": "Strongly focused, elevated",
       "type": "topping",
       "effect": { "x": -0.70, "y": 0.1 },
       "color": { "r": 0.9, "g": 0.9, "b": 0.9, "a": 1.0 }
@@ -35,7 +35,7 @@
     {
       "id": "cupid_arrow",
       "name": "Cupid Arrow",
-      "description": "Dissociative, calming",
+      "description": "Dissociative, grounding",
       "type": "topping",
       "effect": { "x": 0.53, "y": -0.14 },
       "color": { "r": 0.9, "g": 0.25, "b": 0.35, "a": 1.0 }
@@ -43,7 +43,7 @@
     {
       "id": "eden_apple",
       "name": "Forbidden Fruit",
-      "description": "Calming, dissociative",
+      "description": "Grounding, dissociative",
       "type": "topping",
       "effect": { "x": 0.48, "y": -0.27 },
       "color": { "r": 0.65, "g": 0.15, "b": 0.2, "a": 1.0 }
@@ -51,7 +51,7 @@
     {
       "id": "broken_sword",
       "name": "Sword Shard",
-      "description": "Dissociative, calming",
+      "description": "Dissociative, grounding",
       "type": "topping",
       "effect": { "x": 0.39, "y": -0.39 },
       "color": { "r": 0.7, "g": 0.72, "b": 0.78, "a": 1.0 }
@@ -59,7 +59,7 @@
     {
       "id": "wishbone",
       "name": "Wishbone",
-      "description": "Calming, dissociative",
+      "description": "Grounding, dissociative",
       "type": "topping",
       "effect": { "x": 0.28, "y": -0.48 },
       "color": { "r": 0.92, "g": 0.85, "b": 0.7, "a": 1.0 }
@@ -68,7 +68,7 @@
     {
       "id": "lotus_flower",
       "name": "Lotus Flower",
-      "description": "Very calming, grounding",
+      "description": "Very grounding, focused",
       "type": "topping",
       "effect": { "x": -0.28, "y": -0.48 },
       "color": { "r": 0.55, "g": 0.8, "b": 0.65, "a": 1.0 }
@@ -76,7 +76,7 @@
     {
       "id": "unicorn_horn",
       "name": "Unicorn Horn",
-      "description": "Calming, grounding",
+      "description": "Grounding, focused",
       "type": "topping",
       "effect": { "x": -0.39, "y": -0.39 },
       "color": { "r": 0.95, "g": 0.85, "b": 0.55, "a": 1.0 }
@@ -84,7 +84,7 @@
     {
       "id": "crow_feather",
       "name": "Crow Feather",
-      "description": "Calming, strongly grounding",
+      "description": "Grounding, strongly focused",
       "type": "topping",
       "effect": { "x": -0.53, "y": -0.14 },
       "color": { "r": 0.25, "g": 0.3, "b": 0.45, "a": 1.0 }
@@ -92,7 +92,7 @@
     {
       "id": "pomegranate",
       "name": "Persephone’s Pomegranate",
-      "description": "Calming and grounding",
+      "description": "Grounding and focused",
       "type": "topping",
       "effect": { "x": -0.48, "y": -0.27 },
       "color": { "r": 0.55, "g": 0.05, "b": 0.15, "a": 1.0 }
@@ -101,7 +101,7 @@
     {
       "id": "rose_thorn",
       "name": "Rose Thorn",
-      "description": "Grounding, elevated",
+      "description": "Focused, elevated",
       "type": "topping",
       "effect": { "x": -0.48, "y": 0.27 },
       "color": { "r": 0.35, "g": 0.65, "b": 0.35, "a": 1.0 }
@@ -109,7 +109,7 @@
     {
       "id": "spiderweb",
       "name": "Spider Web",
-      "description": "Very grounding, elevated",
+      "description": "Very focused, elevated",
       "type": "topping",
       "effect": { "x": -0.53, "y": 0.14 },
       "color": { "r": 0.75, "g": 0.75, "b": 0.78, "a": 1.0 }
@@ -117,7 +117,7 @@
     {
       "id": "eternal_flame",
       "name": "Eternal Flame",
-      "description": "Grounding, elevated",
+      "description": "Focused, elevated",
       "type": "topping",
       "effect": { "x": -0.39, "y": 0.39 },
       "color": { "r": 0.95, "g": 0.45, "b": 0.15, "a": 1.0 }
@@ -125,7 +125,7 @@
     {
       "id": "phoenix_feather",
       "name": "Phoenix Feather",
-      "description": "Elevated, grounding",
+      "description": "Elevated, focused",
       "type": "topping",
       "effect": { "x": -0.28, "y": 0.48 },
       "color": { "r": 0.95, "g": 0.65, "b": 0.2, "a": 1.0 }
@@ -135,7 +135,7 @@
       "name": "Blood",
       "description": "Grounding",
       "type": "base",
-      "effect": { "x": -1, "y": 0 },
+      "effect": { "x": 0, "y": -1 },
       "color": { "r": 0.7, "g": 0.1, "b": 0.1, "a": 1.0 }
     },
     {
@@ -157,9 +157,9 @@
     {
       "id": "moonshine",
       "name": "Moon-Shine",
-      "description": "Calming",
+      "description": "Focusing",
       "type": "base",
-      "effect": { "x": 0, "y": -1 },
+      "effect": { "x": -1, "y": 0 },
       "color": { "r": 0.72, "g": 0.78, "b": 1.0, "a": 1.0 }
     }
   ]
