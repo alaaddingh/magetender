@@ -113,3 +113,6 @@ VAR is_angry = false
 "You will answer for this incompetence!"
 
 - -> END
+
+=== Day_Three ===
+-> Day_Two

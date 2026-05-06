@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8771b4ebc9357434289506df74be66f4
+guid: c4eb0afea0cdeab4c95ee953299532e7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5353222939700282020
-    second: Knight happy_0
+      213: 3405643607809623466
+    second: IMG_0110_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Knight happy_0
+      name: IMG_0110_0
       rect:
         serializedVersion: 2
         x: 156
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5d31b3591885b5b0800000000000000
-      internalID: -5353222939700282020
+      spriteID: aa5821341d6434f20800000000000000
+      internalID: 3405643607809623466
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Knight happy_0: -5353222939700282020
+      IMG_0110_0: 3405643607809623466
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -11,6 +11,8 @@
         "fight": "Art/Monsters/Unicorn/unicorn_fight2"
       },
       "dialogueId": "dlg_unicorn",
+      "inkDialogueId": "InkyDialogue/anita_carberneigh",
+      "branching": true,
       "position": {
         "pos_x": 0,
         "pos_y": 234
@@ -27,9 +29,11 @@
         "angry": "Art/Monsters/Slime/slime_angry"
       },
       "dialogueId": "dlg_slime",
+      "inkDialogueId": "InkyDialogue/sloshberg_florpton",
+      "branching": true,
       "position": {
-        "pos_x": -169,
-        "pos_y": -37
+        "pos_x": -25,
+        "pos_y": 30
       },
       "scale": 1.0
     },
@@ -45,9 +49,11 @@
         "hit": "Art/Monsters/Alien/alien_hit"
       },
       "dialogueId": "dlg_alien",
+      "inkDialogueId": "InkyDialogue/zip_zorp_the_glorp",
+      "branching": true,
       "position": {
-        "pos_x": -169,
-        "pos_y": -37
+        "pos_x": 0,
+        "pos_y": 30
       },
       "scale": 1.0
     },
@@ -77,13 +83,33 @@
         "fight": "Art/Monsters/rocky/rocky_fight"
 
       },
-      "dialogueId": "InkyDialogue/bouldar_grimweld",
+      "dialogueId": "dlg_rocky",
+      "inkDialogueId": "InkyDialogue/bouldar_grimweld",
       "branching": true,
       "position": {
         "pos_x": 205,
         "pos_y": 280
       },
       "scale": 1.0
+    },
+     {
+      "id": "knight",
+      "name": "Sir Veylance",
+      "sprites": {
+        "neutral": "Art/Monsters/knight/knight_neutral",
+        "angry": "Art/Monsters/knight/knight_angry",
+        "happy": "Art/Monsters/knight/knight_happy",
+        "fight": "Art/Monsters/knight/knight_fight"
+
+      },
+      "dialogueId": "dlg_knight",
+      "inkDialogueId": "InkyDialogue/sir_veylance",
+      "branching": true,
+      "position": {
+        "pos_x": 0,
+        "pos_y": 110
+      },
+      "scale": 0.8
     }
   ]
 }

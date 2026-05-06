@@ -467,6 +467,9 @@ public class DialogueController : MonoBehaviour
         if (currentMonsterManager == null || currentMonsterManager.Data == null)
             return string.Empty;
 
+        if (!string.IsNullOrWhiteSpace(currentMonsterManager.Data.inkDialogueId))
+            return currentMonsterManager.Data.inkDialogueId;
+
         bool isAssessState = monsterStateManager != null && monsterStateManager.MonsterState != "start";
         if (isAssessState && !string.IsNullOrWhiteSpace(currentMonsterManager.Data.assessDialogueId))
             return currentMonsterManager.Data.assessDialogueId;
@@ -482,9 +485,13 @@ public class DialogueController : MonoBehaviour
     {
         string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
         if (string.IsNullOrWhiteSpace(state))
-            return "start";
+            state = "start";
 
-        return state;
+        string knotName = currentMonsterManager != null ? currentMonsterManager.GetCurrentInkKnot() : string.Empty;
+        if (string.IsNullOrWhiteSpace(knotName))
+            return state;
+
+        return $"{knotName}.{state}";
     }
 
     private void RefreshInkButtonState()
@@ -558,7 +565,7 @@ public class DialogueController : MonoBehaviour
         if (monsterStateManager == null || inkyDialogueController == null)
             return;
 
-        if (inkyDialogueController.TryGetBoolVariable("bouldar_angry", out bool isAngry) && isAngry)
+        if (inkyDialogueController.TryGetBoolVariable("is_angry", out bool isAngry) && isAngry)
             monsterStateManager.SetState("angry");
 
         RefreshFightButton();

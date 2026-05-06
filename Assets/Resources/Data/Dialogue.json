@@ -1,9 +1,39 @@
 {
   "dialogue": [
     {
+      "id": "dlg_knight", 
+      "levels": [
+        {
+          "inkKnot": "Day_One",
+          "level": "level_1",
+          "starting": [
+            "test"
+          ],
+            "angry": [
+              "test"
+
+          ],
+            "satisfied": [
+              "test"
+
+
+          ],
+            "neutral": [
+              "test"
+
+          ]
+        },
+        {
+          "level": "level_3",
+          "inkKnot": "Day_Three"
+        }
+      ]
+    },
+    {
       "id": "dlg_slime",
       "levels": [
         {
+          "inkKnot": "Day_One",
           "level": "level_1",
           "starting": [
             "<b>*GLAURGHH* *GLAURGHHHHHHHH*</b>",
@@ -35,6 +65,7 @@
           ]
         },
         {
+          "inkKnot": "Day_Two",
           "level": "level_2",
           "starting": [
             "<b>*GLAURGHH* *GLAURGHHHHHHHH*</b>",
@@ -65,6 +96,7 @@
         "id": "dlg_unicorn",
         "levels": [
         {
+    "inkKnot": "Day_One",
     "level": "level_1",
     "starting": [
       "Hello, Magetender! It is I—the most exquisite unicorn in town, Anita Caberneigh.",
@@ -95,6 +127,7 @@
   },
   
     {
+  "inkKnot": "Day_Two",
   "level": "level_2",
   "starting": [
     "Hello, Magetender. It is I—once again—the most exquisite unicorn in town, Anita Caberneigh.",
@@ -125,6 +158,10 @@
     "You have ruined my entire mood!",
     "You will answer for this incompetence!"
       ]
+    },
+    {
+  "level": "level_3",
+  "inkKnot": "Day_Three"
     }
       ]
     },
@@ -132,6 +169,7 @@
   "id": "dlg_alien",
   "levels": [
     {
+      "inkKnot": "Day_One",
       "level": "level_1",
       "starting": [
         "Hey there, fellow adult! I'll just get the usu—ZOINKIES!!!",
@@ -159,6 +197,7 @@
       ]
     },
     {
+      "inkKnot": "Day_Two",
       "level": "level_2",
       "starting": [
         "WAZZZZ good, my Earthling! Hopefully your day is as zorp-tastic as mine!",

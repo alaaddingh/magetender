@@ -161,3 +161,6 @@ VAR is_angry = false
 "For the good of this city and its people, prepare to defend your honor!"
 
 -> END
+
+=== Day_Three ===
+-> Day_One

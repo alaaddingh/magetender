@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 611579811fabfb748926bc45f052f1fd
+guid: fb1fd70f30dfa4545a9c9310950a4131
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8184334073707013998
-    second: IMG_0112_0
+      213: -3709020966001552407
+    second: tallDeskShelves_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_0112_0
+      name: tallDeskShelves_0
       rect:
         serializedVersion: 2
-        x: 162
+        x: 0
         y: 0
-        width: 576
-        height: 900
+        width: 640
+        height: 247
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 298519db5876b6e80800000000000000
-      internalID: -8184334073707013998
+      spriteID: 9e350092519e68cc0800000000000000
+      internalID: -3709020966001552407
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_0112_0: -8184334073707013998
+      tallDeskShelves_0: -3709020966001552407
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

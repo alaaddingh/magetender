@@ -154,6 +154,7 @@ public class InkyDialogueController : MonoBehaviour
 	{
 		story = null;
 		lastChosenPlayerResponse = null;
+		lastChosenPlayerResponseNormalized = null;
 		CurrentText = string.Empty;
 	}
 
@@ -196,16 +197,8 @@ public class InkyDialogueController : MonoBehaviour
 				continue;
 
 			string sanitizedLine = SanitizeInkLine(line);
-			string normalizedLine = NormalizeInkLine(sanitizedLine);
-			if (!string.IsNullOrEmpty(lastChosenPlayerResponseNormalized) &&
-			    (string.Equals(normalizedLine, lastChosenPlayerResponseNormalized, StringComparison.OrdinalIgnoreCase) ||
-			     normalizedLine.Contains(lastChosenPlayerResponseNormalized) ||
-			     lastChosenPlayerResponseNormalized.Contains(normalizedLine)))
-			{
-				lastChosenPlayerResponse = null;
-				lastChosenPlayerResponseNormalized = null;
+			if (IsPlayerResponseEcho(sanitizedLine))
 				continue;
-			}
 
 			lastChosenPlayerResponse = null;
 			lastChosenPlayerResponseNormalized = null;
@@ -213,6 +206,28 @@ public class InkyDialogueController : MonoBehaviour
 		}
 
 		return string.Empty;
+	}
+
+	private bool IsPlayerResponseEcho(string line)
+	{
+		if (string.IsNullOrEmpty(line) || string.IsNullOrEmpty(lastChosenPlayerResponseNormalized))
+			return false;
+
+		string normalizedLine = NormalizeInkLine(line);
+		if (string.IsNullOrEmpty(normalizedLine))
+			return false;
+
+		bool isEcho =
+			string.Equals(normalizedLine, lastChosenPlayerResponseNormalized, StringComparison.OrdinalIgnoreCase) ||
+			normalizedLine.Contains(lastChosenPlayerResponseNormalized) ||
+			lastChosenPlayerResponseNormalized.Contains(normalizedLine);
+
+		if (!isEcho)
+			return false;
+
+		lastChosenPlayerResponse = null;
+		lastChosenPlayerResponseNormalized = null;
+		return true;
 	}
 
 	private string SanitizeInkLine(string line)

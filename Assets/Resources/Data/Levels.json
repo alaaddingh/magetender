@@ -1,24 +1,6 @@
 {
   "levels": [
     {
-      "id":"test", 
-      "name": "Test",
-      "maintenance_cost": 0,
-      "encounters": [
-          {
-            "monster_id": "rocky",
-            "tolerances": {
-                "tolerances": {
-                "satisfied_tolerance": 10
-            },
-            "starting_score": {"x": 0.5, "y": 0.5},
-            "goal_score": {"x": 0.5, "y": -0.5 },
-            "dialogue_key": "test"
-            }
-          }
-      ]
-    },
-    {
       "id": "tutorial",
       "name": "Tutorial",
       "maintenance_cost": 0,
@@ -39,32 +21,31 @@
       "name": "Opening Night",
       "maintenance_cost": 80,
       "encounters": [
-         {
+        {
           "monster_id": "unicorn",
           "tolerances": {
-            "satisfied_tolerance": 8
+            "satisfied_tolerance": 10
           },
           "starting_score": { "x": -0.5, "y": 0.5 },
           "goal_score": { "x": -0.42, "y": -0.41 },
           "dialogue_key": "level_1"
-        },  
-        
-          {
-          "monster_id": "slime",
+        },
+        {
+          "monster_id": "alien",
           "tolerances": {
             "satisfied_tolerance": 10
           },
-          "starting_score": {"x": -0.5, "y": -0.5},
-          "goal_score": {"x": 0.33,"y": 0.33}, 
-          "dialogue_key": "level_1" 
-        },
-          {
-          "monster_id": "alien",
-          "tolerances": {
-            "satisfied_tolerance": 8
-          },
           "starting_score": { "x": 0.5, "y": 0.1 },
           "goal_score": { "x": -0.35, "y": 0.20}, 
+          "dialogue_key": "level_1"
+        },
+        {
+          "monster_id": "slime",
+          "tolerances": {
+            "satisfied_tolerance": 20
+          },
+          "starting_score": {"x": -0.5, "y": -0.5},
+          "goal_score": {"x": 0.33,"y": 0.33},
           "dialogue_key": "level_1"
         }
       ]
@@ -74,6 +55,21 @@
       "name": "Second Night",
       "maintenance_cost": 80,
       "encounters": [
+           {
+            "monster_id": "rocky",
+            "tolerances": {
+              "satisfied_tolerance": 8
+            },
+           "starting_score": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "goal_score": {
+              "x": 0.5,
+              "y": -0.5
+            },
+            "dialogue_key": "level_2"
+        },
         {
           "monster_id": "alien",
           "tolerances": {
@@ -86,20 +82,36 @@
         {
           "monster_id": "slime",
           "tolerances": {
-            "satisfied_tolerance": 10
+            "satisfied_tolerance": 8
           },
           "starting_score": {"x": -0.4, "y": 0.5},
           "goal_score": {"x": 0.4,"y": -0.67}, 
           "dialogue_key": "level_2" 
+        }
+      ]
+    },
+    {
+      "id": "level_3",
+      "name": "Third Night",
+      "maintenance_cost": 80,
+      "encounters": [
+        {
+          "monster_id": "knight",
+          "tolerances": {
+            "satisfied_tolerance": 6
+          },
+          "starting_score": { "x": -0.5, "y": 0.5 },
+          "goal_score": { "x": -0.42, "y": -0.41 },
+          "dialogue_key": "level_3"
         },
         {
           "monster_id": "unicorn",
           "tolerances": {
-            "satisfied_tolerance": 8
+            "satisfied_tolerance": 6
           },
-          "starting_score": { "x": 0.6, "y": 0.2 },
+          "starting_score": { "x": -0.5, "y": 0.5 },
           "goal_score": { "x": -0.42, "y": -0.41 },
-          "dialogue_key": "level_2"
+          "dialogue_key": "level_3"
         }
       ]
     }
