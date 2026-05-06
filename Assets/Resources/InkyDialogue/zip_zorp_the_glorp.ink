@@ -62,7 +62,7 @@ VAR show_license = false
 	"HA! Classic Earthling mistake."
 	"My species ages differently. Very differently. In fact, I'm, like... ancient."
 	"in my early 20 billions to be exact!"
-	"Behold: my Galactic Maturity License. I mean just LOOK at that lamenation! Very official..."
+	"Check out my Galactic Maturity License. I mean just LOOK at that lamenation! Very official..."
 	** "Fine. You're good."
 		"Excellent.."
 		"Anyway, can you make me a grounded yet elevated brew?"
@@ -97,4 +97,61 @@ VAR show_license = false
 "WHAT IN THE MILKY WAY IS THIS?! THIS TASTES LIKE SPACE JUNK!!!"
 "PREPARE TO BE ZOINKED BY ZIP ZORP!!!"
 
+- -> END
+
+
+
+=== Day_Three ===
+-> start
+
+= start
+"BZZOOHHHH! Hello, Earthling..."
+"Good news."
+"I am officially DONE being 'down to Earth.'"
+"I miss the feeling of being up in orbit... ahh, the nostalgia."
+
+* "You seem less energetic today."
+	"I didn't think you'd notice..."
+	"Your planet's gravity is taking a toll on me. I wish to be back in orbit!"
+	"So today..."
+	"I'd like a brew that is FAR more elevating."
+	"Like I'm operating a spacecraft once again..."
+	"Please don't forget that <b>mini umbrella.</b>"
+
+* "You again?"
+	"..."
+	"What is that supposed to mean?"
+	"I would be weaving through asteroid belts right now if your calming brews weren't <i>super</i> effective."
+	"I YEARN for orbit, Magetender. YEARN FOR IT!! <b>BZZOOHHHH!</b>"
+
+	** "You seem crazed."
+	    ~ is_angry = true
+		"BZZZZOHH!!!"
+		"CRAZED?!"
+		"THAT SLY REMARK ELEVATES ME ALRIGHT..."
+		"ELEVATES MY ZORPIAN BLOOD PRESSURE!"
+
+	** "What can I get you?"
+		"So today..."
+		"I'd like a brew that is FAR more elevating."
+		"Like I'm operating a spacecraft once again..."
+		"Please don't forget that <b>mini umbrella.</b>"
+
+- -> END
+
+= neutral
+"well... this drink doesn't <i> entirely </i> elevate my mood.."
+"I think it'll be awhile 'til I have the proper energy to be back in orbit.."
+
+- -> END
+
+= satisfied
+"ZOINKS! This elevates me alright!"
+"With your help, I believe I will soon be zooming on out of this planet in no time.."
+
+- -> END
+
+= angry
+"WHAT IN THE MILKY WAY IS THIS?! THIS TASTES LIKE SPACE JUNK!!!"
+"PREPARE TO BE ZOINKED BY ZIP ZORP!!!"
 - -> END

@@ -115,4 +115,16 @@ VAR is_angry = false
 - -> END
 
 === Day_Three ===
--> Day_Two
+-> start
+
+= start
+-> Day_Two.start
+
+= neutral
+-> Day_Two.neutral
+
+= satisfied
+-> Day_Two.satisfied
+
+= angry
+-> Day_Two.angry

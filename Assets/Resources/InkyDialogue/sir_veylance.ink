@@ -1,4 +1,4 @@
--> Day_One
+-> Day_Three
 
 
 VAR knight_mood = 0
@@ -10,7 +10,7 @@ VAR is_angry = false
 
 
 
-=== Day_One ===
+=== Day_Three ===
 -> start
 
 = start
@@ -23,7 +23,7 @@ VAR is_angry = false
     "Why must you know?"
     "Are you with <i>them</i>? Trying to extract information from me?!"
     
-    ** "Of course not!["] I'm just someone trying to make a living."
+    ** "Of course not! I'm just someone trying to make a living."
     ~ knight_mood++
     "I see...that is my mistake. How unsightly of me. You have my apologies, you see..."
     "<i>They</i> have been following me for quite some time now. I can't prove it, but I know they're here somewhere..."
@@ -37,10 +37,10 @@ VAR is_angry = false
         "But make it light, something that will keep my senses sharp!"
         // Goes to drink making
         
-        *** "How about a drink?["] It might ease your worries a bit."
+        *** "How about a drink? It might ease your worries a bit."
         "A drink? I don't know...I wouldn't want to lose sight of my objective."
         
-            **** "I can help with that.["] I'll whip up something to help you stay focused."
+            **** "I can help with that. I'll whip up something to help you stay focused."
             "Ah, you can do that? That would be most appreciated, kind Sir. I shall eagerly await your creation."
             //Goes to drink making
     
@@ -50,20 +50,20 @@ VAR is_angry = false
     "Do not lie to me, magetender. I know the eyes of a liar when I see them!"
     "Is this bar your secret base? Is that it? I have stumbled into the lion's den it seems!"
     
-        *** "Not at all!["] I am but a mere magetender."
+        *** "Not at all! I am but a mere magetender."
         ~ knight_mood++
         "Is that so? Well, do not think I won't have my eyes on you..."
         "...but maybe, if I could get a drink...I would much appreciate it. Something that can keep me focused."
         // goes to drink making
         
     
-        *** "Please just order.["] Otherwise I'll have to ask you to leave. You can't stay if you're not a customer."
+        *** "Please just order. Otherwise I'll have to ask you to leave. You can't stay if you're not a customer."
         "Oh...<i>ahem</i>. I guess I could get something if that's the case. Uhh..."
         "...how embarrassing. Just something light please, I must stay alert."
         //Goes to drink making
 
 
-* "I'll have to ask you to leave[."], if you're not a paying customer."
+* "I'll have to ask you to leave, if you're not a paying customer."
     "Is that so? Hmm, most unfortunate. You see, I do not trust you wouldn't slip something into my drink."
     "If you're working for <i>them</i>, it would be easy for you to poison me..."
     
@@ -87,7 +87,7 @@ VAR is_angry = false
     
     
     
-        *** "Yes, I am!["]
+        *** "Yes, I am!"
         ~ knight_mood--
         ~ enemies = true
         "...not. I'm just trying to make a living."
@@ -115,7 +115,7 @@ VAR is_angry = false
         "I needn't need proof! But if proof is what you so desire, then make me a drink!"
         "If it is poisoned, then there is your proof!"
         
-            **** "But wouldn't you be dead?["] Then your plan sort of goes out the window."
+            **** "But wouldn't you be dead? Then your plan sort of goes out the window."
             ~ left_without_drink = true
             "Huh...I supposed you're right."
             "Well...fine then! Forget it, if you do not want my patronage then I shall begone!"
@@ -161,6 +161,3 @@ VAR is_angry = false
 "For the good of this city and its people, prepare to defend your honor!"
 
 -> END
-
-=== Day_Three ===
--> Day_One
