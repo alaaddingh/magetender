@@ -187,14 +187,23 @@ public class CurrentMonster : MonoBehaviour
 
     public string GetCurrentInkKnot()
     {
+        LevelEncounterData encounter = CurrentEncounter;
+        if (encounter != null && !string.IsNullOrWhiteSpace(encounter.ink_knot))
+            return encounter.ink_knot;
+
         DialogueLevelEntry levelEntry = GetCurrentDialogueLevelEntry();
-        if (levelEntry == null)
-            return string.Empty;
+        if (levelEntry != null)
+        {
+            if (!string.IsNullOrWhiteSpace(levelEntry.inkKnot))
+                return levelEntry.inkKnot;
 
-        if (!string.IsNullOrWhiteSpace(levelEntry.inkKnot))
-            return levelEntry.inkKnot;
+            if (!string.IsNullOrWhiteSpace(levelEntry.level))
+                return levelEntry.level;
+        }
 
-        return !string.IsNullOrWhiteSpace(levelEntry.level) ? levelEntry.level : string.Empty;
+        return encounter != null && !string.IsNullOrWhiteSpace(encounter.dialogue_key)
+            ? encounter.dialogue_key
+            : string.Empty;
     }
 
     public void ResetToFirstMonster()

@@ -24,6 +24,7 @@ public class LevelEncounterData
     public ScorePair starting_score;
     public ScorePair goal_score;
     public string dialogue_key;
+    public string ink_knot;
 }
 
 [Serializable]
