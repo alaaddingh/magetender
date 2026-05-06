@@ -94,7 +94,7 @@
       "name": "Persephone’s Pomegranate",
       "description": "Grounding and focused",
       "type": "topping",
-      "effect": { "x": -0.48, "y": -0.27 },
+      "effect": { "x": -0.9, "y": -0.9 },
       "color": { "r": 0.55, "g": 0.05, "b": 0.15, "a": 1.0 }
     },
 
@@ -133,9 +133,9 @@
     {
       "id": "blood",
       "name": "Blood",
-      "description": "Grounding",
+      "description": "focusing",
       "type": "base",
-      "effect": { "x": 0, "y": -1 },
+      "effect": { "x": -1, "y": 0 },
       "color": { "r": 0.7, "g": 0.1, "b": 0.1, "a": 1.0 }
     },
     {
@@ -159,7 +159,7 @@
       "name": "Moon-Shine",
       "description": "Focusing",
       "type": "base",
-      "effect": { "x": -1, "y": 0 },
+      "effect": { "x": 0, "y": -1 },
       "color": { "r": 0.72, "g": 0.78, "b": 1.0, "a": 1.0 }
     }
   ]

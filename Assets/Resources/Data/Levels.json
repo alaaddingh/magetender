@@ -21,33 +21,35 @@
       "name": "Opening Night",
       "maintenance_cost": 80,
       "encounters": [
-         {
+        {
           "monster_id": "unicorn",
-          "tolerances": {
-            "satisfied_tolerance": 8
-          },
-          "starting_score": { "x": -0.5, "y": 0.5 },
-          "goal_score": { "x": -0.42, "y": -0.41 },
-          "dialogue_key": "level_1"
-        },  
-        
-          {
-          "monster_id": "slime",
           "tolerances": {
             "satisfied_tolerance": 10
           },
-          "starting_score": {"x": -0.5, "y": -0.5},
-          "goal_score": {"x": 0.33,"y": 0.33}, 
-          "dialogue_key": "level_1" 
+          "starting_score": { "x": -0.5, "y": 0.5 },
+          "goal_score": { "x": -0.42, "y": -0.41 },
+          "dialogue_key": "level_1",
+          "ink_knot": "Day_One"
         },
-          {
+        {
           "monster_id": "alien",
           "tolerances": {
-            "satisfied_tolerance": 8
+            "satisfied_tolerance": 10
           },
           "starting_score": { "x": 0.5, "y": 0.1 },
-          "goal_score": { "x": -0.35, "y": 0.20}, 
-          "dialogue_key": "level_1"
+          "goal_score": { "x": -0.35, "y": 0.20},
+          "dialogue_key": "level_1",
+          "ink_knot": "Day_One"
+        },
+        {
+          "monster_id": "slime",
+          "tolerances": {
+            "satisfied_tolerance": 20
+          },
+          "starting_score": {"x": -0.5, "y": -0.5},
+          "goal_score": {"x": 0.33,"y": 0.33},
+          "dialogue_key": "level_1",
+          "ink_knot": "Day_One"
         }
       ]
     },
@@ -56,32 +58,78 @@
       "name": "Second Night",
       "maintenance_cost": 80,
       "encounters": [
+           {
+            "monster_id": "rocky",
+            "tolerances": {
+              "satisfied_tolerance": 8
+            },
+           "starting_score": {
+              "x": 0.5,
+              "y": 0.5
+            },
+           "goal_score": {
+              "x": 0.5,
+              "y": -0.5
+            },
+            "dialogue_key": "level_2",
+            "ink_knot": "Day_One"
+        },
         {
           "monster_id": "alien",
           "tolerances": {
             "satisfied_tolerance": 8
           },
           "starting_score": { "x": 0.6, "y": -0.1 },
-          "goal_score": { "x": -0.4, "y": 0.35 }, 
-          "dialogue_key": "level_2"
+          "goal_score": { "x": -0.4, "y": 0.35 },
+          "dialogue_key": "level_2",
+          "ink_knot": "Day_Two"
         },
         {
           "monster_id": "slime",
           "tolerances": {
-            "satisfied_tolerance": 10
+            "satisfied_tolerance": 8
           },
           "starting_score": {"x": -0.4, "y": 0.5},
-          "goal_score": {"x": 0.4,"y": -0.67}, 
-          "dialogue_key": "level_2" 
+          "goal_score": {"x": 0.4,"y": -0.67},
+          "dialogue_key": "level_2",
+          "ink_knot": "Day_Two"
+        }
+      ]
+    },
+    {
+      "id": "level_3",
+      "name": "Third Night",
+      "maintenance_cost": 80,
+      "encounters": [
+        {
+          "monster_id": "knight",
+          "tolerances": {
+            "satisfied_tolerance": 8
+          },
+          "starting_score": { "x": 0.5, "y": 0.5 },
+          "goal_score": { "x": -0.46, "y": -0.21 },
+          "dialogue_key": "level_3",
+          "ink_knot": "Day_Three"
+        },
+           {
+          "monster_id": "alien",
+          "tolerances": {
+            "satisfied_tolerance": 8
+          },
+          "starting_score": { "x": -0.32, "y": -0.31 },
+          "goal_score": { "x": 0.4, "y": 0.35 },
+          "dialogue_key": "level_3",
+          "ink_knot": "Day_Three"
         },
         {
           "monster_id": "unicorn",
           "tolerances": {
-            "satisfied_tolerance": 8
+            "satisfied_tolerance": 6
           },
-          "starting_score": { "x": 0.6, "y": 0.2 },
+          "starting_score": { "x": -0.5, "y": 0.5 },
           "goal_score": { "x": -0.42, "y": -0.41 },
-          "dialogue_key": "level_2"
+          "dialogue_key": "level_3",
+          "ink_knot": "Day_Three"
         }
       ]
     }

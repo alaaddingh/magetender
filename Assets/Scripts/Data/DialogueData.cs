@@ -18,6 +18,7 @@ public class DialogueEntry
 public class DialogueLevelEntry
 {
     public string level;
+    public string inkKnot;
     public List<string> starting;
     public List<string> neutral;
     public List<string> satisfied;
