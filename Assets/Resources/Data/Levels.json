@@ -11,7 +11,7 @@
               "satisfied_tolerance": 10
           },
           "starting_score": {"x": 0.5, "y": 0.6},
-          "goal_score": { "x": 0.6, "y": -0.6 },
+          "goal_score": { "x": 0.42, "y": -0.38 },
           "dialogue_key": "tutorial"
         }
       ]
