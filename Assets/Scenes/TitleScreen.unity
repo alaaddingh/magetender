@@ -4830,6 +4830,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c04c3f5b5a8db5d46ab83b5900d500e7, type: 3}
   - {fileID: 8300000, guid: ce07a35f5ffe9d548ab2b8c056e081ec, type: 3}
   - {fileID: 8300000, guid: 3581a4f7f66331c4291640be39281dd3, type: 3}
+  blobVoiceClipGeneric: []
+  blobVoiceClipAngry: []
+  blobVoiceClipSatisfied: []
+  blobVoiceClipBattle: []
+  dragonVoiceClipGeneric: []
+  dragonVoiceClipAngry: []
+  dragonVoiceClipSatisfied: []
+  dragonVoiceClipBattle: []
+  hamsterVoiceClipGeneric: []
+  hamsterVoiceClipAngry: []
+  hamsterVoiceClipSatisfied: []
+  hamsterVoiceClipBattle: []
+  knightVoiceClipGeneric: []
+  knightVoiceClipAngry: []
+  knightVoiceClipSatisfied: []
+  knightVoiceClipBattle: []
+  rockyVoiceClipGeneric: []
+  rockyVoiceClipAngry: []
+  rockyVoiceClipSatisfied: []
+  rockyVoiceClipBattle: []
+  unicornVoiceClipGeneric: []
+  unicornVoiceClipAngry: []
+  unicornVoiceClipSatisfied: []
+  unicornVoiceClipBattle: []
 --- !u!4 &1878228773
 Transform:
   m_ObjectHideFlags: 0
