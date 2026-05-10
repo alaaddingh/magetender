@@ -90,6 +90,21 @@ public class GameManager : MonoBehaviour
 		ResetIngredientUnlocksToDefaults();
     }
 
+	public void LoadProgressFromSave(SaveData data)
+	{
+		if (data == null)
+			return;
+
+		Coins = data.coins;
+		Day = Mathf.Max(1, data.day);
+		TutorialCompleted = data.tutorialCompleted;
+		SavedEncounterIndex = false;
+
+		ResetIngredientUnlocksToDefaults();
+		if (data.unlockedIngredientIds != null)
+			ApplyUnlockedIngredientIds(data.unlockedIngredientIds);
+	}
+
     public void MarkTutorialCompleted()
     {
         if (TutorialCompleted)
@@ -112,7 +127,7 @@ public class GameManager : MonoBehaviour
         Coins += amount;
 		if (amount > 0)
 			CoinFlyAnimator.NotifyCoinsAdded(amount);
-        SaveSystem.WriteData();
+		// Persist coins only at checkpoints; saving here allowed duplicating coins if reload preceded encounter save.
     }
 
     public void IncrementDay(int maintenanceCost)

@@ -150,6 +150,7 @@ public class DayScreenController : MonoBehaviour
 			AudioManager.Instance.PlayButtonClick();
 		if (showedDayPanelThisLoad && AudioManager.Instance != null)
 			AudioManager.Instance.PlayStartOfDayBell();
+		SaveSystem.WriteData();
         if (dayPanel != null)
             dayPanel.SetActive(false);
         if (orderScreen != null)

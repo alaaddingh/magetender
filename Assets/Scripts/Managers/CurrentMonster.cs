@@ -255,6 +255,11 @@ public class CurrentMonster : MonoBehaviour
         return nextVisitPlan == NextVisitPlan.NextDayFirstMonster;
     }
 
+	public void ClearPendingVisitPlan()
+	{
+		nextVisitPlan = NextVisitPlan.None;
+	}
+
 	public void ApplyPlannedVisit()
 	{
 		if (nextVisitPlan == NextVisitPlan.None)

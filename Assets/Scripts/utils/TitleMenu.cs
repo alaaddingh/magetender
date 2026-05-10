@@ -20,6 +20,19 @@ public class TitleMenu : MonoBehaviour
 
     public void StartGame()
     {
+		// DDOL managers keep in-memory state; reload disk so unpaid rewards (e.g. assessment) are dropped.
+		SaveData data = SaveSystem.LoadGame();
+		if (data != null)
+		{
+			if (GameManager.Instance != null)
+				GameManager.Instance.LoadProgressFromSave(data);
+			if (CurrentMonster.Instance != null)
+			{
+				CurrentMonster.Instance.ClearPendingVisitPlan();
+				CurrentMonster.Instance.ApplySaveProgress(data.currentEncounterIndex);
+			}
+		}
+
         SceneManager.LoadScene("MixScene");
     }
 
