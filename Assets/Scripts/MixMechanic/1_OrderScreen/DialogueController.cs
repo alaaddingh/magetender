@@ -205,6 +205,7 @@ public class DialogueController : MonoBehaviour
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
             typewriter.SkipTyping();
+            AudioManager.Instance.StopVoice();
             return;
         }
 

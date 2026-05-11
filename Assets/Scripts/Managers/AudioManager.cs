@@ -462,7 +462,7 @@ public class AudioManager : MonoBehaviour
 			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
 			sfxSource.Play();
 		}
-		else if (characterType == "unicorn_fight_2")
+		else if (characterType == "unicorn_fight2_0")
 		{
 			int randomIndex = Random.Range(0, unicornVoiceClipBattle.Count);	
 			sfxSource.clip = unicornVoiceClipBattle[randomIndex];
@@ -614,7 +614,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, unicornVoiceClipGeneric.Count);	
 		sfxSource.clip = unicornVoiceClipGeneric[randomIndex];
 		Debug.Log($"Playing generic unicorn voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.5f); 
 		sfxSource.Play();
 	}
 	public void PlayUnicornVoiceAngry()
@@ -627,7 +627,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, unicornVoiceClipAngry.Count);	
 		sfxSource.clip = unicornVoiceClipAngry[randomIndex];
 		Debug.Log($"Playing angry unicorn voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(0.7f, 1.4f); 
 		sfxSource.Play();
 	}
 	public void PlayUnicornVoiceSatisfied()
