@@ -24253,6 +24253,8 @@ MonoBehaviour:
   serveTypewriter: {fileID: 655212808}
   choicesRoot: {fileID: 358829324}
   choiceButtonPrefab: {fileID: 5142958748126349243, guid: e34f06ec8e02368458e7531ef9c13df2, type: 3}
+  currentMonsterManager: {fileID: 1245897901}
+  monsterStateManager: {fileID: 1091468760}
   arabicFontOverride: {fileID: 11400000, guid: 6d8213b4af8e61447bec1fe05163e9f7, type: 2}
 --- !u!114 &2058223061
 MonoBehaviour:

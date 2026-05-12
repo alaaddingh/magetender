@@ -559,7 +559,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, alienVoiceClipSatisfied.Count);	
 		sfxSource.clip = alienVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied alien voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
 		sfxSource.Play();
 	}
 
@@ -600,7 +600,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, blobVoiceClipSatisfied.Count);	
 		sfxSource.clip = blobVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied blob voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
 		sfxSource.Play();
 	}
 
@@ -641,7 +641,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, unicornVoiceClipSatisfied.Count);	
 		sfxSource.clip = unicornVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied unicorn voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
 		sfxSource.Play();
 	}
 
@@ -682,7 +682,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, knightVoiceClipSatisfied.Count);	
 		sfxSource.clip = knightVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied knight voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
 		sfxSource.Play();
 	}
 
@@ -723,7 +723,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, rockyVoiceClipSatisfied.Count);	
 		sfxSource.clip = rockyVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied rocky voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 2.0f); 
 		sfxSource.Play();
 	}
 
@@ -764,7 +764,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, hamsterVoiceClipSatisfied.Count);	
 		sfxSource.clip = hamsterVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied hamster voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 2.0f); 
 		sfxSource.Play();
 	}
 
@@ -805,7 +805,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, dragonVoiceClipSatisfied.Count);	
 		sfxSource.clip = dragonVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied dragon voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 2.0f);
 		sfxSource.Play();
 	}
 	public void StopVoice()

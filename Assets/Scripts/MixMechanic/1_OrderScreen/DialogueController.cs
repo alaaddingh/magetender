@@ -227,124 +227,184 @@ public class DialogueController : MonoBehaviour
 
     public void CharacterVoiceover()
     {
+        if (currentMonsterManager == null || currentMonsterManager.Data == null || monsterStateManager == null)
+        {
+            Debug.LogWarning("CharacterVoiceover: Missing manager references!");
+            return;
+        }
+
+        if (AudioManager.Instance == null)
+            return;
+
+        string monsterId = currentMonsterManager.Data.id.ToLower().Trim();
+        string monsterState = monsterStateManager.MonsterState.ToLower().Trim();
+
+        Debug.Log($"CharacterVoiceover: Playing voice for monsterId='{monsterId}' state='{monsterState}'");
+
         //Toad
-        if (currentMonsterManager.Data.id == "toad" && (monsterStateManager.MonsterState == "start"))
+        if (monsterId == "toad")
         {
-            Debug.Log("Playing generic toad voice"); 
-            AudioManager.Instance.PlayToadVoiceGeneric();
+            if (monsterState == "start")
+            {
+                Debug.Log("Playing generic toad voice"); 
+                AudioManager.Instance.PlayToadVoiceGeneric();
+            }
+            else if (monsterState == "neutral")
+            {
+                Debug.Log("Playing neutral toad voice"); 
+                AudioManager.Instance.PlayToadVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "toad" && (monsterStateManager.MonsterState == "neutral"))
-        {
-            Debug.Log("Playing neutral toad voice"); 
-            AudioManager.Instance.PlayToadVoiceAngry();
-        }
+
         //Alien
-        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "alien")
         {
-            Debug.Log("Playing generic alien voice"); 
-            AudioManager.Instance.PlayAlienVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic alien voice"); 
+                AudioManager.Instance.PlayAlienVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied alien voice"); 
+                AudioManager.Instance.PlayAlienVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry alien voice"); 
+                AudioManager.Instance.PlayAlienVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry alien voice"); 
-            AudioManager.Instance.PlayAlienVoiceAngry();
-        }
+
         //Unicorn
-        if (currentMonsterManager.Data.id == "unicorn" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "unicorn")
         {
-            Debug.Log("Playing generic unicorn voice"); 
-            AudioManager.Instance.PlayUnicornVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic unicorn voice"); 
+                AudioManager.Instance.PlayUnicornVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied unicorn voice"); 
+                AudioManager.Instance.PlayUnicornVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry unicorn voice"); 
+                AudioManager.Instance.PlayUnicornVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "unicorn" && (monsterStateManager.MonsterState == "satisfied"))
-        {
-            Debug.Log("Playing satisfied unicorn voice"); 
-            AudioManager.Instance.PlayUnicornVoiceSatisfied();
-        }
-        if (currentMonsterManager.Data.id == "unicorn" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry unicorn voice"); 
-            AudioManager.Instance.PlayUnicornVoiceAngry();
-        }
+
         //Slime
-        if (currentMonsterManager.Data.id == "slime" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "slime")
         {
-            Debug.Log("Playing generic slime voice"); 
-            AudioManager.Instance.PlayBlobVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic slime voice"); 
+                AudioManager.Instance.PlayBlobVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied slime voice"); 
+                AudioManager.Instance.PlayBlobVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry slime voice"); 
+                AudioManager.Instance.PlayBlobVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "slime" && (monsterStateManager.MonsterState == "satisfied"))
-        {
-            Debug.Log("Playing satisfied slime voice"); 
-            AudioManager.Instance.PlayBlobVoiceSatisfied();
-        }
-        if (currentMonsterManager.Data.id == "slime" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry slime voice"); 
-            AudioManager.Instance.PlayBlobVoiceAngry();
-        }
+
         //Rocky (Golem)
-        if (currentMonsterManager.Data.id == "rocky" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "rocky")
         {
-            Debug.Log("Playing generic rocky voice"); 
-            AudioManager.Instance.PlayRockyVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic rocky voice"); 
+                AudioManager.Instance.PlayRockyVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied rocky voice"); 
+                AudioManager.Instance.PlayRockyVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry rocky voice"); 
+                AudioManager.Instance.PlayRockyVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "rocky" && (monsterStateManager.MonsterState == "satisfied"))
-        {
-            Debug.Log("Playing satisfied rocky voice"); 
-            AudioManager.Instance.PlayRockyVoiceSatisfied();
-        }
-        if (currentMonsterManager.Data.id == "rocky" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry rocky voice"); 
-            AudioManager.Instance.PlayRockyVoiceAngry();
-        }
+
         //Knight
-        if (currentMonsterManager.Data.id == "knight" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "knight")
         {
-            Debug.Log("Playing generic knight voice"); 
-            AudioManager.Instance.PlayKnightVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic knight voice"); 
+                AudioManager.Instance.PlayKnightVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied knight voice"); 
+                AudioManager.Instance.PlayKnightVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry knight voice"); 
+                AudioManager.Instance.PlayKnightVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "knight" && (monsterStateManager.MonsterState == "satisfied"))
-        {
-            Debug.Log("Playing satisfied knight voice"); 
-            AudioManager.Instance.PlayKnightVoiceSatisfied();
-        }
-        if (currentMonsterManager.Data.id == "knight" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry knight voice"); 
-            AudioManager.Instance.PlayKnightVoiceAngry();
-        }
+
         //Hamster
-        if (currentMonsterManager.Data.id == "hamster" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "hamster")
         {
-            Debug.Log("Playing generic hamster voice"); 
-            AudioManager.Instance.PlayHamsterVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic hamster voice"); 
+                AudioManager.Instance.PlayHamsterVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied hamster voice"); 
+                AudioManager.Instance.PlayHamsterVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry hamster voice"); 
+                AudioManager.Instance.PlayHamsterVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "hamster" && (monsterStateManager.MonsterState == "satisfied"))
-        {
-            Debug.Log("Playing satisfied hamster voice"); 
-            AudioManager.Instance.PlayHamsterVoiceSatisfied();
-        }
-        if (currentMonsterManager.Data.id == "hamster" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry hamster voice"); 
-            AudioManager.Instance.PlayHamsterVoiceAngry();
-        }
+
         //Dragon
-        if (currentMonsterManager.Data.id == "dragon" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
+        if (monsterId == "dragon")
         {
-            Debug.Log("Playing generic dragon voice"); 
-            AudioManager.Instance.PlayDragonVoiceGeneric();
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic dragon voice"); 
+                AudioManager.Instance.PlayDragonVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied dragon voice"); 
+                AudioManager.Instance.PlayDragonVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry dragon voice"); 
+                AudioManager.Instance.PlayDragonVoiceAngry();
+            }
+            return;
         }
-        if (currentMonsterManager.Data.id == "dragon" && (monsterStateManager.MonsterState == "satisfied"))
-        {
-            Debug.Log("Playing satisfied dragon voice"); 
-            AudioManager.Instance.PlayDragonVoiceSatisfied();
-        }
-        if (currentMonsterManager.Data.id == "dragon" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry dragon voice"); 
-            AudioManager.Instance.PlayDragonVoiceAngry();
-        }
+
+        Debug.LogWarning($"CharacterVoiceover in DialogueController: Unknown monster monsterId='{monsterId}' or state='{monsterState}'");
     }
 
     public void StopCharacterVoiceoverAfterDialogue()
