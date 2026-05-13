@@ -75,6 +75,9 @@ public class InkDialoguePresenter : MonoBehaviour
 		if (activeTypewriter != null && activeDialogueText != null)
 			activeTypewriter.SetTargetText(activeDialogueText);
 
+		if (currentMonsterManager == null)
+        	currentMonsterManager = CurrentMonster.Instance;
+
 		dialogueOriginalFont = dialogueText != null ? dialogueText.font : null;
 		speakerOriginalFont = speakerNameText != null ? speakerNameText.font : null;
 	}
@@ -107,6 +110,23 @@ public class InkDialoguePresenter : MonoBehaviour
 	{
 		RefreshSpeakerName();
 		ClearChoices();
+		ReconnectManagers();
+	}
+
+	// Sometimes the CurrentMonster or MonsterStateManager would disconnect itself that would make the vo's to not work
+	private void ReconnectManagers(){
+	
+    if (currentMonsterManager == null)
+        currentMonsterManager = FindFirstObjectByType<CurrentMonster>();
+
+    if (monsterStateManager == null)
+        monsterStateManager = FindFirstObjectByType<MonsterStateManager>();
+	}
+
+	private void Update()
+	{
+    if (currentMonsterManager == null || monsterStateManager == null)
+        ReconnectManagers();
 	}
 
 	public void StartKnotAndPresent(string knotName)
