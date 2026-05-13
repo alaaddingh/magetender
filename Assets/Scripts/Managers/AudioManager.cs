@@ -46,6 +46,7 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioSource musicSource;
 
 	[Header("Character VO's")]
+	// Toad customer VO's
 	[SerializeField] private List<AudioClip> toadVoiceClipGeneric;
 	[SerializeField] private List<AudioClip> toadVoiceClipAngry;
 	[SerializeField] private List<AudioClip> toadVoiceClipBattle;
@@ -55,6 +56,42 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private List<AudioClip> alienVoiceClipAngry;
 	[SerializeField] private List<AudioClip> alienVoiceClipSatisfied;
 	[SerializeField] private List<AudioClip> alienVoiceClipBattle;
+
+	// Blob customer VO's
+	[SerializeField] private List<AudioClip> blobVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> blobVoiceClipAngry;
+	[SerializeField] private List<AudioClip> blobVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> blobVoiceClipBattle;
+
+	// Dragon customer VO's
+	[SerializeField] private List<AudioClip> dragonVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> dragonVoiceClipAngry;
+	[SerializeField] private List<AudioClip> dragonVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> dragonVoiceClipBattle;
+
+	// Hamster customer VO's
+	[SerializeField] private List<AudioClip> hamsterVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> hamsterVoiceClipAngry;
+	[SerializeField] private List<AudioClip> hamsterVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> hamsterVoiceClipBattle;
+
+	// Knight customer VO's
+	[SerializeField] private List<AudioClip> knightVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> knightVoiceClipAngry;
+	[SerializeField] private List<AudioClip> knightVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> knightVoiceClipBattle;
+
+	// Rocky customer VO's
+	[SerializeField] private List<AudioClip> rockyVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> rockyVoiceClipAngry;
+	[SerializeField] private List<AudioClip> rockyVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> rockyVoiceClipBattle;
+
+	// Unicorn customer VO's
+	[SerializeField] private List<AudioClip> unicornVoiceClipGeneric;
+	[SerializeField] private List<AudioClip> unicornVoiceClipAngry;
+	[SerializeField] private List<AudioClip> unicornVoiceClipSatisfied;
+	[SerializeField] private List<AudioClip> unicornVoiceClipBattle;
 
 
 	private AudioSource cantAffordVoice;
@@ -403,6 +440,11 @@ public class AudioManager : MonoBehaviour
 		}
 		if (characterType == "toad_angry")
 		{
+			if (toadVoiceClipBattle == null || toadVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle toad voice clips assigned.");
+				return;
+			}
 			int randomIndex = Random.Range(0, toadVoiceClipBattle.Count);	
 			sfxSource.clip = toadVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle toad voice clip: {sfxSource.clip.name}");
@@ -411,15 +453,73 @@ public class AudioManager : MonoBehaviour
 		}
 		else if (characterType == "alien_fight_0")
 		{
+			if (alienVoiceClipBattle == null || alienVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle alien voice clips assigned.");
+				return;
+			}
 			int randomIndex = Random.Range(0, alienVoiceClipBattle.Count);	
 			sfxSource.clip = alienVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle alien voice clip: {sfxSource.clip.name}");
 			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
 			sfxSource.Play();
 		}
+		else if (characterType == "knight_fight")
+		{
+			if (knightVoiceClipBattle == null || knightVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle knight voice clips assigned.");
+				return;
+			}
+			int randomIndex = Random.Range(0, knightVoiceClipBattle.Count);	
+			sfxSource.clip = knightVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle knight voice clip: {sfxSource.clip.name}");
+			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
+			sfxSource.Play();
+		}
+		else if (characterType == "unicorn_fight2_0")
+		{
+			if (unicornVoiceClipBattle == null || unicornVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle unicorn voice clips assigned.");
+				return;
+			}
+			int randomIndex = Random.Range(0, unicornVoiceClipBattle.Count);	
+			sfxSource.clip = unicornVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle unicorn voice clip: {sfxSource.clip.name}");
+			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
+			sfxSource.Play();
+		}
+		else if (characterType == "slime_angry")
+		{
+			if (blobVoiceClipBattle == null || blobVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle blob voice clips assigned.");
+				return;
+			}
+			int randomIndex = Random.Range(0, blobVoiceClipBattle.Count);	
+			sfxSource.clip = blobVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle blob voice clip: {sfxSource.clip.name}");
+			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
+			sfxSource.Play();
+		}
+		else if (characterType == "rocky_fight")
+		{
+			if (rockyVoiceClipBattle == null || rockyVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle rocky voice clips assigned.");
+				return;
+			}
+			int randomIndex = Random.Range(0, rockyVoiceClipBattle.Count);	
+			sfxSource.clip = rockyVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle rocky voice clip: {sfxSource.clip.name}");
+			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.0f); 
+			sfxSource.Play();
+		}
 		else
 		{
 			Debug.Log("Unknown character type: " + characterType);
+			return;
 		}
 	}
 
@@ -438,7 +538,6 @@ public class AudioManager : MonoBehaviour
 		Debug.Log($"Playing generic toad voice clip: {sfxSource.clip.name}");
 		sfxSource.Play();
 	}
-
 	public void PlayToadVoiceAngry()
 	{
 		if (toadVoiceClipAngry == null || toadVoiceClipAngry.Count == 0 || sfxSource == null)
@@ -466,7 +565,6 @@ public class AudioManager : MonoBehaviour
 		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
 		sfxSource.Play();
 	}
-
 	public void PlayAlienVoiceAngry()
 	{
 		if (alienVoiceClipAngry == null || alienVoiceClipAngry.Count == 0 || sfxSource == null)
@@ -480,7 +578,6 @@ public class AudioManager : MonoBehaviour
 		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
 		sfxSource.Play();
 	}
-
 	public void PlayAlienVoiceSatisfied()
 	{
 		
@@ -492,10 +589,255 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, alienVoiceClipSatisfied.Count);	
 		sfxSource.clip = alienVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied alien voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
 		sfxSource.Play();
 	}
 
+		public void PlayBlobVoiceGeneric()
+	{
+		if (blobVoiceClipGeneric == null || blobVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic blob voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, blobVoiceClipGeneric.Count);	
+		sfxSource.clip = blobVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic blob voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayBlobVoiceAngry()
+	{
+		if (blobVoiceClipAngry == null || blobVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry blob voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, blobVoiceClipAngry.Count);	
+		sfxSource.clip = blobVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry blob voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayBlobVoiceSatisfied()
+	{
+		
+		if (blobVoiceClipSatisfied == null || blobVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied blob voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, blobVoiceClipSatisfied.Count);	
+		sfxSource.clip = blobVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied blob voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
+		sfxSource.Play();
+	}
+
+	public void PlayUnicornVoiceGeneric()
+	{
+		if (unicornVoiceClipGeneric == null || unicornVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic unicorn voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, unicornVoiceClipGeneric.Count);	
+		sfxSource.clip = unicornVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic unicorn voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.5f); 
+		sfxSource.Play();
+	}
+	public void PlayUnicornVoiceAngry()
+	{
+		if (unicornVoiceClipAngry == null || unicornVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry unicorn voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, unicornVoiceClipAngry.Count);	
+		sfxSource.clip = unicornVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry unicorn voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.7f, 1.4f); 
+		sfxSource.Play();
+	}
+	public void PlayUnicornVoiceSatisfied()
+	{
+		
+		if (unicornVoiceClipSatisfied == null || unicornVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied unicorn voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, unicornVoiceClipSatisfied.Count);	
+		sfxSource.clip = unicornVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied unicorn voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
+		sfxSource.Play();
+	}
+
+	public void PlayKnightVoiceGeneric()
+	{
+		if (knightVoiceClipGeneric == null || knightVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic knight voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, knightVoiceClipGeneric.Count);	
+		sfxSource.clip = knightVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic knight voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayKnightVoiceAngry()
+	{
+		if (knightVoiceClipAngry == null || knightVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry knight voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, knightVoiceClipAngry.Count);	
+		sfxSource.clip = knightVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry knight voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayKnightVoiceSatisfied()
+	{
+		
+		if (knightVoiceClipSatisfied == null || knightVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied knight voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, knightVoiceClipSatisfied.Count);	
+		sfxSource.clip = knightVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied knight voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.7f); 
+		sfxSource.Play();
+	}
+
+	public void PlayRockyVoiceGeneric()
+	{
+		if (rockyVoiceClipGeneric == null || rockyVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic rocky voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, rockyVoiceClipGeneric.Count);	
+		sfxSource.clip = rockyVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic rocky voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayRockyVoiceAngry()
+	{
+		if (rockyVoiceClipAngry == null || rockyVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry rocky voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, rockyVoiceClipAngry.Count);	
+		sfxSource.clip = rockyVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry rocky voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayRockyVoiceSatisfied()
+	{
+		
+		if (rockyVoiceClipSatisfied == null || rockyVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied rocky voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, rockyVoiceClipSatisfied.Count);	
+		sfxSource.clip = rockyVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied rocky voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.5f); 
+		sfxSource.Play();
+	}
+
+	public void PlayHamsterVoiceGeneric()
+	{
+		if (hamsterVoiceClipGeneric == null || hamsterVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic hamster voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, hamsterVoiceClipGeneric.Count);	
+		sfxSource.clip = hamsterVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic hamster voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayHamsterVoiceAngry()
+	{
+		if (hamsterVoiceClipAngry == null || hamsterVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry hamster voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, hamsterVoiceClipAngry.Count);	
+		sfxSource.clip = hamsterVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry hamster voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayHamsterVoiceSatisfied()
+	{
+		
+		if (hamsterVoiceClipSatisfied == null || hamsterVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied hamster voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, hamsterVoiceClipSatisfied.Count);	
+		sfxSource.clip = hamsterVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied hamster voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 2.0f); 
+		sfxSource.Play();
+	}
+
+	public void PlayDragonVoiceGeneric()
+	{
+		if (dragonVoiceClipGeneric == null || dragonVoiceClipGeneric.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No generic dragon voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, dragonVoiceClipGeneric.Count);	
+		sfxSource.clip = dragonVoiceClipGeneric[randomIndex];
+		Debug.Log($"Playing generic dragon voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayDragonVoiceAngry()
+	{
+		if (dragonVoiceClipAngry == null || dragonVoiceClipAngry.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No angry dragon voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, dragonVoiceClipAngry.Count);	
+		sfxSource.clip = dragonVoiceClipAngry[randomIndex];
+		Debug.Log($"Playing angry dragon voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); 
+		sfxSource.Play();
+	}
+	public void PlayDragonVoiceSatisfied()
+	{
+		
+		if (dragonVoiceClipSatisfied == null || dragonVoiceClipSatisfied.Count == 0 || sfxSource == null)
+		{
+			Debug.Log("No satisfied dragon voice clip or sfx source assigned.");
+			return;
+		}
+		int randomIndex = Random.Range(0, dragonVoiceClipSatisfied.Count);	
+		sfxSource.clip = dragonVoiceClipSatisfied[randomIndex];
+		Debug.Log($"Playing satisfied dragon voice clip: {sfxSource.clip.name}");
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 2.0f);
+		sfxSource.Play();
+	}
 	public void StopVoice()
 	{
 		if (sfxSource != null && sfxSource.isPlaying)
