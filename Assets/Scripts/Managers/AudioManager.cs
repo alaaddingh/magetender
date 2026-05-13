@@ -753,7 +753,7 @@ public class AudioManager : MonoBehaviour
 		int randomIndex = Random.Range(0, rockyVoiceClipSatisfied.Count);	
 		sfxSource.clip = rockyVoiceClipSatisfied[randomIndex];
 		Debug.Log($"Playing satisfied rocky voice clip: {sfxSource.clip.name}");
-		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 2.0f); 
+		sfxSource.pitch = UnityEngine.Random.Range(1.2f, 1.5f); 
 		sfxSource.Play();
 	}
 
