@@ -197,6 +197,8 @@ public class InkDialoguePresenter : MonoBehaviour
 
 	private void OnChoiceSelected(int choiceIndex)
 	{
+		CharacterVoiceover();
+		Debug.Log($"Choice selected: index={choiceIndex}");
 		if (inkyDialogueController == null)
 			return;
 
@@ -206,7 +208,6 @@ public class InkDialoguePresenter : MonoBehaviour
 
 		inkyDialogueController.ContinueStory();
 		RefreshView();
-		CharacterVoiceover();
 	}
 
 	private void ClearChoices()
@@ -306,33 +307,35 @@ public class InkDialoguePresenter : MonoBehaviour
 
 
 
-	   public void CharacterVoiceover()
+	public void CharacterVoiceover()
     	{
-		if (currentMonsterManager == null || currentMonsterManager.Data == null || monsterStateManager == null)
-		{
-			Debug.LogWarning("CharacterVoiceover: Missing manager references!");
-			return;
-		}
+        if (currentMonsterManager == null || currentMonsterManager.Data == null || monsterStateManager == null)
+        {
+            Debug.LogWarning("CharacterVoiceover: Missing manager references!");
+            return;
+        }
 
 		if (AudioManager.Instance == null)
+		{
 			return;
+		}
 
 		string monsterId = currentMonsterManager.Data.id.ToLower().Trim();
 		string monsterState = monsterStateManager.MonsterState.ToLower().Trim();
 
-		Debug.Log($"CharacterVoiceover: Playing voice for monsterId='{monsterId}' state='{monsterState}'");
+		Debug.Log($"Ink: Playing voice for monsterId='{monsterId}' state='{monsterState}'");
 
 		//Toad
 		if (monsterId == "toad")
 		{
 			if (monsterState == "start")
 			{
-				Debug.Log("Playing generic toad voice"); 
+				Debug.Log("Ink: Playing generic toad voice"); 
 				AudioManager.Instance.PlayToadVoiceGeneric();
 			}
 			else if (monsterState == "neutral")
 			{
-				Debug.Log("Playing neutral toad voice"); 
+				Debug.Log("Ink: Playing neutral toad voice"); 
 				AudioManager.Instance.PlayToadVoiceAngry();
 			}
 			return;
@@ -343,12 +346,12 @@ public class InkDialoguePresenter : MonoBehaviour
 		{
 			if (monsterState == "start" || monsterState == "neutral")
 			{
-				Debug.Log("Playing generic alien voice"); 
+				Debug.Log("Ink: Playing generic alien voice"); 
 				AudioManager.Instance.PlayAlienVoiceGeneric();
 			}
 			else if (monsterState == "angry")
 			{
-				Debug.Log("Playing angry alien voice"); 
+				Debug.Log("Ink: Playing angry alien voice"); 
 				AudioManager.Instance.PlayAlienVoiceAngry();
 			}
 			return;
@@ -359,17 +362,17 @@ public class InkDialoguePresenter : MonoBehaviour
 		{
 			if (monsterState == "start" || monsterState == "neutral")
 			{
-				Debug.Log("Playing generic unicorn voice"); 
+				Debug.Log("Ink: Playing generic unicorn voice"); 
 				AudioManager.Instance.PlayUnicornVoiceGeneric();
 			}
 			else if (monsterState == "satisfied")
 			{
-				Debug.Log("Playing satisfied unicorn voice"); 
+				Debug.Log("Ink: Playing satisfied unicorn voice"); 
 				AudioManager.Instance.PlayUnicornVoiceSatisfied();
 			}
 			else if (monsterState == "angry")
 			{
-				Debug.Log("Playing angry unicorn voice"); 
+				Debug.Log("Ink: Playing angry unicorn voice"); 
 				AudioManager.Instance.PlayUnicornVoiceAngry();
 			}
 			return;
@@ -380,17 +383,17 @@ public class InkDialoguePresenter : MonoBehaviour
 		{
 			if (monsterState == "start" || monsterState == "neutral")
 			{
-				Debug.Log("Playing generic slime voice"); 
+				Debug.Log("Ink: Playing generic slime voice"); 
 				AudioManager.Instance.PlayBlobVoiceGeneric();
 			}
 			else if (monsterState == "satisfied")
 			{
-				Debug.Log("Playing satisfied slime voice"); 
+				Debug.Log("Ink: Playing satisfied slime voice"); 
 				AudioManager.Instance.PlayBlobVoiceSatisfied();
 			}
 			else if (monsterState == "angry")
 			{
-				Debug.Log("Playing angry slime voice"); 
+				Debug.Log("Ink: Playing angry slime voice"); 
 				AudioManager.Instance.PlayBlobVoiceAngry();
 			}
 			return;
@@ -401,17 +404,17 @@ public class InkDialoguePresenter : MonoBehaviour
 		{
 			if (monsterState == "start" || monsterState == "neutral")
 			{
-				Debug.Log("Playing generic rocky voice"); 
+				Debug.Log("Ink: Playing generic rocky voice"); 
 				AudioManager.Instance.PlayRockyVoiceGeneric();
 			}
 			else if (monsterState == "satisfied")
 			{
-				Debug.Log("Playing satisfied rocky voice"); 
+				Debug.Log("Ink: Playing satisfied rocky voice"); 
 				AudioManager.Instance.PlayRockyVoiceSatisfied();
 			}
 			else if (monsterState == "angry")
 			{
-				Debug.Log("Playing angry rocky voice"); 
+				Debug.Log("Ink: Playing angry rocky voice"); 
 				AudioManager.Instance.PlayRockyVoiceAngry();
 			}
 			return;
@@ -481,6 +484,7 @@ public class InkDialoguePresenter : MonoBehaviour
 		}
 
 		Debug.LogWarning($"CharacterVoiceover in InkDialoguePresenter: Unknown monster monsterId='{monsterId}' or state='{monsterState}'");
+		return;
     }
 }
 

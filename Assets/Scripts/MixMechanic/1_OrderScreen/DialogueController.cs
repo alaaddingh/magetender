@@ -119,7 +119,9 @@ public class DialogueController : MonoBehaviour
 
     private void Start()
     {
+        //To ensure character voiceovers plays on first dialogue
         CharacterVoiceover();
+
         Debug.Log($"[DialogueController] Starting with monster='{currentMonsterManager.Data?.id}' state='{monsterStateManager?.MonsterState}'");
         brewButtonObject.SetActive(false);
         if (fightButtonObject != null) fightButtonObject.SetActive(false);
@@ -184,7 +186,8 @@ public class DialogueController : MonoBehaviour
     }
 
     public void OnNextPressed()
-    {
+    {       
+
         CharacterVoiceover();
 
 		if (AudioManager.Instance != null)
@@ -198,8 +201,10 @@ public class DialogueController : MonoBehaviour
             SyncMonsterStateFromInkVariables();
             RefreshInkButtonState();
             TryMakeTutorialToadAngryInk();
+            CharacterVoiceover();
             return;
         }
+
 
         UpdateTypewriterEnabledState();
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
@@ -221,8 +226,6 @@ public class DialogueController : MonoBehaviour
             dialogueIndex++;
 
         ShowCurrentLine(lines);
-
-        StopCharacterVoiceoverAfterDialogue();
     }
 
     public void CharacterVoiceover()
@@ -406,7 +409,7 @@ public class DialogueController : MonoBehaviour
 
         Debug.LogWarning($"CharacterVoiceover in DialogueController: Unknown monster monsterId='{monsterId}' or state='{monsterState}'");
     }
-
+/*
     public void StopCharacterVoiceoverAfterDialogue()
     {
         if (IsDialogueFinished == true)
@@ -414,7 +417,7 @@ public class DialogueController : MonoBehaviour
             AudioManager.Instance.StopVoice();
         }
     }
-
+*/
     public void BrewingPressed()
     {
 		if (AudioManager.Instance != null)

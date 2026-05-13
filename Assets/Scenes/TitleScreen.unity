@@ -4868,10 +4868,19 @@ MonoBehaviour:
   knightVoiceClipAngry: []
   knightVoiceClipSatisfied: []
   knightVoiceClipBattle: []
-  rockyVoiceClipGeneric: []
-  rockyVoiceClipAngry: []
+  rockyVoiceClipGeneric:
+  - {fileID: 8300000, guid: 4069da367d0a2f64b9b405d8f7b88e13, type: 3}
+  - {fileID: 8300000, guid: 0fc80d8eaf00acd4f96f6e79540059d9, type: 3}
+  - {fileID: 8300000, guid: 16f30c28fd9071542ae5e2ce852a5fdf, type: 3}
+  rockyVoiceClipAngry:
+  - {fileID: 8300000, guid: b1f6922dc8ce8654695ed08944f06862, type: 3}
+  - {fileID: 8300000, guid: 51467e4f98a920746ad1129359c7dd56, type: 3}
+  - {fileID: 8300000, guid: bd6dee7f18a403847974685c3b561773, type: 3}
   rockyVoiceClipSatisfied: []
-  rockyVoiceClipBattle: []
+  rockyVoiceClipBattle:
+  - {fileID: 8300000, guid: 8f932bc9a3aa6364c9b1d84ef6b63208, type: 3}
+  - {fileID: 8300000, guid: c7f63751249b3da4f91418536a7ef553, type: 3}
+  - {fileID: 8300000, guid: 9a341a0db58f4a340945ecf099a36819, type: 3}
   unicornVoiceClipGeneric:
   - {fileID: 8300000, guid: 9c7c6a8f723fc274080c37c0d8a70e27, type: 3}
   - {fileID: 8300000, guid: 2a0819f01d505bc45b81d19d19aea5da, type: 3}

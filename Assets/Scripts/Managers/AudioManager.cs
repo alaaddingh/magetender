@@ -440,6 +440,11 @@ public class AudioManager : MonoBehaviour
 		}
 		if (characterType == "toad_angry")
 		{
+			if (toadVoiceClipBattle == null || toadVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle toad voice clips assigned.");
+				return;
+			}
 			int randomIndex = Random.Range(0, toadVoiceClipBattle.Count);	
 			sfxSource.clip = toadVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle toad voice clip: {sfxSource.clip.name}");
@@ -448,6 +453,11 @@ public class AudioManager : MonoBehaviour
 		}
 		else if (characterType == "alien_fight_0")
 		{
+			if (alienVoiceClipBattle == null || alienVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle alien voice clips assigned.");
+				return;
+			}
 			int randomIndex = Random.Range(0, alienVoiceClipBattle.Count);	
 			sfxSource.clip = alienVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle alien voice clip: {sfxSource.clip.name}");
@@ -456,14 +466,24 @@ public class AudioManager : MonoBehaviour
 		}
 		else if (characterType == "knight_fight")
 		{
-			int randomIndex = Random.Range(0, blobVoiceClipBattle.Count);	
-			sfxSource.clip = blobVoiceClipBattle[randomIndex];
-			Debug.Log($"Playing battle blob voice clip: {sfxSource.clip.name}");
+			if (knightVoiceClipBattle == null || knightVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle knight voice clips assigned.");
+				return;
+			}
+			int randomIndex = Random.Range(0, knightVoiceClipBattle.Count);	
+			sfxSource.clip = knightVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle knight voice clip: {sfxSource.clip.name}");
 			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
 			sfxSource.Play();
 		}
 		else if (characterType == "unicorn_fight2_0")
 		{
+			if (unicornVoiceClipBattle == null || unicornVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle unicorn voice clips assigned.");
+				return;
+			}
 			int randomIndex = Random.Range(0, unicornVoiceClipBattle.Count);	
 			sfxSource.clip = unicornVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle unicorn voice clip: {sfxSource.clip.name}");
@@ -472,6 +492,11 @@ public class AudioManager : MonoBehaviour
 		}
 		else if (characterType == "slime_angry")
 		{
+			if (blobVoiceClipBattle == null || blobVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle blob voice clips assigned.");
+				return;
+			}
 			int randomIndex = Random.Range(0, blobVoiceClipBattle.Count);	
 			sfxSource.clip = blobVoiceClipBattle[randomIndex];
 			Debug.Log($"Playing battle blob voice clip: {sfxSource.clip.name}");
@@ -480,10 +505,15 @@ public class AudioManager : MonoBehaviour
 		}
 		else if (characterType == "rocky_fight")
 		{
-			int randomIndex = Random.Range(0, blobVoiceClipBattle.Count);	
-			sfxSource.clip = blobVoiceClipBattle[randomIndex];
-			Debug.Log($"Playing battle blob voice clip: {sfxSource.clip.name}");
-			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.4f); 
+			if (rockyVoiceClipBattle == null || rockyVoiceClipBattle.Count == 0)
+			{
+				Debug.Log("No battle rocky voice clips assigned.");
+				return;
+			}
+			int randomIndex = Random.Range(0, rockyVoiceClipBattle.Count);	
+			sfxSource.clip = rockyVoiceClipBattle[randomIndex];
+			Debug.Log($"Playing battle rocky voice clip: {sfxSource.clip.name}");
+			sfxSource.pitch = UnityEngine.Random.Range(0.8f, 1.0f); 
 			sfxSource.Play();
 		}
 		else
