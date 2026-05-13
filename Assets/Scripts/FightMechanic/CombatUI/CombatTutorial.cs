@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 // Progressive tutorial with spotlight and complete timer control
 // Uses LanguageManager and UIStrings JSON for localization
+[DefaultExecutionOrder(100)]
 public class CombatTutorial : MonoBehaviour
 {
 	private const string CombatTutorialCompletedKey = "CombatTutorialCompleted";
@@ -32,6 +33,19 @@ public class CombatTutorial : MonoBehaviour
 	void Start()
 	{
 		LoadUIStrings();
+
+		if (QTECombatManager.SuppressTutorialForSaveResume)
+		{
+			if (tutorialPanel != null)
+				tutorialPanel.SetActive(false);
+			if (spotlight != null)
+				spotlight.HideSpotlight();
+			if (defendBankContainer != null)
+				defendBankContainer.SetActive(QTECombatManager.ResumeDefendBankVisible);
+			if (attackBankContainer != null)
+				attackBankContainer.SetActive(QTECombatManager.ResumeAttackBankVisible);
+			return;
+		}
 
 		if (combatManager != null)
 		{
@@ -311,6 +325,12 @@ public class CombatTutorial : MonoBehaviour
 			return CurrentMonster.Instance.Data.name;
 		}
 		return "This customer";
+	}
+
+	public void GetBankVisibility(out bool defendVisible, out bool attackVisible)
+	{
+		defendVisible = defendBankContainer != null && defendBankContainer.activeSelf;
+		attackVisible = attackBankContainer != null && attackBankContainer.activeSelf;
 	}
 
     // Update visual feedback based on active bank

@@ -4,6 +4,9 @@ using Magetender.Data;
 
 public class TitleMenu : MonoBehaviour
 {
+	private const string QteSceneName = "QTECombatScene";
+	private const string LoseSceneName = "LoseScene";
+
     [Header("Panels")]
     [SerializeField] private GameObject creditsPanel;
 
@@ -24,6 +27,13 @@ public class TitleMenu : MonoBehaviour
 		SaveData data = SaveSystem.LoadGame();
 		if (data != null)
 		{
+			bool resumeLose = data.resumeLoseScreenOnContinue;
+			if (resumeLose)
+			{
+				data.resumeLoseScreenOnContinue = false;
+				SaveSystem.SaveGame(data);
+			}
+
 			if (GameManager.Instance != null)
 				GameManager.Instance.LoadProgressFromSave(data);
 			if (CurrentMonster.Instance != null)
@@ -31,9 +41,18 @@ public class TitleMenu : MonoBehaviour
 				CurrentMonster.Instance.ClearPendingVisitPlan();
 				CurrentMonster.Instance.ApplySaveProgress(data.currentEncounterIndex);
 			}
+
+			if (resumeLose)
+			{
+				SceneManager.LoadScene(LoseSceneName);
+				return;
+			}
 		}
 
-        SceneManager.LoadScene("MixScene");
+		bool goCombat = GameManager.Instance != null && GameManager.Instance.PendingBarFight;
+		if (goCombat && GameManager.Instance != null)
+			GameManager.Instance.RequestOpenPauseMenuOnNextFightSceneLoad();
+        SceneManager.LoadScene(goCombat ? QteSceneName : "MixScene");
     }
 
     private const string CombatTutorialCompletedKey = "CombatTutorialCompleted";

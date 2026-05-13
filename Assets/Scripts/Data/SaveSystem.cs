@@ -21,11 +21,45 @@ namespace Magetender.Data
                 day = gameManager.Day,
                 currentEncounterIndex = currentMonster.currentEncounterIndex,
 				unlockedIngredientIds = gameManager.GetUnlockedIngredientIds(),
-                tutorialCompleted = gameManager.TutorialCompleted
+                tutorialCompleted = gameManager.TutorialCompleted,
+				pendingBarFight = gameManager.PendingBarFight,
+				skipDayPanelNextMixLoad = gameManager.SkipDayPanelNextMixLoad,
+				pendingBarFightEncounterIndex = gameManager.PendingBarFightEncounterIndex,
+				resumeLoseScreenOnContinue = false,
+				fightCheckpoint = new FightCheckpointState { hasData = false }
             };
 
             SaveGame(data);
         }
+
+		public static void WriteFightQuitSave(FightCheckpointState checkpoint, bool pendingBarFight)
+		{
+			var gameManager = GameManager.Instance;
+			var currentMonster = CurrentMonster.Instance;
+			if (gameManager == null || currentMonster == null)
+				return;
+
+			if (checkpoint == null)
+				checkpoint = new FightCheckpointState { hasData = false };
+
+			gameManager.SetPendingBarFight(pendingBarFight, currentMonster.currentEncounterIndex);
+
+			var data = new SaveData
+			{
+				coins = gameManager.Coins,
+				day = gameManager.Day,
+				currentEncounterIndex = currentMonster.currentEncounterIndex,
+				unlockedIngredientIds = gameManager.GetUnlockedIngredientIds(),
+				tutorialCompleted = gameManager.TutorialCompleted,
+				pendingBarFight = pendingBarFight,
+				skipDayPanelNextMixLoad = gameManager.SkipDayPanelNextMixLoad,
+				pendingBarFightEncounterIndex = gameManager.PendingBarFightEncounterIndex,
+				resumeLoseScreenOnContinue = false,
+				fightCheckpoint = checkpoint
+			};
+
+			SaveGame(data);
+		}
 
         public static void WriteLoseState()
         {
@@ -51,7 +85,12 @@ namespace Magetender.Data
                 coins = 0,
                 day = day,
                 currentEncounterIndex = 0,
-                tutorialCompleted = tutorialCompleted
+                tutorialCompleted = tutorialCompleted,
+				pendingBarFight = false,
+				skipDayPanelNextMixLoad = false,
+				pendingBarFightEncounterIndex = 0,
+				resumeLoseScreenOnContinue = true,
+				fightCheckpoint = new FightCheckpointState { hasData = false }
             });
         }
 
@@ -89,5 +128,14 @@ namespace Magetender.Data
                 Debug.Log("[SaveSystem] Save cleared.");
             }
         }
+
+		public static void ClearPersistedFightCheckpointOnly()
+		{
+			SaveData d = LoadGame();
+			if (d == null)
+				return;
+			d.fightCheckpoint = new FightCheckpointState { hasData = false };
+			SaveGame(d);
+		}
     }
 }

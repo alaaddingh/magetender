@@ -48,7 +48,8 @@ public class DayScreenController : MonoBehaviour
             if (dc != null) orderScreen = dc.orderScreen;
         }
 
-        bool skipDayCounter = CurrentMonster.Instance != null && CurrentMonster.Instance.IsPlannedVisitSameDay();
+		bool skipToOrder = GameManager.Instance != null && GameManager.Instance.ConsumeSkipDayPanelNextMixLoad();
+        bool skipDayCounter = skipToOrder || (CurrentMonster.Instance != null && CurrentMonster.Instance.IsPlannedVisitSameDay());
         showedDayPanelThisLoad = !skipDayCounter;
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ApplyPlannedVisit();

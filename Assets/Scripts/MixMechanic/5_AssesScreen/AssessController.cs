@@ -12,6 +12,19 @@ using TMPro;
 
 public class AssessController : MonoBehaviour
 {
+	public static bool IsAssessmentUiActive { get; private set; }
+
+	public MonsterStateManager MonsterStateForAssessment => MonsterStateManager;
+
+	public bool IsAssessmentCommitEligible()
+	{
+		if (!gameObject.activeInHierarchy)
+			return false;
+		if (coinCanvas != null)
+			return coinCanvas.activeInHierarchy;
+		return true;
+	}
+
     [Header("refs")]
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private MonsterStateManager MonsterStateManager;
@@ -48,6 +61,28 @@ public class AssessController : MonoBehaviour
     public float MixAccuracy; /* just so we can see the accuracy as a perctenage */
 
     public GameObject FightButton;
+
+	private void OnEnable()
+	{
+		RefreshAssessmentUiActiveFlag();
+	}
+
+	private void OnDisable()
+	{
+		IsAssessmentUiActive = false;
+	}
+
+	private void LateUpdate()
+	{
+		if (!gameObject.activeInHierarchy)
+			return;
+		RefreshAssessmentUiActiveFlag();
+	}
+
+	private void RefreshAssessmentUiActiveFlag()
+	{
+		IsAssessmentUiActive = coinCanvas != null && coinCanvas.activeInHierarchy;
+	}
 
     private void Awake()
     {
@@ -87,6 +122,7 @@ public class AssessController : MonoBehaviour
             coinCanvas.SetActive(true);
 
         RefreshCoinsDisplay();
+		RefreshAssessmentUiActiveFlag();
     }
 
 	private void ShowDrinkMoodValue()
