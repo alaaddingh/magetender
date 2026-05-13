@@ -482,6 +482,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122618994}
   m_CullTransparentMesh: 1
+--- !u!1 &137199715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137199716}
+  m_Layer: 0
+  m_Name: FightQuitSaver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &137199716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137199715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 888.4539, y: 403.90375, z: -3.5982912}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &144169150
 GameObject:
   m_ObjectHideFlags: 0
@@ -3431,6 +3462,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 23a444a5d19558740b10dc4414362751, type: 3}
   - {fileID: 8300000, guid: 69e23ae05fba74e48ac7959e317b1eec, type: 3}
   - {fileID: 8300000, guid: 0b3f78256e666dd4db8d52e2cde4fdc6, type: 3}
+  blobVoiceClipGeneric: []
+  blobVoiceClipAngry: []
+  blobVoiceClipSatisfied: []
+  blobVoiceClipBattle: []
+  dragonVoiceClipGeneric: []
+  dragonVoiceClipAngry: []
+  dragonVoiceClipSatisfied: []
+  dragonVoiceClipBattle: []
+  hamsterVoiceClipGeneric: []
+  hamsterVoiceClipAngry: []
+  hamsterVoiceClipSatisfied: []
+  hamsterVoiceClipBattle: []
+  knightVoiceClipGeneric: []
+  knightVoiceClipAngry: []
+  knightVoiceClipSatisfied: []
+  knightVoiceClipBattle: []
+  rockyVoiceClipGeneric: []
+  rockyVoiceClipAngry: []
+  rockyVoiceClipSatisfied: []
+  rockyVoiceClipBattle: []
+  unicornVoiceClipGeneric: []
+  unicornVoiceClipAngry: []
+  unicornVoiceClipSatisfied: []
+  unicornVoiceClipBattle: []
 --- !u!4 &1249467906
 Transform:
   m_ObjectHideFlags: 0
@@ -6372,3 +6427,4 @@ SceneRoots:
   - {fileID: 2078284586}
   - {fileID: 1249467906}
   - {fileID: 716103914}
+  - {fileID: 137199716}
