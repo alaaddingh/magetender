@@ -15530,6 +15530,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 23a444a5d19558740b10dc4414362751, type: 3}
   - {fileID: 8300000, guid: 69e23ae05fba74e48ac7959e317b1eec, type: 3}
   - {fileID: 8300000, guid: 0b3f78256e666dd4db8d52e2cde4fdc6, type: 3}
+  blobVoiceClipGeneric: []
+  blobVoiceClipAngry: []
+  blobVoiceClipSatisfied: []
+  blobVoiceClipBattle: []
+  dragonVoiceClipGeneric: []
+  dragonVoiceClipAngry: []
+  dragonVoiceClipSatisfied: []
+  dragonVoiceClipBattle: []
+  hamsterVoiceClipGeneric: []
+  hamsterVoiceClipAngry: []
+  hamsterVoiceClipSatisfied: []
+  hamsterVoiceClipBattle: []
+  knightVoiceClipGeneric: []
+  knightVoiceClipAngry: []
+  knightVoiceClipSatisfied: []
+  knightVoiceClipBattle: []
+  rockyVoiceClipGeneric: []
+  rockyVoiceClipAngry: []
+  rockyVoiceClipSatisfied: []
+  rockyVoiceClipBattle: []
+  unicornVoiceClipGeneric: []
+  unicornVoiceClipAngry: []
+  unicornVoiceClipSatisfied: []
+  unicornVoiceClipBattle: []
 --- !u!82 &1266327015
 AudioSource:
   m_ObjectHideFlags: 0
@@ -24229,6 +24253,8 @@ MonoBehaviour:
   serveTypewriter: {fileID: 655212808}
   choicesRoot: {fileID: 358829324}
   choiceButtonPrefab: {fileID: 5142958748126349243, guid: e34f06ec8e02368458e7531ef9c13df2, type: 3}
+  currentMonsterManager: {fileID: 1245897901}
+  monsterStateManager: {fileID: 1091468760}
   arabicFontOverride: {fileID: 11400000, guid: 6d8213b4af8e61447bec1fe05163e9f7, type: 2}
 --- !u!114 &2058223061
 MonoBehaviour:
