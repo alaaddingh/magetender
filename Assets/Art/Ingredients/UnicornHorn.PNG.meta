@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4fdb68a5a9ac4a3419438f1343379e36
+guid: dea0ece992072184d845ec89ca535a66
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5249246429314551034
-    second: RoseThorn-Adan_0
+      213: 6149161054517270118
+    second: UnicornHorn_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RoseThorn-Adan_0
+      name: UnicornHorn_0
       rect:
         serializedVersion: 2
-        x: 74
-        y: 42
-        width: 165
-        height: 166
+        x: 58
+        y: 88
+        width: 132
+        height: 158
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 603f73a2f2ee627b0800000000000000
-      internalID: -5249246429314551034
+      spriteID: 6661b214665365550800000000000000
+      internalID: 6149161054517270118
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RoseThorn-Adan_0: -5249246429314551034
+      UnicornHorn_0: 6149161054517270118
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

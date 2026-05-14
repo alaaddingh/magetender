@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 137f547580a9a4446a95a4fd4e306a00
+guid: 42ffec0ed1182784b939d8bf5950ea81
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1131400297885282787
-    second: FairyDust-Adan_0
+      213: -4657961194593890473
+    second: flamePurple_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FairyDust-Adan_0
+      name: flamePurple_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 6
-        width: 209
-        height: 292
+        x: 63
+        y: 25
+        width: 167
+        height: 254
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1ec6c96c657c40f0800000000000000
-      internalID: -1131400297885282787
+      spriteID: 75f4da2f8f89b5fb0800000000000000
+      internalID: -4657961194593890473
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FairyDust-Adan_0: -1131400297885282787
+      flamePurple_0: -4657961194593890473
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

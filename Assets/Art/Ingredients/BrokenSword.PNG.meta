@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: e800ff992738c854586d4725b6909827
+guid: 97fbf0a41e184544f93c5a8687e8762d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8117530010530809563
-    second: Eyeballs_0
-  - first:
-      213: 931997208277635427
-    second: Eyeballs_1
-  - first:
-      213: 292056487509645962
-    second: Eyeballs_2
+      213: -632631445619733160
+    second: BrokenSword_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Eyeballs_0
+      name: BrokenSword_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 77
-        width: 90
-        height: 86
+        x: 63
+        y: 36
+        width: 200
+        height: 226
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,52 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd6034b398247a070800000000000000
-      internalID: 8117530010530809563
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eyeballs_1
-      rect:
-        serializedVersion: 2
-        x: 89
-        y: 150
-        width: 96
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3615b03e58e1fec00800000000000000
-      internalID: 931997208277635427
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eyeballs_2
-      rect:
-        serializedVersion: 2
-        x: 142
-        y: 72
-        width: 85
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a8a5c58f3d79d0400800000000000000
-      internalID: 292056487509645962
+      spriteID: 85d08125d017837f0800000000000000
+      internalID: -632631445619733160
       vertices: []
       indices: 
       edges: []
@@ -185,9 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Eyeballs_0: 8117530010530809563
-      Eyeballs_1: 931997208277635427
-      Eyeballs_2: 292056487509645962
+      BrokenSword_0: -632631445619733160
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
