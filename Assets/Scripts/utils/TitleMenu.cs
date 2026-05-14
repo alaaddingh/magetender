@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Magetender.Data;
 
 public class TitleMenu : MonoBehaviour
@@ -14,6 +15,25 @@ public class TitleMenu : MonoBehaviour
 	[SerializeField] private GameObject startButtonRoot;
 	[SerializeField] private GameObject newGameButtonRoot;
 	[SerializeField] private LocalizedTMPText startButtonLabel;
+
+	[Header("Button container")]
+	[SerializeField] private RectTransform buttonContainer;
+	[Tooltip("Added to the container's scene anchored Y when there is no save.")]
+	[SerializeField] private float buttonContainerOffsetYFirstPlay;
+	[Tooltip("Added to the container's scene anchored Y when a save exists.")]
+	[SerializeField] private float buttonContainerOffsetYContinue;
+
+	[Header("First play vs continue (optional)")]
+	[SerializeField] private GameObject firstPlayOnlyVisualRoot;
+	[SerializeField] private GameObject continueOnlyVisualRoot;
+	[SerializeField] private Sprite firstPlayBackdropSprite;
+	[SerializeField] private Sprite continueBackdropSprite;
+
+	private const string TitleBackdropChildName = "Background";
+	private const string ButtonContainerChildName = "ButtonContainer";
+	private Image cachedTitleBackdropImage;
+	private Vector2 buttonContainerSceneAnchoredPosition;
+	private bool buttonContainerBaseCaptured;
 
 	private void Start()
 	{
@@ -88,17 +108,64 @@ public class TitleMenu : MonoBehaviour
 		{
 			startButtonLabel = startButtonRoot.GetComponentInChildren<LocalizedTMPText>(includeInactive: true);
 		}
+		if (buttonContainer == null)
+		{
+			var t = transform.Find(ButtonContainerChildName);
+			if (t != null)
+				buttonContainer = t as RectTransform;
+		}
 	}
 
 	private void RefreshMainMenuButtons()
 	{
 		bool hasSave = SaveSystem.LoadGame() != null;
 
-		// UI constraint: buttons stay present; only the label changes.
-		// No save => "Start", Has save => "Continue"
+		if (newGameButtonRoot != null)
+			newGameButtonRoot.SetActive(hasSave);
+
+		if (firstPlayOnlyVisualRoot != null)
+			firstPlayOnlyVisualRoot.SetActive(!hasSave);
+		if (continueOnlyVisualRoot != null)
+			continueOnlyVisualRoot.SetActive(hasSave);
+
+		ApplyBackdropSprites(hasSave);
+		ApplyButtonContainerLayout(hasSave);
 
 		if (startButtonLabel != null)
 			startButtonLabel.SetKey(hasSave ? "continue_button" : "start_button");
+	}
+
+	private void ApplyButtonContainerLayout(bool hasSave)
+	{
+		if (buttonContainer == null)
+			return;
+		if (!buttonContainerBaseCaptured)
+		{
+			buttonContainerSceneAnchoredPosition = buttonContainer.anchoredPosition;
+			buttonContainerBaseCaptured = true;
+		}
+		float extraY = hasSave ? buttonContainerOffsetYContinue : buttonContainerOffsetYFirstPlay;
+		Vector2 b = buttonContainerSceneAnchoredPosition;
+		buttonContainer.anchoredPosition = new Vector2(b.x, b.y + extraY);
+	}
+
+	private Image GetTitleBackdropImage()
+	{
+		if (cachedTitleBackdropImage != null)
+			return cachedTitleBackdropImage;
+		var t = transform.Find(TitleBackdropChildName);
+		if (t != null)
+			cachedTitleBackdropImage = t.GetComponent<Image>();
+		return cachedTitleBackdropImage;
+	}
+
+	private void ApplyBackdropSprites(bool hasSave)
+	{
+		if (firstPlayBackdropSprite == null || continueBackdropSprite == null)
+			return;
+		var img = GetTitleBackdropImage();
+		if (img != null)
+			img.sprite = hasSave ? continueBackdropSprite : firstPlayBackdropSprite;
 	}
 
     public void ShowCredits()
