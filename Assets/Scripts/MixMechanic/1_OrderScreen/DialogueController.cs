@@ -50,6 +50,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private GameObject coinCanvas;
 
     private int dialogueIndex = 0;
+	private bool dialogueFightOfferAnalyticsSent;
     private TMP_FontAsset monsterSpeechOriginalFont;
     private TMP_FontAsset serveSpeechOriginalFont;
     private TMP_FontAsset monsterNameOriginalFont;
@@ -435,6 +436,7 @@ public class DialogueController : MonoBehaviour
     private void HandleMonsterChanged(string _)
     {
         dialogueIndex = 0;
+		dialogueFightOfferAnalyticsSent = false;
         RefreshAll();
     }
 
@@ -448,10 +450,32 @@ public class DialogueController : MonoBehaviour
         if (fightButtonObject == null)
             return;
 
+		if (IsAssessDialogueController())
+		{
+			bool assessShow = monsterStateManager != null && monsterStateManager.MonsterState == "angry" && IsDialogueFinished;
+			fightButtonObject.SetActive(assessShow);
+			return;
+		}
+
         bool dialogueFinished = IsDialogueFinished;
         bool angry = monsterStateManager != null && monsterStateManager.MonsterState == "angry";
-        fightButtonObject.SetActive(angry && dialogueFinished);
+		bool shouldShow = angry && dialogueFinished;
+		if (shouldShow && !dialogueFightOfferAnalyticsSent)
+		{
+			dialogueFightOfferAnalyticsSent = true;
+			GameAnalytics.RecordDialogueFightButtonBecameAvailable(GameAnalytics.DialogueFightSurfaceTakeOrder);
+		}
+		else if (!shouldShow)
+		{
+			dialogueFightOfferAnalyticsSent = false;
+		}
+        fightButtonObject.SetActive(shouldShow);
     }
+
+	private bool IsAssessDialogueController()
+	{
+		return gameObject != null && gameObject.name == "AssessDialogueController";
+	}
 
     private void UpdateMonsterName()
     {

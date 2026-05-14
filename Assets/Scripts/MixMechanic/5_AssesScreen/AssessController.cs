@@ -62,6 +62,8 @@ public class AssessController : MonoBehaviour
 
     public GameObject FightButton;
 
+	private bool serveDialogueFightOfferAnalyticsSent;
+
 	private void OnEnable()
 	{
 		RefreshAssessmentUiActiveFlag();
@@ -102,6 +104,7 @@ public class AssessController : MonoBehaviour
 
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
+		GameAnalytics.RecordServeOutcome(currentMonsterManager, MonsterStateManager.MonsterState, MixAccuracy);
 		ShowDrinkMoodValue();
         if (AudioManager.Instance != null)
         {
@@ -163,7 +166,18 @@ public class AssessController : MonoBehaviour
 
 		bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
 		bool angry = MonsterStateManager.MonsterState == "angry";
-		FightButton.SetActive(angry && dialogueFinished);
+		bool shouldShow = angry && dialogueFinished;
+		if (shouldShow && !serveDialogueFightOfferAnalyticsSent)
+		{
+			serveDialogueFightOfferAnalyticsSent = true;
+			if (GameManager.Instance != null)
+				GameAnalytics.RecordDialogueFightButtonBecameAvailable(GameAnalytics.DialogueFightSurfacePostServeAssessment);
+		}
+		else if (!shouldShow)
+		{
+			serveDialogueFightOfferAnalyticsSent = false;
+		}
+		FightButton.SetActive(shouldShow);
 	}
 
     private int AwardCoinsForDrink()

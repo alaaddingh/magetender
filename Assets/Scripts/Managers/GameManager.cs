@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using Magetender.Data;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 /* Holds coins and day. Put one GameManager in the scene; it survives scene load via DontDestroyOnLoad. */
 public class GameManager : MonoBehaviour
@@ -47,6 +48,8 @@ public class GameManager : MonoBehaviour
 	public bool SkipDayPanelNextMixLoad => skipDayPanelNextMixLoad;
 	public int PendingBarFightEncounterIndex => pendingBarFightEncounterIndex;
 
+	public string PlaythroughId { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -71,6 +74,10 @@ public class GameManager : MonoBehaviour
             EncounterIndex = data.currentEncounterIndex;
             SavedEncounterIndex = true;
 
+			PlaythroughId = string.IsNullOrEmpty(data.playthroughId)
+				? Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)
+				: data.playthroughId;
+
 			ResetIngredientUnlocksToDefaults();
 			if (data.unlockedIngredientIds != null)
 				ApplyUnlockedIngredientIds(data.unlockedIngredientIds);
@@ -80,6 +87,7 @@ public class GameManager : MonoBehaviour
 		else
 		{
             TutorialCompleted = false;
+			PlaythroughId = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture);
 			ResetIngredientUnlocksToDefaults();
 		}
     }
@@ -99,6 +107,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+		GameAnalytics.InitializeIfNeeded();
         if (SavedEncounterIndex && CurrentMonster.Instance != null)
         {
             CurrentMonster.Instance.ApplySaveProgress(EncounterIndex);
@@ -126,6 +135,7 @@ public class GameManager : MonoBehaviour
         Day = startingDay;
         EncounterIndex = 0;
         SavedEncounterIndex = false;
+		PlaythroughId = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture);
 		ClearProgressFlowFlags();
 		ResetIngredientUnlocksToDefaults();
     }
@@ -139,6 +149,10 @@ public class GameManager : MonoBehaviour
 		Day = Mathf.Max(1, data.day);
 		TutorialCompleted = data.tutorialCompleted;
 		SavedEncounterIndex = false;
+
+		PlaythroughId = string.IsNullOrEmpty(data.playthroughId)
+			? Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture)
+			: data.playthroughId;
 
 		ResetIngredientUnlocksToDefaults();
 		if (data.unlockedIngredientIds != null)

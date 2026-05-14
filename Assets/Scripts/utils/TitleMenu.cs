@@ -17,6 +17,7 @@ public class TitleMenu : MonoBehaviour
 
 	private void Start()
 	{
+		GameAnalytics.InitializeIfNeeded();
 		AutoResolveRefs();
 		RefreshMainMenuButtons();
 	}
@@ -66,6 +67,8 @@ public class TitleMenu : MonoBehaviour
             GameManager.Instance.ResetForNewGame(preserveTutorialCompleted: false);
         if (CurrentMonster.Instance != null)
             CurrentMonster.Instance.ResetToFirstMonster();
+		GameAnalytics.InitializeIfNeeded();
+		GameAnalytics.RecordPlaythroughStarted();
         SceneManager.LoadScene("MixScene");
     }
 

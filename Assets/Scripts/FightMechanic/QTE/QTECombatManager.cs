@@ -835,6 +835,12 @@ public class QTECombatManager : MonoBehaviour
 		fightEnded = true;
 		lastFightPlayerWon = playerWon;
 
+		string fightMonsterId = CurrentMonster.Instance != null && CurrentMonster.Instance.Data != null
+			? CurrentMonster.Instance.Data.id
+			: string.Empty;
+		int fightDay = GameManager.Instance != null ? GameManager.Instance.Day : 1;
+		GameAnalytics.RecordFightCompleted(fightMonsterId, fightDay, playerWon, tutorialMode);
+
 		// Stop shake
 		if (customerShake != null)
 		{

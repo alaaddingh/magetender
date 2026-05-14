@@ -26,7 +26,8 @@ namespace Magetender.Data
 				skipDayPanelNextMixLoad = gameManager.SkipDayPanelNextMixLoad,
 				pendingBarFightEncounterIndex = gameManager.PendingBarFightEncounterIndex,
 				resumeLoseScreenOnContinue = false,
-				fightCheckpoint = new FightCheckpointState { hasData = false }
+				fightCheckpoint = new FightCheckpointState { hasData = false },
+				playthroughId = gameManager.PlaythroughId
             };
 
             SaveGame(data);
@@ -55,7 +56,8 @@ namespace Magetender.Data
 				skipDayPanelNextMixLoad = gameManager.SkipDayPanelNextMixLoad,
 				pendingBarFightEncounterIndex = gameManager.PendingBarFightEncounterIndex,
 				resumeLoseScreenOnContinue = false,
-				fightCheckpoint = checkpoint
+				fightCheckpoint = checkpoint,
+				playthroughId = gameManager.PlaythroughId
 			};
 
 			SaveGame(data);
@@ -67,9 +69,11 @@ namespace Magetender.Data
 
 			// Preserve tutorial completion even if GameManager isn't available for some reason.
 			bool tutorialCompleted = false;
+			string playthroughId = string.Empty;
 			if (GameManager.Instance != null)
 			{
 				tutorialCompleted = GameManager.Instance.TutorialCompleted;
+				playthroughId = GameManager.Instance.PlaythroughId;
 			}
 			else
 			{
@@ -77,6 +81,7 @@ namespace Magetender.Data
 				if (existing != null)
 				{
 					tutorialCompleted = existing.tutorialCompleted;
+					playthroughId = existing.playthroughId;
 				}
 			}
 
@@ -90,7 +95,8 @@ namespace Magetender.Data
 				skipDayPanelNextMixLoad = false,
 				pendingBarFightEncounterIndex = 0,
 				resumeLoseScreenOnContinue = true,
-				fightCheckpoint = new FightCheckpointState { hasData = false }
+				fightCheckpoint = new FightCheckpointState { hasData = false },
+				playthroughId = playthroughId
             });
         }
 

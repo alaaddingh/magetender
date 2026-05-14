@@ -374,6 +374,7 @@ public class ShopPanelController : MonoBehaviour
 
 		gm.AddCoins(-cost);
 		gm.TryUnlockIngredient(id);
+		GameAnalytics.RecordShopPurchase(id);
 
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayRegisterChaChing();

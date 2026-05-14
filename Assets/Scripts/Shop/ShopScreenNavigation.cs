@@ -17,6 +17,7 @@ public class ShopScreenNavigation : MonoBehaviour
 
 	public void OpenShop()
 	{
+		GameAnalytics.RecordShopOpened();
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
 

@@ -37,6 +37,7 @@ namespace Magetender.Data
 		public int pendingBarFightEncounterIndex;
 		public bool resumeLoseScreenOnContinue;
 		public FightCheckpointState fightCheckpoint;
+		public string playthroughId;
     }
 }
 

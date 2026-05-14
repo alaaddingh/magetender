@@ -23,6 +23,7 @@ public static class AssessmentMenuExit
 		{
 			gm.SetPendingBarFight(true, cm.currentEncounterIndex);
 			gm.SetSkipDayPanelNextMixLoad(false);
+			GameAnalytics.RecordAssessmentFight(cm, gm);
 			SaveSystem.WriteData();
 			return;
 		}
@@ -66,7 +67,8 @@ public static class AssessmentMenuExit
 				skipDayPanelNextMixLoad = true,
 				pendingBarFightEncounterIndex = 0,
 				resumeLoseScreenOnContinue = false,
-				fightCheckpoint = new FightCheckpointState { hasData = false }
+				fightCheckpoint = new FightCheckpointState { hasData = false },
+				playthroughId = gm.PlaythroughId
 			};
 		}
 
@@ -85,7 +87,8 @@ public static class AssessmentMenuExit
 				skipDayPanelNextMixLoad = false,
 				pendingBarFightEncounterIndex = 0,
 				resumeLoseScreenOnContinue = false,
-				fightCheckpoint = new FightCheckpointState { hasData = false }
+				fightCheckpoint = new FightCheckpointState { hasData = false },
+				playthroughId = gm.PlaythroughId
 			};
 		}
 
@@ -106,7 +109,8 @@ public static class AssessmentMenuExit
 			skipDayPanelNextMixLoad = false,
 			pendingBarFightEncounterIndex = 0,
 			resumeLoseScreenOnContinue = false,
-			fightCheckpoint = new FightCheckpointState { hasData = false }
+			fightCheckpoint = new FightCheckpointState { hasData = false },
+			playthroughId = gm.PlaythroughId
 		};
 	}
 }

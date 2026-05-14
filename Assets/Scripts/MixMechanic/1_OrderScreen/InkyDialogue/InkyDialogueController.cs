@@ -146,6 +146,7 @@ public class InkyDialogueController : MonoBehaviour
 		lastChosenPlayerResponse = SanitizeInkLine(story.currentChoices[choiceIndex].text);
 		lastChosenPlayerResponseNormalized = NormalizeInkLine(lastChosenPlayerResponse);
 		story.ChooseChoiceIndex(choiceIndex);
+		GameAnalytics.TryRecordAlienIdRefusedFromInkChoice(lastChosenPlayerResponseNormalized);
 		CurrentText = string.Empty;
 		return true;
 	}
