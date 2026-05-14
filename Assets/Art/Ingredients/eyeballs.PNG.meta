@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: efc714d682a011d43851cc52cb3db750
+guid: e800ff992738c854586d4725b6909827
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7864118084739457388
-    second: Eyeballs-Adan_0
+      213: 8117530010530809563
+    second: Eyeballs_0
   - first:
-      213: -7280264656421097080
-    second: Eyeballs-Adan_1
+      213: 931997208277635427
+    second: Eyeballs_1
   - first:
-      213: -4822673575108659354
-    second: Eyeballs-Adan_2
+      213: 292056487509645962
+    second: Eyeballs_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -81,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Eyeballs-Adan_0
+      name: Eyeballs_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 41
-        width: 115
-        height: 108
+        x: 27
+        y: 77
+        width: 90
+        height: 86
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c61ee907bb5f22d60800000000000000
-      internalID: 7864118084739457388
+      spriteID: bd6034b398247a070800000000000000
+      internalID: 8117530010530809563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eyeballs-Adan_1
+      name: Eyeballs_1
       rect:
         serializedVersion: 2
-        x: 103
-        y: 147
-        width: 122
-        height: 115
+        x: 89
+        y: 150
+        width: 96
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 88170331edd47fa90800000000000000
-      internalID: -7280264656421097080
+      spriteID: 3615b03e58e1fec00800000000000000
+      internalID: 931997208277635427
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eyeballs-Adan_2
+      name: Eyeballs_2
       rect:
         serializedVersion: 2
-        x: 178
-        y: 34
-        width: 107
-        height: 107
+        x: 142
+        y: 72
+        width: 85
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,8 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6673cff5feb621db0800000000000000
-      internalID: -4822673575108659354
+      spriteID: a8a5c58f3d79d0400800000000000000
+      internalID: 292056487509645962
       vertices: []
       indices: 
       edges: []
@@ -185,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Eyeballs-Adan_0: 7864118084739457388
-      Eyeballs-Adan_1: -7280264656421097080
-      Eyeballs-Adan_2: -4822673575108659354
+      Eyeballs_0: 8117530010530809563
+      Eyeballs_1: 931997208277635427
+      Eyeballs_2: 292056487509645962
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

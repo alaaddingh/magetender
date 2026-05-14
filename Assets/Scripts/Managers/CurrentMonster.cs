@@ -22,7 +22,7 @@ public class CurrentMonster : MonoBehaviour
 
     [Header("Data sources")]
     [SerializeField] private string monstersJsonResourcePath = "Data/Monsters";
-    [SerializeField] private string levelsJsonResourcePath = "Data/Levels";
+    [SerializeField] private string levelsJsonResourcePath = "Data/inkylevels";
     [SerializeField] private string dialogueJsonResourcePath = "Data/Dialogue";
 
     private MonstersFile monstersFile;
@@ -100,6 +100,35 @@ public class CurrentMonster : MonoBehaviour
         }
     }
 
+    private DialogueLevelEntry GetCurrentDialogueLevelEntry()
+    {
+        MonsterData monster = Data;
+        LevelEncounterData encounter = CurrentEncounter;
+        if (monster == null || encounter == null || dialogueFile == null || dialogueFile.dialogue == null)
+            return null;
+
+        DialogueEntry dialogueEntry = null;
+        foreach (var entry in dialogueFile.dialogue)
+        {
+            if (entry.id == monster.dialogueId)
+            {
+                dialogueEntry = entry;
+                break;
+            }
+        }
+
+        if (dialogueEntry == null || dialogueEntry.levels == null)
+            return null;
+
+        foreach (var levelEntry in dialogueEntry.levels)
+        {
+            if (levelEntry.level == encounter.dialogue_key)
+                return levelEntry;
+        }
+
+        return null;
+    }
+
     public ScorePair GetStartingScore()
     {
         var encounter = CurrentEncounter;
@@ -146,37 +175,35 @@ public class CurrentMonster : MonoBehaviour
 
     public List<string> GetDialogue(string state)
     {
-        MonsterData monster = Data;
-        LevelEncounterData encounter = CurrentEncounter;
-        if (monster == null || encounter == null || dialogueFile == null || dialogueFile.dialogue == null)
+        DialogueLevelEntry levelEntry = GetCurrentDialogueLevelEntry();
+        if (levelEntry == null)
             return new List<string>();
-
-        DialogueEntry entry = null;
-        foreach (var d in dialogueFile.dialogue)
-        {
-            if (d.id == monster.dialogueId)
-            {
-                entry = d;
-                break;
-            }
-        }
-        if (entry == null || entry.levels == null) return new List<string>();
-
-        DialogueLevelEntry levelEntry = null;
-        foreach (var l in entry.levels)
-        {
-            if (l.level == encounter.dialogue_key)
-            {
-                levelEntry = l;
-                break;
-            }
-        }
-        if (levelEntry == null) return new List<string>();
 
         if (state == "satisfied") return levelEntry.satisfied ?? new List<string>();
         if (state == "angry") return levelEntry.angry ?? new List<string>();
         if (state == "neutral") return levelEntry.neutral ?? new List<string>();
         return levelEntry.starting ?? new List<string>();
+    }
+
+    public string GetCurrentInkKnot()
+    {
+        LevelEncounterData encounter = CurrentEncounter;
+        if (encounter != null && !string.IsNullOrWhiteSpace(encounter.ink_knot))
+            return encounter.ink_knot;
+
+        DialogueLevelEntry levelEntry = GetCurrentDialogueLevelEntry();
+        if (levelEntry != null)
+        {
+            if (!string.IsNullOrWhiteSpace(levelEntry.inkKnot))
+                return levelEntry.inkKnot;
+
+            if (!string.IsNullOrWhiteSpace(levelEntry.level))
+                return levelEntry.level;
+        }
+
+        return encounter != null && !string.IsNullOrWhiteSpace(encounter.dialogue_key)
+            ? encounter.dialogue_key
+            : string.Empty;
     }
 
     public void ResetToFirstMonster()
@@ -228,6 +255,11 @@ public class CurrentMonster : MonoBehaviour
         return nextVisitPlan == NextVisitPlan.NextDayFirstMonster;
     }
 
+	public void ClearPendingVisitPlan()
+	{
+		nextVisitPlan = NextVisitPlan.None;
+	}
+
 	public void ApplyPlannedVisit()
 	{
 		if (nextVisitPlan == NextVisitPlan.None)
@@ -270,8 +302,28 @@ public class CurrentMonster : MonoBehaviour
 
     private void LoadData()
     {
-        monstersFile = JsonUtility.FromJson<MonstersFile>(Resources.Load<TextAsset>(monstersJsonResourcePath).text);
-        levelsFile = JsonUtility.FromJson<LevelsFile>(Resources.Load<TextAsset>(levelsJsonResourcePath).text);
+        TextAsset monstersAsset = Resources.Load<TextAsset>(monstersJsonResourcePath);
+        if (monstersAsset == null)
+        {
+            Debug.LogError($"[CurrentMonster] Monsters TextAsset not found at Resources path '{monstersJsonResourcePath}'", this);
+            monstersFile = null;
+        }
+        else
+        {
+            monstersFile = JsonUtility.FromJson<MonstersFile>(monstersAsset.text);
+        }
+
+        TextAsset levelsAsset = LoadLevelsTextAsset();
+        if (levelsAsset == null)
+        {
+            Debug.LogError($"[CurrentMonster] Levels TextAsset not found at Resources path '{levelsJsonResourcePath}' or fallback path 'Data/Levels'", this);
+            levelsFile = null;
+        }
+        else
+        {
+            levelsFile = JsonUtility.FromJson<LevelsFile>(levelsAsset.text);
+        }
+
         LoadDialogue();
 
         dataLoaded = true;
@@ -285,6 +337,18 @@ public class CurrentMonster : MonoBehaviour
             SetCurrentMonsterNameById(encounter.monster_id);
         else if (monstersFile != null && monstersFile.monsters != null && monstersFile.monsters.Count > 0)
             name = monstersFile.monsters[0].name;
+    }
+
+    private TextAsset LoadLevelsTextAsset()
+    {
+        TextAsset levelsAsset = Resources.Load<TextAsset>(levelsJsonResourcePath);
+        if (levelsAsset != null)
+            return levelsAsset;
+
+        if (levelsJsonResourcePath == "Data/inkylevels")
+            return Resources.Load<TextAsset>("Data/Levels");
+
+        return null;
     }
 
     private void LoadDialogue()

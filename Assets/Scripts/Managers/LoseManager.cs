@@ -6,18 +6,30 @@ public class LoseManager : MonoBehaviour
 {
     public string loseSceneName = "LoseScene";
 
+	public static bool WouldLoseIfEndOfDayAdvanceNow()
+	{
+		var cm = CurrentMonster.Instance;
+		var gm = GameManager.Instance;
+		if (cm == null || gm == null)
+			return false;
+
+		if (cm.GetCurrentLevelId() == "tutorial")
+			return false;
+
+		if (cm.HasNextMonsterInCurrentLevel())
+			return false;
+
+		int maintenanceCost = cm.GetMaintenanceCostForDay(gm.Day + 1);
+		return gm.Coins < maintenanceCost;
+	}
+
     public bool CheckLoseAndLoad()
     {
-        int maintenanceCost = CurrentMonster.Instance != null ? CurrentMonster.Instance.GetCurrentMaintenanceCost() : 0;
-        int earnedCoins = GameManager.Instance != null ? GameManager.Instance.Coins : 0;
+		if (!WouldLoseIfEndOfDayAdvanceNow())
+			return false;
 
-        if (earnedCoins < maintenanceCost)
-        {
-            LoadLoseScene();
-            return true;
-        }
-
-        return false;
+		LoadLoseScene();
+		return true;
     }
 
     public void LoadLoseScene()

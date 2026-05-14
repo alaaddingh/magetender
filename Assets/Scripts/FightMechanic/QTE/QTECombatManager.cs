@@ -10,6 +10,7 @@ using Magetender.Data;
 // QTE Bank Combat System
 // Two banks (defend/attack) with key sequences
 // Player switches between them with SPACE
+[DefaultExecutionOrder(-100)]
 public class QTECombatManager : MonoBehaviour
 {
 	[Header("UI References")]
@@ -134,6 +135,10 @@ public class QTECombatManager : MonoBehaviour
 	private bool fightEnded = false;
 	private bool lastFightPlayerWon = false;
 
+	public static bool SuppressTutorialForSaveResume { get; private set; }
+	public static bool ResumeDefendBankVisible { get; private set; } = true;
+	public static bool ResumeAttackBankVisible { get; private set; } = true;
+
 	public System.Action OnDefendSequenceCompleted;
 	public System.Action OnAttackSequenceCompleted;
 	
@@ -141,26 +146,31 @@ public class QTECombatManager : MonoBehaviour
 	{
 		KeyBindPrefs();
 
-		// Load monster data from CurrentMonster
 		LoadMonsterData();
 
 		if (customerSprite != null)
 		{
 			originalCustomerColor = customerSprite.color;
 			originalCustomerPosition = customerSprite.transform.localPosition;
-			
+
 			if (customerFightSprite != null)
-    			customerSprite.sprite = customerFightSprite;
+				customerSprite.sprite = customerFightSprite;
 			else if (customerAngrySprite != null)
 				customerSprite.sprite = customerAngrySprite;
-			
-			// Get component
+
 			customerShake = customerSprite.GetComponent<CustomerMovement>();
 		}
-		
-		playerHealth = playerMaxHealth;
-		playerHealthFloat = playerMaxHealth;
-		customerHealth = customerMaxHealth;
+
+		SaveData loadedSave = SaveSystem.LoadGame();
+		bool resumeCombat = ShouldResumeFightFromSave(loadedSave);
+
+		if (!resumeCombat)
+		{
+			SuppressTutorialForSaveResume = false;
+			playerHealth = playerMaxHealth;
+			playerHealthFloat = playerMaxHealth;
+			customerHealth = customerMaxHealth;
+		}
 
 		if (playerHealthBar != null)
 		{
@@ -170,22 +180,20 @@ public class QTECombatManager : MonoBehaviour
 		{
 			customerHealthBar.Initialize(customerMaxHealth);
 		}
-				
+
 		if (customerSprite != null)
 		{
 			originalCustomerColor = customerSprite.color;
 			originalCustomerPosition = customerSprite.transform.localPosition;
-			
-			// Set fight sprite at fight start
+
 			if (customerFightSprite != null)
 				customerSprite.sprite = customerFightSprite;
 			else if (customerAngrySprite != null)
 				customerSprite.sprite = customerAngrySprite;
-
 		}
-		
+
 		originalCanvasPosition = mainCanvas.transform.localPosition;
-		
+
 		if (leftHand != null)
 		{
 			leftHandOriginalPos = leftHand.anchoredPosition;
@@ -196,7 +204,7 @@ public class QTECombatManager : MonoBehaviour
 			rightHandOriginalPos = rightHand.anchoredPosition;
 			rightHandFloat = rightHand.GetComponent<HandAnimation>();
 		}
-		
+
 		if (screenFlashOverlay != null)
 		{
 			Color overlayColor = screenFlashOverlay.color;
@@ -205,9 +213,110 @@ public class QTECombatManager : MonoBehaviour
 		}
 
 		visualEffects = GetComponent<CombatVisualEffects>();
-		
+
+		if (resumeCombat)
+		{
+			ApplyFightCheckpoint(loadedSave.fightCheckpoint);
+		}
+
 		UpdateHealthDisplays();
-        // Don't start sequences yet - wait for tutorial
+	}
+
+	bool ShouldResumeFightFromSave(SaveData loadedSave)
+	{
+		if (loadedSave == null || !loadedSave.pendingBarFight)
+			return false;
+		if (loadedSave.fightCheckpoint == null || !loadedSave.fightCheckpoint.hasData)
+			return false;
+		if (CurrentMonster.Instance == null)
+			return false;
+		return loadedSave.fightCheckpoint.encounterIndexWhenSaved == CurrentMonster.Instance.currentEncounterIndex;
+	}
+
+	public bool IsFightEnded()
+	{
+		return fightEnded;
+	}
+
+	public FightCheckpointState BuildFightCheckpoint()
+	{
+		var state = new FightCheckpointState();
+		state.encounterIndexWhenSaved = CurrentMonster.Instance != null ? CurrentMonster.Instance.currentEncounterIndex : 0;
+		state.defendBankVisible = true;
+		state.attackBankVisible = true;
+		CombatTutorial tutorial = Object.FindFirstObjectByType<CombatTutorial>();
+		if (tutorial != null)
+			tutorial.GetBankVisibility(out state.defendBankVisible, out state.attackBankVisible);
+
+		if (fightEnded || !combatStarted)
+		{
+			state.hasData = false;
+			return state;
+		}
+
+		state.hasData = true;
+		state.playerHealth = playerHealth;
+		state.customerHealth = customerHealth;
+		state.playerHealthFloat = playerHealthFloat;
+		state.defendBankActive = defendBankActive;
+		state.defendProgress = defendProgress;
+		state.attackProgress = attackProgress;
+		state.defendTimer = defendTimer;
+		state.attackTimer = attackTimer;
+		state.combatStarted = combatStarted;
+		state.tutorialMode = tutorialMode;
+		state.combatPaused = combatPaused;
+		state.defendSequenceKeyCodes = KeyListToInts(defendSequence);
+		state.attackSequenceKeyCodes = KeyListToInts(attackSequence);
+		return state;
+	}
+
+	void ApplyFightCheckpoint(FightCheckpointState s)
+	{
+		if (s == null || !s.hasData)
+			return;
+
+		defendSequence = IntsToKeyList(s.defendSequenceKeyCodes);
+		attackSequence = IntsToKeyList(s.attackSequenceKeyCodes);
+		playerHealth = s.playerHealth;
+		customerHealth = s.customerHealth;
+		playerHealthFloat = s.playerHealthFloat;
+		defendBankActive = s.defendBankActive;
+		defendProgress = s.defendProgress;
+		attackProgress = s.attackProgress;
+		defendTimer = s.defendTimer;
+		attackTimer = s.attackTimer;
+		combatStarted = s.combatStarted;
+		tutorialMode = s.tutorialMode;
+		combatPaused = s.combatPaused;
+		fightEnded = false;
+
+		ResumeDefendBankVisible = s.defendBankVisible;
+		ResumeAttackBankVisible = s.attackBankVisible;
+		SuppressTutorialForSaveResume = true;
+
+		UpdateBankVisuals();
+	}
+
+	static int[] KeyListToInts(List<KeyCode> keys)
+	{
+		if (keys == null || keys.Count == 0)
+			return new int[0];
+
+		int[] arr = new int[keys.Count];
+		for (int i = 0; i < keys.Count; i++)
+			arr[i] = (int)keys[i];
+		return arr;
+	}
+
+	static List<KeyCode> IntsToKeyList(int[] codes)
+	{
+		var list = new List<KeyCode>();
+		if (codes == null)
+			return list;
+		for (int i = 0; i < codes.Length; i++)
+			list.Add((KeyCode)codes[i]);
+		return list;
 	}
 
 	void KeyBindPrefs()
@@ -723,8 +832,17 @@ public class QTECombatManager : MonoBehaviour
 	
 	void EndFight(bool playerWon)
 	{
+		SuppressTutorialForSaveResume = false;
+		SaveSystem.ClearPersistedFightCheckpointOnly();
+
 		fightEnded = true;
 		lastFightPlayerWon = playerWon;
+
+		string fightMonsterId = CurrentMonster.Instance != null && CurrentMonster.Instance.Data != null
+			? CurrentMonster.Instance.Data.id
+			: string.Empty;
+		int fightDay = GameManager.Instance != null ? GameManager.Instance.Day : 1;
+		GameAnalytics.RecordFightCompleted(fightMonsterId, fightDay, playerWon, tutorialMode);
 
 		// Stop shake
 		if (customerShake != null)
@@ -777,6 +895,9 @@ public class QTECombatManager : MonoBehaviour
 	/* call from Back to bar button OnClick */
 	public void OnBackToBarPressed()
 	{
+		if (fightEnded && GameManager.Instance != null)
+			GameManager.Instance.SetPendingBarFight(false, 0);
+
 		if (fightEnded)
 		{
 			var cm = CurrentMonster.Instance;

@@ -17,6 +17,9 @@ public class MonsterData
     public MonsterPosition position;
     public float scale = 1f;
     public string dialogueId;
+    public string inkDialogueId;
+    public string assessDialogueId;
+    public bool branching;
 }
 
 [Serializable]

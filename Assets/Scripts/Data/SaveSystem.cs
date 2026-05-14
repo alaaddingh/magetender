@@ -21,11 +21,47 @@ namespace Magetender.Data
                 day = gameManager.Day,
                 currentEncounterIndex = currentMonster.currentEncounterIndex,
 				unlockedIngredientIds = gameManager.GetUnlockedIngredientIds(),
-                tutorialCompleted = gameManager.TutorialCompleted
+                tutorialCompleted = gameManager.TutorialCompleted,
+				pendingBarFight = gameManager.PendingBarFight,
+				skipDayPanelNextMixLoad = gameManager.SkipDayPanelNextMixLoad,
+				pendingBarFightEncounterIndex = gameManager.PendingBarFightEncounterIndex,
+				resumeLoseScreenOnContinue = false,
+				fightCheckpoint = new FightCheckpointState { hasData = false },
+				playthroughId = gameManager.PlaythroughId
             };
 
             SaveGame(data);
         }
+
+		public static void WriteFightQuitSave(FightCheckpointState checkpoint, bool pendingBarFight)
+		{
+			var gameManager = GameManager.Instance;
+			var currentMonster = CurrentMonster.Instance;
+			if (gameManager == null || currentMonster == null)
+				return;
+
+			if (checkpoint == null)
+				checkpoint = new FightCheckpointState { hasData = false };
+
+			gameManager.SetPendingBarFight(pendingBarFight, currentMonster.currentEncounterIndex);
+
+			var data = new SaveData
+			{
+				coins = gameManager.Coins,
+				day = gameManager.Day,
+				currentEncounterIndex = currentMonster.currentEncounterIndex,
+				unlockedIngredientIds = gameManager.GetUnlockedIngredientIds(),
+				tutorialCompleted = gameManager.TutorialCompleted,
+				pendingBarFight = pendingBarFight,
+				skipDayPanelNextMixLoad = gameManager.SkipDayPanelNextMixLoad,
+				pendingBarFightEncounterIndex = gameManager.PendingBarFightEncounterIndex,
+				resumeLoseScreenOnContinue = false,
+				fightCheckpoint = checkpoint,
+				playthroughId = gameManager.PlaythroughId
+			};
+
+			SaveGame(data);
+		}
 
         public static void WriteLoseState()
         {
@@ -33,9 +69,11 @@ namespace Magetender.Data
 
 			// Preserve tutorial completion even if GameManager isn't available for some reason.
 			bool tutorialCompleted = false;
+			string playthroughId = string.Empty;
 			if (GameManager.Instance != null)
 			{
 				tutorialCompleted = GameManager.Instance.TutorialCompleted;
+				playthroughId = GameManager.Instance.PlaythroughId;
 			}
 			else
 			{
@@ -43,6 +81,7 @@ namespace Magetender.Data
 				if (existing != null)
 				{
 					tutorialCompleted = existing.tutorialCompleted;
+					playthroughId = existing.playthroughId;
 				}
 			}
 
@@ -51,7 +90,13 @@ namespace Magetender.Data
                 coins = 0,
                 day = day,
                 currentEncounterIndex = 0,
-                tutorialCompleted = tutorialCompleted
+                tutorialCompleted = tutorialCompleted,
+				pendingBarFight = false,
+				skipDayPanelNextMixLoad = false,
+				pendingBarFightEncounterIndex = 0,
+				resumeLoseScreenOnContinue = true,
+				fightCheckpoint = new FightCheckpointState { hasData = false },
+				playthroughId = playthroughId
             });
         }
 
@@ -89,5 +134,14 @@ namespace Magetender.Data
                 Debug.Log("[SaveSystem] Save cleared.");
             }
         }
+
+		public static void ClearPersistedFightCheckpointOnly()
+		{
+			SaveData d = LoadGame();
+			if (d == null)
+				return;
+			d.fightCheckpoint = new FightCheckpointState { hasData = false };
+			SaveGame(d);
+		}
     }
 }

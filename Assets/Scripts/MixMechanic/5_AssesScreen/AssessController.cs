@@ -12,6 +12,19 @@ using TMPro;
 
 public class AssessController : MonoBehaviour
 {
+	public static bool IsAssessmentUiActive { get; private set; }
+
+	public MonsterStateManager MonsterStateForAssessment => MonsterStateManager;
+
+	public bool IsAssessmentCommitEligible()
+	{
+		if (!gameObject.activeInHierarchy)
+			return false;
+		if (coinCanvas != null)
+			return coinCanvas.activeInHierarchy;
+		return true;
+	}
+
     [Header("refs")]
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private MonsterStateManager MonsterStateManager;
@@ -49,6 +62,30 @@ public class AssessController : MonoBehaviour
 
     public GameObject FightButton;
 
+	private bool serveDialogueFightOfferAnalyticsSent;
+
+	private void OnEnable()
+	{
+		RefreshAssessmentUiActiveFlag();
+	}
+
+	private void OnDisable()
+	{
+		IsAssessmentUiActive = false;
+	}
+
+	private void LateUpdate()
+	{
+		if (!gameObject.activeInHierarchy)
+			return;
+		RefreshAssessmentUiActiveFlag();
+	}
+
+	private void RefreshAssessmentUiActiveFlag()
+	{
+		IsAssessmentUiActive = coinCanvas != null && coinCanvas.activeInHierarchy;
+	}
+
     private void Awake()
     {
         if (currentMonsterManager == null)
@@ -67,6 +104,7 @@ public class AssessController : MonoBehaviour
 
         MixAccuracy = AssessAccuracy();
         AssessState(MixAccuracy);
+		GameAnalytics.RecordServeOutcome(currentMonsterManager, MonsterStateManager.MonsterState, MixAccuracy);
 		ShowDrinkMoodValue();
         if (AudioManager.Instance != null)
         {
@@ -87,6 +125,7 @@ public class AssessController : MonoBehaviour
             coinCanvas.SetActive(true);
 
         RefreshCoinsDisplay();
+		RefreshAssessmentUiActiveFlag();
     }
 
 	private void ShowDrinkMoodValue()
@@ -127,7 +166,18 @@ public class AssessController : MonoBehaviour
 
 		bool dialogueFinished = serveDialogueController != null && serveDialogueController.IsDialogueFinished;
 		bool angry = MonsterStateManager.MonsterState == "angry";
-		FightButton.SetActive(angry && dialogueFinished);
+		bool shouldShow = angry && dialogueFinished;
+		if (shouldShow && !serveDialogueFightOfferAnalyticsSent)
+		{
+			serveDialogueFightOfferAnalyticsSent = true;
+			if (GameManager.Instance != null)
+				GameAnalytics.RecordDialogueFightButtonBecameAvailable(GameAnalytics.DialogueFightSurfacePostServeAssessment);
+		}
+		else if (!shouldShow)
+		{
+			serveDialogueFightOfferAnalyticsSent = false;
+		}
+		FightButton.SetActive(shouldShow);
 	}
 
     private int AwardCoinsForDrink()

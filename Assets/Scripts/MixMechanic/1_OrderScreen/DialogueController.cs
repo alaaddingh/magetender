@@ -14,12 +14,14 @@ public class DialogueController : MonoBehaviour
 {
     [Header("UI variables")]
     [SerializeField] private TMP_Text monsterSpeech;
+    [SerializeField] private TMP_Text serveSpeech;
     [SerializeField] private TMP_Text monsterName;
     [SerializeField] private DialogueTypewriter typewriter;
 
     [Header("Buttons")]
     [SerializeField] private GameObject brewButtonObject;
     [SerializeField] private GameObject nextButtonObject; // optional (dialogue next)
+    [SerializeField] private GameObject fightButtonObject;
     public GameObject continueButtonObject; // optional
 
     [Header("Data source")]
@@ -30,6 +32,14 @@ public class DialogueController : MonoBehaviour
 
     [Header("Arabic (optional)")]
     [SerializeField] private TMP_FontAsset arabicFontOverride;
+
+    [Header("Ink Dialogue (optional)")]
+    [SerializeField] private InkyDialogueController inkyDialogueController;
+    [SerializeField] private InkDialoguePresenter inkDialoguePresenter;
+    [SerializeField] private TextAsset orderInkJsonAsset;
+    [SerializeField] private TextAsset serveInkJsonAsset;
+
+    [SerializeField] private GameObject alienIDPanel;
 
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
@@ -42,7 +52,9 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private GameObject coinCanvas;
 
     private int dialogueIndex = 0;
+	private bool dialogueFightOfferAnalyticsSent;
     private TMP_FontAsset monsterSpeechOriginalFont;
+    private TMP_FontAsset serveSpeechOriginalFont;
     private TMP_FontAsset monsterNameOriginalFont;
     private bool wasTyping;
 
@@ -50,6 +62,14 @@ public class DialogueController : MonoBehaviour
     {
         get
         {
+            if (UsesInkDialogue())
+            {
+                if (inkDialoguePresenter != null && inkDialoguePresenter.IsTyping)
+                    return false;
+
+                return inkyDialogueController == null || inkyDialogueController.IsFinished;
+            }
+
             var lines = GetActiveDialogue();
             if (lines.Count == 0)
                 return true;
@@ -75,13 +95,15 @@ public class DialogueController : MonoBehaviour
         }
 
         monsterSpeechOriginalFont = monsterSpeech.font;
+        if (serveSpeech != null)
+            serveSpeechOriginalFont = serveSpeech.font;
         if (monsterName != null)
             monsterNameOriginalFont = monsterName.font;
 
         if (typewriter == null)
-            typewriter = monsterSpeech.GetComponent<DialogueTypewriter>();
+            typewriter = GetActiveSpeechText()?.GetComponent<DialogueTypewriter>();
         if (typewriter != null)
-            typewriter.SetTargetText(monsterSpeech);
+            typewriter.SetTargetText(GetActiveSpeechText());
     }
 
     private void OnEnable()
@@ -100,9 +122,12 @@ public class DialogueController : MonoBehaviour
 
     private void Start()
     {
+        //To ensure character voiceovers plays on first dialogue
         CharacterVoiceover();
+
         Debug.Log($"[DialogueController] Starting with monster='{currentMonsterManager.Data?.id}' state='{monsterStateManager?.MonsterState}'");
         brewButtonObject.SetActive(false);
+        if (fightButtonObject != null) fightButtonObject.SetActive(false);
         if (continueButtonObject != null) continueButtonObject.SetActive(false);
 
         RefreshAll();
@@ -110,11 +135,28 @@ public class DialogueController : MonoBehaviour
 
     private void Update()
     {
+        if (UsesInkDialogue())
+        {
+            bool isTyping = inkDialoguePresenter != null && inkDialoguePresenter.IsTyping;
+            if (wasTyping && !isTyping)
+            {
+                RefreshInkButtonState();
+                UpdateNextButtonStateInk();
+                UpdateContinueButtonStateInk();
+            }
+
+            wasTyping = isTyping;
+            return;
+        }
+
         if (typewriter == null || !typewriter.enabled)
             return;
 
         if (wasTyping && !typewriter.IsTyping)
+        {
+            RefreshFightButton();
             UpdateContinueButtonState(GetActiveDialogue());
+        }
 
         wasTyping = typewriter.IsTyping;
     }
@@ -132,6 +174,13 @@ public class DialogueController : MonoBehaviour
 
     private void RefreshAll()
     {
+        if (UsesInkDialogue() && TryStartInkDialogueForCurrentState())
+        {
+            SyncMonsterStateFromInkVariables();
+            UpdateMonsterName();
+            return;
+        }
+
         UpdateTypewriterEnabledState();
         bool isArabic = RtlText.IsArabic();
         ApplyDialogueFontsForLanguage(isArabic);
@@ -140,23 +189,38 @@ public class DialogueController : MonoBehaviour
     }
 
     public void OnNextPressed()
-    {
+    {       
+
         CharacterVoiceover();
 
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.PlayButtonClick();
 
+        if (UsesInkDialogue())
+        {
+            if (inkDialoguePresenter != null)
+                inkDialoguePresenter.AdvanceAndPresent();
+
+            SyncMonsterStateFromInkVariables();
+            RefreshInkButtonState();
+            TryMakeTutorialToadAngryInk();
+            CharacterVoiceover();
+            return;
+        }
+
+
         UpdateTypewriterEnabledState();
         if (typewriter != null && typewriter.enabled && typewriter.IsTyping)
         {
             typewriter.SkipTyping();
+            AudioManager.Instance.StopVoice();
             return;
         }
 
         var lines = GetActiveDialogue();
         if (lines.Count == 0)
         {
-            brewButtonObject.SetActive(true);
+            brewButtonObject.SetActive(CanShowBrewButton());
             UpdateContinueButtonState(lines);
             return;
         }
@@ -165,36 +229,190 @@ public class DialogueController : MonoBehaviour
             dialogueIndex++;
 
         ShowCurrentLine(lines);
-
-        StopCharacterVoiceoverAfterDialogue();
     }
 
     public void CharacterVoiceover()
     {
-        //Tyvin: Feel free to remove or replace it, since this was to visually test it out
-        if (currentMonsterManager.Data.id == "toad" && (monsterStateManager.MonsterState == "start"))
+        if (currentMonsterManager == null || currentMonsterManager.Data == null || monsterStateManager == null)
         {
-            Debug.Log("Playing generic toad voice"); 
-            AudioManager.Instance.PlayToadVoiceGeneric();
+            Debug.LogWarning("CharacterVoiceover: Missing manager references!");
+            return;
         }
-        // This might need to be changed since I thought the toad was angry on that dialogue "FOR A ROOKIE!!!"
-        if (currentMonsterManager.Data.id == "toad" && (monsterStateManager.MonsterState == "neutral"))
-        {
-            Debug.Log("Playing neutral toad voice"); 
-            AudioManager.Instance.PlayToadVoiceAngry();
-        }
-        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "start" || monsterStateManager.MonsterState == "neutral"))
-        {
-            Debug.Log("Playing generic alien voice"); 
-            AudioManager.Instance.PlayAlienVoiceGeneric();
-        }
-        if (currentMonsterManager.Data.id == "alien" && (monsterStateManager.MonsterState == "angry"))
-        {
-            Debug.Log("Playing angry alien voice"); 
-            AudioManager.Instance.PlayAlienVoiceAngry();
-        }
-    }
 
+        if (AudioManager.Instance == null)
+            return;
+
+        string monsterId = currentMonsterManager.Data.id.ToLower().Trim();
+        string monsterState = monsterStateManager.MonsterState.ToLower().Trim();
+
+        Debug.Log($"CharacterVoiceover: Playing voice for monsterId='{monsterId}' state='{monsterState}'");
+
+        //Toad
+        if (monsterId == "toad")
+        {
+            if (monsterState == "start")
+            {
+                Debug.Log("Playing generic toad voice"); 
+                AudioManager.Instance.PlayToadVoiceGeneric();
+            }
+            else if (monsterState == "neutral")
+            {
+                Debug.Log("Playing neutral toad voice"); 
+                AudioManager.Instance.PlayToadVoiceAngry();
+            }
+            return;
+        }
+
+        //Alien
+        if (monsterId == "alien")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic alien voice"); 
+                AudioManager.Instance.PlayAlienVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied alien voice"); 
+                AudioManager.Instance.PlayAlienVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry alien voice"); 
+                AudioManager.Instance.PlayAlienVoiceAngry();
+            }
+            return;
+        }
+
+        //Unicorn
+        if (monsterId == "unicorn")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic unicorn voice"); 
+                AudioManager.Instance.PlayUnicornVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied unicorn voice"); 
+                AudioManager.Instance.PlayUnicornVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry unicorn voice"); 
+                AudioManager.Instance.PlayUnicornVoiceAngry();
+            }
+            return;
+        }
+
+        //Slime
+        if (monsterId == "slime")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic slime voice"); 
+                AudioManager.Instance.PlayBlobVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied slime voice"); 
+                AudioManager.Instance.PlayBlobVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry slime voice"); 
+                AudioManager.Instance.PlayBlobVoiceAngry();
+            }
+            return;
+        }
+
+        //Rocky (Golem)
+        if (monsterId == "rocky")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic rocky voice"); 
+                AudioManager.Instance.PlayRockyVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied rocky voice"); 
+                AudioManager.Instance.PlayRockyVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry rocky voice"); 
+                AudioManager.Instance.PlayRockyVoiceAngry();
+            }
+            return;
+        }
+
+        //Knight
+        if (monsterId == "knight")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic knight voice"); 
+                AudioManager.Instance.PlayKnightVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied knight voice"); 
+                AudioManager.Instance.PlayKnightVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry knight voice"); 
+                AudioManager.Instance.PlayKnightVoiceAngry();
+            }
+            return;
+        }
+
+        //Hamster
+        if (monsterId == "hamster")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic hamster voice"); 
+                AudioManager.Instance.PlayHamsterVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied hamster voice"); 
+                AudioManager.Instance.PlayHamsterVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry hamster voice"); 
+                AudioManager.Instance.PlayHamsterVoiceAngry();
+            }
+            return;
+        }
+
+        //Dragon
+        if (monsterId == "dragon")
+        {
+            if (monsterState == "start" || monsterState == "neutral")
+            {
+                Debug.Log("Playing generic dragon voice"); 
+                AudioManager.Instance.PlayDragonVoiceGeneric();
+            }
+            else if (monsterState == "satisfied")
+            {
+                Debug.Log("Playing satisfied dragon voice"); 
+                AudioManager.Instance.PlayDragonVoiceSatisfied();
+            }
+            else if (monsterState == "angry")
+            {
+                Debug.Log("Playing angry dragon voice"); 
+                AudioManager.Instance.PlayDragonVoiceAngry();
+            }
+            return;
+        }
+
+        Debug.LogWarning($"CharacterVoiceover in DialogueController: Unknown monster monsterId='{monsterId}' or state='{monsterState}'");
+    }
+/*
     public void StopCharacterVoiceoverAfterDialogue()
     {
         if (IsDialogueFinished == true)
@@ -202,7 +420,7 @@ public class DialogueController : MonoBehaviour
             AudioManager.Instance.StopVoice();
         }
     }
-
+*/
     public void BrewingPressed()
     {
 		if (AudioManager.Instance != null)
@@ -220,8 +438,46 @@ public class DialogueController : MonoBehaviour
     private void HandleMonsterChanged(string _)
     {
         dialogueIndex = 0;
+		dialogueFightOfferAnalyticsSent = false;
         RefreshAll();
     }
+
+    private bool CanShowBrewButton()
+    {
+        return monsterStateManager == null || monsterStateManager.MonsterState != "angry";
+    }
+
+    private void RefreshFightButton()
+    {
+        if (fightButtonObject == null)
+            return;
+
+		if (IsAssessDialogueController())
+		{
+			bool assessShow = monsterStateManager != null && monsterStateManager.MonsterState == "angry" && IsDialogueFinished;
+			fightButtonObject.SetActive(assessShow);
+			return;
+		}
+
+        bool dialogueFinished = IsDialogueFinished;
+        bool angry = monsterStateManager != null && monsterStateManager.MonsterState == "angry";
+		bool shouldShow = angry && dialogueFinished;
+		if (shouldShow && !dialogueFightOfferAnalyticsSent)
+		{
+			dialogueFightOfferAnalyticsSent = true;
+			GameAnalytics.RecordDialogueFightButtonBecameAvailable(GameAnalytics.DialogueFightSurfaceTakeOrder);
+		}
+		else if (!shouldShow)
+		{
+			dialogueFightOfferAnalyticsSent = false;
+		}
+        fightButtonObject.SetActive(shouldShow);
+    }
+
+	private bool IsAssessDialogueController()
+	{
+		return gameObject != null && gameObject.name == "AssessDialogueController";
+	}
 
     private void UpdateMonsterName()
     {
@@ -241,6 +497,8 @@ public class DialogueController : MonoBehaviour
     {
         if (monsterSpeech != null)
             monsterSpeech.font = isArabic && arabicFontOverride != null ? arabicFontOverride : monsterSpeechOriginalFont;
+        if (serveSpeech != null)
+            serveSpeech.font = isArabic && arabicFontOverride != null ? arabicFontOverride : serveSpeechOriginalFont;
         if (monsterName != null)
             monsterName.font = isArabic && arabicFontOverride != null ? arabicFontOverride : monsterNameOriginalFont;
     }
@@ -250,14 +508,24 @@ public class DialogueController : MonoBehaviour
         ShowCurrentLine(GetActiveDialogue());
     }
 
+    private TMP_Text GetActiveSpeechText()
+    {
+        if (serveSpeech != null && gameObject.name == "AssessDialogueController")
+            return serveSpeech;
+
+        return monsterSpeech;
+    }
+
     private void ShowCurrentLine(List<string> lines)
     {
+        TMP_Text activeSpeech = GetActiveSpeechText();
+
         if (lines.Count == 0)
         {
             if (typewriter != null) typewriter.SetInstant(string.Empty);
-            else SetText(monsterSpeech, string.Empty, preserveNumbers: true);
+            else SetText(activeSpeech, string.Empty, preserveNumbers: true);
 
-            brewButtonObject.SetActive(true);
+            brewButtonObject.SetActive(CanShowBrewButton());
             UpdateNextButtonState(lines);
             UpdateContinueButtonState(lines);
             return;
@@ -269,9 +537,9 @@ public class DialogueController : MonoBehaviour
         bool isArabic = RtlText.IsArabic();
         bool useTypewriter = typewriter != null && typewriter.enabled && !isArabic;
         if (useTypewriter) typewriter.TypeLine(rawLine);
-        else SetText(monsterSpeech, rawLine, preserveNumbers: true);
+        else SetText(activeSpeech, rawLine, preserveNumbers: true);
 
-        brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1);
+        brewButtonObject.SetActive(dialogueIndex >= lines.Count - 1 && CanShowBrewButton());
         UpdateNextButtonState(lines);
         UpdateContinueButtonState(lines);
         TryMakeTutorialToadAngry(lines);
@@ -365,4 +633,177 @@ public class DialogueController : MonoBehaviour
         string dialogueKey = currentMonsterManager.CurrentEncounter.dialogue_key;
         return dialogueKey == "tutorial" || dialogueKey == "tutorial_1";
     }
+
+    private bool UsesInkDialogue()
+    {
+        return currentMonsterManager != null &&
+               currentMonsterManager.Data != null &&
+               currentMonsterManager.Data.branching &&
+               inkyDialogueController != null &&
+               inkDialoguePresenter != null;
+    }
+
+    private bool TryStartInkDialogueForCurrentState()
+    {
+        if (!UsesInkDialogue())
+            return false;
+
+        TextAsset inkAsset = GetAssignedInkDialogueAsset() ?? LoadInkDialogueTextAssetFromResources();
+        if (inkAsset == null)
+        {
+            string dialogueResourceId = GetInkDialogueResourceId();
+            Debug.LogWarning($"[DialogueController] Branching monster requires compiled Ink JSON. No assigned TextAsset found and resource lookup failed for '{dialogueResourceId}'. Falling back to standard dialogue.", this);
+            return false;
+        }
+
+        UpdateMonsterName();
+        inkyDialogueController.SetInkJsonAsset(inkAsset);
+        inkDialoguePresenter.SetDialogueTextTarget(GetActiveSpeechText());
+        inkDialoguePresenter.SetSpeakerName(currentMonsterManager != null && currentMonsterManager.Data != null
+            ? currentMonsterManager.Data.name
+            : string.Empty);
+        inkDialoguePresenter.StartKnotAndPresent(GetInkKnotNameForCurrentState());
+        RefreshInkButtonState();
+        TryMakeTutorialToadAngryInk();
+        return true;
+    }
+
+    private TextAsset GetAssignedInkDialogueAsset()
+    {
+        bool isAssessState = monsterStateManager != null && monsterStateManager.MonsterState != "start";
+        bool isAssessScreen = gameObject.name == "AssessDialogueController";
+
+        if ((isAssessState || isAssessScreen) && serveInkJsonAsset != null)
+            return serveInkJsonAsset;
+
+        if (!isAssessState && orderInkJsonAsset != null)
+            return orderInkJsonAsset;
+
+        return null;
+    }
+
+    private TextAsset LoadInkDialogueTextAssetFromResources()
+    {
+        string dialogueResourceId = GetInkDialogueResourceId();
+        return string.IsNullOrWhiteSpace(dialogueResourceId) ? null : Resources.Load<TextAsset>(dialogueResourceId);
+    }
+
+    private string GetInkDialogueResourceId()
+    {
+        if (currentMonsterManager == null || currentMonsterManager.Data == null)
+            return string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(currentMonsterManager.Data.inkDialogueId))
+            return currentMonsterManager.Data.inkDialogueId;
+
+        bool isAssessState = monsterStateManager != null && monsterStateManager.MonsterState != "start";
+        if (isAssessState && !string.IsNullOrWhiteSpace(currentMonsterManager.Data.assessDialogueId))
+            return currentMonsterManager.Data.assessDialogueId;
+
+        bool isAssessScreen = gameObject.name == "AssessDialogueController";
+        if (isAssessScreen && !string.IsNullOrWhiteSpace(currentMonsterManager.Data.assessDialogueId))
+            return currentMonsterManager.Data.assessDialogueId;
+
+        return currentMonsterManager.Data.dialogueId;
+    }
+
+    private string GetInkKnotNameForCurrentState()
+    {
+        string state = monsterStateManager != null ? monsterStateManager.MonsterState : "start";
+        if (string.IsNullOrWhiteSpace(state))
+            state = "start";
+
+        string knotName = currentMonsterManager != null ? currentMonsterManager.GetCurrentInkKnot() : string.Empty;
+        if (string.IsNullOrWhiteSpace(knotName))
+            return state;
+
+        return $"{knotName}.{state}";
+    }
+
+    private void RefreshInkButtonState()
+    {
+        SyncMonsterStateFromInkVariables();
+        RefreshFightButton();
+        UpdateNextButtonStateInk();
+        UpdateContinueButtonStateInk();
+
+        if (brewButtonObject != null)
+            brewButtonObject.SetActive(inkyDialogueController != null &&
+                                       inkyDialogueController.IsFinished &&
+                                       CanShowBrewButton());
+    }
+
+    private void UpdateNextButtonStateInk()
+    {
+        if (nextButtonObject == null)
+            return;
+
+        bool showNext = inkyDialogueController != null &&
+                        !inkyDialogueController.IsFinished &&
+                        !inkyDialogueController.HasChoices &&
+                        (inkDialoguePresenter == null || !inkDialoguePresenter.IsTyping);
+        nextButtonObject.SetActive(showNext);
+    }
+
+    private void UpdateContinueButtonStateInk()
+    {
+        if (continueButtonObject == null)
+            return;
+
+        if (monsterStateManager != null && monsterStateManager.MonsterState == "angry")
+        {
+            continueButtonObject.SetActive(false);
+            return;
+        }
+
+        bool showContinue = inkyDialogueController != null &&
+                            inkyDialogueController.IsFinished &&
+                            (inkDialoguePresenter == null || !inkDialoguePresenter.IsTyping);
+        continueButtonObject.SetActive(showContinue);
+
+        if (!showContinue)
+            return;
+
+        bool isLastMonsterOfDay = !currentMonsterManager.HasNextMonsterInCurrentLevel();
+        string key = isLastMonsterOfDay ? "next_day_button" : "continue_button";
+
+        var localizedText = continueButtonObject.GetComponentInChildren<LocalizedTMPText>(true);
+        if (localizedText != null)
+            localizedText.SetKey(key);
+    }
+
+    private void TryMakeTutorialToadAngryInk()
+    {
+        if (!UsesInkDialogue())
+            return;
+
+        if (!IsTutorialToadNeutralServeDialogue())
+            return;
+
+        if (inkyDialogueController == null || !inkyDialogueController.IsFinished)
+            return;
+
+        monsterStateManager.SetState("angry");
+    }
+
+    private void SyncMonsterStateFromInkVariables()
+{
+    if (monsterStateManager == null || inkyDialogueController == null)
+        return;
+
+    if (inkyDialogueController.TryGetBoolVariable("is_angry", out bool isAngry) && isAngry)
+        monsterStateManager.SetState("angry");
+
+    if (alienIDPanel != null)
+    {
+        bool showLicense = false;
+
+        if (inkyDialogueController.TryGetBoolVariable("show_license", out bool inkShowLicense))
+            showLicense = inkShowLicense;
+
+        alienIDPanel.SetActive(showLicense);
+    }
+
+    RefreshFightButton();
+}
 }

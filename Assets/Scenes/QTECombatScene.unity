@@ -482,6 +482,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122618994}
   m_CullTransparentMesh: 1
+--- !u!1 &137199715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137199716}
+  m_Layer: 0
+  m_Name: FightQuitSaver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &137199716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137199715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 888.4539, y: 403.90375, z: -3.5982912}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &144169150
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,13 +3435,59 @@ MonoBehaviour:
   combatIncorrectKeyClip: {fileID: 8300000, guid: c59df29e6c9ba4b07818c028adeb75f7, type: 3}
   backgroundMusicClip: {fileID: 8300000, guid: b2f23dd2d2d32eb40b35b314023d5a50, type: 3}
   musicSource: {fileID: 1249467907}
-  toadVoiceClipGeneric: []
-  toadVoiceClipAngry: []
-  toadVoiceClipBattle: []
-  alienVoiceClipGeneric: []
-  alienVoiceClipAngry: []
-  alienVoiceClipSatisfied: []
-  alienVoiceClipBattle: []
+  toadVoiceClipGeneric:
+  - {fileID: 8300000, guid: 3909163380661b84cb84527bc620fb53, type: 3}
+  - {fileID: 8300000, guid: 9a6283edb8f0b9048aeed6bb182775e6, type: 3}
+  - {fileID: 8300000, guid: f1f5e5c2f77c9ee4e83ce7298db52b67, type: 3}
+  - {fileID: 8300000, guid: 0747055d303073646a465d6d09b3bf78, type: 3}
+  toadVoiceClipAngry:
+  - {fileID: 8300000, guid: 0c0f61cc4b21e2541b37ce0d42ad33bc, type: 3}
+  - {fileID: 8300000, guid: c88511ddced425848a300cf0d3a98b6a, type: 3}
+  - {fileID: 8300000, guid: 5556d83e474cb2443aa720b4ad58a079, type: 3}
+  toadVoiceClipBattle:
+  - {fileID: 8300000, guid: fdf548c614529b049908d8452f767e40, type: 3}
+  - {fileID: 8300000, guid: 18a57922fee2f49418338822421812d3, type: 3}
+  - {fileID: 8300000, guid: 0449720f3c7d7714b8d0f5db8146e3ba, type: 3}
+  alienVoiceClipGeneric:
+  - {fileID: 8300000, guid: fe69dc035905a0f41881560bb3a71962, type: 3}
+  - {fileID: 8300000, guid: 1792684ca6d1a37428e145b1de503884, type: 3}
+  - {fileID: 8300000, guid: 750b03081e6fc4a478e54960012341d6, type: 3}
+  - {fileID: 8300000, guid: 5235b31978bdbea4cac9e5a54590798c, type: 3}
+  - {fileID: 8300000, guid: ebe648b13ce00564e8062b22ca620763, type: 3}
+  alienVoiceClipAngry:
+  - {fileID: 8300000, guid: c04c3f5b5a8db5d46ab83b5900d500e7, type: 3}
+  - {fileID: 8300000, guid: ce07a35f5ffe9d548ab2b8c056e081ec, type: 3}
+  - {fileID: 8300000, guid: 3581a4f7f66331c4291640be39281dd3, type: 3}
+  alienVoiceClipSatisfied:
+  - {fileID: 8300000, guid: d4423f8f6aae0634291a7cc269ab351f, type: 3}
+  alienVoiceClipBattle:
+  - {fileID: 8300000, guid: 23a444a5d19558740b10dc4414362751, type: 3}
+  - {fileID: 8300000, guid: 69e23ae05fba74e48ac7959e317b1eec, type: 3}
+  - {fileID: 8300000, guid: 0b3f78256e666dd4db8d52e2cde4fdc6, type: 3}
+  blobVoiceClipGeneric: []
+  blobVoiceClipAngry: []
+  blobVoiceClipSatisfied: []
+  blobVoiceClipBattle: []
+  dragonVoiceClipGeneric: []
+  dragonVoiceClipAngry: []
+  dragonVoiceClipSatisfied: []
+  dragonVoiceClipBattle: []
+  hamsterVoiceClipGeneric: []
+  hamsterVoiceClipAngry: []
+  hamsterVoiceClipSatisfied: []
+  hamsterVoiceClipBattle: []
+  knightVoiceClipGeneric: []
+  knightVoiceClipAngry: []
+  knightVoiceClipSatisfied: []
+  knightVoiceClipBattle: []
+  rockyVoiceClipGeneric: []
+  rockyVoiceClipAngry: []
+  rockyVoiceClipSatisfied: []
+  rockyVoiceClipBattle: []
+  unicornVoiceClipGeneric: []
+  unicornVoiceClipAngry: []
+  unicornVoiceClipSatisfied: []
+  unicornVoiceClipBattle: []
 --- !u!4 &1249467906
 Transform:
   m_ObjectHideFlags: 0
@@ -6321,3 +6398,4 @@ SceneRoots:
   - {fileID: 2078284586}
   - {fileID: 1249467906}
   - {fileID: 716103914}
+  - {fileID: 137199716}

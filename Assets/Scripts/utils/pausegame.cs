@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[DefaultExecutionOrder(-200)]
 public class PauseGame : MonoBehaviour
 {	[SerializeField] private GameObject pauseMenuPanel; 
 	[SerializeField] private string menuSceneName = "TitleScreen";
@@ -10,6 +11,15 @@ public class PauseGame : MonoBehaviour
 	{
 		if (pauseMenuPanel != null)
 			pauseMenuPanel.SetActive(false);
+	}
+
+	void Start()
+	{
+		if (pauseMenuPanel == null || GameManager.Instance == null)
+			return;
+		if (!GameManager.Instance.ConsumeOpenPauseMenuOnNextFightSceneLoad())
+			return;
+		Pause();
 	}
 
 	void OnDisable()
@@ -52,6 +62,9 @@ public class PauseGame : MonoBehaviour
 
 		if (AudioManager.Instance != null)
 			AudioManager.Instance.StopAllSounds();
+
+		FightSceneQuitSave.TryCommitMidFightSaveIfInFightScene();
+		AssessmentMenuExit.TryCommitSaveBeforeReturningToTitle();
 
 		if (!string.IsNullOrEmpty(menuSceneName))
 			SceneManager.LoadScene(menuSceneName);

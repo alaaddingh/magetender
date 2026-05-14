@@ -675,11 +675,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 6992a9b4-af57-4633-bb99-c8ab396f6b96
+  cloudProjectId: e30715a7-aea2-47d8-a8fb-433b44bbb18e
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Magetender
-  organizationId: alaaddin07
+  organizationId: dguerr15
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

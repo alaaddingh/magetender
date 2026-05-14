@@ -10,33 +10,37 @@
         "angry": "Art/Monsters/Unicorn/unicorn_angry",
         "fight": "Art/Monsters/Unicorn/unicorn_fight_clean"
       },
-  
       "dialogueId": "dlg_unicorn",
-      "position": {"pos_x": 0, "pos_y": 234},
+      "inkDialogueId": "InkyDialogue/anita_carberneigh",
+      "branching": true,
+      "position": {
+        "pos_x": 0,
+        "pos_y": 234
+      },
       "scale": 0.75
-
     },
-     {
+    {
       "id": "slime",
       "name": "Sloshberg Florpton",
       "toppingsPreference": "Lime",
-
       "sprites": {
         "neutral": "Art/Monsters/Slime/slime_neutral",
         "happy": "Art/Monsters/Slime/slime_happy",
         "angry": "Art/Monsters/Slime/slime_angry"
       },
-    
       "dialogueId": "dlg_slime",
-      "position": {"pos_x": -169, "pos_y": -37},
+      "inkDialogueId": "InkyDialogue/sloshberg_florpton",
+      "branching": true,
+      "position": {
+        "pos_x": -25,
+        "pos_y": 30
+      },
       "scale": 1.0
     },
-     {
+    {
       "id": "alien",
       "name": "Zip Zorp the Glorp",
       "toppingsPreference": "Umbrella",
-
-
       "sprites": {
         "neutral": "Art/Monsters/Alien/alien_neutral",
         "happy": "Art/Monsters/Alien/alien_happy",
@@ -44,25 +48,68 @@
         "fight": "Art/Monsters/Alien/alien_fight",
         "hit": "Art/Monsters/Alien/alien_hit"
       },
-    
       "dialogueId": "dlg_alien",
-      "position": {"pos_x": -169, "pos_y": -37},
+      "inkDialogueId": "InkyDialogue/zip_zorp_the_glorp",
+      "branching": true,
+      "position": {
+        "pos_x": 0,
+        "pos_y": 30
+      },
       "scale": 1.0
     },
-        {
+    {
       "id": "toad",
       "name": "Gurt Lagunitoad",
       "toppingsPreference": "Lime",
-
-
       "sprites": {
         "neutral": "Art/Monsters/Toad/toad_neutral",
         "angry": "Art/Monsters/Toad/toad_angry"
       },
-    
       "dialogueId": "dlg_toad",
-      "position": {"pos_x": 30, "pos_y": 70},
+      "position": {
+        "pos_x": 30,
+        "pos_y": 70
+      },
       "scale": 0.5
+    },
+    {
+      "id": "rocky",
+      "name": "Bouldar Grimweld",
+      "toppingsPreference": "Umbrella",
+      "sprites": {
+        "neutral": "Art/Monsters/rocky/rocky_neutral",
+        "angry": "Art/Monsters/rocky/rocky_angry",
+        "happy": "Art/Monsters/rocky/rocky_neutral",
+        "fight": "Art/Monsters/rocky/rocky_fight"
+
+      },
+      "dialogueId": "dlg_rocky",
+      "inkDialogueId": "InkyDialogue/bouldar_grimweld",
+      "branching": true,
+      "position": {
+        "pos_x": 205,
+        "pos_y": 280
+      },
+      "scale": 1.0
+    },
+     {
+      "id": "knight",
+      "name": "Sir Veylance",
+      "sprites": {
+        "neutral": "Art/Monsters/knight/knight_neutral",
+        "angry": "Art/Monsters/knight/knight_angry",
+        "happy": "Art/Monsters/knight/knight_happy",
+        "fight": "Art/Monsters/knight/knight_fight"
+
+      },
+      "dialogueId": "dlg_knight",
+      "inkDialogueId": "InkyDialogue/sir_veylance",
+      "branching": true,
+      "position": {
+        "pos_x": 0,
+        "pos_y": 110
+      },
+      "scale": 0.8
     }
   ]
 }

@@ -1,0 +1,106 @@
+# Normalize line endings so Git status/diffs match what teammates see (Windows-friendly: editors handle LF fine).
+* text=auto
+
+# Source and data
+*.cs text eol=lf diff=csharp
+*.json text eol=lf
+*.xml text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.csv text eol=lf
+
+# Unity YAML / text assets
+*.meta text eol=lf
+*.asset text eol=lf
+*.prefab text eol=lf
+*.unity text eol=lf
+*.anim text eol=lf
+*.controller text eol=lf
+*.overrideController text eol=lf
+*.mask text eol=lf
+*.mat text eol=lf
+*.physicMaterial text eol=lf
+*.physicsMaterial text eol=lf
+*.physicsMaterial2D text eol=lf
+*.physicMaterial2D text eol=lf
+*.shader text eol=lf
+*.compute text eol=lf
+*.cginc text eol=lf
+*.hlsl text eol=lf
+*.shadergraph text eol=lf
+*.shadersubgraph text eol=lf
+*.asmdef text eol=lf
+*.asmref text eol=lf
+*.rsp text eol=lf
+*.uxml text eol=lf
+*.uss text eol=lf
+*.inputactions text eol=lf
+
+# Project / tooling text
+*.sln text eol=lf
+*.csproj text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+*.config text eol=lf
+.editorconfig text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+# Binaries (do not convert line endings)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.tga binary
+*.tif binary
+*.tiff binary
+*.ico binary
+*.webp binary
+*.psd binary
+*.exr binary
+*.hdr binary
+
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.aif binary
+*.aiff binary
+*.flac binary
+*.m4a binary
+
+*.fbx binary
+*.obj binary
+*.blend binary
+*.dae binary
+*.3ds binary
+*.dxf binary
+*.max binary
+*.ma binary
+*.mb binary
+*.c4d binary
+*.lxo binary
+
+*.dll binary
+*.exe binary
+*.so binary
+*.dylib binary
+*.lib binary
+*.a binary
+*.pdb binary
+*.mdb binary
+
+*.zip binary
+*.7z binary
+*.rar binary
+*.gz binary
+*.bz2 binary
+
+*.ttf binary
+*.otf binary
+*.fon binary
+
+*.pdf binary
+*.unitypackage binary

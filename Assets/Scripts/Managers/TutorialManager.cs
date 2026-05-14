@@ -90,6 +90,11 @@ public class TutorialManager : MonoBehaviour
             gameObject.SetActive(false);
     }
 
+    void OnDisable()
+    {
+        DeactivateItems(true);
+    }
+
     void Start()
     {
         if (ShouldDisableTutorialManager())
@@ -103,7 +108,11 @@ public class TutorialManager : MonoBehaviour
 
         DisableTutorialTimer();
         groupTriggered = new bool[groups.Length];
-        DeactivateItems(false);
+        CurrentMonster currentMonster = CurrentMonster.Instance;
+        if (currentMonster != null && currentMonster.GetCurrentLevelId() == "tutorial")
+            DeactivateItems(false);
+        else
+            DeactivateItems(true);
         ApplyTutorialMonsterSpritesOnce();
         ApplyTutorialMonsterLayoutOnce();
     }
