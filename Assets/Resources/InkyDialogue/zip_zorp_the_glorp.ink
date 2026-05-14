@@ -15,8 +15,9 @@ VAR show_license = false
 	"What? Old enough to command a spaceship, obviously.."
 	"I'm in my early 20 billions!"
 	"What, you want a form of ID? Fine. Feast your Earth-eyes on my Galactic Adult License."
-	"As you can see It's laminated.. which makes is VERY official.."
 	~ show_license = true
+	"As you can see It's laminated.. which makes is VERY official.."
+
 	** "Looks legit. Go ahead."
 		"Excellent judgment, Earthling."
 		"Regardless, I need a nice, grounded yet elevated brew."

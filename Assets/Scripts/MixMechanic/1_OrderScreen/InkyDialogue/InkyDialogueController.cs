@@ -71,6 +71,13 @@ public class InkyDialogueController : MonoBehaviour
 		}
 	}
 
+	public void SetBoolVariable(string variableName, bool value)
+
+{
+        story.variablesState[variableName] = value;
+    
+}
+
 	public void StartKnot(string knotName)
 	{
 		story = new Story(inkJsonAsset.text);

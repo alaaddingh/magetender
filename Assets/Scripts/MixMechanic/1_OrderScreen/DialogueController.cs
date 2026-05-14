@@ -39,6 +39,8 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private TextAsset orderInkJsonAsset;
     [SerializeField] private TextAsset serveInkJsonAsset;
 
+    [SerializeField] private GameObject alienIDPanel;
+
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
     public GameObject BaseScreen;
@@ -785,13 +787,23 @@ public class DialogueController : MonoBehaviour
     }
 
     private void SyncMonsterStateFromInkVariables()
+{
+    if (monsterStateManager == null || inkyDialogueController == null)
+        return;
+
+    if (inkyDialogueController.TryGetBoolVariable("is_angry", out bool isAngry) && isAngry)
+        monsterStateManager.SetState("angry");
+
+    if (alienIDPanel != null)
     {
-        if (monsterStateManager == null || inkyDialogueController == null)
-            return;
+        bool showLicense = false;
 
-        if (inkyDialogueController.TryGetBoolVariable("is_angry", out bool isAngry) && isAngry)
-            monsterStateManager.SetState("angry");
+        if (inkyDialogueController.TryGetBoolVariable("show_license", out bool inkShowLicense))
+            showLicense = inkShowLicense;
 
-        RefreshFightButton();
+        alienIDPanel.SetActive(showLicense);
     }
+
+    RefreshFightButton();
+}
 }
