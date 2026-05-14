@@ -3441,7 +3441,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f1f5e5c2f77c9ee4e83ce7298db52b67, type: 3}
   - {fileID: 8300000, guid: 0747055d303073646a465d6d09b3bf78, type: 3}
   toadVoiceClipAngry:
-  - {fileID: 8300000, guid: c19f9cbf9f1719c43b5030915a9493ac, type: 3}
+  - {fileID: 8300000, guid: 0c0f61cc4b21e2541b37ce0d42ad33bc, type: 3}
+  - {fileID: 8300000, guid: c88511ddced425848a300cf0d3a98b6a, type: 3}
+  - {fileID: 8300000, guid: 5556d83e474cb2443aa720b4ad58a079, type: 3}
   toadVoiceClipBattle:
   - {fileID: 8300000, guid: fdf548c614529b049908d8452f767e40, type: 3}
   - {fileID: 8300000, guid: 18a57922fee2f49418338822421812d3, type: 3}

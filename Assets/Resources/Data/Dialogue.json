@@ -234,12 +234,12 @@
         {
           "level": "tutorial",
           "starting": [
-            "Wha- a new employee? <b>*ribbit*</b> interesting...",
-            "<b>*ribbit*</b> Salutations! you must be the new Magetender! the latest additon to the Fantasy Tavern team..",
-            "Guessing the ol' college-to-wizard pipe dream didn't pan out, huh? <b>*ribbit*</b>",
+            "What's this? A new employee? <b>*Ribbit*</b> Interesting...",
+            "*Ribbit* Salutations! You must be the new Magetender! The latest addition to our wonderful Fantasy Tavern team!",
+            "Guessing the ol' college-to-wizard pipe dream didn't pan out, huh? <b>*Ribbit*</b>",
             "Tough luck..",
-            "Well I'll go easy on you, seeing as it's your first day and all..",
-            "I'd like a brew that will help me feel grounded, please! Let's see what you've got..",
+            "Well I'll go easy on you, seeing as it's your first day and all.",
+            "I'd like a brew that will help me feel grounded, please! Now let's see what you've got..",
             "..."
           ],
           "satisfied": [
@@ -252,7 +252,7 @@
 
           ],
              "angry": [
-              "FIGHT ME"
+              "FOR A ROOKIE!!!"
           ]
         }
       ]
