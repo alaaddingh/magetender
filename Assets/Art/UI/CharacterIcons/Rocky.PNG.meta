@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c295ed9ae5913194995c62dcb90c621f
+guid: 9354d38bcb07b4746ad406960f538797
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2846309587358148861
-    second: anita_0
+      213: -3030794605390870092
+    second: Golem_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: anita_0
+      name: Golem_0
       rect:
         serializedVersion: 2
-        x: 56
-        y: 53
-        width: 10
-        height: 16
+        x: 15
+        y: 15
+        width: 98
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3079abcb280ef78d0800000000000000
-      internalID: -2846309587358148861
+      spriteID: 4b9c18e3d5470f5d0800000000000000
+      internalID: -3030794605390870092
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      anita_0: -2846309587358148861
+      Golem_0: -3030794605390870092
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 03acdd31558ee234a8b40daa527be9ba
+guid: f2aca6b32935308428c15d0a16761df8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5178441293493378082
-    second: moodDetailsBackground_0
+      213: -767012685871985225
+    second: moodDetailsBackgroundLight_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: moodDetailsBackground_0
+      name: moodDetailsBackgroundLight_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 66
-        width: 300
-        height: 166
+        width: 298
+        height: 165
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed3ec13841b7228b0800000000000000
-      internalID: -5178441293493378082
+      spriteID: 7bdc168a6060b55f0800000000000000
+      internalID: -767012685871985225
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      moodDetailsBackground_0: -5178441293493378082
+      moodDetailsBackgroundLight_0: -767012685871985225
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

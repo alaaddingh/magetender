@@ -12563,13 +12563,17 @@ MonoBehaviour:
   moodMarkerIcon: {fileID: 0}
   monsterMarkerIcons:
   - monsterId: unicorn
-    icon: {fileID: -2846309587358148861, guid: c295ed9ae5913194995c62dcb90c621f, type: 3}
+    icon: {fileID: 21300000, guid: 4a8cd2159db9e3d4d9b80c81c4177672, type: 3}
   - monsterId: alien
-    icon: {fileID: 1333401826788945531, guid: 00798ec629539b0479e53460b97a5c4b, type: 3}
+    icon: {fileID: 21300000, guid: 00798ec629539b0479e53460b97a5c4b, type: 3}
   - monsterId: slime
-    icon: {fileID: 368543389579951487, guid: 0af38176f069050408c075b2f21c6692, type: 3}
+    icon: {fileID: 21300000, guid: 0af38176f069050408c075b2f21c6692, type: 3}
   - monsterId: toad
-    icon: {fileID: 6658670927973994472, guid: 3676b52fff59edf4c8a3125150e8b17f, type: 3}
+    icon: {fileID: 21300000, guid: 3676b52fff59edf4c8a3125150e8b17f, type: 3}
+  - monsterId: knight
+    icon: {fileID: 21300000, guid: 4fa76aa12a3081f49b0399d2deef97da, type: 3}
+  - monsterId: rocky
+    icon: {fileID: 21300000, guid: 9354d38bcb07b4746ad406960f538797, type: 3}
   fallbackMoodMarkerSprite: {fileID: 24433315276218064, guid: 20a546dae8718cf4c88b692a9a3bc7ab, type: 3}
   goalMarkerRect: {fileID: 1177180210}
   nameText: {fileID: 1908581327}
@@ -17340,7 +17344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5178441293493378082, guid: 03acdd31558ee234a8b40daa527be9ba, type: 3}
+  m_Sprite: {fileID: -767012685871985225, guid: f2aca6b32935308428c15d0a16761df8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 936912d3506874342be9a52fe3f4bdac
+guid: 4a8cd2159db9e3d4d9b80c81c4177672
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7246546996493305
-    second: Bouldar_0
+      213: -2092730633671331588
+    second: Unicorn_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bouldar_0
+      name: Unicorn_0
       rect:
         serializedVersion: 2
-        x: 53
-        y: 55
-        width: 13
-        height: 8
+        x: 37
+        y: 0
+        width: 75
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9fbf29332beb91000800000000000000
-      internalID: 7246546996493305
+      spriteID: cf03171939025f2e0800000000000000
+      internalID: -2092730633671331588
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Bouldar_0: 7246546996493305
+      Unicorn_0: -2092730633671331588
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

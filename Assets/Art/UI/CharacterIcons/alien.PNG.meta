@@ -3,8 +3,8 @@ guid: 00798ec629539b0479e53460b97a5c4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1333401826788945531
-    second: alien_0
+      213: -2942823943379307754
+    second: Alien_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: alien_0
+      name: Alien_0
       rect:
         serializedVersion: 2
-        x: 54
-        y: 54
-        width: 11
-        height: 12
+        x: 22
+        y: 8
+        width: 83
+        height: 90
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b7eac9495e1318210800000000000000
-      internalID: 1333401826788945531
+      spriteID: 613bc5a173df827d0800000000000000
+      internalID: -2942823943379307754
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      alien_0: 1333401826788945531
+      Alien_0: -2942823943379307754
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
