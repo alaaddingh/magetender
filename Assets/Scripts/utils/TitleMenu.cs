@@ -22,16 +22,23 @@ public class TitleMenu : MonoBehaviour
 	[SerializeField] private float buttonContainerOffsetYFirstPlay;
 	[Tooltip("Added to the container's scene anchored Y when a save exists.")]
 	[SerializeField] private float buttonContainerOffsetYContinue;
+	[SerializeField] private VerticalLayoutGroup buttonContainerLayout;
+	[Tooltip("Vertical Layout Group spacing when showing 3-button art (no save).")]
+	[SerializeField] private float buttonContainerSpacingFirstPlay = 40f;
+	[Tooltip("Vertical Layout Group spacing when showing 4-button art (save exists).")]
+	[SerializeField] private float buttonContainerSpacingContinue = 40f;
 
-	[Header("First play vs continue (optional)")]
+	[Header("Menu button art (3 vs 4 buttons, optional)")]
+	[Tooltip("Image on your button-art object (e.g. TitlePanel). Sprite swaps; background stays fixed.")]
+	[SerializeField] private Image menuButtonArtImage;
+	[SerializeField] private Sprite firstPlayButtonArtSprite;
+	[SerializeField] private Sprite continueButtonArtSprite;
+	[Tooltip("Alternative to sprite swap: enable one root for first play, the other when a save exists.")]
 	[SerializeField] private GameObject firstPlayOnlyVisualRoot;
 	[SerializeField] private GameObject continueOnlyVisualRoot;
-	[SerializeField] private Sprite firstPlayBackdropSprite;
-	[SerializeField] private Sprite continueBackdropSprite;
 
-	private const string TitleBackdropChildName = "Background";
+	private static readonly string[] MenuButtonArtChildNames = { "TitleButtons", "TitlePanel" };
 	private const string ButtonContainerChildName = "ButtonContainer";
-	private Image cachedTitleBackdropImage;
 	private Vector2 buttonContainerSceneAnchoredPosition;
 	private bool buttonContainerBaseCaptured;
 
@@ -39,6 +46,7 @@ public class TitleMenu : MonoBehaviour
 	{
 		GameAnalytics.InitializeIfNeeded();
 		AutoResolveRefs();
+		EnsureDecorativeLayersDoNotBlockClicks();
 		RefreshMainMenuButtons();
 	}
 
@@ -109,10 +117,64 @@ public class TitleMenu : MonoBehaviour
 			startButtonLabel = startButtonRoot.GetComponentInChildren<LocalizedTMPText>(includeInactive: true);
 		}
 		if (buttonContainer == null)
+			buttonContainer = FindRectTransform(ButtonContainerChildName);
+		if (buttonContainerLayout == null && buttonContainer != null)
+			buttonContainerLayout = buttonContainer.GetComponent<VerticalLayoutGroup>();
+		if (menuButtonArtImage == null)
 		{
-			var t = transform.Find(ButtonContainerChildName);
-			if (t != null)
-				buttonContainer = t as RectTransform;
+			for (int i = 0; i < MenuButtonArtChildNames.Length; i++)
+			{
+				var t = transform.Find(MenuButtonArtChildNames[i]);
+				if (t == null)
+					continue;
+				menuButtonArtImage = t.GetComponent<Image>();
+				if (menuButtonArtImage != null)
+					break;
+			}
+		}
+	}
+
+	private RectTransform FindRectTransform(string objectName)
+	{
+		var transforms = GetComponentsInChildren<RectTransform>(includeInactive: true);
+		for (int i = 0; i < transforms.Length; i++)
+		{
+			if (transforms[i].name == objectName)
+				return transforms[i];
+		}
+		return null;
+	}
+
+	private void EnsureDecorativeLayersDoNotBlockClicks()
+	{
+		if (menuButtonArtImage != null)
+		{
+			menuButtonArtImage.raycastTarget = false;
+			if (buttonContainer != null)
+			{
+				var artTransform = menuButtonArtImage.rectTransform;
+				if (artTransform.parent == buttonContainer.parent
+					&& artTransform.GetSiblingIndex() >= buttonContainer.GetSiblingIndex())
+				{
+					artTransform.SetSiblingIndex(buttonContainer.GetSiblingIndex());
+				}
+			}
+		}
+
+		var background = transform.Find("Background");
+		if (background != null)
+		{
+			var backgroundImage = background.GetComponent<Image>();
+			if (backgroundImage != null)
+				backgroundImage.raycastTarget = false;
+		}
+
+		var smoke = transform.Find("Smoke");
+		if (smoke != null)
+		{
+			var smokeImage = smoke.GetComponent<Image>();
+			if (smokeImage != null)
+				smokeImage.raycastTarget = false;
 		}
 	}
 
@@ -123,12 +185,7 @@ public class TitleMenu : MonoBehaviour
 		if (newGameButtonRoot != null)
 			newGameButtonRoot.SetActive(hasSave);
 
-		if (firstPlayOnlyVisualRoot != null)
-			firstPlayOnlyVisualRoot.SetActive(!hasSave);
-		if (continueOnlyVisualRoot != null)
-			continueOnlyVisualRoot.SetActive(hasSave);
-
-		ApplyBackdropSprites(hasSave);
+		ApplyMenuButtonArt(hasSave);
 		ApplyButtonContainerLayout(hasSave);
 
 		if (startButtonLabel != null)
@@ -147,25 +204,26 @@ public class TitleMenu : MonoBehaviour
 		float extraY = hasSave ? buttonContainerOffsetYContinue : buttonContainerOffsetYFirstPlay;
 		Vector2 b = buttonContainerSceneAnchoredPosition;
 		buttonContainer.anchoredPosition = new Vector2(b.x, b.y + extraY);
+
+		if (buttonContainerLayout != null)
+		{
+			buttonContainerLayout.spacing = hasSave
+				? buttonContainerSpacingContinue
+				: buttonContainerSpacingFirstPlay;
+			LayoutRebuilder.ForceRebuildLayoutImmediate(buttonContainer);
+		}
 	}
 
-	private Image GetTitleBackdropImage()
+	private void ApplyMenuButtonArt(bool hasSave)
 	{
-		if (cachedTitleBackdropImage != null)
-			return cachedTitleBackdropImage;
-		var t = transform.Find(TitleBackdropChildName);
-		if (t != null)
-			cachedTitleBackdropImage = t.GetComponent<Image>();
-		return cachedTitleBackdropImage;
-	}
+		if (firstPlayOnlyVisualRoot != null)
+			firstPlayOnlyVisualRoot.SetActive(!hasSave);
+		if (continueOnlyVisualRoot != null)
+			continueOnlyVisualRoot.SetActive(hasSave);
 
-	private void ApplyBackdropSprites(bool hasSave)
-	{
-		if (firstPlayBackdropSprite == null || continueBackdropSprite == null)
+		if (menuButtonArtImage == null || firstPlayButtonArtSprite == null || continueButtonArtSprite == null)
 			return;
-		var img = GetTitleBackdropImage();
-		if (img != null)
-			img.sprite = hasSave ? continueBackdropSprite : firstPlayBackdropSprite;
+		menuButtonArtImage.sprite = hasSave ? continueButtonArtSprite : firstPlayButtonArtSprite;
 	}
 
     public void ShowCredits()
