@@ -10,30 +10,35 @@ public class MoodGraphPositioning : MonoBehaviour
     public GameObject IngredientsScreen;
     public GameObject AssessScreen;
 
-    [Header("Order Screen pos.")]
-    public float OrderX;
-    public float OrderY;
-    public float OrderScale = 1f;
+    [System.Serializable]
+    public class PanelLayout
+    {
+        [Header("Anchor Presets")]
+        public Vector2 AnchorMin = new Vector2(0.5f, 0.5f);
+        public Vector2 AnchorMax = new Vector2(0.5f, 0.5f);
+        public Vector2 Pivot = new Vector2(0.5f, 0.5f);
 
-    [Header("Toppings Screen pos.")]
-    public float ToppingsX;
-    public float ToppingsY;
-    public float ToppingsScale = 1f;
+        [Header("Offset")]
+        public Vector2 AnchoredPosition;
 
-    [Header("Base Screen pos.")]
-    public float BaseX;
-    public float BaseY;
-    public float BaseScale = 1f;
+        [Header("Scale")]
+        public float Scale = 1f;
+    }
 
-    [Header("Ingredients Screen pos.")]
-    public float IngredientsX;
-    public float IngredientsY;
-    public float IngredientsScale = 1f;
+    [Header("Order Screen")]
+    public PanelLayout OrderLayout;
 
-    [Header("Assess Screen pos.")]
-    public float AssessX;
-    public float AssessY;
-    public float AssessScale = 1f;
+    [Header("Toppings Screen")]
+    public PanelLayout ToppingsLayout;
+
+    [Header("Base Screen")]
+    public PanelLayout BaseLayout;
+
+    [Header("Ingredients Screen")]
+    public PanelLayout IngredientsLayout;
+
+    [Header("Assess Screen")]
+    public PanelLayout AssessLayout;
 
     private void Start()
     {
@@ -49,63 +54,87 @@ public class MoodGraphPositioning : MonoBehaviour
     public void PanelOn(string id)
     {
         if (MoodGraph == null) return;
-        var rt = MoodGraph.transform as RectTransform;
 
-        if (id == "Order")
+        RectTransform rt = MoodGraph.transform as RectTransform;
+
+        switch (id)
         {
-            Place(rt, OrderX, OrderY, OrderScale);
-            return;
-        }
+            case "Order":
+                ApplyLayout(rt, OrderLayout);
+                break;
 
-        if (id == "Toppings")
-        {
-            Place(rt, ToppingsX, ToppingsY, ToppingsScale);
-            return;
-        }
+            case "Toppings":
+                ApplyLayout(rt, ToppingsLayout);
+                break;
 
-        if (id == "Base")
-        {
-            Place(rt, BaseX, BaseY, BaseScale);
-            return;
-        }
+            case "Base":
+                ApplyLayout(rt, BaseLayout);
+                break;
 
-        if (id == "Ingredients")
-        {
-            Place(rt, IngredientsX, IngredientsY, IngredientsScale);
-            return;
-        }
+            case "Ingredients":
+                ApplyLayout(rt, IngredientsLayout);
+                break;
 
-        if (id == "Assess")
-            Place(rt, AssessX, AssessY, AssessScale);
+            case "Assess":
+                ApplyLayout(rt, AssessLayout);
+                break;
+        }
     }
 
     private void Hook(GameObject panel, string id)
     {
         if (panel == null) return;
-        var r = panel.GetComponent<PanelOnRelay>() ?? panel.AddComponent<PanelOnRelay>();
-        r.Target = this;
-        r.Id = id;
-    }
 
+        PanelOnRelay relay =
+            panel.GetComponent<PanelOnRelay>() ??
+            panel.AddComponent<PanelOnRelay>();
+
+        relay.Target = this;
+        relay.Id = id;
+    }
 
     private void PlaceActive()
     {
         if (OrderScreen != null && OrderScreen.activeInHierarchy)
-            { PanelOn("Order"); return; }
+        {
+            PanelOn("Order");
+            return;
+        }
+
         if (ToppingsScreen != null && ToppingsScreen.activeInHierarchy)
-            { PanelOn("Toppings"); return; }
+        {
+            PanelOn("Toppings");
+            return;
+        }
+
         if (BaseScreen != null && BaseScreen.activeInHierarchy)
-            { PanelOn("Base"); return; }
+        {
+            PanelOn("Base");
+            return;
+        }
+
         if (IngredientsScreen != null && IngredientsScreen.activeInHierarchy)
-            { PanelOn("Ingredients"); return; }
+        {
+            PanelOn("Ingredients");
+            return;
+        }
+
         if (AssessScreen != null && AssessScreen.activeInHierarchy)
-           { PanelOn("Assess"); }
+        {
+            PanelOn("Assess");
+        }
     }
 
-    private void Place(RectTransform rt, float x, float y, float s)
+    private void ApplyLayout(RectTransform rt, PanelLayout layout)
     {
-        rt.anchoredPosition = new Vector2(x, y);
-        rt.localScale = Vector3.one * s;
+        if (layout == null) return;
+
+        rt.anchorMin = layout.AnchorMin;
+        rt.anchorMax = layout.AnchorMax;
+        rt.pivot = layout.Pivot;
+
+        rt.anchoredPosition = layout.AnchoredPosition;
+        rt.localScale = Vector3.one * layout.Scale;
     }
 }
 

@@ -39,7 +39,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private TextAsset orderInkJsonAsset;
     [SerializeField] private TextAsset serveInkJsonAsset;
 
-    [SerializeField] private GameObject alienIDPanel;
+    [SerializeField] private GameObject alienIDCanvas;
 
     [Header("Ui Panels (to toggle/hide)")]
     public GameObject orderScreen;
@@ -794,14 +794,14 @@ public class DialogueController : MonoBehaviour
     if (inkyDialogueController.TryGetBoolVariable("is_angry", out bool isAngry) && isAngry)
         monsterStateManager.SetState("angry");
 
-    if (alienIDPanel != null)
+    if (alienIDCanvas != null)
     {
         bool showLicense = false;
 
         if (inkyDialogueController.TryGetBoolVariable("show_license", out bool inkShowLicense))
             showLicense = inkShowLicense;
 
-        alienIDPanel.SetActive(showLicense);
+        alienIDCanvas.SetActive(showLicense);
     }
 
     RefreshFightButton();
