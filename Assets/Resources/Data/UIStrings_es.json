@@ -64,6 +64,12 @@
     { "key": "controls_wasd", "value": "WASD" },
     { "key": "controls_text", "value": "Controles" },
     { "key": "volume_text", "value": "Volumen" },
-    { "key": "credits_text", "value": "Créditos:\nDavid Guerrero-Pantoja - Líder de producción\nAla'Addin Ghosheh - Líder de motor\nEder Yepez Cuevas - Líder de herramientas\nZosia Trela - Líder de diseño\nArchie Dickson - Arte\nAdan O'Toole - Arte\nTyana Tran - Arte\n\nEfectos de sonido:\nFreesound.com\nPixabay.com\n\nFuentes:\nAlkhemical, NotoSansArabic and PixeloidMono" }
+    { "key": "credits_text", "value": "Créditos:\nDavid Guerrero-Pantoja - Líder de producción\nAla'Addin Ghosheh - Líder de motor\nEder Yepez Cuevas - Líder de herramientas\nZosia Trela - Líder de diseño\nArchie Dickson - Arte\nAdan O'Toole - Arte\nTyana Tran - Arte\n\nEfectos de sonido:\nFreesound.com\nPixabay.com\n\nFuentes:\nAlkhemical, NotoSansArabic and PixeloidMono" },
+    { "key": "maintenance_cost_text", "value": "Costo de mantenimiento:" },
+    { "key": "maintence_cost_text", "value": "Costo de mantenimiento:" }
   ]
 }
+
+
+
+
