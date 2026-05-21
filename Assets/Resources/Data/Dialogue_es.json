@@ -116,6 +116,34 @@
           ]
         }
       ]
+    },
+    {
+      "id": "dlg_toad",
+      "levels": [
+        {
+          "level": "tutorial",
+          "starting": [
+            "¿Qué es esto? ¿Un empleado nuevo? <b>*Croac*</b> Interesante...",
+            "<b>*Croac*</b> ¡Saludos! ¡Debes ser el nuevo Magetender! ¡La última incorporación a nuestro maravilloso equipo de la Taberna Fantástica!",
+            "Supongo que el sueño universidad-mago no salió como esperabas, ¿eh? <b>*Croac*</b>",
+            "Qué mala suerte...",
+            "Bueno, me portaré bien contigo, ya que es tu primer día y todo eso.",
+            "¡Me gustaría un brebaje que me ayude a sentirme arraigado, por favor! A ver qué tienes...",
+            "..."
+          ],
+          "satisfied": [
+            "¡Excelente trabajo! ¡Esta bebida no está mal!",
+            "¡PARA UN NOVATO!!!"
+          ],
+          "neutral": [
+            "¡Excelente trabajo! ¡Esta bebida no está mal!",
+            "¡PARA UN NOVATO!!!"
+          ],
+          "angry": [
+            "¡PARA UN NOVATO!!!"
+          ]
+        }
+      ]
     }
   ]
 }

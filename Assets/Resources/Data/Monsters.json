@@ -12,6 +12,8 @@
       },
       "dialogueId": "dlg_unicorn",
       "inkDialogueId": "InkyDialogue/anita_carberneigh",
+      "inkDialogueId_es": "InkyDialogue_es/anita_carberneigh",
+      "inkDialogueId_ar": "InkyDialogue_ar/anita_carberneigh",
       "branching": true,
       "position": {
         "pos_x": 0,
@@ -30,6 +32,8 @@
       },
       "dialogueId": "dlg_slime",
       "inkDialogueId": "InkyDialogue/sloshberg_florpton",
+      "inkDialogueId_es": "InkyDialogue_es/sloshberg_florpton",
+      "inkDialogueId_ar": "InkyDialogue_ar/sloshberg_florpton",
       "branching": true,
       "position": {
         "pos_x": -25,
@@ -50,6 +54,8 @@
       },
       "dialogueId": "dlg_alien",
       "inkDialogueId": "InkyDialogue/zip_zorp_the_glorp",
+      "inkDialogueId_es": "InkyDialogue_es/zip_zorp_the_glorp",
+      "inkDialogueId_ar": "InkyDialogue_ar/zip_zorp_the_glorp",
       "branching": true,
       "position": {
         "pos_x": 0,
@@ -85,6 +91,8 @@
       },
       "dialogueId": "dlg_rocky",
       "inkDialogueId": "InkyDialogue/bouldar_grimweld",
+      "inkDialogueId_es": "InkyDialogue_es/bouldar_grimweld",
+      "inkDialogueId_ar": "InkyDialogue_ar/bouldar_grimweld",
       "branching": true,
       "position": {
         "pos_x": 205,
@@ -104,6 +112,8 @@
       },
       "dialogueId": "dlg_knight",
       "inkDialogueId": "InkyDialogue/sir_veylance",
+      "inkDialogueId_es": "InkyDialogue_es/sir_veylance",
+      "inkDialogueId_ar": "InkyDialogue_ar/sir_veylance",
       "branching": true,
       "position": {
         "pos_x": 0,

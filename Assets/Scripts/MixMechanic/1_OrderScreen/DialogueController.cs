@@ -693,18 +693,20 @@ public class DialogueController : MonoBehaviour
         if (currentMonsterManager == null || currentMonsterManager.Data == null)
             return string.Empty;
 
-        if (!string.IsNullOrWhiteSpace(currentMonsterManager.Data.inkDialogueId))
-            return currentMonsterManager.Data.inkDialogueId;
+        MonsterData data = currentMonsterManager.Data;
+
+        if (!string.IsNullOrWhiteSpace(data.inkDialogueId))
+            return data.GetInkDialogueIdForCurrentLanguage();
 
         bool isAssessState = monsterStateManager != null && monsterStateManager.MonsterState != "start";
-        if (isAssessState && !string.IsNullOrWhiteSpace(currentMonsterManager.Data.assessDialogueId))
-            return currentMonsterManager.Data.assessDialogueId;
+        if (isAssessState && !string.IsNullOrWhiteSpace(data.assessDialogueId))
+            return data.GetAssessInkDialogueIdForCurrentLanguage();
 
         bool isAssessScreen = gameObject.name == "AssessDialogueController";
-        if (isAssessScreen && !string.IsNullOrWhiteSpace(currentMonsterManager.Data.assessDialogueId))
-            return currentMonsterManager.Data.assessDialogueId;
+        if (isAssessScreen && !string.IsNullOrWhiteSpace(data.assessDialogueId))
+            return data.GetAssessInkDialogueIdForCurrentLanguage();
 
-        return currentMonsterManager.Data.dialogueId;
+        return data.dialogueId;
     }
 
     private string GetInkKnotNameForCurrentState()
