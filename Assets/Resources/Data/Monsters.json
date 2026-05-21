@@ -120,6 +120,42 @@
         "pos_y": 110
       },
       "scale": 0.8
+    },
+     {
+      "id": "hamster",
+      "name": "Pippwick Wandsworth",
+      "sprites": {
+        "neutral": "Art/Monsters/hamster/hamster_neutral",
+        "angry": "Art/Monsters/hamster/hamster_angry",
+        "happy": "Art/Monsters/hamster/hamster_happy",
+        "fight": "Art/Monsters/hamster/hamster_fight"
+
+      },
+      "dialogueId": "dlg_hamster",
+      "inkDialogueId": "InkyDialogue/pippwick_wandsworth",
+      "branching": true,
+      "position": {
+        "pos_x": 20,
+        "pos_y": 180
+      },
+      "scale": 0.7
+    },
+    {
+      "id": "ghost",
+      "name": "Ghost Girl",
+      "sprites" : {
+        "neutral": "Art/Monsters/ghost/ghost_neutral",
+        "angry": "Art/Monsters/ghost/ghost_angry",
+        "happy": "Art/Monsters/ghost/ghost_happy",
+        "fight": "Art/Monsters/ghost/ghost_fight"
+      },
+      "dialogueId": "dlg_ghost",
+      "branching": true,
+      "position": {
+        "pos_x": 0,
+        "pos_y": 80
+      },
+      "scale": 1
     }
   ]
 }

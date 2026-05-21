@@ -19,6 +19,7 @@ public class MoodGraphUI : MonoBehaviour
 
     [Header("optional: assess behavior")]
     public GameObject assessPanel;
+    [SerializeField] private GameObject ingredientsPanel;
     [SerializeField] private ScoreManager scoreManager;
 
     [Header("graph range")]
@@ -111,13 +112,14 @@ public class MoodGraphUI : MonoBehaviour
         }
 
         bool isAssessActive = assessPanel != null && assessPanel.activeInHierarchy;
+        bool isIngredientsActive = IsIngredientsPanelActive();
 
         ScorePair start = currentMonster.GetStartingScore();
         float x = start != null ? start.x : float.NaN;
         float y = start != null ? start.y : float.NaN;
         bool hasMood = start != null;
 
-        if (isAssessActive)
+        if (isAssessActive || isIngredientsActive)
         {
             if (scoreManager == null)
                 scoreManager = FindFirstObjectByType<ScoreManager>();
@@ -263,6 +265,18 @@ public class MoodGraphUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    private bool IsIngredientsPanelActive()
+    {
+        if (ingredientsPanel == null)
+        {
+            var ingredientsController = FindFirstObjectByType<IngredientsController>();
+            if (ingredientsController != null)
+                ingredientsPanel = ingredientsController.CurrentScreen;
+        }
+
+        return ingredientsPanel != null && ingredientsPanel.activeInHierarchy;
     }
 }
 

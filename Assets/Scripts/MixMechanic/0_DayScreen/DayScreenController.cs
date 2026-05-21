@@ -15,6 +15,7 @@ public class DayScreenController : MonoBehaviour
     [Header("Day screen UI")]
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text coinsText;
+    [SerializeField] private TMP_Text maintenanceCostText;
 
     [Header("Global coin canvas - show only on Day / Order / Assess")]
     [SerializeField] private GameObject coinCanvas;
@@ -36,6 +37,11 @@ public class DayScreenController : MonoBehaviour
 	private bool showedDayPanelThisLoad;
 
 	public static bool OrderScreenRevealedThisSession { get; private set; }
+
+	private void OnEnable()
+	{
+		LanguageManager.OnLanguageChanged += RefreshDisplay;
+	}
 
     private void Start()
     {
@@ -119,7 +125,31 @@ public class DayScreenController : MonoBehaviour
         }
         if (coinsText != null)
             coinsText.text = coins.ToString();
+
+		RefreshMaintenanceCostDisplay(day);
     }
+
+	private void RefreshMaintenanceCostDisplay(int day)
+	{
+		if (maintenanceCostText == null)
+			return;
+
+		int maintenanceCost = CurrentMonster.Instance != null
+			? CurrentMonster.Instance.GetMaintenanceCostForDay(day)
+			: 0;
+
+		var localizedText = maintenanceCostText.GetComponent<LocalizedTMPText>();
+		string label = localizedText != null && !string.IsNullOrWhiteSpace(localizedText.Key)
+			? L.Get(localizedText.Key)
+			: maintenanceCostText.text;
+		string display = $"{label} {maintenanceCost}";
+		bool isArabic = RtlText.IsArabic();
+
+		maintenanceCostText.isRightToLeftText = isArabic;
+		maintenanceCostText.text = isArabic
+			? RtlText.FixIfArabic(display, preserveNumbers: true, fixTags: true, reverseOutput: true)
+			: display;
+	}
 
     private void DisableTutorialManagerIfNotNeeded()
     {
@@ -215,6 +245,8 @@ public class DayScreenController : MonoBehaviour
 
 	void OnDisable()
 	{
+		LanguageManager.OnLanguageChanged -= RefreshDisplay;
+
 		if (coinLossPopup != null)
 			coinLossPopup.gameObject.SetActive(false);
 	}

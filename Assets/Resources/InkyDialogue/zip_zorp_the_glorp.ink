@@ -53,7 +53,7 @@ VAR show_license = false
 
 - -> END
 
-=== Day_Two ===
+=== Day_Three ===
 -> start
 
 = start
@@ -102,7 +102,7 @@ VAR show_license = false
 
 
 
-=== Day_Three ===
+=== Day_X ===
 -> start
 
 = start

@@ -29,6 +29,8 @@ public class LocalizedTMPText : MonoBehaviour
 	private TextOverflowModes originalOverflowMode;
 	private readonly FastStringBuilder rtlOutput = new FastStringBuilder(RTLSupport.DefaultBufferSize);
 
+	public string Key => key;
+
 	private void Awake()
 	{
 		tmpText = GetComponent<TMP_Text>();

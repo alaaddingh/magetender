@@ -74,16 +74,17 @@
             "dialogue_key": "level_2",
             "ink_knot": "Day_One"
         },
-        {
-          "monster_id": "alien",
+          {
+          "monster_id": "knight",
           "tolerances": {
             "satisfied_tolerance": 8
           },
-          "starting_score": { "x": 0.6, "y": -0.1 },
-          "goal_score": { "x": -0.4, "y": 0.35 },
-          "dialogue_key": "level_2",
-          "ink_knot": "Day_Two"
+          "starting_score": { "x": 0.5, "y": 0.5 },
+          "goal_score": { "x": -0.46, "y": -0.21 },
+          "dialogue_key": "level_3",
+          "ink_knot": "Day_Three"
         },
+       
         {
           "monster_id": "slime",
           "tolerances": {
@@ -101,33 +102,23 @@
       "name": "Third Night",
       "maintenance_cost": 80,
       "encounters": [
-        {
-          "monster_id": "knight",
+           {
+          "monster_id": "hamster",
           "tolerances": {
             "satisfied_tolerance": 8
           },
-          "starting_score": { "x": 0.5, "y": 0.5 },
-          "goal_score": { "x": -0.46, "y": -0.21 },
+          "starting_score": { "x": 0.45, "y": 0.2 },
+          "goal_score": { "x": -0.8, "y": 0.4 },
           "dialogue_key": "level_3",
           "ink_knot": "Day_Three"
         },
-           {
+         {
           "monster_id": "alien",
           "tolerances": {
             "satisfied_tolerance": 8
           },
-          "starting_score": { "x": -0.32, "y": -0.31 },
-          "goal_score": { "x": 0.4, "y": 0.35 },
-          "dialogue_key": "level_3",
-          "ink_knot": "Day_Three"
-        },
-        {
-          "monster_id": "unicorn",
-          "tolerances": {
-            "satisfied_tolerance": 6
-          },
-          "starting_score": { "x": -0.5, "y": 0.5 },
-          "goal_score": { "x": -0.42, "y": -0.41 },
+          "starting_score": { "x": 0.6, "y": -0.1 },
+          "goal_score": { "x": -0.4, "y": 0.35 },
           "dialogue_key": "level_3",
           "ink_knot": "Day_Three"
         }
